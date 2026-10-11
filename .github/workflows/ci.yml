@@ -1,0 +1,28 @@
+name: Foundation checks
+
+on:
+  push:
+    branches: [main, "chore/**", "docs/**", "feat/**", "fix/**", "content/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  foundation:
+    name: Repository foundation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Validate foundation files and relative links
+        run: python scripts/check_foundation.py
