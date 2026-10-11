@@ -35,6 +35,9 @@ Persist durable facts only: changes/commit/PR, checks and outcomes, accepted/ope
 - Avoid repeated speculative refactors; record hard-to-reverse decisions.
 - Start a fresh task context when previous chat has irrelevant history; pass a short handoff with canonical links.
 
+## Claude.ai Project context
+For copy-ready Project Instructions and guidance on Project Knowledge, use [Claude Project Context](./CLAUDE_PROJECT_CONTEXT.md). Claude.ai chats must not claim live repository access unless a working connector/access path is available.
+
 ## Safety and release
 - No production deploys, billing changes, live migrations, or deletion of learner data without explicit authorization.
 - Never place secrets in prompts, logs, files, or issues.
