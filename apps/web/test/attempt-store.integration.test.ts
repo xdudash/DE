@@ -32,8 +32,11 @@ if (url) {
   try {
     // pg is CommonJS: take the default namespace when the loader provides one.
     const mod = await import("pg");
-    const pg = ((mod as { default?: unknown }).default ?? mod) as { Client: new (c: { connectionString: string }) => Client };
-    admin = new pg.Client({ connectionString: url });
+    const pg = ((mod as { default?: unknown }).default ?? mod) as {
+      Client: new (c: { connectionString: string; connectionTimeoutMillis: number }) => Client;
+    };
+    // An explicit timeout: an unreachable host must fail the suite, never hang it.
+    admin = new pg.Client({ connectionString: url, connectionTimeoutMillis: 5_000 });
     await admin.connect();
     ({ attemptStore } = await import("../lib/data/attempt-store.ts"));
     const { getPool } = await import("../lib/data/pg.ts");

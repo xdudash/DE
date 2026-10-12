@@ -113,6 +113,8 @@ jobs:
       - name: Attempt recording integration test
         timeout-minutes: 5
         env:
-          DG_DB_URL: postgres://postgres:postgres@localhost:5432/deutschgo_integration
+          # 127.0.0.1, not localhost: Node resolves localhost to ::1 first, where the
+          # service container does not listen, and the driver would wait for it.
+          DG_DB_URL: postgres://postgres:postgres@127.0.0.1:5432/deutschgo_integration
           DATABASE_SSL: disable
         run: npm test -w @deutschgo/web
