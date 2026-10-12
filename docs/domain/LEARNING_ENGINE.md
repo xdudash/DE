@@ -16,18 +16,20 @@ Help learners know what they can use reliably, what to practise next and why, an
 
 Each event: learner, timestamp (client + server), content id + local id + content version, concept ids, skill, result, evaluator version. Events are immutable; states are **derived** and recomputable (makes sync conflicts and algorithm changes safe).
 
-## Concept states (v1)
-```text
-unseen ──open──► in_progress ──≥1 correct attempt in each objective──► needs_practice?──►
-          │                                                     │
-          └ prerequisites met → "available"                     ▼
-                                       provisionally_mastered ◄── ≥2 successful delayed recalls
-                                                     │                 (≥1 day apart)
-                                                     └─ due date passed ─► review_due
-```
-- `needs_practice`: accuracy < 70 % over the last 5 attempts or a signalled error ≥2 times in 7 days.
-- `provisionally_mastered` never becomes permanent: later errors move it back.
-- Exact transition rules are implemented as a pure function with fixture tests before any learner data is collected (P2 task).
+## Concept states (v1) — implemented in `packages/learning-engine` (DG-010)
+States are recomputed from the full event list (order-independent; events after `now` ignored). Precedence, first match wins:
+
+| # | Condition | State | `because` |
+|---|---|---|---|
+| 1 | no evidence (self-reports alone don't count); all direct prerequisites in progress or better with ≥1 correct result | `available` | `prerequisites_met` |
+| 1 | no evidence otherwise | `unseen` | `no_evidence` |
+| 2 | ≥3 graded results and accuracy of the last 5 < 70 % | `needs_practice` | `low_recent_accuracy` |
+| 3 | ≥2 failed results (any unit) whose error rule **signals** this concept within 7 days | `needs_practice` | `repeated_signalled_error` |
+| 4 | review schedule exists and `now ≥ dueAt` | `review_due` | `review_overdue` |
+| 5 | ≥2 successful recalls ≥1 day apart and the latest recall succeeded | `provisionally_mastered` | `delayed_recall_confirmed` |
+| 6 | otherwise (exposure or practice) | `in_progress` | `practising` |
+
+Graded results = `attempt`, `recall`, `transfer` with a boolean result. Mastery is never permanent: due reviews, failed recalls, or new errors move a concept back. Constants live in `states.ts` / `scheduler.ts`; changing them requires updating this table and the fixture tests.
 
 ## Mastery estimate (v1)
 A transparent score per concept: weighted recent accuracy (attempts) × recall factor × transfer bonus, bucketed into the states above. Shown to learners as states with the evidence ("3 of 4 correct, last review 5 days ago"), not as a fake-precise percentage.
@@ -38,10 +40,10 @@ A transparent score per concept: weighted recent accuracy (attempts) × recall f
 3. Due reviews (capped by the learner's daily budget).
 4. Concepts recently signalled by errors.
 5. Next step of the active route.
-6. Every recommendation carries a reason code (`review_due`, `prerequisite_of:<id>`, `frequent_error`, `route_next`, `goal_match`) rendered in the explanation language; the learner can dismiss/override.
+6. Every recommendation carries a reason code (`requested`, `prerequisite_of` + ref, `review_due`, `frequent_error`, `route_next`) rendered in the explanation language; the learner can dismiss/override. Catch-up lists transitive prerequisite gaps foundations-first; reviews are capped by the learner's budget, most overdue first; route_next prefers required over optional steps; targets are never duplicated. `goal_match` is deferred until concepts carry goal tags.
 
 ## Spaced repetition
-- v1 (P3): fixed expanding intervals (1, 3, 7, 16, 35 days; "again" resets to 1) — testable, explainable.
+- v1 (implemented, DG-010): fixed expanding intervals 1, 3, 7, 16, 35 days. The schedule starts at the first correct graded result; an on-time successful recall advances one step (early recalls give no credit); a failed recall ("again") resets to 1 day from the failure; failed ordinary attempts do not move the schedule (they affect state via accuracy).
 - v2 (P6): FSRS-class scheduler (open-source algorithm, MIT-licensed implementations exist; verify license at adoption) once enough review history exists; A/B against v1 on recall outcomes.
 - Review units: vocabulary **senses** (not bare words), concepts (via exercise variants), phrases/collocations.
 

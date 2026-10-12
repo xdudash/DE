@@ -11,6 +11,7 @@ A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a 
  ├─ content/                YAML: concepts, units, routes, i18n, registries      (authored, reviewed)
  ├─ packages/content-kit/   schemas · loader · semantic checks · compiler ·      (pure TS, tested)
  │                          answer evaluator · graph · l10n resolution
+ ├─ packages/learning-engine/ concept states · review scheduler · recommendations (pure TS, tested)
  └─ apps/web/               Next.js App Router
       ├─ build time: content-kit compiles content → generated/content.json → static pages per lang × unit
       ├─ server: route handlers / server actions (P2): attempts, sync, settings, entitlements
@@ -26,7 +27,7 @@ A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a 
 |---|---|---|
 | `content-kit` | content types, validation, compile, evaluation, graph, l10n | nothing app-specific (no DB, no React) |
 | `apps/web/lib/content` | read compiled bundle, resolve strings | content-kit |
-| `apps/web/lib/learning` (P2) | evidence → states → recommendations (pure functions) | content-kit types |
+| `packages/learning-engine` ✔ | evidence → states → review schedule → recommendations (pure functions, no I/O) | content-kit types only |
 | `apps/web/lib/data` (P2) | the only module that talks to Supabase; repository functions | Supabase client |
 | `apps/web/app`, `components` | presentation | all of the above via their APIs |
 | `apps/mobile` (P8) | Capacitor shell | apps/web build |

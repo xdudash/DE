@@ -14,6 +14,7 @@ Do not load all docs or all content files by default.
 ## Repository map
 - `content/` — YAML: concepts, units, routes, `i18n/<lang>/`, `languages.yaml`, `sources.yaml`. Never learner data.
 - `packages/content-kit/` — schemas, loader, validator, compiler, evaluator (pure TS, `node:test`).
+- `packages/learning-engine/` — evidence → states → schedule → recommendations (pure TS, `node:test`).
 - `apps/web/` — Next.js app; reads `generated/content.json`; no teaching text in components.
 - `docs/` — canonical decisions; `scripts/check_foundation.py` — doc/link check.
 
