@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.prepositions_accusative
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Prepositions with the accusative (durch, für, gegen, ohne, um)
+  summary: 'These five prepositions always take the accusative: Das ist für meinen Sohn. Ohne Termin geht es nicht.'

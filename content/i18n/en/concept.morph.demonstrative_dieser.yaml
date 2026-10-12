@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.demonstrative_dieser
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Demonstratives dieser / diese / dieses
+  summary: 'Point at something specific and take the same endings as the definite article: Dieser Termin passt mir nicht.'

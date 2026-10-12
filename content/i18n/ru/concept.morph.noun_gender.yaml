@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.noun_gender
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Род существительных (der, die, das)
+  summary: У каждого немецкого существительного есть один из трёх родов, который определяет артикль и окончания. Закономерности помогают, но род в основном запоминается вместе со словом.

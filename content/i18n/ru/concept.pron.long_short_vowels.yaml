@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.long_short_vowels
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Долгие и краткие гласные
+  summary: 'Долгота гласного различает слова (Staat/Stadt, Miete/Mitte). На письме это видно: удвоенная гласная или h удлиняют, удвоенная согласная сокращает.'

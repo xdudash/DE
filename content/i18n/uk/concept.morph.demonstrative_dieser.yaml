@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.demonstrative_dieser
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Вказівні слова dieser / diese / dieses
+  summary: 'Указують на конкретний предмет і мають ті самі закінчення, що означений артикль: Dieser Termin passt mir nicht.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.article_definite
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Определённый артикль (der, die, das)
+  summary: Употребляется для известного или уже упомянутого предмета; его формы меняются по падежам и числам.

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.final_devoicing
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Оглушение в конце слова (Auslautverhärtung)
+  summary: 'b, d, g в конце слова или слога звучат как p, t, k: Tag, Kind, halb — но написание сохраняется, что видно во множественном числе (Tage).'

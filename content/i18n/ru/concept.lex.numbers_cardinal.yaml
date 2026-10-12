@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_cardinal
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Количественные числительные
+  summary: Счёт от нуля до миллионов, включая немецкий порядок десятков и единиц (einundzwanzig), а также чтение цен и телефонных номеров.

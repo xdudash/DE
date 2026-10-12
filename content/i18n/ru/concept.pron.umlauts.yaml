@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.umlauts
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Умлауты ä, ö, ü
+  summary: 'Три гласных, которых нет в славянских языках и которые меняют значение: Mutter/Mütter, schon/schön. ö и ü образуются округлением губ.'

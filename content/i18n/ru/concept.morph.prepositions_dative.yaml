@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.prepositions_dative
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Предлоги с Dativ (aus, bei, mit, nach, seit, von, zu)
+  summary: 'Эти предлоги всегда требуют Dativ и выражают происхождение, сопровождение, время и направление к людям и учреждениям: Ich fahre mit dem Bus zum Arzt.'

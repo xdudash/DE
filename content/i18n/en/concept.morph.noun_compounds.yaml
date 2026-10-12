@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.noun_compounds
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Compound nouns
+  summary: 'German builds long words by joining nouns: die Krankenversicherung, der Aufenthaltstitel. The last part carries the gender and the meaning core.'

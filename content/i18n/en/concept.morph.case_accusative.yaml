@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.case_accusative
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Accusative: the direct object'
+  summary: 'The direct object of most verbs. Only the masculine article changes visibly: der → den. Ich brauche den Termin.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.adjective_predicative
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Прикметники після sein, werden, bleiben (без закінчення)
+  summary: 'У ролі присудка прикметник ніколи не отримує закінчення: Die Wohnung ist teuer. Das Wetter wird schön.'

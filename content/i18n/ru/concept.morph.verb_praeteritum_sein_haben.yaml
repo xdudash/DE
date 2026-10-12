@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_praeteritum_sein_haben
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Прошедшее время sein и haben (war, hatte)
+  summary: 'Уже на уровне A1 глаголы sein и haben обычно употребляются в Präteritum, а не в Perfekt: Ich war krank. Wir hatten keine Zeit.'

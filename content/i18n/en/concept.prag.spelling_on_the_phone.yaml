@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.spelling_on_the_phone
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Spelling your name and address aloud
+  summary: The German alphabet, how to spell a name letter by letter on the phone or at a counter, and how to read out postcodes and phone numbers.

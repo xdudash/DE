@@ -20,7 +20,7 @@ Do not load all docs or all content files by default.
 - `docs/` — canonical decisions; `scripts/check_foundation.py` — doc/link check.
 
 ## Commands
-`npm run check` (everything) · `npm run test:db` · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `python3 scripts/check_foundation.py`
+`npm run check` (everything) · `npm run test:db` · `npm run content:report` · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `python3 scripts/check_foundation.py`
 
 ## Non-negotiable principles
 1. Separate language knowledge, curriculum, content, learner state, localization, and UI code.

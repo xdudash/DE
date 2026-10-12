@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.ortho.noun_capitalization
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Все существительные пишутся с большой буквы
+  summary: 'Любое существительное пишется с заглавной буквы, где бы оно ни стояло: Ich habe einen Termin beim Arzt. Так же пишутся субстантивированные слова (das Lernen).'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.greetings_dach
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Вітання в Німеччині, Австрії та Швейцарії
+  summary: Guten Tag, Hallo, Grüß Gott (південь та Австрія), Grüezi (Швейцарія), Servus, Moin — яке вітання пасує для якого регіону й ситуації.

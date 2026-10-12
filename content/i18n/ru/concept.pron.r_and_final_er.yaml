@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.r_and_final_er
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Немецкий r и окончание -er
+  summary: r перед гласной произносится в горле (Reise); после гласной и в окончании -er превращается в звук, похожий на гласный (Mutter, Uhr).

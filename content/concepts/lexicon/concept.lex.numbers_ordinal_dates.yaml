@@ -1,0 +1,14 @@
+# Graph placeholder (status: planned): id, level and dependencies only.
+# Authored content is added when a unit teaches this concept (see DG-007 gate).
+schema: deutschgo.concept/1
+id: concept.lex.numbers_ordinal_dates
+version: 0.1.0
+status: planned
+kind: lexeme_sense
+domain: numbers
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A2 }
+relations:
+  - { type: depends_on, target: concept.lex.numbers_cardinal }
+  - { type: depends_on, target: concept.morph.adjective_attributive_intro }

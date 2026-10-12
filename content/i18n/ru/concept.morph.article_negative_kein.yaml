@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.article_negative_kein
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Отрицательный артикль kein
+  summary: 'kein отрицает существительное и склоняется как ein, но имеет и формы множественного числа: Ich habe keine Zeit. Das ist kein Problem.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.noun_gender
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Noun gender (der, die, das)
+  summary: Every German noun has one of three genders, which determines its article and endings. Patterns and endings help, but gender must largely be learned with the word.

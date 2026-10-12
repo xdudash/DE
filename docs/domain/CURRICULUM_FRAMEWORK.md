@@ -31,7 +31,28 @@ Counts are rough orders of magnitude used for planning and progress reporting; r
 | B2 | ~70 | ~4,000 | ~25 | ~90 |
 | C1 | ~60 | ~6,000+ | ~20 | ~70 |
 
-A generated coverage report (P3 task) will show, per level × strand × language: planned / draft / reviewed / published counts.
+A generated coverage report exists: `npm run content:report` (add `-- --markdown` for a pasteable table) prints concepts per CEFR level and per strand with their status, units per level, and explanation-language completeness. Current state (2026-10-12): 67 concepts mapped at A1/A2 — 66 `planned`, 1 `needs_review` — in 15 strands, 1 unit, 2 routes, full en/uk/ru coverage of all titles and summaries.
+
+## A1 inventory (mapped, DG-012)
+The A1 graph is mapped as `planned` concepts so dependencies are visible before any
+unit is authored: verbs (13), articles (5), cases (5), pronouns (4), prepositions (3),
+nouns (3), adjectives (3), pronunciation (7), negation (2), numbers (2), time (2),
+orthography (2), pragmatics (4), adverbs (1), questions (1), syntax (9 — the strand
+the gold unit belongs to). Each carries `introduced` and `expected_mastery` levels, so
+concepts that merely start at A1 (cases, participles, adjective endings) are not
+claimed to be finished there.
+
+## Routes
+- `route.core.a1_core` — the main A1 journey in nine pedagogical blocks: first
+  sentences → questions and negation → introducing yourself, numbers, time, politeness
+  → accusative → modal and separable verbs → dative → the past → longer sentences →
+  rounding off. Pronunciation and spelling are optional steps that can be woven in at
+  any point.
+- `route.core.a1_sentence_foundations` — a focused thread through sentence structure
+  for learners who want grammar in one line.
+
+The validator warns (`route.prerequisite_order`) when a step needs a concept the route
+teaches later or never covers, unless a unit declares it as assumed knowledge.
 
 ## Authoring order
 1. Map the concept graph per level as `planned` concepts (cheap; reveals dependencies early).
@@ -39,6 +60,7 @@ A generated coverage report (P3 task) will show, per level × strand × language
 3. Interleave scenarios that apply the grammar (Behörden, Wohnen, Arbeit) so learners use German early.
 4. Every batch passes [content review](../quality/CONTENT_REVIEW.md); bulk drafting is allowed only after the gold standard is approved, and only in batches that reviewers can actually review.
 
-## Routes
-- **Core routes** per level (A1 sentence foundations → … ), goal routes (work, everyday, study, exam prep), and scenario routes.
-- A route is valid only if every step's prerequisites appear earlier or are explicitly marked as assumed knowledge (validator task in P3).
+## Further routes (planned)
+Goal routes (work, everyday, study, exam preparation) and scenario routes (Behörden,
+Wohnen, Arbeit) follow once A1 units exist; they reuse the same concepts rather than
+duplicating them.

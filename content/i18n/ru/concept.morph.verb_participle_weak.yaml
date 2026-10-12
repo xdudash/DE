@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_participle_weak
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Причастие слабых глаголов (ge-…-t)
+  summary: 'Правильные глаголы образуют причастие по модели ge- + основа + -t: arbeiten → gearbeitet, kaufen → gekauft.'

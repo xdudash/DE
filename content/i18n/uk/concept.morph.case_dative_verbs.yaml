@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.case_dative_verbs
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Дієслова з Dativ (helfen, danken, gefallen …)
+  summary: 'Низка дієслів вимагає додатка в Dativ там, де в інших мовах прямий додаток: Ich helfe dir. Die Wohnung gefällt mir.'

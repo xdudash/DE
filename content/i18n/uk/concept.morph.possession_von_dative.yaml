@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.possession_von_dative
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Вираження належності через von + Dativ
+  summary: 'На рівні A1 належність зазвичай виражається через von + Dativ або присвійним артиклем, а не родовим відмінком: die Nummer von meinem Chef.'

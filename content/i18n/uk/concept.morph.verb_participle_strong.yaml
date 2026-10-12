@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_participle_strong
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Дієприкметник сильних і мішаних дієслів (ge-…-en)
+  summary: 'Сильні дієслова закінчуються на -en і часто змінюють кореневий голосний: sprechen → gesprochen, gehen → gegangen. Такі форми потрібно запам''ятовувати окремо.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.ortho.eszett_and_ss
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: ß and ss (and Swiss spelling)
+  summary: ß follows a long vowel or diphthong (Straße, heiß), ss a short one (Fluss). Swiss standard German writes ss everywhere.

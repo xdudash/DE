@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.question_words
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Вопросительные слова (wer, was, wann, wo, wie, warum, welcher, wie viel)
+  summary: Какое слово о чём спрашивает, включая разницу между wo / wohin / woher и welcher / was für ein.

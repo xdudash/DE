@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.word_stress
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Словесное ударение
+  summary: В немецких словах ударение обычно падает на первый слог; отделяемые приставки ударны (ánrufen), неотделяемые — нет (verstéhen).

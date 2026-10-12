@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_inseparable_prefix
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Дієслова з невідокремлюваним префіксом
+  summary: 'Префікси be-, ver-, er-, ent-, emp-, ge-, miss- ніколи не відокремлюються і не мають наголосу: Ich verstehe dich. Дієприкметник у них утворюється без ge-.'

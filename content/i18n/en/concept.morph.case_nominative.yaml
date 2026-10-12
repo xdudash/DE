@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.case_nominative
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Nominative: the subject'
+  summary: 'The case of the subject and of what follows sein/werden/bleiben: Der Vertrag ist neu. It answers the question wer? or was?'

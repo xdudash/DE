@@ -1,0 +1,15 @@
+# Graph placeholder (status: planned): id, level and dependencies only.
+# Authored content is added when a unit teaches this concept (see DG-007 gate).
+schema: deutschgo.concept/1
+id: concept.morph.adjective_attributive_intro
+version: 0.1.0
+status: planned
+kind: morphology
+domain: adjectives
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: B1 }
+relations:
+  - { type: depends_on, target: concept.morph.adjective_predicative }
+  - { type: depends_on, target: concept.morph.article_definite }
+  - { type: contrasts_with, target: concept.morph.adjective_predicative }

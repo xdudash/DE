@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.noun_plural
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Plural forms of nouns
+  summary: German has five plural patterns (-e, -(e)n, -er, -s, no ending), often with an umlaut. The plural article is always die.

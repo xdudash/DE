@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.possessive_articles
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Possessive articles (mein, dein, sein, ihr …)
+  summary: 'They show who something belongs to and take the same endings as ein/kein: mein Vertrag, meine Wohnung, meinem Chef.'

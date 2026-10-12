@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.long_short_vowels
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Long and short vowels
+  summary: 'Vowel length distinguishes words (Staat/Stadt, Miete/Mitte). Spelling signals it: a doubled vowel or h lengthens, a doubled consonant shortens.'

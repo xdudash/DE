@@ -1,0 +1,15 @@
+# Graph placeholder (status: planned): id, level and dependencies only.
+# Authored content is added when a unit teaches this concept (see DG-007 gate).
+schema: deutschgo.concept/1
+id: concept.morph.pronoun_dative
+version: 0.1.0
+status: planned
+kind: morphology
+domain: pronouns
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A2 }
+relations:
+  - { type: depends_on, target: concept.morph.pronoun_accusative }
+  - { type: depends_on, target: concept.morph.case_dative }
+  - { type: commonly_confused_with, target: concept.morph.pronoun_accusative }

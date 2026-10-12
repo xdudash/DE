@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.pronoun_man
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Неозначений займенник man
+  summary: 'man позначає людей загалом і завжди вживається з формою er/sie/es: Hier darf man nicht parken. Це не іменник der Mann.'

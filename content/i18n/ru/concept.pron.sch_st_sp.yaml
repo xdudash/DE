@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.sch_st_sp
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: sch, а также st / sp в начале слова
+  summary: sch — один звук (Schule); в начале слова или корня st и sp произносятся как scht- и schp- (Straße, sprechen).

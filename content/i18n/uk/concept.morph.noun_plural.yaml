@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.noun_plural
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Форми множини іменників
+  summary: У німецькій п'ять моделей множини (-e, -(e)n, -er, -s, без закінчення), часто з умлаутом. Артикль множини завжди die.

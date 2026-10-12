@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.negation_kein_vs_nicht
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: kein or nicht?
+  summary: kein negates a noun with an indefinite or no article; nicht negates everything else, including nouns with a definite article or a possessive.

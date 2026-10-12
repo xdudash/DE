@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.greetings_dach
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Приветствия в Германии, Австрии и Швейцарии
+  summary: Guten Tag, Hallo, Grüß Gott (юг и Австрия), Grüezi (Швейцария), Servus, Moin — какое приветствие подходит для какого региона и ситуации.

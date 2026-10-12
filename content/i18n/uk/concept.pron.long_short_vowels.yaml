@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.long_short_vowels
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Довгі та короткі голосні
+  summary: 'Довгота голосного розрізняє слова (Staat/Stadt, Miete/Mitte). На письмі це видно: подвоєна голосна або h подовжують, подвоєна приголосна скорочує.'

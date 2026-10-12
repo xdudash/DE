@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.adverbs_frequency
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Прислівники частоти (immer, oft, manchmal, nie)
+  summary: Повідомляють, як часто щось відбувається; стоять у середині речення, а не між підметом і дієсловом.

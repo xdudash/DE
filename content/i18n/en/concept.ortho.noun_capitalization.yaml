@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.ortho.noun_capitalization
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: All nouns are capitalised
+  summary: 'Every noun is written with a capital letter, wherever it stands: Ich habe einen Termin beim Arzt. So are nominalised words (das Lernen).'

@@ -13,7 +13,8 @@
     "test": "node --test --experimental-strip-types \"test/**/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.json",
     "validate": "node --experimental-strip-types src/cli/validate.ts ../../content",
-    "build:content": "node --experimental-strip-types src/cli/build.ts ../../content ../../apps/web/generated/content.json"
+    "build:content": "node --experimental-strip-types src/cli/build.ts ../../content ../../apps/web/generated/content.json",
+    "report": "node --experimental-strip-types src/cli/report.ts ../../content"
   },
   "dependencies": {
     "ajv": "^8.17.1",

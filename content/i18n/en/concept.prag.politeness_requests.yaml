@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.politeness_requests
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Polite requests (bitte, Könnten Sie …, Ich hätte gern …)
+  summary: How to ask for something politely at a counter, on the phone or in a shop, and why a bare imperative often sounds rude.

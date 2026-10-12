@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.r_and_final_er
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Німецьке r і закінчення -er
+  summary: r перед голосною вимовляється в горлі (Reise); після голосної та в закінченні -er перетворюється на звук, подібний до голосного (Mutter, Uhr).

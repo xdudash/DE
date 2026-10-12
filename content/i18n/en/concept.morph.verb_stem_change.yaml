@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_stem_change
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Stem-vowel change in the present tense
+  summary: 'In the du and er/sie/es forms, some verbs change their stem vowel: fahren → du fährst, lesen → du liest, nehmen → du nimmst.'

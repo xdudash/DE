@@ -1,0 +1,13 @@
+# Graph placeholder (status: planned): id, level and dependencies only.
+# Authored content is added when a unit teaches this concept (see DG-007 gate).
+schema: deutschgo.concept/1
+id: concept.morph.case_nominative
+version: 0.1.0
+status: planned
+kind: morphology
+domain: cases
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A1 }
+relations:
+  - { type: depends_on, target: concept.morph.article_definite }
