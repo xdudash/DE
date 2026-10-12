@@ -6,7 +6,7 @@
  * implements it on PostgreSQL (apps/web/lib/data), tests use the in-memory one.
  */
 import type { Response } from "@deutschgo/content-kit/evaluate";
-import type { ConceptStatus, LearningEvent } from "@deutschgo/learning-engine";
+import type { ConceptStatus, EvidenceSummary, LearningEvent } from "@deutschgo/learning-engine";
 
 /** What a client sends. `correct` is deliberately absent: the server decides. */
 export interface AttemptRequest {
@@ -49,7 +49,8 @@ export interface ConceptStateRow {
   conceptId: string;
   state: ConceptStatus["state"];
   because: string;
-  evidence: unknown;
+  /** The engine's own summary, stored as jsonb so a client can show the reasoning. */
+  evidence: EvidenceSummary;
   engineVersion: string;
 }
 
