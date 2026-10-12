@@ -25,8 +25,11 @@ Every issue should state problem/user value, scope/non-goals, dependencies and c
 8. Report actual outcomes and prepare the PR summary.
 9. Update docs/status when a durable decision or project state changes.
 
+## Commands
+`npm run check` runs everything CI runs (foundation check, content validation, tests, typecheck, web build). Use the narrower commands listed in CLAUDE.md for focused checks.
+
 ## Daily handoff
-Persist durable facts only: changes/commit/PR, checks and outcomes, accepted/open decisions, current blocker, next smallest task. Do not paste large chat transcripts into the repository.
+Persist durable facts only in PROJECT_STATUS.md / BACKLOG.md and the issue tracker: changes/commit/PR, checks and outcomes, accepted/open decisions, current blocker, next smallest task. Do not paste large chat transcripts into the repository.
 
 ## Context/token discipline
 - Global rules go in CLAUDE.md; scoped rules in .claude/rules; repeatable procedures in .claude/skills.

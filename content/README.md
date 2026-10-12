@@ -1,22 +1,14 @@
 # Learning Content
 
-This directory will contain version-controlled authored content and manifest metadata. Keep it separate from UI code and learner-specific state.
+Authored, version-controlled content following the [content contract](../docs/domain/CONTENT_CONTRACT.md). Never learner data.
 
-## Planned areas
-- concepts: canonical descriptions of German-language phenomena and typed relationships.
-- curriculum: routes, sequencing, goal-oriented tracks, and CEFR mapping.
-- lessons: learning units.
-- exercises: reusable tasks if the approved model needs them.
-- vocabulary: lemmas, senses, collocations, grammar details, and translations.
-- reading: authored or rights-cleared texts with metadata.
-- dialogues: contextual dialogue scripts and speaker metadata.
-- audio: metadata/manifests and local assets only when storage, rights, and repository size make this appropriate.
+```text
+languages.yaml            explanation/interface language registry
+sources.yaml              source registry (only "approved" sources may be referenced)
+concepts/<domain>/        canonical language concepts (German-facing; "planned" = graph placeholder)
+units/<domain>/           learning units (blocks + exercises)
+routes/                   recommended sequences
+i18n/<lang>/              explanation strings per entity (status, based_on_version)
+```
 
-Create subdirectories when the approved content model and an actual task require them.
-
-## Rules
-- Do not bulk-author content before the contract and gold-standard lesson are approved.
-- Use stable IDs independent of titles and languages.
-- Include review status and source/rights metadata.
-- Do not commit large binary media or copyrighted material without an explicit storage/rights decision.
-- Never store learner progress here.
+Validate after every change: `npm run content:validate`. Gold-standard calibration unit: `units/syntax/unit.syntax.v2_declarative.a1.yaml`. Future families (lexicon, resources, scenarios, diagnostics) get their own folders when their schemas are accepted. Large media never goes into Git (ADR-0007).

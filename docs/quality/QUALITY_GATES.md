@@ -1,52 +1,37 @@
 # Quality Gates
 
 ## Principle
-A green build proves only the checks that actually run. Automated structure validation cannot prove German naturalness, teaching effectiveness, or legal reuse rights.
+A green build proves only the checks that actually ran. Automated validation cannot prove German naturalness, teaching effectiveness, translation quality, or legal reuse rights — those are separate human gates ([content review](./CONTENT_REVIEW.md)).
+
+## Required CI checks (GitHub Actions, every push/PR)
+| Check | Command | Status |
+|---|---|---|
+| Foundation: required files, concise CLAUDE.md, relative links | `python3 scripts/check_foundation.py` | ✔ |
+| Content validation: schema, ids, references, cycles, exercises, status gates, l10n coverage | `npm run content:validate` | ✔ |
+| Unit + integration tests (incl. invalid fixtures) | `npm test` | ✔ |
+| Type check (content-kit, web) | `npm run typecheck` | ✔ |
+| Web build (static pages for every language × unit) | `npm run build` | ✔ |
+| E2E journeys + accessibility (Playwright + axe) | `npm run e2e` | P2 |
+| DB migrations + RLS isolation tests | `npm run test:db` | P2 |
+
+Run everything locally with `npm run check`.
 
 ## Every change
-- Scope matches the task and acceptance criteria.
-- No credentials, secrets, or real learner data are committed.
-- Diff is reviewed for accidental edits.
-- Relevant lint/type/build/tests are reported truthfully.
-- New behaviour has tests or an explicit reason testing is not applicable.
-- No unrelated refactor is hidden in the change.
+- Scope matches the task; no unrelated refactors; diff reviewed.
+- No secrets, credentials, or real learner data (public repository).
+- New behaviour has tests or a stated reason why not; failing checks are fixed, never weakened or deleted to get green.
+- Docs updated when a decision or behaviour changes; report lists checks actually run.
 
-## Foundation checks
-- Required project files exist.
-- Relative Markdown links resolve.
-- Global Claude instructions remain concise and point to canonical docs.
-- Workflows use minimal permissions.
-- Documents distinguish decided, proposed, and unresolved choices.
+## Content changes
+- Validator passes; coverage table reviewed for intended languages.
+- Status never raised above `needs_review` without recorded human reviews (validator-enforced for approved/published).
+- Sources approved in `content/sources.yaml` for any non-original material.
 
-## Content-data checks (as tooling is implemented)
-- Every record validates against a versioned schema.
-- IDs are unique and references resolve.
-- Required fields and localization statuses are present.
-- Prerequisite relationships have no invalid cycles.
-- Exercise keys/rubrics are structurally complete.
-- External content has source/license metadata.
-- Duplicate/near-duplicate detection runs where useful.
-- Invalid data exits with a non-zero status.
+## Learning journey gate (from P2)
+Setup → topic navigation with prerequisite guidance → lesson → exercises with feedback → persisted attempt → state update → explainable next step; language and region switch; mobile layout; keyboard-only run; loading/empty/error/offline states.
 
-## Linguistic and pedagogical review
-- German correctness and naturalness reviewed by a competent reviewer.
-- Translation meaning, register, and explanation accuracy reviewed.
-- Examples fit the declared variety and level.
-- Exercises measure the objective and feedback is sound.
-- Exceptions and accepted alternatives are accurate.
-- Rights/provenance reviewed for sourced material.
-- Review status is recorded. Automation alone cannot approve content.
+## Privacy gate (before any real learner data, P3)
+RLS isolation tests pass; export and deletion work end-to-end; privacy notice and processor list published; backups + restore test done; monitoring scrubs PII.
 
-## End-to-end learning journey
-Test learner setup/diagnostic, topic navigation and prerequisite guidance, lesson attempts/feedback, reading/vocabulary save/review, progress/recommendations, language/region changes, mobile layout, keyboard accessibility, and failure/recovery states as the product supports them.
-
-## Release
-- Required checks pass.
-- Migrations and rollback reviewed where applicable.
-- Environment/secrets documented.
-- Backup, monitoring, privacy, export/deletion, and recovery addressed before production data.
-- Release notes and known limitations recorded.
-- Production deployment requires explicit authorization.
-
-## Failure handling
-Fix the earliest meaningful failure first, rerun the focused check, then broader checks. Do not weaken or delete a test merely to get a green result.
+## Release gate
+See [release stages](../product/RELEASE_STAGES.md#release-gate-applies-to-every-release) and [operations](./OPERATIONS.md#release-process). Production deployment requires explicit owner authorization.
