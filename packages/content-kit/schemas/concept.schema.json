@@ -132,14 +132,16 @@
           "status": {
             "const": "planned"
           }
-        }
+        },
+        "type": "object"
       },
       "then": {
         "properties": {
           "pattern": false,
           "examples": false,
           "confusions": false
-        }
+        },
+        "type": "object"
       },
       "else": {
         "required": [
@@ -149,9 +151,11 @@
         ],
         "properties": {
           "examples": {
-            "minItems": 2
+            "minItems": 2,
+            "type": "array"
           }
-        }
+        },
+        "type": "object"
       }
     }
   ]

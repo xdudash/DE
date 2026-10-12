@@ -5,20 +5,52 @@
   "description": "Explanation-language strings for one canonical entity in one language.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "entity", "lang", "based_on_version", "status", "strings"],
+  "required": [
+    "schema",
+    "entity",
+    "lang",
+    "based_on_version",
+    "status",
+    "strings"
+  ],
   "properties": {
-    "schema": { "const": "deutschgo.l10n/1" },
-    "entity": { "$ref": "common.schema.json#/$defs/entityId" },
-    "lang": { "type": "string", "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?$" },
-    "based_on_version": { "$ref": "common.schema.json#/$defs/semver" },
-    "status": { "enum": ["machine_draft", "draft", "needs_review", "reviewed"] },
-    "translator": { "type": "string" },
-    "reviewer": { "type": "string" },
+    "schema": {
+      "const": "deutschgo.l10n/1"
+    },
+    "entity": {
+      "$ref": "common.schema.json#/$defs/entityId"
+    },
+    "lang": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?$"
+    },
+    "based_on_version": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "status": {
+      "enum": [
+        "machine_draft",
+        "draft",
+        "needs_review",
+        "reviewed"
+      ]
+    },
+    "translator": {
+      "type": "string"
+    },
+    "reviewer": {
+      "type": "string"
+    },
     "strings": {
       "type": "object",
       "minProperties": 1,
-      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9_.-]*$" },
-      "additionalProperties": { "type": "string" }
+      "propertyNames": {
+        "pattern": "^[a-z0-9][a-z0-9_.-]*$",
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   }
 }

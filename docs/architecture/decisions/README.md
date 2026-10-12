@@ -2,46 +2,33 @@
 
 ADRs document significant decisions so future work does not silently reopen or contradict them.
 
+## Index
+| ADR | Decision | Status |
+|---|---|---|
+| [ADR-0001](./ADR-0001-application-platform.md) | Next.js + TypeScript web app/PWA first; Capacitor for store apps later | Accepted |
+| [ADR-0002](./ADR-0002-backend-auth-database.md) | Supabase (EU) for auth, Postgres, storage — learner data only | Accepted (provisioning in P2) |
+| [ADR-0003](./ADR-0003-content-format-and-pipeline.md) | YAML in Git + JSON Schema 2020-12 + build-time compiled bundle | Accepted, implemented |
+| [ADR-0004](./ADR-0004-localization.md) | Per-entity localization files, English pivot, explicit review states | Accepted, implemented |
+| [ADR-0005](./ADR-0005-hosting-and-delivery.md) | Vercel hosting + GitHub Actions CI; previews per PR | Accepted (provisioning in P2) |
+| [ADR-0006](./ADR-0006-repository-and-tooling.md) | Single monorepo, npm workspaces, Node 22, TS strict, node:test/Playwright | Accepted, implemented |
+| [ADR-0007](./ADR-0007-media-and-audio.md) | Audio: object storage + manifests in Git; recorded speech preferred, TTS labelled | Proposed (decide in P5) |
+| [ADR-0008](./ADR-0008-billing.md) | Billing via merchant-of-record (Paddle) for web; RevenueCat when native | Proposed (decide in P7) |
+
 ## When to write one
-Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries. Not every small coding choice needs an ADR.
+Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.
 
 ## Workflow
-1. State the problem and constraints.
-2. List realistic alternatives, including doing nothing when relevant.
-3. Compare effort, cost, portability/lock-in, quality, accessibility, security/privacy, and maintenance.
-4. Recommend an option and explain trade-offs.
-5. Mark it Proposed, Accepted, Superseded, or Rejected.
-6. Update affected docs after acceptance.
-
-## Filename
-Use a monotonic identifier and short topic, e.g. ADR-0001-frontend-stack.md.
+1. State problem and constraints. 2. List realistic alternatives. 3. Compare effort, cost, lock-in, quality, accessibility, security/privacy, maintenance. 4. Decide and explain trade-offs. 5. Status: Proposed, Accepted, Superseded, Rejected. 6. Update affected docs.
 
 ## Template
 ~~~markdown
 # ADR-NNNN: Short decision title
-
 - Status: Proposed | Accepted | Superseded | Rejected
 - Date: YYYY-MM-DD
 - Decision owner: Project owner
-
 ## Context
-What problem must be solved? Which constraints matter?
-
 ## Options considered
-### Option A
-Advantages, disadvantages, costs, risks.
-
-### Option B
-Advantages, disadvantages, costs, risks.
-
 ## Decision
-Chosen option and why it fits the constraints.
-
 ## Consequences
-Benefits, trade-offs, migration implications, new obligations.
-
 ## Verification
-What must be tested to confirm the decision works?
 ~~~
-
-No final technology decision has been made. Do not fabricate ADRs as if they were accepted.

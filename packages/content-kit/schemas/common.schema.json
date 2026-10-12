@@ -3,93 +3,287 @@
   "$id": "https://deutschgo.dev/schemas/common.schema.json",
   "title": "DeutschGo shared definitions (schema family v1)",
   "$defs": {
-    "conceptId": { "type": "string", "pattern": "^concept\\.[a-z0-9]+(\\.[a-z0-9_]+)+$" },
-    "unitId": { "type": "string", "pattern": "^unit\\.[a-z0-9]+(\\.[a-z0-9_]+)+$" },
-    "routeId": { "type": "string", "pattern": "^route\\.[a-z0-9]+(\\.[a-z0-9_]+)+$" },
-    "entityId": { "type": "string", "pattern": "^(concept|unit|route)\\.[a-z0-9]+(\\.[a-z0-9_]+)+$" },
-    "localId": { "type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)*$" },
-    "sourceId": { "type": "string", "pattern": "^src\\.[a-z0-9_]+$" },
-    "semver": { "type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$" },
-    "l10nRef": { "type": "string", "pattern": "^@[a-z0-9][a-z0-9_.-]*$" },
-    "de": { "type": "string", "minLength": 1, "not": { "pattern": "^@" } },
-    "cefr": { "enum": ["A1", "A2", "B1", "B2", "C1", "C2"] },
-    "status": { "enum": ["planned", "draft", "needs_review", "approved", "published", "deprecated"] },
-    "variety": { "enum": ["standard", "de-DE", "de-AT", "de-CH", "south", "north"] },
-    "register": { "enum": ["neutral", "formal", "informal", "colloquial", "written", "dated"] },
-    "goal": { "enum": ["general", "everyday", "work", "study", "exam"] },
+    "conceptId": {
+      "type": "string",
+      "pattern": "^concept\\.[a-z0-9]+(\\.[a-z0-9_]+)+$"
+    },
+    "unitId": {
+      "type": "string",
+      "pattern": "^unit\\.[a-z0-9]+(\\.[a-z0-9_]+)+$"
+    },
+    "routeId": {
+      "type": "string",
+      "pattern": "^route\\.[a-z0-9]+(\\.[a-z0-9_]+)+$"
+    },
+    "entityId": {
+      "type": "string",
+      "pattern": "^(concept|unit|route)\\.[a-z0-9]+(\\.[a-z0-9_]+)+$"
+    },
+    "localId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)*$"
+    },
+    "sourceId": {
+      "type": "string",
+      "pattern": "^src\\.[a-z0-9_]+$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "l10nRef": {
+      "type": "string",
+      "pattern": "^@[a-z0-9][a-z0-9_.-]*$"
+    },
+    "de": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "^@",
+        "type": "string"
+      }
+    },
+    "cefr": {
+      "enum": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ]
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "draft",
+        "needs_review",
+        "approved",
+        "published",
+        "deprecated"
+      ]
+    },
+    "variety": {
+      "enum": [
+        "standard",
+        "de-DE",
+        "de-AT",
+        "de-CH",
+        "south",
+        "north"
+      ]
+    },
+    "register": {
+      "enum": [
+        "neutral",
+        "formal",
+        "informal",
+        "colloquial",
+        "written",
+        "dated"
+      ]
+    },
+    "goal": {
+      "enum": [
+        "general",
+        "everyday",
+        "work",
+        "study",
+        "exam"
+      ]
+    },
     "reviewRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": { "enum": ["pending", "passed", "changes_requested", "not_applicable"] },
-        "reviewer": { "type": "string", "minLength": 1 },
-        "date": { "type": "string", "format": "date" },
-        "notes": { "type": "string" }
+        "status": {
+          "enum": [
+            "pending",
+            "passed",
+            "changes_requested",
+            "not_applicable"
+          ]
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
       },
-      "if": { "properties": { "status": { "enum": ["passed", "changes_requested"] } } },
-      "then": { "required": ["status", "reviewer", "date"] }
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "passed",
+              "changes_requested"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "required": [
+          "status",
+          "reviewer",
+          "date"
+        ],
+        "type": "object"
+      }
     },
     "review": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["linguistic", "pedagogical", "rights"],
+      "required": [
+        "linguistic",
+        "pedagogical",
+        "rights"
+      ],
       "properties": {
-        "linguistic": { "$ref": "#/$defs/reviewRecord" },
-        "pedagogical": { "$ref": "#/$defs/reviewRecord" },
-        "rights": { "$ref": "#/$defs/reviewRecord" }
+        "linguistic": {
+          "$ref": "#/$defs/reviewRecord"
+        },
+        "pedagogical": {
+          "$ref": "#/$defs/reviewRecord"
+        },
+        "rights": {
+          "$ref": "#/$defs/reviewRecord"
+        }
       }
     },
     "sourceUse": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["source"],
-      "properties": { "source": { "$ref": "#/$defs/sourceId" }, "scope": { "type": "string" } }
+      "required": [
+        "source"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
     },
     "example": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "de"],
+      "required": [
+        "id",
+        "de"
+      ],
       "properties": {
-        "id": { "$ref": "#/$defs/localId" },
-        "de": { "$ref": "#/$defs/de" },
-        "gloss": { "$ref": "#/$defs/l10nRef" },
-        "note": { "$ref": "#/$defs/l10nRef" },
-        "highlight": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "uniqueItems": true },
-        "variety": { "$ref": "#/$defs/variety" },
-        "register": { "$ref": "#/$defs/register" },
-        "source": { "$ref": "#/$defs/sourceId" }
+        "id": {
+          "$ref": "#/$defs/localId"
+        },
+        "de": {
+          "$ref": "#/$defs/de"
+        },
+        "gloss": {
+          "$ref": "#/$defs/l10nRef"
+        },
+        "note": {
+          "$ref": "#/$defs/l10nRef"
+        },
+        "highlight": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "uniqueItems": true
+        },
+        "variety": {
+          "$ref": "#/$defs/variety"
+        },
+        "register": {
+          "$ref": "#/$defs/register"
+        },
+        "source": {
+          "$ref": "#/$defs/sourceId"
+        }
       }
     },
     "confusion": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "wrong", "right", "explanation"],
+      "required": [
+        "id",
+        "wrong",
+        "right",
+        "explanation"
+      ],
       "properties": {
-        "id": { "$ref": "#/$defs/localId" },
-        "wrong": { "$ref": "#/$defs/de" },
-        "right": { "$ref": "#/$defs/de" },
-        "explanation": { "$ref": "#/$defs/l10nRef" }
+        "id": {
+          "$ref": "#/$defs/localId"
+        },
+        "wrong": {
+          "$ref": "#/$defs/de"
+        },
+        "right": {
+          "$ref": "#/$defs/de"
+        },
+        "explanation": {
+          "$ref": "#/$defs/l10nRef"
+        }
       }
     },
     "relation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "target"],
+      "required": [
+        "type",
+        "target"
+      ],
       "properties": {
-        "type": { "enum": ["depends_on", "related_to", "contrasts_with", "commonly_confused_with", "part_of"] },
-        "target": { "$ref": "#/$defs/conceptId" },
-        "note": { "$ref": "#/$defs/l10nRef" }
+        "type": {
+          "enum": [
+            "depends_on",
+            "related_to",
+            "contrasts_with",
+            "commonly_confused_with",
+            "part_of"
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/conceptId"
+        },
+        "note": {
+          "$ref": "#/$defs/l10nRef"
+        }
       }
     },
     "feedbackRule": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["match", "feedback"],
+      "required": [
+        "match",
+        "feedback"
+      ],
       "properties": {
-        "match": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
-        "feedback": { "$ref": "#/$defs/l10nRef" },
-        "signals": { "$ref": "#/$defs/conceptId" }
+        "match": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "feedback": {
+          "$ref": "#/$defs/l10nRef"
+        },
+        "signals": {
+          "$ref": "#/$defs/conceptId"
+        }
       }
     }
   }
