@@ -46,7 +46,9 @@ if (url) {
   }
 }
 
-describe("attempt recording against PostgreSQL", { skip }, () => {
+// A per-test timeout turns a stuck query into a readable failure instead of a job
+// that hangs until the runner kills it.
+describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () => {
   // Closing in `after` rather than in a final test: a failing assertion must not leave
   // an open pool behind, or the test runner waits for handles that never close.
   after(async () => {
@@ -55,6 +57,7 @@ describe("attempt recording against PostgreSQL", { skip }, () => {
   });
 
   before(async () => {
+    console.log(`connected to ${url}; seeding ${ALICE} and ${BOB}`);
     for (const id of [ALICE, BOB]) {
       await admin.query("insert into auth.users (id, email) values ($1, $2)", [id, `${id}@example.test`]);
       await admin.query("insert into public.profiles (user_id, explanation_lang) values ($1, 'uk')", [id]);

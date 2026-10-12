@@ -117,4 +117,10 @@ jobs:
           # service container does not listen, and the driver would wait for it.
           DG_DB_URL: postgres://postgres:postgres@127.0.0.1:5432/deutschgo_integration
           DATABASE_SSL: disable
-        run: npm test -w @deutschgo/web
+        run: npm test -w @deutschgo/web 2>&1 | tee -a db.log; exit ${PIPESTATUS[0]}
+        shell: bash
+      - name: Publish log tail as annotation on failure
+        if: failure()
+        shell: bash
+        run: |
+          tail -n 120 db.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=Database job log tail::'+d)"
