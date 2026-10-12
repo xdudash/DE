@@ -15,11 +15,12 @@ Do not load all docs or all content files by default.
 - `content/` — YAML: concepts, units, routes, `i18n/<lang>/`, `languages.yaml`, `sources.yaml`. Never learner data.
 - `packages/content-kit/` — schemas, loader, validator, compiler, evaluator (pure TS, `node:test`).
 - `packages/learning-engine/` — evidence → states → schedule → recommendations (pure TS, `node:test`).
+- `supabase/` — learner-data migrations and RLS tests (`npm run test:db`); never content.
 - `apps/web/` — Next.js app; reads `generated/content.json`; no teaching text in components.
 - `docs/` — canonical decisions; `scripts/check_foundation.py` — doc/link check.
 
 ## Commands
-`npm run check` (everything) · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `python3 scripts/check_foundation.py`
+`npm run check` (everything) · `npm run test:db` · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `python3 scripts/check_foundation.py`
 
 ## Non-negotiable principles
 1. Separate language knowledge, curriculum, content, learner state, localization, and UI code.

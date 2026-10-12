@@ -12,7 +12,7 @@ A green build proves only the checks that actually ran. Automated validation can
 | Type check (content-kit, web) | `npm run typecheck` | ✔ |
 | Web build (static pages for every language × unit) | `npm run build` | ✔ |
 | E2E journeys + accessibility (Playwright + axe) | `npm run e2e` | P2 |
-| DB migrations + RLS isolation tests | `npm run test:db` | P2 |
+| DB migrations + RLS/policy tests (PostgreSQL service container) | `npm run test:db` | ✔ |
 
 Run everything locally with `npm run check`.
 
@@ -31,7 +31,7 @@ Run everything locally with `npm run check`.
 Setup → topic navigation with prerequisite guidance → lesson → exercises with feedback → persisted attempt → state update → explainable next step; language and region switch; mobile layout; keyboard-only run; loading/empty/error/offline states.
 
 ## Privacy gate (before any real learner data, P3)
-RLS isolation tests pass; export and deletion work end-to-end; privacy notice and processor list published; backups + restore test done; monitoring scrubs PII.
+RLS isolation and policy-inventory tests pass (✔ in CI); export and deletion work end-to-end; privacy notice and processor list published; backups + restore test done; monitoring scrubs PII.
 
 ## Release gate
 See [release stages](../product/RELEASE_STAGES.md#release-gate-applies-to-every-release) and [operations](./OPERATIONS.md#release-process). Production deployment requires explicit owner authorization.
