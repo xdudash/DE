@@ -44,17 +44,32 @@ jobs:
           if [ -f package-lock.json ]; then
             npm ci --no-audit --no-fund
           else
-            npm install --no-audit --no-fund
+            npm install --no-audit --no-fund 2>&1 | tee -a ci.log
             echo "lock_generated=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Content validation (schema, references, graph, exercises, localization coverage)
-        run: npm run content:validate
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run content:validate 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
       - name: Unit and integration tests
-        run: npm test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm test 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
       - name: Type check
-        run: npm run typecheck
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run typecheck 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
       - name: Build web app (static pages for every language × unit)
-        run: npm run build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run build 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
+      # Raw job logs live in blob storage; surfacing the tail as an annotation makes
+      # failures readable through the GitHub API (used by Claude Code sessions).
+      - name: Publish log tail as annotation on failure
+        if: failure()
+        shell: bash
+        run: |
+          tail -n 150 ci.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=CI log tail::'+d)"
       - name: Upload lockfile produced by this run (for DG-011)
         if: steps.install.outputs.lock_generated == 'true'
         uses: actions/upload-artifact@v7
