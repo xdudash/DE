@@ -1,0 +1,4 @@
+# INVALID ON PURPOSE: duplicate mapping key.
+schema: deutschgo.unit/1
+id: unit.bad.duplicate_key
+id: unit.bad.duplicate_key

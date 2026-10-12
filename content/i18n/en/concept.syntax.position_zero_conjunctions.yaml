@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.position_zero_conjunctions
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Position 0: und, aber, oder, denn, sondern'
+  summary: Coordinating conjunctions that connect main clauses without taking a sentence position.

@@ -1,0 +1,10 @@
+schema: deutschgo.concept/1
+id: concept.morph.verb_present_conjugation
+version: 0.1.0
+status: planned
+kind: morphology
+domain: verbs
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A1 }
+relations: []

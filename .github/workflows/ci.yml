@@ -1,4 +1,4 @@
-name: Foundation checks
+name: CI
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -26,3 +26,39 @@ jobs:
           python-version: "3.13"
       - name: Validate foundation files and relative links
         run: python scripts/check_foundation.py
+
+  app:
+    name: Content contract, tests, and web build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      # TODO(DG-011): switch to `npm ci` once package-lock.json is committed.
+      - name: Install dependencies
+        id: install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+            echo "lock_generated=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Content validation (schema, references, graph, exercises, localization coverage)
+        run: npm run content:validate
+      - name: Unit and integration tests
+        run: npm test
+      - name: Type check
+        run: npm run typecheck
+      - name: Build web app (static pages for every language × unit)
+        run: npm run build
+      - name: Upload lockfile produced by this run (for DG-011)
+        if: steps.install.outputs.lock_generated == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: package-lock
+          path: package-lock.json
+          if-no-files-found: ignore

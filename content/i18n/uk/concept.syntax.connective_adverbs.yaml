@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.connective_adverbs
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Прислівники-зв''язки: deshalb, trotzdem, dann …'
+  summary: Зв'язувальні слова, що займають позицію 1; одразу за ними йде дієслово.

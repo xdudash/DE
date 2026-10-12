@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.position_zero_conjunctions
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Позиція 0: und, aber, oder, denn, sondern'
+  summary: Сурядні сполучники, що з'єднують головні речення, не займаючи позиції в реченні.

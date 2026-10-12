@@ -1,0 +1,18 @@
+schema: deutschgo.route/1
+id: route.core.a1_sentence_foundations
+version: 0.1.0
+status: draft
+title: "@title"
+summary: "@summary"
+goals: [general, everyday, work]
+cefr: { from: A1, to: A2 }
+steps:
+  - { concept: concept.morph.verb_present_conjugation }
+  - { unit: unit.syntax.v2_declarative.a1 }
+  - { concept: concept.syntax.w_questions }
+  - { concept: concept.syntax.v1_yes_no_questions }
+  - { concept: concept.syntax.imperative, optional: true }
+  - { concept: concept.syntax.position_zero_conjunctions }
+  - { concept: concept.syntax.verbal_bracket }
+  - { concept: concept.syntax.connective_adverbs }
+  - { concept: concept.syntax.verb_final_subordinate }

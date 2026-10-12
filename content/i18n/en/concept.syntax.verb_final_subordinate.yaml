@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.verb_final_subordinate
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Verb-final subordinate clauses
+  summary: After weil, dass, wenn, ob … the conjugated verb goes to the end of the clause.

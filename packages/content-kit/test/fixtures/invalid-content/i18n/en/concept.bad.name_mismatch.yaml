@@ -1,0 +1,6 @@
+schema: deutschgo.l10n/1
+entity: concept.bad.name_mismatch
+lang: en
+based_on_version: 1.0.0
+status: draft
+strings: { title: "Title", summary: "Summary" }

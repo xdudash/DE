@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deutschgo.dev/schemas/route.schema.json",
+  "title": "DeutschGo learning route v1",
+  "description": "A recommended, editable sequence of units/concepts. Routes never own concept definitions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "version", "status", "title", "summary", "goals", "cefr", "steps"],
+  "properties": {
+    "schema": { "const": "deutschgo.route/1" },
+    "id": { "$ref": "common.schema.json#/$defs/routeId" },
+    "version": { "$ref": "common.schema.json#/$defs/semver" },
+    "status": { "$ref": "common.schema.json#/$defs/status" },
+    "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+    "summary": { "$ref": "common.schema.json#/$defs/l10nRef" },
+    "goals": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/goal" } },
+    "cefr": {
+      "type": "object", "additionalProperties": false, "required": ["from", "to"],
+      "properties": { "from": { "$ref": "common.schema.json#/$defs/cefr" }, "to": { "$ref": "common.schema.json#/$defs/cefr" } }
+    },
+    "steps": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "unit": { "$ref": "common.schema.json#/$defs/unitId" },
+          "concept": { "$ref": "common.schema.json#/$defs/conceptId" },
+          "optional": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

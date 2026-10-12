@@ -1,0 +1,254 @@
+# GOLD-STANDARD REFERENCE UNIT (calibration item for the content contract).
+# Topic: V2 — the finite verb in second position in declarative main clauses.
+# Status is needs_review: structurally validated, NOT yet linguistically or
+# pedagogically reviewed by a qualified human. See docs/quality/CONTENT_REVIEW.md.
+schema: deutschgo.unit/1
+id: unit.syntax.v2_declarative.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.syntax.v2_declarative]
+prerequisites: [concept.morph.verb_present_conjugation]
+goals: [general, everyday, work]
+estimated_minutes: 25
+objectives:
+  - { id: obj_identify, text: "@obj.identify", skill: knowledge }
+  - { id: obj_produce, text: "@obj.produce", skill: knowledge }
+  - { id: obj_position_zero, text: "@obj.position_zero", skill: knowledge }
+  - { id: obj_limits, text: "@obj.limits", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.p1", "@col.p2", "@col.middle", "@col.end"]
+    rows:
+      - ["Ich", "wohne", "seit Mai in Berlin.", ""]
+      - ["Seit Mai", "wohne", "ich in Berlin.", ""]
+      - ["In Berlin", "wohne", "ich seit Mai.", ""]
+      - ["Morgen", "rufe", "ich meine Vermieterin", "an."]
+      - ["Am Montag", "muss", "ich zum Bürgeramt", "gehen."]
+
+  - { type: explanation, id: b_position1, body: "@b.position1" }
+
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_work, de: "Ab nächster Woche arbeite ich in Linz.", gloss: "@ex.work", highlight: [3] }
+      - { id: ex_doctor, de: "Beim Arzt muss man oft lange warten.", gloss: "@ex.doctor", highlight: [2] }
+      - { id: ex_object, de: "Diese Wohnung finde ich zu teuer.", gloss: "@ex.object", note: "@ex.object.note", highlight: [2] }
+      - { id: ex_bracket, de: "Heute fängt der Deutschkurs um neun Uhr an.", gloss: "@ex.bracket", note: "@ex.bracket.note", highlight: [1] }
+      - { id: ex_perfect, de: "Gestern habe ich meine Steuererklärung abgeschickt.", gloss: "@ex.perfect", highlight: [1] }
+
+  - type: contrast
+    id: b_contrast
+    title: "@b.contrast.title"
+    pairs:
+      - id: c_emphasis
+        a: { id: c_emphasis_a, de: "Ich arbeite heute im Homeoffice.", highlight: [1] }
+        b: { id: c_emphasis_b, de: "Heute arbeite ich im Homeoffice.", highlight: [1] }
+        point: "@c.emphasis"
+      - id: c_und_deshalb
+        a: { id: c_und_a, de: "Ich arbeite in Wien, und ich lerne Deutsch.", highlight: [6] }
+        b: { id: c_deshalb_b, de: "Ich arbeite in Wien, deshalb lerne ich Deutsch.", highlight: [5] }
+        point: "@c.und_deshalb"
+
+  - { type: explanation, id: b_position0, body: "@b.position0" }
+
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_v3, wrong: "Heute ich habe keine Zeit.", right: "Heute habe ich keine Zeit.", explanation: "@e.v3" }
+      - { id: e_deshalb, wrong: "Deshalb ich lerne Deutsch.", right: "Deshalb lerne ich Deutsch.", explanation: "@e.deshalb" }
+      - { id: e_aber, wrong: "Aber habe ich keine Zeit.", right: "Aber ich habe keine Zeit.", explanation: "@e.aber" }
+      - { id: e_adverb, wrong: "Ich oft koche am Wochenende.", right: "Ich koche oft am Wochenende.", explanation: "@e.adverb" }
+      - { id: e_bracket, wrong: "Ich will lernen Deutsch.", right: "Ich will Deutsch lernen.", explanation: "@e.bracket" }
+
+  - { type: explanation, id: b_limits, body: "@b.limits" }
+
+  - { type: regional_note, id: b_regional, variety: standard, body: "@b.regional" }
+
+  - { type: summary, id: b_summary, body: "@b.summary" }
+
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_choose_correct
+        type: single_choice
+        objective: obj_identify
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 1
+        prompt: "@x.choose_correct.prompt"
+        options:
+          - { id: a, de: "Heute ich habe frei.", correct: false, feedback: "@x.choose_correct.a" }
+          - { id: b, de: "Heute habe ich frei.", correct: true }
+          - { id: c, de: "Heute frei habe ich.", correct: false, feedback: "@x.choose_correct.c" }
+          - { id: d, de: "Habe heute ich frei.", correct: false, feedback: "@x.choose_correct.d" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_correct.explanation"
+
+      - id: x_position2
+        type: single_choice
+        objective: obj_identify
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 2
+        prompt: "@x.position2.prompt"
+        stem_de: "Seit drei Jahren wohnt meine Schwester in Zürich."
+        options:
+          - { id: a, de: "drei", correct: false, feedback: "@x.position2.a" }
+          - { id: b, de: "Jahren", correct: false, feedback: "@x.position2.b" }
+          - { id: c, de: "wohnt", correct: true }
+          - { id: d, de: "meine", correct: false, feedback: "@x.position2.d" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.position2.explanation"
+
+      - id: x_order_vienna
+        type: word_order
+        objective: obj_produce
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 1
+        prompt: "@x.order_vienna.prompt"
+        tokens: ["ich", "nach Wien", "morgen", "fahre"]
+        final_punctuation: "."
+        accept:
+          - "Morgen fahre ich nach Wien."
+          - "Ich fahre morgen nach Wien."
+          - "Nach Wien fahre ich morgen."
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Morgen ich fahre nach Wien.", "Nach Wien ich fahre morgen."], feedback: "@fb.v3", signals: concept.syntax.v2_declarative }
+            - { match: ["Ich morgen fahre nach Wien."], feedback: "@fb.subject_adverb", signals: concept.syntax.v2_declarative }
+        explanation: "@x.order_vienna.explanation"
+
+      - id: x_order_rent
+        type: word_order
+        objective: obj_produce
+        concepts: [concept.syntax.v2_declarative, concept.syntax.verbal_bracket]
+        difficulty: 2
+        prompt: "@x.order_rent.prompt"
+        tokens: ["muss", "am Montag", "ich", "bezahlen", "die Miete"]
+        final_punctuation: "."
+        accept:
+          - "Am Montag muss ich die Miete bezahlen."
+          - "Ich muss am Montag die Miete bezahlen."
+          - "Ich muss die Miete am Montag bezahlen."
+          - "Die Miete muss ich am Montag bezahlen."
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Am Montag ich muss die Miete bezahlen."], feedback: "@fb.v3", signals: concept.syntax.v2_declarative }
+            - { match: ["Am Montag muss ich bezahlen die Miete.", "Ich muss bezahlen die Miete am Montag.", "Ich muss am Montag bezahlen die Miete."], feedback: "@fb.bracket", signals: concept.syntax.verbal_bracket }
+        explanation: "@x.order_rent.explanation"
+
+      - id: x_order_call
+        type: word_order
+        objective: obj_produce
+        concepts: [concept.syntax.v2_declarative, concept.syntax.verbal_bracket]
+        difficulty: 2
+        prompt: "@x.order_call.prompt"
+        tokens: ["an", "ich", "rufe", "heute", "meine Vermieterin"]
+        final_punctuation: "."
+        accept:
+          - "Heute rufe ich meine Vermieterin an."
+          - "Ich rufe heute meine Vermieterin an."
+          - "Ich rufe meine Vermieterin heute an."
+          - "Meine Vermieterin rufe ich heute an."
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Heute ich rufe meine Vermieterin an."], feedback: "@fb.v3", signals: concept.syntax.v2_declarative }
+            - { match: ["Heute rufe ich an meine Vermieterin.", "Ich rufe an meine Vermieterin heute.", "Ich rufe heute an meine Vermieterin."], feedback: "@fb.separable", signals: concept.syntax.verbal_bracket }
+        explanation: "@x.order_call.explanation"
+
+      - id: x_cloze_deshalb
+        type: cloze
+        objective: obj_position_zero
+        concepts: [concept.syntax.v2_declarative, concept.syntax.connective_adverbs]
+        difficulty: 2
+        prompt: "@x.cloze_deshalb.prompt"
+        text_de: "Ich arbeite in einer Klinik in Graz. Deshalb {{0}} {{1}} jeden Tag Deutsch."
+        gaps:
+          - accept: ["lerne"]
+            rules: [{ match: ["ich", "Ich"], feedback: "@x.cloze_deshalb.gap0_subject", signals: concept.syntax.connective_adverbs }]
+          - accept: ["ich"]
+            rules: [{ match: ["lerne"], feedback: "@x.cloze_deshalb.gap1_verb", signals: concept.syntax.connective_adverbs }]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze_deshalb.explanation"
+
+      - id: x_transform_evening
+        type: transform
+        objective: obj_produce
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 2
+        prompt: "@x.transform_evening.prompt"
+        source_de: "Ich gehe heute Abend ins Kino."
+        accept: ["Heute Abend gehe ich ins Kino."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Heute Abend ich gehe ins Kino."], feedback: "@fb.v3", signals: concept.syntax.v2_declarative }
+            - { match: ["Heute Abend gehe ins Kino ich.", "Heute Abend ins Kino gehe ich."], feedback: "@x.transform_evening.subject", signals: concept.syntax.v2_declarative }
+        explanation: "@x.transform_evening.explanation"
+
+      - id: x_transform_aber
+        type: transform
+        objective: obj_position_zero
+        concepts: [concept.syntax.v2_declarative, concept.syntax.position_zero_conjunctions]
+        difficulty: 2
+        prompt: "@x.transform_aber.prompt"
+        source_de: "Ich habe heute keine Zeit."
+        accept: ["Aber ich habe heute keine Zeit.", "Aber heute habe ich keine Zeit."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Aber habe ich heute keine Zeit."], feedback: "@fb.position_zero", signals: concept.syntax.position_zero_conjunctions }
+        explanation: "@x.transform_aber.explanation"
+
+      - id: x_transform_deshalb
+        type: transform
+        objective: obj_position_zero
+        concepts: [concept.syntax.v2_declarative, concept.syntax.connective_adverbs]
+        difficulty: 3
+        prompt: "@x.transform_deshalb.prompt"
+        source_de: "Der Bus kommt nicht. Ich nehme ein Taxi."
+        accept: ["Der Bus kommt nicht. Deshalb nehme ich ein Taxi.", "Der Bus kommt nicht, deshalb nehme ich ein Taxi."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Der Bus kommt nicht. Deshalb ich nehme ein Taxi.", "Der Bus kommt nicht, deshalb ich nehme ein Taxi."], feedback: "@fb.connective", signals: concept.syntax.connective_adverbs }
+        explanation: "@x.transform_deshalb.explanation"
+
+      - id: x_limits
+        type: single_choice
+        objective: obj_limits
+        concepts: [concept.syntax.v2_declarative, concept.syntax.v1_yes_no_questions]
+        difficulty: 2
+        prompt: "@x.limits.prompt"
+        options:
+          - { id: a, de: "Morgen komme ich.", correct: false, feedback: "@x.limits.a" }
+          - { id: b, de: "Kommst du morgen?", correct: true }
+          - { id: c, de: "Wann kommst du?", correct: false, feedback: "@x.limits.c" }
+          - { id: d, de: "Ich komme morgen.", correct: false, feedback: "@x.limits.d" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.limits.explanation"
+
+review:
+  linguistic: { status: pending, notes: "AI-authored gold-standard draft. Needs a qualified reviewer (native/teacher), see DG-007." }
+  pedagogical: { status: pending, notes: "Check A1 load: position-zero and limits sections may be too dense for absolute beginners." }
+  rights: { status: pending, notes: "All German text authored for DeutschGo; owner confirmation pending." }

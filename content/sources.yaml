@@ -1,0 +1,23 @@
+# Machine-readable source registry. Narrative review: docs/sources/SOURCE_REGISTER.md
+# Only "approved" sources may be referenced from content (validator-enforced).
+schema: deutschgo.sources/1
+sources:
+  - id: src.deutschgo_original
+    name: DeutschGo original editorial content
+    license: Proprietary (DeutschGo)
+    allowed_use: [display, modify, redistribute, commercial]
+    status: approved
+  - id: src.tatoeba
+    name: Tatoeba sentence corpus
+    url: https://tatoeba.org/en/downloads
+    license: CC BY 2.0 FR (sentences; part CC0 1.0); audio licensed per contributor
+    license_url: https://creativecommons.org/licenses/by/2.0/fr/
+    allowed_use: [internal_research]
+    attribution: Sentence ID and contributor required per item
+    status: candidate
+  - id: src.common_voice_de
+    name: Mozilla Common Voice — German
+    url: https://commonvoice.mozilla.org/en/datasets
+    license: CC0 1.0 (verify per release)
+    allowed_use: [internal_research]
+    status: candidate

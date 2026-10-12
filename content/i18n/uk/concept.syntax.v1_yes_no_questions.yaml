@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.v1_yes_no_questions
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Загальні питання: дієслово на першому місці'
+  summary: Питання, на які відповідають ja/nein, починаються з дієвідмінюваного дієслова.

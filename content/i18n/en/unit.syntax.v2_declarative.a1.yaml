@@ -1,0 +1,137 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.v2_declarative.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: "Word order: the verb in second position (V2)"
+  summary: "In a German statement, the conjugated verb always stands in position 2 — whatever comes first."
+  obj.identify: "Find the conjugated verb in a statement and see that it stands in position 2."
+  obj.produce: "Build statements that start with a time, place or object and keep the verb in position 2."
+  obj.position_zero: "Tell apart words that take no position (und, aber, oder, denn, sondern) from words that do take position 1 (deshalb, dann, trotzdem)."
+  obj.limits: "Recognise sentence types where the verb is NOT in position 2."
+
+  b.intro: |
+    In English the order is usually fixed: **subject – verb – rest** ("Today I work at home").
+    German works differently. In a **statement** (a main clause that is not a question or a command),
+    the **conjugated verb** — the verb form that changes with the person: *ich arbeit**e***, *du arbeit**est*** —
+    always stands in **position 2**.
+
+    Position 1 can be the subject, but it does not have to be. It can also be a time, a place, an object
+    or another part of the sentence. If something other than the subject comes first,
+    the subject moves **behind** the verb. The verb itself does not move.
+  b.pattern.caption: "One sentence, three different starts — the verb stays in position 2"
+  col.p1: "Position 1 (one element)"
+  col.p2: "Position 2 (conjugated verb)"
+  col.middle: "Middle (subject, objects, details)"
+  col.end: "End (other verb parts)"
+  b.position1: |
+    **Position 1 is one sentence element, not one word.** *Seit Mai*, *am nächsten Montag* and
+    *meine neue Kollegin aus Polen* each count as **one** element, so the verb still comes directly after them.
+
+    Use position 1 for what connects best to the previous sentence or what you want to emphasise:
+    *Seit Mai wohne ich in Berlin.* answers "since when?", *In Berlin wohne ich seit Mai.* stresses the place.
+    In neutral speech, the subject or a time expression is the most common start.
+
+    Only the **conjugated** verb goes to position 2. Other verb parts — an infinitive after a modal verb
+    (*muss … gehen*), a participle (*habe … abgeschickt*) or a separable prefix (*rufe … an*) — go to the
+    **end** of the sentence. Together they form a "bracket" around the middle of the sentence.
+  b.examples.title: "Examples from everyday life"
+  ex.work: "From next week I work in Linz."
+  ex.doctor: "At the doctor's you often have to wait a long time."
+  ex.object: "I find this flat too expensive."
+  ex.object.note: "The object (*diese Wohnung*) is in position 1 for emphasis; the subject *ich* follows the verb."
+  ex.bracket: "Today the German course starts at nine o'clock."
+  ex.bracket.note: "*anfangen* is separable: *fängt* stands in position 2, the prefix *an* goes to the end."
+  ex.perfect: "Yesterday I sent off my tax return."
+  b.contrast.title: "Compare"
+  c.emphasis: "Same meaning, different starting point. In both sentences the verb *arbeite* is in position 2; with *heute* first, the subject *ich* moves behind the verb."
+  c.und_deshalb: "*und* does not occupy a position, so *ich* is in position 1 and *lerne* in position 2. *deshalb* (therefore) **does** occupy position 1, so the verb follows it immediately and the subject comes after the verb."
+  b.position0: |
+    Some short connectors stand **before** position 1 and do not count. Think of them as "position 0":
+    **und, aber, oder, denn, sondern**.
+
+    - *Aber **ich** habe keine Zeit.* — *aber* = position 0, *ich* = position 1, *habe* = position 2.
+
+    Words like **deshalb, dann, danach, trotzdem, außerdem, leider** are different: they are normal sentence
+    elements and **take** position 1.
+
+    - *Deshalb **lerne** ich Deutsch.* / *Dann **gehen** wir nach Hause.*
+
+    *Ja*, *nein* and a name used to address someone are also outside the count: *Ja, ich komme.* — *Anna, ich bin gleich da.*
+  b.errors.title: "Typical mistakes"
+  e.v3: "After *heute* (position 1) the verb must come next. Putting the subject first, as in English or Russian/Ukrainian, puts the verb in position 3."
+  e.deshalb: "*deshalb* takes position 1, so the verb follows directly: *Deshalb lerne ich …*"
+  e.aber: "*aber* is in position 0. Position 1 is still free, so you need a normal element there, usually the subject: *Aber ich habe …*"
+  e.adverb: "An adverb cannot stand between the subject in position 1 and the verb. Put it after the verb — or start the sentence with it: *Am Wochenende koche ich oft.*"
+  e.bracket: "Only the conjugated verb (*will*) is in position 2. The infinitive *lernen* goes to the end."
+  b.limits: |
+    V2 is the rule for **statements** (main clauses). Other sentence types work differently — you will learn them in separate topics:
+
+    - **Yes/no questions** start with the verb (position 1): *Kommst du morgen?*
+    - **Commands** also start with the verb: *Komm bitte morgen!*
+    - **W-questions** keep the verb in position 2, with the question word in position 1: *Wann kommst du?*
+    - In **subordinate clauses** (after *weil*, *dass*, *wenn* …) the verb goes to the **end**: *…, weil ich keine Zeit habe.*
+
+    In spoken German you will hear *weil* with the verb in position 2 (*weil ich habe keine Zeit*). This is informal
+    and not accepted in standard written German, so use verb-final after *weil* in writing.
+  b.regional: "The V2 rule is the same in Germany, Austria and Switzerland. Regional differences are in vocabulary, e.g. *Im Jänner* (Austria) for *Im Januar*, or *das Velo* (Switzerland) for *das Fahrrad* — the word order stays the same: *Im Jänner **fahre** ich nach Graz.*"
+  b.summary: |
+    - In a statement, the **conjugated verb is always in position 2**.
+    - Position 1 is **one element** (it may be several words): subject, time, place, object …
+    - If position 1 is not the subject, the **subject comes right after the verb**.
+    - Other verb parts (infinitive, participle, prefix) go to the **end**.
+    - *und, aber, oder, denn, sondern* don't count; *deshalb, dann, trotzdem* do.
+  b.practice.title: "Practice"
+
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check where the conjugated verb is."
+  fb.v3: "The verb is in position 3 here. After the first element, the conjugated verb must come next — then the subject."
+  fb.subject_adverb: "Nothing may stand between the subject in position 1 and the verb. Put *morgen* after the verb or at the start."
+  fb.bracket: "Only the conjugated verb (*muss*) is in position 2. The infinitive *bezahlen* goes to the very end."
+  fb.separable: "*anrufen* is separable: *rufe* is in position 2, and *an* goes to the very end of the sentence."
+  fb.position_zero: "*aber* does not take a position. After *aber* you still need position 1 (for example *ich*), and then the verb."
+  fb.connective: "*deshalb* takes position 1, so the verb comes directly after it: *Deshalb nehme ich …*"
+
+  x.choose_correct.prompt: "Which sentence is correct?"
+  x.choose_correct.a: "*heute* is in position 1, so the verb must come next — not the subject."
+  x.choose_correct.c: "The verb is in position 3 here. *frei* belongs after the subject."
+  x.choose_correct.d: "A statement does not start with the verb. Starting with the verb makes it sound like a yes/no question — and *heute ich* is not possible after it."
+  x.choose_correct.explanation: "*Heute* takes position 1, the conjugated verb *habe* follows in position 2, and the subject *ich* comes after the verb."
+
+  x.position2.prompt: "Which word is in position 2 in this sentence?"
+  x.position2.a: "*Seit drei Jahren* is one element (a time expression) and fills position 1 as a whole."
+  x.position2.b: "*Jahren* still belongs to the first element *Seit drei Jahren*."
+  x.position2.d: "*meine Schwester* is the subject. It comes after the verb because position 1 is already taken."
+  x.position2.explanation: "*Seit drei Jahren* is one element in position 1, so the conjugated verb *wohnt* is in position 2."
+
+  x.order_vienna.prompt: "Build a statement: \"I'm going to Vienna tomorrow.\" Try starting with *morgen*."
+  x.order_vienna.explanation: "Possible: *Morgen fahre ich nach Wien.* / *Ich fahre morgen nach Wien.* / *Nach Wien fahre ich morgen.* In each one, *fahre* is in position 2."
+
+  x.order_rent.prompt: "Build a statement: \"I have to pay the rent on Monday.\""
+  x.order_rent.explanation: "*muss* is in position 2 and the infinitive *bezahlen* is at the end. Position 1 can be *am Montag*, *ich* or *die Miete*."
+
+  x.order_call.prompt: "Build a statement: \"I'm calling my landlady today.\" (*anrufen* = to call)"
+  x.order_call.explanation: "*rufe* is in position 2 and the separable prefix *an* goes to the end: *Heute rufe ich meine Vermieterin an.*"
+
+  x.cloze_deshalb.prompt: "Fill in the gaps with *ich* and *lerne* in the right order."
+  x.cloze_deshalb.gap0_subject: "*Deshalb* is already in position 1, so position 2 must be the verb."
+  x.cloze_deshalb.gap1_verb: "The verb has to come before the subject here, because *deshalb* is in position 1."
+  x.cloze_deshalb.explanation: "*Deshalb* takes position 1 → *lerne* (position 2) → *ich*."
+
+  x.transform_evening.prompt: "Rewrite the sentence so that it starts with *Heute Abend*."
+  x.transform_evening.subject: "The subject *ich* comes directly after the verb, before the rest of the sentence."
+  x.transform_evening.explanation: "*Heute Abend* (position 1) → *gehe* (position 2) → *ich* → *ins Kino*."
+
+  x.transform_aber.prompt: "Add *aber* at the start of the sentence."
+  x.transform_aber.explanation: "*aber* is in position 0. Position 1 stays as it was (*ich*) and *habe* stays in position 2. You can also say *Aber heute habe ich keine Zeit.*"
+
+  x.transform_deshalb.prompt: "Connect the two sentences with *deshalb*: the second sentence is the consequence."
+  x.transform_deshalb.explanation: "*Deshalb* takes position 1 of the second sentence, so the verb *nehme* comes right after it: *Deshalb nehme ich ein Taxi.*"
+
+  x.limits.prompt: "All of these sentences are correct. In which one is the verb NOT in position 2?"
+  x.limits.a: "*Morgen* is in position 1, *komme* in position 2 — this is a normal V2 statement."
+  x.limits.c: "In a W-question, the question word takes position 1 and the verb is in position 2."
+  x.limits.d: "*Ich* is in position 1, *komme* in position 2."
+  x.limits.explanation: "A yes/no question starts with the verb (position 1): *Kommst du morgen?*"

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.verb_final_subordinate
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Підрядні речення: дієслово в кінці'
+  summary: Після weil, dass, wenn, ob … дієвідмінюване дієслово стоїть у кінці речення.

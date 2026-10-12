@@ -1,0 +1,12 @@
+schema: deutschgo.concept/1
+id: concept.syntax.verb_final_subordinate
+version: 0.1.0
+status: planned
+kind: grammar
+domain: syntax
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A2, expected_mastery: B1 }
+relations:
+  - { type: depends_on, target: concept.syntax.v2_declarative }
+  - { type: contrasts_with, target: concept.syntax.v2_declarative }

@@ -1,0 +1,10 @@
+# INVALID ON PURPOSE: file name does not match the id.
+schema: deutschgo.concept/1
+id: concept.bad.name_mismatch
+version: 1.0.0
+status: planned
+kind: grammar
+domain: syntax
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1 }

@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deutschgo.dev/schemas/unit.schema.json",
+  "title": "DeutschGo learning unit v1",
+  "description": "A pedagogical treatment of one or more concepts for a level and goal.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "version", "status", "title", "summary", "cefr", "concepts", "prerequisites", "goals", "estimated_minutes", "objectives", "blocks", "review"],
+  "properties": {
+    "schema": { "const": "deutschgo.unit/1" },
+    "id": { "$ref": "common.schema.json#/$defs/unitId" },
+    "version": { "$ref": "common.schema.json#/$defs/semver" },
+    "status": { "enum": ["draft", "needs_review", "approved", "published", "deprecated"] },
+    "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+    "summary": { "$ref": "common.schema.json#/$defs/l10nRef" },
+    "cefr": { "$ref": "common.schema.json#/$defs/cefr" },
+    "concepts": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/conceptId" } },
+    "prerequisites": { "type": "array", "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/conceptId" } },
+    "goals": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/goal" } },
+    "estimated_minutes": { "type": "integer", "minimum": 3, "maximum": 120 },
+    "objectives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "skill"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/localId" },
+          "text": { "$ref": "common.schema.json#/$defs/l10nRef" },
+          "skill": { "enum": ["knowledge", "reading", "listening", "writing", "speaking"] }
+        }
+      }
+    },
+    "blocks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/block" } },
+    "sources": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/sourceUse" } },
+    "review": { "$ref": "common.schema.json#/$defs/review" }
+  },
+  "$defs": {
+    "block": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": { "type": { "enum": ["explanation", "pattern", "examples", "contrast", "common_errors", "regional_note", "summary", "exercises"] } },
+      "oneOf": [
+        { "$ref": "#/$defs/explanation" }, { "$ref": "#/$defs/pattern" }, { "$ref": "#/$defs/examples" },
+        { "$ref": "#/$defs/contrast" }, { "$ref": "#/$defs/commonErrors" }, { "$ref": "#/$defs/regionalNote" },
+        { "$ref": "#/$defs/summary" }, { "$ref": "#/$defs/exercises" }
+      ]
+    },
+    "explanation": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "body"],
+      "properties": { "type": { "const": "explanation" }, "id": { "$ref": "common.schema.json#/$defs/localId" }, "body": { "$ref": "common.schema.json#/$defs/l10nRef" } }
+    },
+    "summary": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "body"],
+      "properties": { "type": { "const": "summary" }, "id": { "$ref": "common.schema.json#/$defs/localId" }, "body": { "$ref": "common.schema.json#/$defs/l10nRef" } }
+    },
+    "regionalNote": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "variety", "body"],
+      "properties": { "type": { "const": "regional_note" }, "id": { "$ref": "common.schema.json#/$defs/localId" }, "variety": { "$ref": "common.schema.json#/$defs/variety" }, "body": { "$ref": "common.schema.json#/$defs/l10nRef" } }
+    },
+    "pattern": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "caption", "columns", "rows"],
+      "properties": {
+        "type": { "const": "pattern" }, "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "caption": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "columns": { "type": "array", "minItems": 2, "items": { "$ref": "common.schema.json#/$defs/l10nRef" } },
+        "rows": { "type": "array", "minItems": 1, "items": { "type": "array", "items": { "type": "string" } } }
+      }
+    },
+    "examples": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "title", "items"],
+      "properties": {
+        "type": { "const": "examples" }, "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/example" } }
+      }
+    },
+    "contrast": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "title", "pairs"],
+      "properties": {
+        "type": { "const": "contrast" }, "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "pairs": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["id", "a", "b", "point"],
+            "properties": {
+              "id": { "$ref": "common.schema.json#/$defs/localId" },
+              "a": { "$ref": "common.schema.json#/$defs/example" },
+              "b": { "$ref": "common.schema.json#/$defs/example" },
+              "point": { "$ref": "common.schema.json#/$defs/l10nRef" }
+            }
+          }
+        }
+      }
+    },
+    "commonErrors": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "title", "items"],
+      "properties": {
+        "type": { "const": "common_errors" }, "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/confusion" } }
+      }
+    },
+    "exercises": {
+      "type": "object", "additionalProperties": false, "required": ["type", "id", "title", "items"],
+      "properties": {
+        "type": { "const": "exercises" }, "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "title": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/exercise" } }
+      }
+    },
+    "exerciseBase": {
+      "type": "object",
+      "required": ["id", "type", "objective", "concepts", "prompt", "difficulty", "feedback", "explanation"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localId" },
+        "objective": { "$ref": "common.schema.json#/$defs/localId" },
+        "concepts": { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/conceptId" } },
+        "prompt": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "difficulty": { "enum": [1, 2, 3] },
+        "explanation": { "$ref": "common.schema.json#/$defs/l10nRef" },
+        "feedback": {
+          "type": "object", "additionalProperties": false, "required": ["correct", "incorrect"],
+          "properties": {
+            "correct": { "$ref": "common.schema.json#/$defs/l10nRef" },
+            "incorrect": { "$ref": "common.schema.json#/$defs/l10nRef" },
+            "rules": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/feedbackRule" } }
+          }
+        }
+      }
+    },
+    "exercise": {
+      "type": "object",
+      "required": ["type"],
+      "properties": { "type": { "enum": ["single_choice", "word_order", "cloze", "transform"] } },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": { "const": "single_choice" },
+            "stem_de": { "$ref": "common.schema.json#/$defs/de" },
+            "options": {
+              "type": "array", "minItems": 2, "maxItems": 6,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["id", "correct"],
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[a-z]$" },
+                  "de": { "$ref": "common.schema.json#/$defs/de" },
+                  "text": { "$ref": "common.schema.json#/$defs/l10nRef" },
+                  "correct": { "type": "boolean" },
+                  "feedback": { "$ref": "common.schema.json#/$defs/l10nRef" }
+                }
+              }
+            }
+          },
+          "required": ["options"]
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": { "const": "word_order" },
+            "tokens": { "type": "array", "minItems": 2, "maxItems": 9, "items": { "$ref": "common.schema.json#/$defs/de" } },
+            "accept": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/de" } },
+            "final_punctuation": { "enum": [".", "?", "!"] }
+          },
+          "required": ["tokens", "accept", "final_punctuation"]
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": { "const": "cloze" },
+            "text_de": { "type": "string", "pattern": "\\{\\{0\\}\\}" },
+            "gaps": {
+              "type": "array", "minItems": 1,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["accept"],
+                "properties": {
+                  "accept": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+                  "rules": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/feedbackRule" } },
+                  "hint": { "$ref": "common.schema.json#/$defs/l10nRef" }
+                }
+              }
+            }
+          },
+          "required": ["text_de", "gaps"]
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": { "const": "transform" },
+            "source_de": { "$ref": "common.schema.json#/$defs/de" },
+            "accept": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "common.schema.json#/$defs/de" } }
+          },
+          "required": ["source_de", "accept"]
+        }
+      ]
+    }
+  }
+}
