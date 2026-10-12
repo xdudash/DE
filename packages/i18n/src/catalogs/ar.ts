@@ -38,6 +38,8 @@ export const ar: Catalog = {
   "exercise.reset": "إعادة",
   "exercise.tryAgain": "حاول مرة أخرى",
   "exercise.yourAnswer": "إجابتك",
+  "exercise.saveFailed": "تم التحقق من إجابتك، لكن تعذّر حفظها. لن تظهر في تقدّمك.",
+  "exercise.stale": "تم تحديث هذا الدرس. أعد تحميل الصفحة للمتابعة بالإصدار الحالي.",
   "exercise.progress": "التمرين {current} من {total}",
   "exercise.score": "{correct} صحيحة من {total}",
 

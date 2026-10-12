@@ -29,7 +29,7 @@ function TextNotice({ dict, msg, pivotName }: { dict: Dictionary; msg: Translate
   );
 }
 
-function renderBlock(block: Block, d: Dictionary, msg: Translate) {
+function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: string; version: string }) {
   switch (block.type) {
     case "explanation":
     case "summary":
@@ -101,11 +101,15 @@ function renderBlock(block: Block, d: Dictionary, msg: Translate) {
         reset: msg("exercise.reset"),
         tryAgain: msg("exercise.tryAgain"),
         yourAnswer: msg("exercise.yourAnswer"),
+        saveFailed: msg("exercise.saveFailed"),
+        stale: msg("exercise.stale"),
       };
       return (
         <>
           <h2>{t(d, block.title)}</h2>
-          {block.items.map((ex) => <ExercisePlayer key={ex.id} exercise={ex} text={text} labels={labels} />)}
+          {block.items.map((ex) => (
+            <ExercisePlayer key={ex.id} exercise={ex} text={text} labels={labels} unit={unit} />
+          ))}
         </>
       );
     }
@@ -142,7 +146,11 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
         <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
       )}
       <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
-      {unit.blocks.map((block) => <section key={block.id} id={block.id}>{renderBlock(block, d, msg)}</section>)}
+      {unit.blocks.map((block) => (
+        <section key={block.id} id={block.id}>
+          {renderBlock(block, d, msg, { id: unit.id, version: unit.version })}
+        </section>
+      ))}
       <p className="banner">{msg("status.noPersistence")}</p>
     </main>
   );

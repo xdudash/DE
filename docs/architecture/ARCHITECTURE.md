@@ -13,6 +13,7 @@ A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a 
  │                          answer evaluator · graph · l10n resolution
  ├─ packages/learning-engine/ concept states · review scheduler · recommendations (pure TS, tested)
  ├─ packages/i18n/          interface catalogs (en·uk·ru·ar) · ICU-subset formatter      (pure TS, tested)
+ ├─ packages/attempts/      validate · re-evaluate · append event · recompute state    (pure TS, tested)
  └─ apps/web/               Next.js App Router
       ├─ build time: content-kit compiles content → generated/content.json → static pages per lang × unit
       ├─ server: route handlers / server actions (P2): attempts, sync, settings, entitlements
@@ -29,7 +30,7 @@ A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a 
 | `content-kit` | content types, validation, compile, evaluation, graph, l10n | nothing app-specific (no DB, no React) |
 | `apps/web/lib/content` | read compiled bundle, resolve strings | content-kit |
 | `packages/learning-engine` ✔ | evidence → states → review schedule → recommendations (pure functions, no I/O) | content-kit types only |
-| `apps/web/lib/data` (P2) | the only module that talks to Supabase; repository functions | Supabase client |
+| `apps/web/lib/data` ✔ | the only module that opens a database connection; `withLearner` / `withService` contexts ([ADR-0010](./decisions/ADR-0010-server-database-access.md)) | `pg`, attempts port |
 | `apps/web/app`, `components` | presentation | all of the above via their APIs |
 | `apps/mobile` (P8) | Capacitor shell | apps/web build |
 

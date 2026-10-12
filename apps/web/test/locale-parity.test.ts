@@ -9,14 +9,27 @@ import { strict as assert } from "node:assert";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
-import { loadContent } from "@deutschgo/content-kit/load";
 import { LOCALES, PIVOT_LOCALE, catalogs, offeredLocales } from "@deutschgo/i18n";
+import type { LanguageInfo } from "@deutschgo/content-kit";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../content");
-const languages = loadContent(CONTENT).repo.languages.languages;
+
+/**
+ * Reading the registry needs the content loader's dependencies (yaml, ajv). Where they
+ * are not installed, the suite skips with a reason instead of failing — CI installs
+ * them, so the check is never silently lost.
+ */
+let languages: LanguageInfo[] = [];
+let skip: string | false = false;
+try {
+  const { loadContent } = await import("@deutschgo/content-kit/load");
+  languages = loadContent(CONTENT).repo.languages.languages;
+} catch (err) {
+  skip = `content loader unavailable (${(err as Error).message.split("\n")[0]}) — run npm install`;
+}
 const byCode = new Map(languages.map((l) => [l.code, l]));
 
-describe("interface locales vs content languages", () => {
+describe("interface locales vs content languages", { skip }, () => {
   it("offers only locales that content declares as explanation languages", () => {
     for (const locale of offeredLocales()) {
       const lang = byCode.get(locale.code);

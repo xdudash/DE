@@ -79,7 +79,7 @@ jobs:
           if-no-files-found: ignore
 
   database:
-    name: Learner-data migrations and RLS tests
+    name: Learner-data migrations, RLS and attempt recording
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -99,3 +99,19 @@ jobs:
         uses: actions/checkout@v7
       - name: Apply migrations and run database tests
         run: ./scripts/db_test.sh
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+      # The attempt pipeline against the real schema: server re-evaluation, append-only
+      # events, idempotent retries and RLS isolation. Skips itself without DG_DB_URL.
+      - name: Prepare a migrated database for the integration test
+        run: ./scripts/db_prepare.sh deutschgo_integration
+      - name: Attempt recording integration test
+        env:
+          DG_DB_URL: postgres://postgres:postgres@localhost:5432/deutschgo_integration
+          DATABASE_SSL: disable
+        run: npm test -w @deutschgo/web

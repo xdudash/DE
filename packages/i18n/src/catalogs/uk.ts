@@ -26,6 +26,8 @@ export const uk: Catalog = {
   "exercise.reset": "Скинути",
   "exercise.tryAgain": "Спробувати ще",
   "exercise.yourAnswer": "Ваша відповідь",
+  "exercise.saveFailed": "Відповідь перевірено, але зберегти її не вдалося. У вашому прогресі вона не з'явиться.",
+  "exercise.stale": "Цей урок оновлено. Перезавантажте сторінку, щоб продовжити з актуальною версією.",
   "exercise.progress": "Вправа {current} з {total}",
   "exercise.score": "Правильно: {correct} з {total}",
 

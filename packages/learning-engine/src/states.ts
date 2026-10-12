@@ -15,6 +15,9 @@
 import { DAY_MS, computeSchedule } from "./scheduler.ts";
 import type { ConceptState, ConceptStatus, EvidenceSummary, GraphConcept, LearningEvent, StateReason } from "./types.ts";
 
+/** Bumped whenever state thresholds or transitions change; stored with derived rows. */
+export const ENGINE_VERSION = "1.0.0";
+
 export const RECENT_WINDOW = 5;
 export const MIN_GRADED_FOR_ACCURACY = 3;
 export const ACCURACY_THRESHOLD = 0.7;
