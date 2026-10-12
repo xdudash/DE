@@ -34,7 +34,7 @@ Before a major implementation, study the current requirements, identify unresolv
 ## Recommended Project Knowledge
 If useful, add current copies of these canonical documents to the Claude.ai Project Knowledge:
 - [Product vision](../product/PRODUCT_VISION.md)
-- [MVP scope](../product/MVP_SCOPE.md)
+- [Release stages](../product/RELEASE_STAGES.md)
 - [Knowledge model](../domain/KNOWLEDGE_MODEL.md)
 - [Learning engine](../domain/LEARNING_ENGINE.md)
 - [Content standard](../domain/CONTENT_STANDARD.md)

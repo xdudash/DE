@@ -25,7 +25,8 @@ const SCHEMA_FILES: Record<string, string> = {
 };
 
 export function createValidator() {
-  const ajv = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true });
+  // strictRequired is off: conditional branches legitimately require root-level properties.
+  const ajv = new Ajv2020({ allErrors: true, strict: true, strictRequired: false, allowUnionTypes: true });
   addFormats(ajv);
   for (const f of readdirSync(SCHEMA_DIR).filter((x) => x.endsWith(".schema.json")).sort()) {
     ajv.addSchema(JSON.parse(readFileSync(join(SCHEMA_DIR, f), "utf8")));

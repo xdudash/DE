@@ -1,52 +1,45 @@
 # German Knowledge Model
 
+Status: **Accepted** (2026-10-12). Machine contract: [content contract](./CONTENT_CONTRACT.md).
+
 ## Purpose
-Represent German-language knowledge independently of lesson order or UI navigation.
+Represent knowledge of German independently of lesson order, UI, and explanation language, so that units, routes, review, diagnostics, and search all reuse one source of truth.
 
-## Core entities
+## Layers
+```text
+  Language knowledge (canonical)     Pedagogy                Learner (database)
+  ┌──────────────────────────┐   ┌─────────────────────┐   ┌───────────────────────┐
+  │ Concept graph            │◄──│ Units (blocks,      │   │ Evidence events       │
+  │  grammar, morphology,    │   │  examples,          │──►│ (attempt, result,     │
+  │  syntax, pragmatics,     │   │  exercises)         │   │  recall, transfer)    │
+  │  pronunciation, regional │   │ Routes (sequences)  │   │ Concept/skill states  │
+  │ Lexicon                  │◄──│ Resources (texts,   │   │ Review schedule       │
+  │  lemma → senses → forms, │   │  dialogues, audio)  │   │ Saved vocabulary      │
+  │  collocations            │   │ Scenarios           │   │ Settings, goals       │
+  └──────────────────────────┘   └─────────────────────┘   └───────────────────────┘
+           ▲ explained by: Localizations (per language, per entity, with review state)
+```
 
-### Language concept
-A stable unit of knowledge: word order, dative-case functions, separable-prefix verbs, a lexical sense, collocation, pronunciation, register, pragmatics, or a regional usage note. Each concept should have:
-- Stable ID and type.
-- Canonical description of the German phenomenon.
-- Scope, variety, and register (standard, regional, colloquial, formal, etc.).
-- Forms/rules and contextual examples.
-- Relevant learner confusions and limitations/exceptions.
-- Typed relationships to other concepts.
-- Suggested CEFR range with rationale.
-- Sources/editorial evidence where applicable.
-- Version and status: draft, needs_review, approved, deprecated.
+## Entities
+| Entity | Status | Notes |
+|---|---|---|
+| Concept | v1 implemented | Stable unit of knowledge; typed relations; `planned` placeholders map the curriculum. |
+| Unit | v1 implemented | Pedagogical treatment for a level/goal; may cover several concepts; several units may teach one concept at different depths. |
+| Exercise | v1 implemented (4 types) | Inside units in v1; extraction into reusable exercise banks when a second unit needs the same items (schema `/2` candidate). |
+| Route | v1 implemented | Editable recommendation; never owns definitions. |
+| Localization | v1 implemented | Per entity × language; status + based_on_version. |
+| Source | v1 implemented | Registry with license and allowed use; only approved sources may be referenced. |
+| Lexeme / Sense / Form / Collocation | P4 | Lemma with POS, gender, plural, valency/case government, separable prefix; senses are the review unit; forms enable search and tap-to-lookup; frequency band from licensed corpus data. |
+| Resource (text, dialogue, audio) | P4–P5 | Level, region, register, rights, transcript, aligned sentences, linked concepts/senses. |
+| Scenario | P5 | Communicative situation (e.g., "registering an address in Vienna") linking pragmatics, vocabulary, resources, and region-specific procedures. |
+| Diagnostic item bank | P4 | Calibrated items with concept links, versioned. |
+| Learner evidence | P2 | See [learning engine](./LEARNING_ENGINE.md) and [data & privacy](../architecture/DATA_AND_PRIVACY.md). |
 
-### Learning unit
-A pedagogical treatment of one or more concepts for a learner goal and level. It contains selected explanations, examples, scaffolding, practice, and assessment. Multiple units may reuse the same concept for different levels or goals.
-
-### Curriculum node or route
-A collection/sequencing of learning units with an intended audience and rationale. A route does not own or duplicate canonical concept definitions.
-
-### Exercise
-A task with objective, prompt, response type, answer model or rubric, feedback, and concept links.
-
-### Resource/asset
-A text, dialogue, recording, image, or external reference with provenance, version, rights metadata, and attribution requirements.
-
-### Learner evidence
-Attempts, outcomes, confidence, review history, and mastery estimates, stored separately from authored content.
-
-### Localization
-An explanation or UI string in a supported language, linked to canonical concept/content IDs. Missing translation must be distinguishable from intentionally unavailable content.
-
-## Typed relationships
-Possible relationships include prerequisite_for, depends_on, related_to, contrasts_with, demonstrates, commonly_confused_with, belongs_to_domain, and attested_in. Document one canonical direction per edge type. Validate referenced IDs and detect prerequisite cycles; other relationship types may be cyclic.
-
-## IDs and versioning
-- IDs are stable and independent of titles and languages.
-- Renames must not break references.
-- Deprecate or redirect removed concepts if learner history may reference them.
-- Schema changes require compatibility notes and migrations where needed.
-- Keep content human-reviewable and diff-friendly in version control.
+## Relationships
+`depends_on` (the only prerequisite direction; acyclic), `related_to`, `contrasts_with`, `commonly_confused_with`, `part_of` (concept hierarchies, e.g. *Akkusativ-Präpositionen* part_of *Akkusativ*). Units link concepts via `concepts`/`prerequisites`; exercises link concepts and error rules may **signal** a concept, producing diagnostic evidence.
 
 ## Orthogonal axes
-Track proficiency/CEFR level separately from topic domain and demonstrated skill. A concept may appear in multiple levels with different depth.
+CEFR level (introduced / expected mastery), domain/strand, skill, goal, variety (standard, de-DE, de-AT, de-CH, regional), and register are independent tags. A concept may be revisited at several levels with increasing depth through different units.
 
-## Decisions still required
-Exact JSON schema, composing facts/examples/translations, answer variants and partial credit, media licensing model, and review statuses. These are explicit design tasks; do not invent incompatible formats independently.
+## Invariants (validator-enforced)
+IDs stable and language-independent; references resolve; no prerequisite cycles; a unit cannot teach a `planned` concept; approved content requires completed human review; explanations exist in the pivot language.

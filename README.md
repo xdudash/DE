@@ -14,7 +14,7 @@ Not yet decided: final technology stack, backend/provider choices, hosting, mobi
 
 1. [Claude Code instructions](./CLAUDE.md) — short operating instructions for Claude Code.
 2. [Product vision](./docs/product/PRODUCT_VISION.md) — product vision and principles.
-3. [MVP scope](./docs/product/MVP_SCOPE.md) — proposed first usable release and explicit non-goals.
+3. [Release stages](./docs/product/RELEASE_STAGES.md) — proposed first usable release and explicit non-goals.
 4. [Knowledge model](./docs/domain/KNOWLEDGE_MODEL.md) — separate language knowledge, learning content, and learner state.
 5. [Content standard](./docs/domain/CONTENT_STANDARD.md) — quality bar for lessons and exercises.
 6. [Roadmap](./docs/development/ROADMAP.md) — staged implementation plan.

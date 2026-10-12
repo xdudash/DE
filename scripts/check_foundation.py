@@ -14,7 +14,7 @@ REQUIRED_FILES = (
     "README.md",
     "CLAUDE.md",
     "docs/product/PRODUCT_VISION.md",
-    "docs/product/MVP_SCOPE.md",
+    "docs/product/RELEASE_STAGES.md",
     "docs/product/USER_FLOWS.md",
     "docs/architecture/ARCHITECTURE.md",
     "docs/architecture/decisions/README.md",

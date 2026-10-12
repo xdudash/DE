@@ -5,7 +5,7 @@ Build DeutschGo: a deep, flexible German-learning system for life, work, and stu
 
 ## Read context selectively
 - Start with this file and [README.md](./README.md).
-- Product work: [Product vision](./docs/product/PRODUCT_VISION.md), [MVP scope](./docs/product/MVP_SCOPE.md), and [user flows](./docs/product/USER_FLOWS.md).
+- Product work: [Product vision](./docs/product/PRODUCT_VISION.md), [Release stages](./docs/product/RELEASE_STAGES.md), and [user flows](./docs/product/USER_FLOWS.md).
 - Language/content work: [Knowledge model](./docs/domain/KNOWLEDGE_MODEL.md), [learning engine](./docs/domain/LEARNING_ENGINE.md), and [content standard](./docs/domain/CONTENT_STANDARD.md).
 - Technical work: [architecture](./docs/architecture/ARCHITECTURE.md), relevant ADRs, and [quality gates](./docs/quality/QUALITY_GATES.md).
 - Follow the [development workflow](./docs/development/WORKFLOW.md).

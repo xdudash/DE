@@ -3,7 +3,7 @@
  */
 import { strict as assert } from "node:assert";
 import { dirname, join } from "node:path";
-import { describe, it } from "node:test";
+import { before, describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import { runChecks } from "../src/checks.ts";
 import { compileBundle } from "../src/compile.ts";
@@ -14,8 +14,13 @@ const CONTENT = join(here, "../../../content");
 const INVALID = join(here, "fixtures/invalid-content");
 
 describe("repository content", () => {
-  const { repo, issues } = loadContent(CONTENT);
-  const report = runChecks(repo);
+  let repo: ReturnType<typeof loadContent>["repo"];
+  let issues: ReturnType<typeof loadContent>["issues"];
+  let report: ReturnType<typeof runChecks>;
+  before(() => {
+    ({ repo, issues } = loadContent(CONTENT));
+    report = runChecks(repo);
+  });
 
   it("loads without schema or parse errors", () => {
     assert.deepEqual(issues.filter((i) => i.severity === "error"), []);
@@ -37,7 +42,10 @@ describe("repository content", () => {
 });
 
 describe("invalid fixtures", () => {
-  const { issues } = loadContent(INVALID);
+  let issues: ReturnType<typeof loadContent>["issues"] = [];
+  before(() => {
+    ({ issues } = loadContent(INVALID));
+  });
   const has = (code: string, fileFragment: string) => issues.some((i) => i.code === code && (i.file ?? "").includes(fileFragment));
   it("rejects a schema violation with a useful path", () => {
     assert.ok(has("schema.invalid", "concept.bad.missing_summary"), JSON.stringify(issues, null, 1));

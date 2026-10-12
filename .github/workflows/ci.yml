@@ -71,7 +71,7 @@ jobs:
         run: |
           tail -n 150 ci.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=CI log tail::'+d)"
       - name: Upload lockfile produced by this run (for DG-011)
-        if: steps.install.outputs.lock_generated == 'true'
+        if: always() && steps.install.outputs.lock_generated == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: package-lock
