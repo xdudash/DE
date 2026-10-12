@@ -25,7 +25,8 @@ let closePool: () => Promise<void>;
 const ALICE = randomUUID();
 const BOB = randomUUID();
 
-if (!skip) {
+// Narrowing on `url` rather than on `skip`: the compiler can follow the former.
+if (url) {
   process.env.DATABASE_URL = url;
   process.env.DATABASE_SSL = "disable";
   try {
