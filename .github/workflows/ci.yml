@@ -111,6 +111,7 @@ jobs:
       - name: Prepare a migrated database for the integration test
         run: ./scripts/db_prepare.sh deutschgo_integration
       - name: Attempt recording integration test
+        timeout-minutes: 5
         env:
           DG_DB_URL: postgres://postgres:postgres@localhost:5432/deutschgo_integration
           DATABASE_SSL: disable

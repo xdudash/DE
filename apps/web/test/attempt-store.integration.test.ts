@@ -6,7 +6,7 @@
  */
 import { strict as assert } from "node:assert";
 import { randomUUID } from "node:crypto";
-import { before, describe, it } from "node:test";
+import { after, before, describe, it } from "node:test";
 import { recordAttempt } from "@deutschgo/attempts";
 import { T0, UNIT_VERSION, V2, bundle, request as attemptBody } from "../../../packages/attempts/test/fixtures.ts";
 
@@ -44,6 +44,13 @@ if (url) {
 }
 
 describe("attempt recording against PostgreSQL", { skip }, () => {
+  // Closing in `after` rather than in a final test: a failing assertion must not leave
+  // an open pool behind, or the test runner waits for handles that never close.
+  after(async () => {
+    await closePool?.().catch(() => {});
+    await admin?.end().catch(() => {});
+  });
+
   before(async () => {
     for (const id of [ALICE, BOB]) {
       await admin.query("insert into auth.users (id, email) values ($1, $2)", [id, `${id}@example.test`]);
@@ -131,12 +138,8 @@ describe("attempt recording against PostgreSQL", { skip }, () => {
     await withService((c) => c.query("select 1"));
     const { rows } = await withLearner(ALICE, (c) => c.query("select current_user as who"));
     assert.equal(rows[0]!.who, "authenticated");
-    const after = await admin.query("select current_user as who");
-    assert.notEqual(after.rows[0]!.who, "authenticated");
+    const released = await admin.query("select current_user as who");
+    assert.notEqual(released.rows[0]!.who, "authenticated");
   });
 
-  it("closes its pool", async () => {
-    await closePool();
-    await admin.end();
-  });
 });
