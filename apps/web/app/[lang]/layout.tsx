@@ -1,18 +1,18 @@
 import { notFound } from "next/navigation";
-import { explanationLanguages } from "../../lib/content";
+import { isRoutableLocale, localeInfo, routableLocales } from "../../lib/i18n";
 
 export function generateStaticParams() {
-  return explanationLanguages().map((l) => ({ lang: l.code }));
+  return routableLocales().map((l) => ({ lang: l.code }));
 }
 
 export const dynamicParams = false;
 
 export default async function LangLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const info = explanationLanguages().find((l) => l.code === lang);
-  if (!info) notFound();
+  if (!isRoutableLocale(lang)) notFound();
+  const info = localeInfo(lang);
   return (
-    <div lang={lang} dir={info.dir}>
+    <div lang={lang} dir={info.dir} data-locale={lang} data-preview={info.preview ? "true" : undefined}>
       {children}
     </div>
   );

@@ -12,6 +12,7 @@ A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a 
  ├─ packages/content-kit/   schemas · loader · semantic checks · compiler ·      (pure TS, tested)
  │                          answer evaluator · graph · l10n resolution
  ├─ packages/learning-engine/ concept states · review scheduler · recommendations (pure TS, tested)
+ ├─ packages/i18n/          interface catalogs (en·uk·ru·ar) · ICU-subset formatter      (pure TS, tested)
  └─ apps/web/               Next.js App Router
       ├─ build time: content-kit compiles content → generated/content.json → static pages per lang × unit
       ├─ server: route handlers / server actions (P2): attempts, sync, settings, entitlements
@@ -44,7 +45,7 @@ Teaching text never lives in components; learner data never lives in `content/`.
 ## Cross-cutting decisions
 - **Language/runtime:** TypeScript strict everywhere; Node 22 LTS ([ADR-0006](./decisions/ADR-0006-repository-and-tooling.md)).
 - **Rendering:** static generation for content pages (SEO for public concept pages, low cost); dynamic only for learner-specific views.
-- **i18n:** content localization via content-kit; UI strings via message catalogs (library chosen in P2, ICU-capable, RTL-safe).
+- **i18n:** content localization via content-kit; interface strings via typed catalogs with a minimal ICU subset in `packages/i18n` ([ADR-0009](./decisions/ADR-0009-ui-i18n.md)). Plural categories come from `Intl.PluralRules`; `dir` comes from the locale registry; Arabic ships as a preview locale that exercises RTL without being offered to learners.
 - **Accessibility:** semantic HTML, keyboard operable exercises, `lang="de"` on German text for screen readers, 44px targets, WCAG 2.2 AA target; axe checks in E2E tests (P2).
 - **Security:** server-side authorization (RLS + server checks); secrets only in Vercel/Supabase/GitHub secret stores; dependency review; CSP headers (P2).
 - **Testing:** node:test for content-kit; Vitest or node:test for app logic; Playwright E2E for journeys (P2); content validation in CI ([quality gates](../quality/QUALITY_GATES.md)).

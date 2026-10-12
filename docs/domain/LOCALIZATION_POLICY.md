@@ -26,4 +26,6 @@ The registry is technically designed for 9 languages now; adding a language is d
 - Stale translations (canonical version bumped) are flagged and do not count as reviewed until re-confirmed.
 
 ## UI strings
-Separate from learning content: message catalogs in the app (ICU MessageFormat when the i18n library is adopted in P2). Same wave plan; RTL layouts tested with Arabic in P2.
+Separate from learning content: typed catalogs in `packages/i18n` using an ICU-compatible subset — interpolation, `plural` (via `Intl.PluralRules`, so Slavic one/few/many and Arabic's six categories work), `select`, `number` ([ADR-0009](../architecture/decisions/ADR-0009-ui-i18n.md)). English is the key source of truth; a missing key falls back to English rather than printing an identifier, and tests enforce key and placeholder parity for every locale.
+
+**Preview locales.** A locale may have a complete interface catalog before any reviewed explanations exist. Such a locale (currently Arabic) is reachable only by direct URL, never appears in the language picker, and shows content in the pivot language with the usual fallback notice. This keeps RTL layout and plural rules continuously exercised without promising a translation that does not exist. A cross-check test fails the build if the interface registry and `content/languages.yaml` disagree about what is offered.

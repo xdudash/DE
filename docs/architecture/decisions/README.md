@@ -13,6 +13,7 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0006](./ADR-0006-repository-and-tooling.md) | Single monorepo, npm workspaces, Node 22, TS strict, node:test/Playwright | Accepted, implemented |
 | [ADR-0007](./ADR-0007-media-and-audio.md) | Audio: object storage + manifests in Git; recorded speech preferred, TTS labelled | Proposed (decide in P5) |
 | [ADR-0008](./ADR-0008-billing.md) | Billing via merchant-of-record (Paddle) for web; RevenueCat when native | Proposed (decide in P7) |
+| [ADR-0009](./ADR-0009-ui-i18n.md) | Interface localization: typed catalogs + minimal in-house ICU subset | Accepted, implemented |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.

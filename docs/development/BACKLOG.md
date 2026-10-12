@@ -17,7 +17,7 @@ The GitHub issue tracker is the live list; this file mirrors the next tasks with
 | DG-011 (#14) | Commit package-lock.json and switch CI to `npm ci` | P1 | — | **ready** (owner: `npm install` locally or download CI artifact) |
 | DG-012 (#15) | Map the A1 concept graph as `planned` concepts (+ en/uk/ru titles), coverage report | content track | — | **done** in PR (67 concepts, 2 routes, `content:report`) |
 | DG-013 (#16) | Playwright E2E + axe for the lesson page; preview deployments (Vercel) | P2 | owner authorizes Vercel | partially ready |
-| DG-014 (#17) | UI i18n catalogs (ICU) + RTL layout check with an Arabic smoke test | P2 | — | ready |
+| DG-014 (#17) | UI i18n catalogs (ICU) + RTL layout check with an Arabic smoke test | P2 | — | **done** in PR (`packages/i18n`, ADR-0009) |
 
 ## Recommended order
-DG-011 → ~~DG-010~~ ✔ → ~~DG-008~~ ✔ → DG-009 → DG-013/014, while DG-007 (human review) runs in parallel. Authoring A1 units stays blocked by DG-007.
+DG-011 → ~~DG-010~~ ✔ → ~~DG-008~~ ✔ → ~~DG-014~~ ✔ → DG-009 → DG-013, while DG-007 (human review) runs in parallel. Authoring A1 units stays blocked by DG-007.

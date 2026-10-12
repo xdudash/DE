@@ -3,29 +3,33 @@ import { notFound } from "next/navigation";
 import type { Block } from "@deutschgo/content-kit";
 import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
-import { bundle, dictionaryFor, explanationLanguages, t, type Dictionary } from "../../../../lib/content";
+import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
-import { ui, type UiStrings } from "../../../../lib/ui-strings";
+import { contentLanguageFor, localeInfo, routableLocales, ui, type Translate } from "../../../../lib/i18n";
 
 export function generateStaticParams() {
-  return explanationLanguages().flatMap((l) => bundle().units.map((u) => ({ lang: l.code, unitId: u.id })));
+  return routableLocales().flatMap((l) => bundle().units.map((u) => ({ lang: l.code, unitId: u.id })));
 }
 export const dynamicParams = false;
 
-function TextNotice({ dict, s }: { dict: Dictionary; s: UiStrings }) {
+/**
+ * States how trustworthy the text on this page is: a machine draft, or English
+ * shown because the chosen language has no translation for some keys.
+ */
+function TextNotice({ dict, msg, pivotName }: { dict: Dictionary; msg: Translate; pivotName: string }) {
   const values = Object.values(dict);
   const fallback = values.some((v) => v.fallback);
   const machine = values.some((v) => !v.fallback && v.status === "machine_draft");
   if (!fallback && !machine) return null;
   return (
     <p className="banner">
-      {machine && <>{s.machineDraft} </>}
-      {fallback && <>{s.fallback}</>}
+      {machine && <>{msg("status.machineDraft")} </>}
+      {fallback && <>{msg("status.fallback", { language: pivotName })}</>}
     </p>
   );
 }
 
-function renderBlock(block: Block, d: Dictionary, s: UiStrings) {
+function renderBlock(block: Block, d: Dictionary, msg: Translate) {
   switch (block.type) {
     case "explanation":
     case "summary":
@@ -91,7 +95,13 @@ function renderBlock(block: Block, d: Dictionary, s: UiStrings) {
       );
     case "exercises": {
       const text = Object.fromEntries(Object.entries(d).map(([k, v]) => [k, v.text]));
-      const labels = { check: s.check, reset: s.reset, tryAgain: s.tryAgain, yourAnswer: s.yourAnswer };
+      // Labels are resolved on the server: a client component cannot receive a function.
+      const labels = {
+        check: msg("exercise.check"),
+        reset: msg("exercise.reset"),
+        tryAgain: msg("exercise.tryAgain"),
+        yourAnswer: msg("exercise.yourAnswer"),
+      };
       return (
         <>
           <h2>{t(d, block.title)}</h2>
@@ -107,29 +117,33 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
   const b = bundle();
   const unit = b.units.find((u) => u.id === unitId);
   if (!unit) notFound();
-  const s = ui(lang);
-  const d = dictionaryFor(unit.id, unit, lang);
+  const msg = ui(lang);
+  const contentLang = contentLanguageFor(lang);
+  const pivotName = localeInfo("en").nativeName;
+  const d = dictionaryFor(unit.id, unit, contentLang);
   const concepts = new Map(b.concepts.map((c) => [c.id, c]));
   const name = (id: string) => {
     const c = concepts.get(id);
-    return c ? t(dictionaryFor(c.id, c, lang), c.title) : id;
+    return c ? t(dictionaryFor(c.id, c, contentLang), c.title) : id;
   };
 
   return (
     <main className="page lesson">
-      <p><Link href={`/${lang}`}>← {s.back}</Link></p>
+      <p><Link href={`/${lang}`}>← {msg("nav.allTopics")}</Link></p>
       <h1>{t(d, unit.title)}</h1>
       <p className="lead">{t(d, unit.summary)}</p>
       <p>
-        <span className="tag">{unit.cefr}</span> <span className="tag">{unit.estimated_minutes} {s.minutes}</span>{" "}
-        <span className="tag warn">{s.status}: {unit.status}</span>
+        <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>{" "}
+        <span className="tag warn">{msg("status.label")}: {unit.status}</span>
       </p>
-      {unit.review.linguistic.status !== "passed" && <p className="banner">{s.notReviewed}</p>}
-      <TextNotice dict={d} s={s} />
-      {unit.prerequisites.length > 0 && <p className="muted">{s.prerequisites}: {unit.prerequisites.map(name).join(", ")}</p>}
+      {unit.review.linguistic.status !== "passed" && <p className="banner">{msg("status.notReviewed")}</p>}
+      <TextNotice dict={d} msg={msg} pivotName={pivotName} />
+      {unit.prerequisites.length > 0 && (
+        <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
+      )}
       <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
-      {unit.blocks.map((block) => <section key={block.id} id={block.id}>{renderBlock(block, d, s)}</section>)}
-      <p className="banner">{s.noPersistence}</p>
+      {unit.blocks.map((block) => <section key={block.id} id={block.id}>{renderBlock(block, d, msg)}</section>)}
+      <p className="banner">{msg("status.noPersistence")}</p>
     </main>
   );
 }
