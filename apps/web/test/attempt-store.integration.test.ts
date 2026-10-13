@@ -18,12 +18,18 @@ type Client = {
   query(sql: string, values?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number | null }>;
   end(): Promise<void>;
 };
-let admin: Client;
+let admin: Client | undefined;
 let attemptStore: typeof import("../lib/data/attempt-store.ts").attemptStore;
-let closePool: () => Promise<void>;
+let closePool: (() => Promise<void>) | undefined;
 
 const ALICE = randomUUID();
 const BOB = randomUUID();
+
+/** The admin connection, asserted present: the suite only runs once it exists. */
+function db(): Client {
+  if (!admin) throw new Error("no admin connection");
+  return admin;
+}
 
 // Narrowing on `url` rather than on `skip`: the compiler can follow the former.
 if (url) {
@@ -42,6 +48,10 @@ if (url) {
     const { getPool } = await import("../lib/data/pg.ts");
     closePool = () => getPool().end();
   } catch (err) {
+    // Hand the connection back before skipping: a live client keeps the runner's
+    // process alive, which looks like a hanging job rather than a skipped suite.
+    await admin?.end().catch(() => {});
+    admin = undefined;
     skip = `database unavailable (${(err as Error).message.split("\n")[0]})`;
   }
 }
@@ -59,8 +69,8 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
   before(async () => {
     console.log(`connected to ${url}; seeding ${ALICE} and ${BOB}`);
     for (const id of [ALICE, BOB]) {
-      await admin.query("insert into auth.users (id, email) values ($1, $2)", [id, `${id}@example.test`]);
-      await admin.query("insert into public.profiles (user_id, explanation_lang) values ($1, 'uk')", [id]);
+      await db().query("insert into auth.users (id, email) values ($1, $2)", [id, `${id}@example.test`]);
+      await db().query("insert into public.profiles (user_id, explanation_lang) values ($1, 'uk')", [id]);
     }
   });
 
@@ -74,15 +84,15 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     assert.equal(out.correct, true);
     assert.equal(out.recorded, true);
 
-    const events = await admin.query("select * from public.learning_events where user_id = $1", [ALICE]);
+    const events = await db().query("select * from public.learning_events where user_id = $1", [ALICE]);
     assert.equal(events.rowCount, 1);
     assert.equal(events.rows[0]!.correct, true);
     assert.equal(events.rows[0]!.evaluator_version, "1.0.0");
     assert.deepEqual(events.rows[0]!.concept_ids, [V2]);
 
-    const states = await admin.query("select * from public.concept_states where user_id = $1", [ALICE]);
+    const states = await db().query("select * from public.concept_states where user_id = $1", [ALICE]);
     assert.equal(states.rows[0]!.state, "in_progress");
-    const reviews = await admin.query("select * from public.review_items where user_id = $1", [ALICE]);
+    const reviews = await db().query("select * from public.review_items where user_id = $1", [ALICE]);
     assert.equal(reviews.rows[0]!.interval_days, 1);
   });
 
@@ -92,7 +102,7 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     const second = await recordAttempt(body, { bundle: bundle(), store: attemptStore(ALICE), userId: ALICE, now: T0 });
     assert.equal(first.recorded, true);
     assert.equal(second.recorded, false);
-    const { rowCount } = await admin.query("select 1 from public.learning_events where id = $1", [body.eventId]);
+    const { rowCount } = await db().query("select 1 from public.learning_events where id = $1", [body.eventId]);
     assert.equal(rowCount, 1);
   });
 
@@ -104,7 +114,7 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     out = await record(BOB, wrong);
     assert.equal(out.states[0]!.state, "needs_practice");
     assert.equal(out.states[0]!.because, "low_recent_accuracy");
-    const { rows } = await admin.query("select signals from public.learning_events where user_id = $1 limit 1", [BOB]);
+    const { rows } = await db().query("select signals from public.learning_events where user_id = $1 limit 1", [BOB]);
     assert.deepEqual(rows[0]!.signals, [V2]);
   });
 
@@ -113,7 +123,7 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     const bobEvents = await attemptStore(BOB).eventsForConcepts([V2]);
     assert.ok(aliceEvents.length > 0 && bobEvents.length > 0);
     assert.equal(aliceEvents.some((e) => bobEvents.some((b) => b.id === e.id)), false);
-    const all = await admin.query("select count(*)::int as n from public.learning_events");
+    const all = await db().query("select count(*)::int as n from public.learning_events");
     assert.equal(all.rows[0]!.n, aliceEvents.length + bobEvents.length);
   });
 
@@ -130,12 +140,12 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
   });
 
   it("cannot update or delete stored evidence, even as the learner", async () => {
-    const { rows } = await admin.query("select id from public.learning_events where user_id = $1 limit 1", [ALICE]);
+    const { rows } = await db().query("select id from public.learning_events where user_id = $1 limit 1", [ALICE]);
     const id = rows[0]!.id;
     const { withLearner } = await import("../lib/data/pg.ts");
     await assert.rejects(() => withLearner(ALICE, (c) => c.query("update public.learning_events set correct = true where id = $1", [id])));
     await assert.rejects(() => withLearner(ALICE, (c) => c.query("delete from public.learning_events where id = $1", [id])));
-    const still = await admin.query("select 1 from public.learning_events where id = $1", [id]);
+    const still = await db().query("select 1 from public.learning_events where id = $1", [id]);
     assert.equal(still.rowCount, 1);
   });
 
@@ -144,7 +154,7 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     await withService((c) => c.query("select 1"));
     const { rows } = await withLearner(ALICE, (c) => c.query("select current_user as who"));
     assert.equal(rows[0]!.who, "authenticated");
-    const released = await admin.query("select current_user as who");
+    const released = await db().query("select current_user as who");
     assert.notEqual(released.rows[0]!.who, "authenticated");
   });
 
