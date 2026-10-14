@@ -1,0 +1,27 @@
+{
+  "name": "@deutschgo/content-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DeutschGo content contract: JSON Schemas, loader, semantic validator, compiler, and answer evaluator.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./evaluate": "./src/evaluate.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "test": "node --test --experimental-strip-types \"test/**/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "validate": "node --experimental-strip-types src/cli/validate.ts ../../content",
+    "build:content": "node --experimental-strip-types src/cli/build.ts ../../content ../../apps/web/generated/content.json"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^5.9.3"
+  }
+}

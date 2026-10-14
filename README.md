@@ -1,67 +1,40 @@
 # DeutschGo
 
-DeutschGo is a long-term project to build a deep, flexible German-learning system for people who need German for life, work, and study in Germany, Austria, and Switzerland.
+DeutschGo is a deep, flexible German-learning system for people who need German for life, work, and study in Germany, Austria, and Switzerland: a connected model of German, a curriculum from A1 to C1, practice in all four skills, explanations in the learner's language, and honest, evidence-based progress.
 
-It is intended to combine a structured model of German-language knowledge, a high-quality curriculum, flexible learning paths, authentic learning materials, practice across all four skills, and measurable progress.
+## Status
+**Phase P1 — content contract & application skeleton.** The content contract, validator, answer evaluator, a gold-standard unit (V2 word order; not yet human-reviewed), and a Next.js skeleton exist and are checked in CI. Accounts, persistence, and the learning engine come next. Details: [project status](./docs/development/PROJECT_STATUS.md).
 
-## Project status
+## Quick start
+Requires Node.js ≥ 22.18 and Python 3 (for the doc check).
+```bash
+npm install
+npm run content:validate     # validate all content, show language coverage
+npm test                     # content-kit tests
+npm run dev -w @deutschgo/web  # http://localhost:3000 (builds the content bundle first)
+npm run check                # everything CI runs
+```
 
-**Phase: product and technical foundation.** This repository is being prepared before large-scale application development or bulk lesson authoring.
+## Documentation
+| Area | Start here |
+|---|---|
+| Product | [Vision](./docs/product/PRODUCT_VISION.md) · [Functional spec](./docs/product/PRODUCT_SPEC.md) · [Release stages](./docs/product/RELEASE_STAGES.md) · [Monetization](./docs/product/MONETIZATION.md) · [User flows](./docs/product/USER_FLOWS.md) |
+| Language & content | [Content contract](./docs/domain/CONTENT_CONTRACT.md) · [Knowledge model](./docs/domain/KNOWLEDGE_MODEL.md) · [Content standard](./docs/domain/CONTENT_STANDARD.md) · [Curriculum](./docs/domain/CURRICULUM_FRAMEWORK.md) · [Localization](./docs/domain/LOCALIZATION_POLICY.md) · [Regional varieties](./docs/domain/REGIONAL_VARIETIES.md) |
+| Learning | [Learning engine](./docs/domain/LEARNING_ENGINE.md) · [Four skills](./docs/domain/SKILLS.md) |
+| Technical | [Architecture](./docs/architecture/ARCHITECTURE.md) · [ADRs](./docs/architecture/decisions/README.md) · [Data & privacy](./docs/architecture/DATA_AND_PRIVACY.md) |
+| Quality | [Quality gates](./docs/quality/QUALITY_GATES.md) · [Content review](./docs/quality/CONTENT_REVIEW.md) · [Operations](./docs/quality/OPERATIONS.md) |
+| Work | [Roadmap](./docs/development/ROADMAP.md) · [Backlog](./docs/development/BACKLOG.md) · [Workflow](./docs/development/WORKFLOW.md) · [Sources](./docs/sources/SOURCE_REGISTER.md) |
 
-Not yet decided: final technology stack, backend/provider choices, hosting, mobile delivery strategy, subscription provider, and production data architecture. These decisions must be documented before implementation depends on them.
+## Repository layout
+```text
+CLAUDE.md, .claude/        instructions, scoped rules, skills for Claude Code
+docs/                      product, domain, architecture (ADRs), quality, development
+content/                   YAML: concepts, units, routes, i18n/<lang>, languages, sources
+packages/content-kit/      JSON Schemas, validator, compiler, answer evaluator (TypeScript)
+apps/web/                  Next.js web app / PWA
+scripts/                   repository checks
+.github/                   CI workflow, issue and PR templates
+```
 
-## Start here
-
-1. [Claude Code instructions](./CLAUDE.md) — short operating instructions for Claude Code.
-2. [Product vision](./docs/product/PRODUCT_VISION.md) — product vision and principles.
-3. [MVP scope](./docs/product/MVP_SCOPE.md) — proposed first usable release and explicit non-goals.
-4. [Knowledge model](./docs/domain/KNOWLEDGE_MODEL.md) — separate language knowledge, learning content, and learner state.
-5. [Content standard](./docs/domain/CONTENT_STANDARD.md) — quality bar for lessons and exercises.
-6. [Roadmap](./docs/development/ROADMAP.md) — staged implementation plan.
-7. [Development workflow](./docs/development/WORKFLOW.md) — task, branch, test, and review workflow.
-
-## Repository principles
-
-- Treat committed documentation as the project’s shared source of truth; do not rely on chat history as the only record of a decision.
-- Keep product/domain rules separate from implementation details.
-- Build one complete, testable user journey before expanding breadth.
-- Use small, reviewable changes and automated checks.
-- Do not bulk-generate lessons until the content contract, gold-standard lesson, and review process are approved.
-- Distinguish verified functionality from mockups, placeholders, and planned work.
-- Record material architectural decisions with their context, alternatives, and consequences.
-- Verify license, provenance, attribution, and reuse conditions before importing external text, audio, images, or datasets.
-
-## Current repository layout
-
-~~~text
-CLAUDE.md
-.claude/
-  rules/
-  skills/
-docs/
-  product/
-  architecture/
-  domain/
-  quality/
-  sources/
-  development/
-content/
-schemas/
-scripts/
-tests/
-.github/
-  ISSUE_TEMPLATE/
-  workflows/
-~~~
-
-Directories will gain implementation files as the corresponding decisions and work items become ready. This repository deliberately avoids committing to an unapproved technology stack.
-
-## How to contribute with Claude Code
-
-1. Open the repository locally and start Claude Code from its root.
-2. Ask Claude to read CLAUDE.md and only the documents relevant to the assigned task.
-3. Work on one small task in a dedicated branch.
-4. Run the documented checks, inspect the diff, and report any checks that were not run.
-5. Open a pull request and merge only after review and passing checks.
-
-See [Development workflow](./docs/development/WORKFLOW.md) for the fuller procedure.
+## Principles
+Committed docs are the source of truth. Content is validated automatically and reviewed by humans; schema-valid is not the same as correct German. Unfinished, unreviewed, or machine-translated material is always labelled. External material only with verified rights.

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.middle_field_order
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Order in the middle field
+  summary: Ordering of pronouns, objects and adverbials between the verb parts (e.g. time – manner – place tendencies).

@@ -1,51 +1,55 @@
-# Architecture — Principles and Decisions
+# Architecture
 
-## Status
-Architecture principles are being defined; the implementation stack is intentionally **not selected yet**. This is a decision checklist, not an implied commitment to a framework or provider.
+Status: **Accepted** (2026-10-12). Decisions: [ADR index](./decisions/README.md). Data/privacy: [DATA_AND_PRIVACY.md](./DATA_AND_PRIVACY.md). Operations: [OPERATIONS.md](../quality/OPERATIONS.md).
 
-## Boundaries
-Keep these domains separate, even if the first release uses a modular monolith:
-1. Presentation: responsive UX, navigation, accessibility, localization.
-2. Learning domain: knowledge graph, routes, diagnostics, exercise evaluation, progress, review scheduling.
-3. Content domain: language concepts, lessons, exercises, texts, dialogues, localization, sources, and media metadata.
-4. Application services: orchestration, business rules, and permissions.
-5. Persistence/integrations: profiles, progress, content delivery, audio, optional AI, analytics, billing.
-6. Quality tooling: schema validation, content checks, tests, builds, and release automation.
+## Summary
+A **modular monolith in one repository**: a Next.js (TypeScript) web app/PWA, a TypeScript content kit, content as YAML in Git compiled at build time, and Supabase (Postgres + Auth + Storage, EU region) for learner data only. Hosted on Vercel; CI on GitHub Actions. Native store apps later via Capacitor around the same web app. No microservices.
 
-Presentation components must not become the canonical storage format for teaching content. The learning model must not be coupled to one screen.
+## Component map
+```text
+ GitHub repo (monorepo, npm workspaces)
+ ├─ content/                YAML: concepts, units, routes, i18n, registries      (authored, reviewed)
+ ├─ packages/content-kit/   schemas · loader · semantic checks · compiler ·      (pure TS, tested)
+ │                          answer evaluator · graph · l10n resolution
+ └─ apps/web/               Next.js App Router
+      ├─ build time: content-kit compiles content → generated/content.json → static pages per lang × unit
+      ├─ server: route handlers / server actions (P2): attempts, sync, settings, entitlements
+      └─ client: lesson player, exercise player (shared evaluator), offline queue (P3)
 
-## Constraints
-- Start with a modular monolith unless evidence supports independent services.
-- Use stable IDs, not localized titles, as identifiers.
-- Version schemas; document compatibility and migrations.
-- Separate canonical German content from explanation translations and UI strings.
-- Keep source/rights metadata with imported content.
-- Store learner state separately from authored content.
-- Make recommendations explainable and testable before opaque personalization.
-- Minimize personal data and define retention/export/deletion before production.
-- Keep secrets outside the repository.
-- Make local setup reproducible.
-- Add abstractions only when they address a real boundary or expected change.
+ Runtime services
+  Vercel (hosting, CDN, previews)   Supabase EU (Postgres+RLS, Auth, Storage)   Sentry-class error monitoring (P2)
+  Object storage/CDN for audio (ADR-0007, P5)   Billing provider (ADR-0008, P7)   Cookieless analytics (P2)
+```
 
-## Decisions required before implementation
-For each area, compare realistic options, solo-developer effort, running cost, portability/lock-in, quality, privacy/security, and maintenance. Record accepted decisions as ADRs.
-- Frontend framework, UI system, routing, accessibility.
-- Web/PWA first versus simultaneous native applications.
-- Language/runtime, data validation, test tooling.
-- Content format and build-time versus runtime delivery.
-- Backend, authentication, database, backups, and data isolation.
-- Media storage/audio delivery/asset rights.
-- Workflow for 5–10 explanation/interface languages.
-- Hosting, deployment, monitoring, rollback.
-- Subscription/entitlement model and billing.
-- Privacy, analytics, account deletion, and data export.
+## Module boundaries (enforced by folder structure and imports)
+| Module | Responsibility | May depend on |
+|---|---|---|
+| `content-kit` | content types, validation, compile, evaluation, graph, l10n | nothing app-specific (no DB, no React) |
+| `apps/web/lib/content` | read compiled bundle, resolve strings | content-kit |
+| `apps/web/lib/learning` (P2) | evidence → states → recommendations (pure functions) | content-kit types |
+| `apps/web/lib/data` (P2) | the only module that talks to Supabase; repository functions | Supabase client |
+| `apps/web/app`, `components` | presentation | all of the above via their APIs |
+| `apps/mobile` (P8) | Capacitor shell | apps/web build |
 
-## Hypothesis to verify
-A single deployable app with explicit modules is likely easier for a solo founder to maintain than microservices. Treat this as a hypothesis, not a final technology decision.
+Teaching text never lives in components; learner data never lives in `content/`.
 
-## Ready-for-implementation criteria
-- Blocking architecture decisions are accepted or explicitly deferred with reasons.
-- Data flow is documented for profile, content delivery, answer attempts, and progress.
-- Content can be validated independently of UI code.
-- A representative lesson can be loaded, rendered, exercised, and recorded end-to-end.
-- Backup, privacy, deployment, and rollback are addressed before production learner data is collected.
+## Key data flows
+1. **Content delivery:** YAML → `content:validate` → `content:build` → JSON bundle → static generation → CDN. Content updates ship by merging a PR (no DB migration). When the bundle outgrows a single file, split per language and unit (P3/P4, same contract).
+2. **Answer attempt (P2):** client evaluates with the shared evaluator for instant feedback → sends attempt event (content id/version, response, result) → server **re-evaluates** with the same code against the bundle (never trusts client correctness) → inserts event → recomputes affected concept states → returns next-step recommendation.
+3. **Sync (P3):** events are append-only with client-generated UUIDs → idempotent upload of an offline queue; states recomputed server-side.
+4. **Profile/settings:** Supabase Auth user → `profiles` row (RLS: owner only).
+5. **Export/deletion (P3):** server job assembles all rows for a user → JSON download; deletion cascades and is logged without content.
+
+## Cross-cutting decisions
+- **Language/runtime:** TypeScript strict everywhere; Node 22 LTS ([ADR-0006](./decisions/ADR-0006-repository-and-tooling.md)).
+- **Rendering:** static generation for content pages (SEO for public concept pages, low cost); dynamic only for learner-specific views.
+- **i18n:** content localization via content-kit; UI strings via message catalogs (library chosen in P2, ICU-capable, RTL-safe).
+- **Accessibility:** semantic HTML, keyboard operable exercises, `lang="de"` on German text for screen readers, 44px targets, WCAG 2.2 AA target; axe checks in E2E tests (P2).
+- **Security:** server-side authorization (RLS + server checks); secrets only in Vercel/Supabase/GitHub secret stores; dependency review; CSP headers (P2).
+- **Testing:** node:test for content-kit; Vitest or node:test for app logic; Playwright E2E for journeys (P2); content validation in CI ([quality gates](../quality/QUALITY_GATES.md)).
+
+## Scalability stance
+Static content on a CDN plus Postgres for per-user events comfortably serves thousands of active learners. Re-evaluate when: bundle > 5 MB per language, DB > 10 GB, p95 API latency > 300 ms, or monthly infra cost > €150 (triggers recorded in [OPERATIONS.md](../quality/OPERATIONS.md)).
+
+## Portability (exit paths)
+Next.js can be self-hosted (Node server or container); Supabase is Postgres (pg_dump), auth users exportable; content is plain YAML in Git; evaluator/checks are dependency-light TypeScript. The single riskiest lock-in is Supabase Auth — mitigated by keeping auth calls inside `lib/data`.

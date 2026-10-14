@@ -1,56 +1,45 @@
 # DeutschGo — Claude Code Instructions
 
 ## Mission
-Build DeutschGo: a deep, flexible German-learning system for life, work, and study in Germany, Austria, and Switzerland. Quality of learning and content is the main differentiator; do not reduce it to a generic flashcard app.
+Build DeutschGo: a deep, flexible German-learning system for life, work, and study in Germany, Austria, and Switzerland. Quality of learning and content is the differentiator; never reduce it to a generic flashcard app. We build the complete product in phases — phases order work, they never shrink the design.
 
-## Read context selectively
-- Start with this file and [README.md](./README.md).
-- Product work: [Product vision](./docs/product/PRODUCT_VISION.md), [MVP scope](./docs/product/MVP_SCOPE.md), and [user flows](./docs/product/USER_FLOWS.md).
-- Language/content work: [Knowledge model](./docs/domain/KNOWLEDGE_MODEL.md), [learning engine](./docs/domain/LEARNING_ENGINE.md), and [content standard](./docs/domain/CONTENT_STANDARD.md).
-- Technical work: [architecture](./docs/architecture/ARCHITECTURE.md), relevant ADRs, and [quality gates](./docs/quality/QUALITY_GATES.md).
-- Follow the [development workflow](./docs/development/WORKFLOW.md).
-- Read only the extra files needed for the current task; do not load the whole content repository by default.
+## Orient fast (read only what the task needs)
+1. [Project status](./docs/development/PROJECT_STATUS.md) and [backlog](./docs/development/BACKLOG.md) — where we are, what is next.
+2. Product: [vision](./docs/product/PRODUCT_VISION.md), [functional spec](./docs/product/PRODUCT_SPEC.md), [release stages](./docs/product/RELEASE_STAGES.md), [user flows](./docs/product/USER_FLOWS.md).
+3. Content/language: [content contract](./docs/domain/CONTENT_CONTRACT.md), [knowledge model](./docs/domain/KNOWLEDGE_MODEL.md), [content standard](./docs/domain/CONTENT_STANDARD.md), [localization](./docs/domain/LOCALIZATION_POLICY.md), [curriculum](./docs/domain/CURRICULUM_FRAMEWORK.md).
+4. Engine/skills: [learning engine](./docs/domain/LEARNING_ENGINE.md), [skills](./docs/domain/SKILLS.md).
+5. Technical: [architecture](./docs/architecture/ARCHITECTURE.md), [ADR index](./docs/architecture/decisions/README.md), [data & privacy](./docs/architecture/DATA_AND_PRIVACY.md), [quality gates](./docs/quality/QUALITY_GATES.md).
+Do not load all docs or all content files by default.
+
+## Repository map
+- `content/` — YAML: concepts, units, routes, `i18n/<lang>/`, `languages.yaml`, `sources.yaml`. Never learner data.
+- `packages/content-kit/` — schemas, loader, validator, compiler, evaluator (pure TS, `node:test`).
+- `apps/web/` — Next.js app; reads `generated/content.json`; no teaching text in components.
+- `docs/` — canonical decisions; `scripts/check_foundation.py` — doc/link check.
+
+## Commands
+`npm run check` (everything) · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `python3 scripts/check_foundation.py`
 
 ## Non-negotiable principles
-1. Keep language knowledge, curriculum, learning content, learner state, and UI code separate.
-2. Prefer small, reversible, testable changes over broad rewrites.
-3. Do not invent project decisions. If an unresolved decision blocks implementation, recommend options and record the accepted choice.
-4. Do not bulk-create lessons before the content contract, gold-standard lesson, and review process are approved.
-5. Never present mock, placeholder, or planned functionality as implemented.
-6. Verify provenance and reuse permissions before copying external content or media.
-7. Preserve working behaviour unless the task explicitly changes it.
-8. Never commit secrets, credentials, or real personal learner data.
+1. Separate language knowledge, curriculum, content, learner state, localization, and UI code.
+2. Follow accepted ADRs; propose a new/superseding ADR instead of silently deviating.
+3. Never present mock, planned, unreviewed, or machine-translated material as finished; keep UI labels honest.
+4. Never set content `approved`/`published` or l10n `reviewed` without a recorded human review.
+5. No bulk content before the gold unit is human-reviewed; afterwards batches ≤ review capacity.
+6. Verify rights before using external material; only `approved` sources in `content/sources.yaml`.
+7. Never commit secrets or real learner data (the repository is public).
+8. Small, reversible, tested changes; preserve working behaviour.
 
-## Standard task procedure
-1. Identify the exact task and acceptance criteria. Inspect repository status and relevant files first.
-2. State a brief plan for non-trivial work.
-3. Inspect dependencies and adjacent tests before editing.
-4. Implement the smallest coherent change; avoid unrelated formatting and renaming.
-5. Run focused checks, then broader applicable checks.
-6. Review the diff for accidental changes, missing tests, broken links, security issues, and scope creep.
-7. Report changed files, checks actually run, results, limitations, and the next dependency. Never claim an unrun check passed.
+## Task procedure
+1. Read the issue + relevant docs; restate acceptance criteria.
+2. Short plan for non-trivial work; check dependencies and adjacent tests.
+3. Implement the smallest complete slice; add/adjust tests and docs.
+4. Run focused checks, then `npm run check` where practical.
+5. Review the diff for scope creep, secrets, broken links.
+6. Report: result · files changed · checks actually run + outcome · unverified risks · next task. Never claim an unrun check passed.
 
-## Git discipline
-- Use a dedicated branch for each bounded task; do not work on main unless explicitly instructed.
-- Do not force-push, rewrite history, delete branches, change repository visibility, or deploy to production without explicit authorization.
-- Keep commits focused and descriptive. Open a pull request with context and test evidence.
-- Do not merge merely because code was generated; follow the review and quality gates.
+## Git
+Dedicated branch per task (`feat/`, `fix/`, `docs/`, `content/`, `chore/`); PR with evidence; no direct commits to `main`, no force-push, no history rewrite, no visibility change, no production deploy/migration/billing change without explicit owner authorization.
 
-## Context and token efficiency
-- Committed documentation is the project record; chat history is not the sole source of truth.
-- Link to canonical docs instead of copying their contents into prompts.
-- Read targeted files and search for symbols rather than opening large files indiscriminately.
-- Summarize long command output; inspect full logs only when debugging.
-- Use relevant skills in .claude/skills for repeatable workflows.
-- Do not repeat discovery or restate the whole project in every response.
-
-## Current status
-The repository is in the product/technical foundation phase. The final application stack, backend, database, hosting, mobile delivery, billing provider, and production data model are not approved. Do not silently lock these choices.
-
-## Completion report
-End implementation tasks with:
-- Result
-- Files changed
-- Checks run and outcome
-- Unverified risks or limitations
-- Suggested next task
+## Token discipline
+Docs are the record, not chat. Link instead of copying specs. Search symbols instead of opening large files. Use `.claude/skills/` for repeated workflows. Update PROJECT_STATUS/BACKLOG when state changes.

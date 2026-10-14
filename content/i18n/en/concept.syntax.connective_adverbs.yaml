@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.connective_adverbs
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Connective adverbs: deshalb, trotzdem, dann …'
+  summary: Linking words that occupy position 1 and are followed directly by the verb.

@@ -1,0 +1,40 @@
+# Canonical concept: verb-second (V2) in German declarative main clauses.
+# German facts live here once; explanations live in content/i18n/<lang>/.
+schema: deutschgo.concept/1
+id: concept.syntax.v2_declarative
+version: 1.0.0
+status: needs_review
+kind: grammar
+domain: syntax
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A2 }
+variety: [standard]
+register: neutral
+relations:
+  - { type: depends_on, target: concept.morph.verb_present_conjugation }
+  - { type: contrasts_with, target: concept.syntax.v1_yes_no_questions, note: "@rel.v1" }
+  - { type: contrasts_with, target: concept.syntax.imperative, note: "@rel.imperative" }
+  - { type: contrasts_with, target: concept.syntax.verb_final_subordinate, note: "@rel.verb_final" }
+  - { type: related_to, target: concept.syntax.verbal_bracket, note: "@rel.bracket" }
+  - { type: related_to, target: concept.syntax.position_zero_conjunctions, note: "@rel.position_zero" }
+  - { type: related_to, target: concept.syntax.connective_adverbs, note: "@rel.connective" }
+  - { type: related_to, target: concept.syntax.w_questions, note: "@rel.w_questions" }
+pattern:
+  schema_de: "[Position 1: genau ein Satzglied] – [Position 2: finites Verb] – [Mittelfeld] – [Satzende: infinite Verbteile]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_subject_first, de: "Ich wohne seit Mai in Berlin.", gloss: "@ex.subject_first", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_time_first, de: "Seit Mai wohne ich in Berlin.", gloss: "@ex.time_first", highlight: [2], source: src.deutschgo_original }
+  - { id: ex_object_first, de: "Den Vertrag unterschreibe ich morgen.", gloss: "@ex.object_first", note: "@ex.object_first.note", highlight: [2], source: src.deutschgo_original }
+  - { id: ex_modal, de: "Am Montag muss ich zum Bürgeramt gehen.", gloss: "@ex.modal", highlight: [2], source: src.deutschgo_original }
+confusions:
+  - { id: err_v3_adverbial, wrong: "Heute ich arbeite im Homeoffice.", right: "Heute arbeite ich im Homeoffice.", explanation: "@err.v3_adverbial" }
+  - { id: err_subject_adverb_verb, wrong: "Ich oft koche am Wochenende.", right: "Ich koche oft am Wochenende.", explanation: "@err.subject_adverb_verb" }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored draft (2026-10-12). Requires review by a qualified German teacher/native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "All examples were authored for DeutschGo; no external material used. Owner confirmation pending." }

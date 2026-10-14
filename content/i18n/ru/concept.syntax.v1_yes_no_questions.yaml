@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.v1_yes_no_questions
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Общие вопросы: глагол на первом месте'
+  summary: Вопросы, на которые отвечают ja/nein, начинаются со спрягаемого глагола.

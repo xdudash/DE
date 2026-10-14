@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.middle_field_order
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Порядок слів у середині речення
+  summary: Розташування займенників, додатків і обставин між частинами дієслова (наприклад, тенденція «час – спосіб дії – місце»).

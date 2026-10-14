@@ -1,0 +1,20 @@
+{
+  "name": "deutschgo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "content:validate": "npm run validate -w @deutschgo/content-kit",
+    "content:build": "npm run content -w @deutschgo/web",
+    "build": "npm run build -w @deutschgo/web",
+    "check": "python3 scripts/check_foundation.py && npm run typecheck && npm test && npm run content:validate && npm run build"
+  }
+}

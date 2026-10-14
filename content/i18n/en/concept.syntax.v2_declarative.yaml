@@ -1,0 +1,25 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.v2_declarative
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: "Verb in second position (V2) in statements"
+  summary: "In German declarative main clauses, the conjugated verb occupies position 2; exactly one sentence element precedes it."
+  rel.v1: "Yes/no questions put the conjugated verb in position 1."
+  rel.imperative: "Commands put the verb in position 1."
+  rel.verb_final: "Subordinate clauses put the conjugated verb at the end."
+  rel.bracket: "Non-finite verb parts go to the end, forming a bracket with the V2 verb."
+  rel.position_zero: "und, aber, oder, denn, sondern stand before position 1."
+  rel.connective: "deshalb, trotzdem, dann … occupy position 1 and trigger inversion."
+  rel.w_questions: "W-questions are V2 with the question word in position 1."
+  pattern.scope: "Declarative main clauses (statements), including the second clause after und/aber/oder/denn/sondern, and W-questions."
+  pattern.limits: "Not for yes/no questions or imperatives (verb first) or subordinate clauses (verb last). Informal spoken weil + V2 is non-standard in writing."
+  ex.subject_first: "I have been living in Berlin since May."
+  ex.time_first: "Since May I have been living in Berlin."
+  ex.object_first: "I'll sign the contract tomorrow."
+  ex.object_first.note: "Object in position 1 for emphasis or contrast."
+  ex.modal: "On Monday I have to go to the citizens' office."
+  err.v3_adverbial: "Transfer from SVO languages: the subject is put before the verb after a fronted adverbial (verb ends up in position 3)."
+  err.subject_adverb_verb: "An adverb inserted between the subject and the verb puts the verb in position 3."

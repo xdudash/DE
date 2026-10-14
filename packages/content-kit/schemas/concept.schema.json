@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deutschgo.dev/schemas/concept.schema.json",
+  "title": "DeutschGo language concept v1",
+  "description": "A stable unit of knowledge about German, independent of lessons and explanation language.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "version",
+    "status",
+    "kind",
+    "domain",
+    "title",
+    "summary",
+    "cefr"
+  ],
+  "properties": {
+    "schema": {
+      "const": "deutschgo.concept/1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/conceptId"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "status": {
+      "$ref": "common.schema.json#/$defs/status"
+    },
+    "kind": {
+      "enum": [
+        "grammar",
+        "morphology",
+        "lexeme_sense",
+        "collocation",
+        "pronunciation",
+        "orthography",
+        "pragmatics",
+        "discourse",
+        "regional"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z][a-z_]*$"
+    },
+    "title": {
+      "$ref": "common.schema.json#/$defs/l10nRef"
+    },
+    "summary": {
+      "$ref": "common.schema.json#/$defs/l10nRef"
+    },
+    "cefr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "introduced"
+      ],
+      "properties": {
+        "introduced": {
+          "$ref": "common.schema.json#/$defs/cefr"
+        },
+        "expected_mastery": {
+          "$ref": "common.schema.json#/$defs/cefr"
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/relation"
+      }
+    },
+    "variety": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/variety"
+      },
+      "uniqueItems": true
+    },
+    "register": {
+      "$ref": "common.schema.json#/$defs/register"
+    },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_de",
+        "scope"
+      ],
+      "properties": {
+        "schema_de": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "common.schema.json#/$defs/l10nRef"
+        },
+        "limits": {
+          "$ref": "common.schema.json#/$defs/l10nRef"
+        }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/example"
+      }
+    },
+    "confusions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/confusion"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/sourceUse"
+      }
+    },
+    "review": {
+      "$ref": "common.schema.json#/$defs/review"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "planned"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "pattern": false,
+          "examples": false,
+          "confusions": false
+        },
+        "type": "object"
+      },
+      "else": {
+        "required": [
+          "pattern",
+          "examples",
+          "review"
+        ],
+        "properties": {
+          "examples": {
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    }
+  ]
+}

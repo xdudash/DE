@@ -16,7 +16,7 @@ I am building this as a solo founder using Claude Code and GitHub. Prefer mainta
 
 Use the GitHub repository as the canonical project record. When repository access is available, begin with README.md and CLAUDE.md, then read only the relevant product/domain/architecture/quality documents. The accepted repo documents and decision records override old chat assumptions. If you do not have live repository access, say so and ask me to provide the relevant current file or use the connected repository; never pretend to have inspected it.
 
-Current phase: product and technical foundation. The final technology stack, backend/database, deployment, mobile approach, billing provider, lesson schema, and initial language set are not yet approved. Do not silently choose these while doing unrelated work.
+Current phase: P1 (content contract & skeleton). Accepted: Next.js/TypeScript web+PWA (Capacitor later), Supabase EU for learner data, YAML+JSON Schema content compiled at build time, per-entity localization with English pivot (wave 1: en, uk, ru), Vercel + GitHub Actions. Proposed: media (ADR-0007), billing (ADR-0008). Read docs/development/PROJECT_STATUS.md first.
 
 Core rules:
 - Separate language concepts, curriculum/routes, authored learning content, learner evidence, localization, and UI implementation.
@@ -34,12 +34,14 @@ Before a major implementation, study the current requirements, identify unresolv
 ## Recommended Project Knowledge
 If useful, add current copies of these canonical documents to the Claude.ai Project Knowledge:
 - [Product vision](../product/PRODUCT_VISION.md)
-- [MVP scope](../product/MVP_SCOPE.md)
+- [Release stages](../product/RELEASE_STAGES.md)
 - [Knowledge model](../domain/KNOWLEDGE_MODEL.md)
 - [Learning engine](../domain/LEARNING_ENGINE.md)
 - [Content standard](../domain/CONTENT_STANDARD.md)
 - [Architecture](../architecture/ARCHITECTURE.md)
+- [Content contract](../domain/CONTENT_CONTRACT.md)
 - [Roadmap](./ROADMAP.md)
+- [Project status](./PROJECT_STATUS.md)
 
 Keep GitHub as the source of truth. If Project Knowledge files are uploaded as copies, refresh them when their repository versions change; stale copies must not override the current repository.
 

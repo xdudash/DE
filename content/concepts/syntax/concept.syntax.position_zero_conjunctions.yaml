@@ -1,0 +1,12 @@
+schema: deutschgo.concept/1
+id: concept.syntax.position_zero_conjunctions
+version: 0.1.0
+status: planned
+kind: grammar
+domain: syntax
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A1, expected_mastery: A2 }
+relations:
+  - { type: depends_on, target: concept.syntax.v2_declarative }
+  - { type: commonly_confused_with, target: concept.syntax.connective_adverbs }

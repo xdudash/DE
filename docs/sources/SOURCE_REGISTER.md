@@ -1,39 +1,28 @@
 # External Source Register
 
-## Status
-The sources below are candidates for research or future integration, not a statement that their content can be copied or redistributed. Verify exact terms, versions, asset-level permissions, and intended commercial use before ingestion.
+Status: updated 2026-10-12. Machine-readable registry: [`content/sources.yaml`](../../content/sources.yaml) — only sources with `status: approved` may be referenced by content (validator-enforced).
 
-## Candidate resources
+## Strategy
+1. **Original editorial content first** (explanations, examples, exercises, graded texts written for DeutschGo) — full rights, consistent quality.
+2. **Licensed open data** where it measurably improves quality (frequency, example candidates, speech for evaluation), after a pilot and per-asset rights check.
+3. **Link-only** to high-quality external resources (public broadcasters, Goethe, official authority pages) with our own description.
+4. **Never** copy commercial textbooks, exam materials, dictionary entries, or audio without a written license.
 
-| Resource | Potential use | Required review |
-|---|---|---|
-| [DW Learn German](https://learngerman.dw.com/) | Learner reference and discovery of topics | Terms for each item, media rights, attribution, redistribution, and whether linking is preferable |
-| [Goethe-Institut](https://www.goethe.de/) | Reference for language learning and exam context | Rights and terms for each asset; public access is not reuse permission |
-| [Mozilla Common Voice](https://commonvoice.mozilla.org/en/datasets) | Candidate speech/audio datasets for research or evaluation | Exact release and locale, license/attribution, participant/privacy conditions, redistribution and training terms |
-| [Tatoeba downloads](https://tatoeba.org/en/downloads) | Candidate sentences and translations | Per-item license/attribution, provenance, translation quality, separate audio rights |
-| [Leipzig Corpora Collection](https://wortschatz.uni-leipzig.de/en/download) | Candidate corpus data for frequency and usage research | Dataset-specific terms, attribution, redistribution limits, version, derived-data obligations |
-| [Duden](https://www.duden.de/) | Dictionary/reference research | Commercial terms and restrictions; do not copy protected entries or definitions without permission |
-| [IDS grammis](https://grammis.ids-mannheim.de/) | Grammar/reference research | Text reuse and redistribution terms; research reference does not imply republishing rights |
+## Candidates (license facts verified where marked ✔; re-verify at ingestion)
+| Resource | Candidate use | License / terms | Commercial display? | Decision |
+|---|---|---|---|---|
+| [Tatoeba](https://tatoeba.org/en/downloads) | example-sentence candidates, translations | ✔ Sentences CC BY 2.0 FR (part CC0); audio licensed per contributor, empty license = no reuse | Yes with attribution per sentence (CC BY); quality varies | candidate — pilot in P4 with editorial filtering and per-item attribution |
+| [Mozilla Common Voice](https://commonvoice.mozilla.org/en/datasets) | speech for ASR evaluation research | CC0 (per release; verify) | Legally yes; read speech, not natural dialogue | candidate — research/evaluation only, not listening lessons |
+| [Leipzig Corpora Collection](https://wortschatz.uni-leipzig.de/en/download) | word frequency for vocabulary selection | Terms page not machine-readable from this session; to verify manually | unknown | candidate — verify terms (DG-005) |
+| Wiktionary (German/English/Russian/Ukrainian) | lexical cross-checks (forms, gender) | CC BY-SA 4.0 (share-alike) | Share-alike would bind derived entries | reference only unless SA obligations accepted |
+| [DW Learn German](https://learngerman.dw.com/) | external learner resource | DW terms; content not freely reusable | no | link-only |
+| [Goethe-Institut](https://www.goethe.de/) | exam context, references | copyright | no | link-only; never copy word lists/test items |
+| [Duden](https://www.duden.de/) | reference | commercial | no | research reference only |
+| [IDS grammis](https://grammis.ids-mannheim.de/) | grammar reference | IDS terms | no (without permission) | research reference only |
+| Official authority sites (BAMF, AMS, oesterreich.gv.at, ch.ch) | scenario fact-checking | public information; texts copyrighted | no copying | link + paraphrase with "last verified" date |
 
 ## Required metadata for imported material
-- Stable internal source ID.
-- Provider and exact source URL/download identifier.
-- Access/download date and resource version.
-- Exact license/terms URL and relevant version.
-- Allowed use: link-only, internal research, display, modification, redistribution, commercial use, or other explicitly permitted activity.
-- Required attribution/license files.
-- Item-level provenance where practical.
-- Transformations made by DeutschGo.
-- Review status and reviewer.
-- Refresh/removal plan if terms or availability change.
+Internal source id; provider and exact URL/identifier; download date and version; license URL/version; allowed uses (`link_only`, `internal_research`, `display`, `modify`, `redistribute`, `commercial`); attribution text; item-level provenance; transformations; reviewer; refresh/removal plan.
 
 ## Rules
-- Publicly accessible does not mean public domain or commercially reusable.
-- A dataset-level license may not cover each media item.
-- Link to protected content instead of copying it when appropriate.
-- Do not scrape or bulk-download unless applicable terms and permissions allow it.
-- Never call a source “free to use” without verifying the exact license and intended use.
-- Keep credentials and private download links out of Git.
-
-## Next action
-Before ingesting a dataset, run a small pilot, capture complete provenance, check sample quality, and confirm that the intended display and commercial use are permitted. Record the decision here.
+Public ≠ free to reuse. Dataset licenses may not cover each item (e.g., audio). Do not scrape or bulk-download unless terms allow it. Never call a source "free to use" without verifying exact license and intended use. Keep credentials and private download links out of Git.

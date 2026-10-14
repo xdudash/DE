@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_present_conjugation
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Present-tense verb conjugation
+  summary: Personal endings of verbs in the present tense, including stem changes and irregular verbs (sein, haben, werden).

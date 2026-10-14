@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deutschgo.dev/schemas/sources.schema.json",
+  "title": "DeutschGo machine-readable source registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "sources"],
+  "properties": {
+    "schema": { "const": "deutschgo.sources/1" },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "name", "license", "allowed_use", "status"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/sourceId" },
+          "name": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "license": { "type": "string" },
+          "license_url": { "type": "string", "format": "uri" },
+          "allowed_use": {
+            "type": "array", "uniqueItems": true,
+            "items": { "enum": ["link_only", "internal_research", "display", "modify", "redistribute", "commercial"] }
+          },
+          "attribution": { "type": "string" },
+          "status": { "enum": ["candidate", "approved", "rejected"] }
+        }
+      }
+    }
+  }
+}

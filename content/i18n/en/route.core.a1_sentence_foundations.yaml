@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: route.core.a1_sentence_foundations
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Core sentence structure (A1–A2)
+  summary: 'The basic German sentence patterns: statements, questions, commands, linking clauses and subordinate clauses.'

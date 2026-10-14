@@ -1,0 +1,9 @@
+# INVALID ON PURPOSE: required "summary" is missing.
+schema: deutschgo.concept/1
+id: concept.bad.missing_summary
+version: 1.0.0
+status: planned
+kind: grammar
+domain: syntax
+title: "@title"
+cefr: { introduced: A1 }

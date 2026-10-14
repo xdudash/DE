@@ -4,7 +4,7 @@
 Define the editorial and pedagogical quality bar before producing lessons at scale. Every published unit must teach a clear objective and help learners understand and apply German, not merely reveal answers.
 
 ## Required learning-unit fields
-A unit must declare stable ID, title, status/version, intended CEFR range, prerequisites, goal/audience, DACH variety/register, measurable objectives, concept references, reviewed explanation language(s), explanation, contextual examples, practice, answer key/rubric, explanatory feedback, source/provenance and rights metadata where relevant, and QA status. The exact machine-readable contract is a separately versioned deliverable.
+Defined and enforced by the [content contract](./CONTENT_CONTRACT.md) (schema family v1). Calibration item: [`unit.syntax.v2_declarative.a1`](../../content/units/syntax/unit.syntax.v2_declarative.a1.yaml). Review workflow: [content review](../quality/CONTENT_REVIEW.md).
 
 ## Explanation quality
 A strong explanation:
@@ -39,5 +39,8 @@ Record origin, exact URL/identifier, version/access date, license/terms, attribu
 ## Review lifecycle
 Use explicit statuses such as draft, needs_review, approved, published, and deprecated. Unreviewed content must never silently appear approved. Structural validation and linguistic/pedagogical review are separate required gates.
 
+## Learner-language awareness
+Explanations name typical transfer errors for the learner's language (e.g. free word order in Ukrainian/Russian → verb-third errors after a fronted adverbial). Such notes live in the explanation-language file; the German facts stay canonical.
+
 ## Gold-standard lesson
-Before mass production, create and review one reference lesson that calibrates depth, data structure, examples, exercise design, translations, and QA. It should test important content features but need not represent every future lesson type.
+The V2 unit is the reference: precise rule with scope and limits, pattern table, everyday DACH examples with highlighted forms, contrasts, position-0 vs position-1 connectors, typical errors, regional note, summary, and ten exercises of four types with accepted variants, error rules that signal concepts, and explanations. Bulk production starts only after its human review (DG-007).
