@@ -18,16 +18,18 @@ h1 { line-height: 1.2; margin: .5rem 0; } h2 { margin-top: 2.2rem; } h3 { margin
 .tag.warn { background: var(--warn); }
 .langs { list-style: none; padding: 0; display: flex; gap: .75rem; flex-wrap: wrap; }
 .langs.inline a[aria-current] { font-weight: 700; text-decoration: none; }
-.route, .graph { padding-left: 1.2rem; } .route li, .graph li { margin: .35rem 0; }
+.route, .graph { padding-inline-start: 1.2rem; } .route li, .graph li { margin: .35rem 0; }
 .step.planned { color: var(--muted); }
 .de { font-family: inherit; }
+/* German stays left-to-right inside a right-to-left interface. */
+[dir="rtl"] [lang="de"], [dir="rtl"] .de { direction: ltr; text-align: start; unicode-bidi: isolate; }
 mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .1em; }
 .table-wrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 th, td { border: 1px solid var(--line); padding: .35rem .5rem; text-align: start; vertical-align: top; }
 td.verb { background: var(--mark); font-weight: 600; }
 figcaption { color: var(--muted); margin-bottom: .4rem; }
-.examples, .errors { padding-left: 1.1rem; } .examples li, .errors li { margin-bottom: .7rem; }
+.examples, .errors { padding-inline-start: 1.1rem; } .examples li, .errors li { margin-bottom: .7rem; }
 .gloss { color: var(--muted); }
 .contrast { border-inline-start: 3px solid var(--line); padding-inline-start: .8rem; margin: .8rem 0; }
 .pair { display: grid; gap: .2rem; }

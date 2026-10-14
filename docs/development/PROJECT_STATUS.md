@@ -11,7 +11,8 @@ Last updated: 2026-10-12
 - Web skeleton (`apps/web`, Next.js): language picker, catalogue (route + concept list), lesson page rendering all block types, interactive exercises using the shared evaluator; honest banners for review/translation/persistence state; PWA manifest.
 - Learning engine v1 (`packages/learning-engine`, DG-010): concept-state derivation, fixed-interval review scheduler, explainable recommendations with reason codes; 26 fixture tests (mutation-checked). Not yet wired to the app — needs persistence (DG-008/009).
 - Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, append-only evidence, server-only writes for derived state and entitlements, GDPR export function and cascade deletion; `supabase/tests` verify isolation, constraints and the policy inventory against a real PostgreSQL (mutation-checked, runs in CI). **No hosted Supabase project exists** — creating one needs owner authorization.
-- CI: foundation check, content validation, tests, typecheck, static build of all language × unit pages.
+- Interface localization (`packages/i18n`, DG-014): typed catalogs for en (pivot), uk, ru and ar (preview, RTL), a dependency-free ICU-subset formatter with `Intl.PluralRules`, and tests that format every message of every catalog and enforce key/placeholder parity; the web app renders all its chrome from these catalogs and a cross-check test keeps the interface registry and `content/languages.yaml` in agreement.
+- CI: foundation check, content validation, tests, typecheck, static build of all locale × unit pages (including the Arabic preview locale).
 
 ## Authored but NOT human-verified
 - German correctness and pedagogy of the gold unit (`review.*: pending`).
@@ -19,10 +20,10 @@ Last updated: 2026-10-12
 - Rights confirmation for original content (owner).
 
 ## Not implemented
-Authentication, hosted database, persistence of real attempts, sync, engine integration in the UI, knowledge-map UI/search, lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
+Authentication, hosted database, persistence of real attempts, sync, engine integration in the UI, knowledge-map UI/search, Arabic explanations (interface only), lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
 
 ## Accepted decisions
-ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling. Proposed: ADR-0007 media, ADR-0008 billing.
+ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization. Proposed: ADR-0007 media, ADR-0008 billing.
 
 ## Blockers needing the owner
 1. Qualified reviewers for the gold unit (DG-007).

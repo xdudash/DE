@@ -1,71 +1,86 @@
 import Link from "next/link";
-import { bundle, dictionaryFor, explanationLanguages, t } from "../../lib/content";
-import { ui } from "../../lib/ui-strings";
+import { bundle, dictionaryFor, t } from "../../lib/content";
+import { contentLanguageFor, localeInfo, offeredLocales, ui } from "../../lib/i18n";
 
 export default async function Catalog({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  const msg = ui(lang);
+  const contentLang = contentLanguageFor(lang);
   const b = bundle();
-  const s = ui(lang);
   const units = new Map(b.units.map((u) => [u.id, u]));
   const concepts = new Map(b.concepts.map((c) => [c.id, c]));
+  const title = (id: string, entity: unknown, key: string) => t(dictionaryFor(id, entity, contentLang), key);
 
   return (
     <main className="page">
       <header className="top">
-        <h1>DeutschGo</h1>
-        <p className="muted">{s.tagline}</p>
-        <nav aria-label={s.chooseLanguage} className="langs inline">
-          {explanationLanguages().map((l) => (
-            <Link key={l.code} href={`/${l.code}`} aria-current={l.code === lang ? "page" : undefined}>{l.native_name}</Link>
+        <h1>{msg("app.name")}</h1>
+        <p className="muted">{msg("app.tagline")}</p>
+        <nav aria-label={msg("app.chooseLanguage")} className="langs inline">
+          {offeredLocales().map((l) => (
+            <Link key={l.code} href={`/${l.code}`} lang={l.code} aria-current={l.code === lang ? "page" : undefined}>
+              {l.nativeName}
+            </Link>
           ))}
         </nav>
       </header>
-      <p className="banner">{s.noPersistence}</p>
+      {localeInfo(lang).preview && (
+        <p className="banner">{msg("status.fallback", { language: "English" })}</p>
+      )}
+      <p className="banner">{msg("status.noPersistence")}</p>
 
-      {b.routes.map((r) => {
-        const d = dictionaryFor(r.id, r, lang);
-        return (
-          <section key={r.id}>
-            <h2>{s.route}: {t(d, r.title)}</h2>
-            <p className="muted">{t(d, r.summary)} · {r.cefr.from}–{r.cefr.to}</p>
-            <ol className="route">
-              {r.steps.map((step, i) => {
-                if (step.unit) {
-                  const u = units.get(step.unit)!;
-                  const ud = dictionaryFor(u.id, u, lang);
-                  return (
-                    <li key={i} className="step available">
-                      <Link href={`/${lang}/learn/${u.id}`}>{t(ud, u.title)}</Link>
-                      <span className="tag">{u.cefr}</span> <span className="tag">{u.estimated_minutes} {s.minutes}</span>
-                      <span className="tag warn">{u.status}</span>
-                    </li>
-                  );
-                }
-                const c = concepts.get(step.concept!)!;
-                const cd = dictionaryFor(c.id, c, lang);
+      {b.routes.map((r) => (
+        <section key={r.id}>
+          <h2>{msg("nav.route")}: {title(r.id, r, r.title)}</h2>
+          <p className="muted">
+            {title(r.id, r, r.summary)}
+            {" · "}
+            {msg("catalog.routeSummary", { from: r.cefr.from, to: r.cefr.to, steps: r.steps.length })}
+          </p>
+          <ol className="route">
+            {r.steps.map((step, i) => {
+              if (step.unit) {
+                const u = units.get(step.unit);
+                if (!u) return null;
                 return (
-                  <li key={i} className="step planned">
-                    {t(cd, c.title)} <span className="tag">{c.cefr.introduced}</span> <span className="muted">— {s.planned}</span>
+                  <li key={i} className="step available">
+                    <Link href={`/${lang}/learn/${u.id}`}>{title(u.id, u, u.title)}</Link>{" "}
+                    <span className="tag">{msg("catalog.unitMeta", { level: u.cefr, minutes: u.estimated_minutes })}</span>{" "}
+                    <span className="tag warn">{u.status}</span>
                   </li>
                 );
-              })}
-            </ol>
-          </section>
-        );
-      })}
+              }
+              const c = concepts.get(step.concept!);
+              if (!c) return null;
+              return (
+                <li key={i} className="step planned">
+                  {title(c.id, c, c.title)} <span className="tag">{c.cefr.introduced}</span>{" "}
+                  <span className="muted">— {msg("catalog.plannedConcept")}</span>
+                  {step.optional && <span className="tag">optional</span>}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))}
 
       <section>
-        <h2>{s.graph}</h2>
+        <h2>{msg("nav.knowledgeMap")}</h2>
+        <p className="muted">{msg("catalog.conceptCount", { count: b.concepts.length })}</p>
         <ul className="graph">
           {b.concepts.map((c) => {
-            const cd = dictionaryFor(c.id, c, lang);
-            const deps = (c.relations ?? []).filter((r) => r.type === "depends_on").map((r) => concepts.get(r.target)).filter((x) => !!x);
+            const deps = (c.relations ?? [])
+              .filter((r) => r.type === "depends_on")
+              .map((r) => concepts.get(r.target))
+              .filter((x) => !!x);
             return (
               <li key={c.id}>
-                <strong>{t(cd, c.title)}</strong> <span className="tag">{c.cefr.introduced}</span>{" "}
+                <strong>{title(c.id, c, c.title)}</strong> <span className="tag">{c.cefr.introduced}</span>{" "}
                 <span className={`tag ${c.status === "planned" ? "" : "warn"}`}>{c.status}</span>
                 {deps.length > 0 && (
-                  <span className="muted"> · {s.prerequisites}: {deps.map((dc) => t(dictionaryFor(dc.id, dc, lang), dc.title)).join(", ")}</span>
+                  <span className="muted">
+                    {" · "}{msg("catalog.prerequisites")}: {deps.map((d) => title(d.id, d, d.title)).join(", ")}
+                  </span>
                 )}
               </li>
             );

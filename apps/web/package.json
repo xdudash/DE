@@ -10,10 +10,12 @@
     "prebuild": "npm run content",
     "build": "next build",
     "start": "next start",
-    "typecheck": "npm run content && tsc --noEmit"
+    "typecheck": "npm run content && tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"test/**/*.test.ts\""
   },
   "dependencies": {
     "@deutschgo/content-kit": "*",
+    "@deutschgo/i18n": "*",
     "next": "^16.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
