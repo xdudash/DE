@@ -15,6 +15,7 @@
     "content:validate": "npm run validate -w @deutschgo/content-kit",
     "content:build": "npm run content -w @deutschgo/web",
     "build": "npm run build -w @deutschgo/web",
-    "check": "python3 scripts/check_foundation.py && npm run typecheck && npm test && npm run content:validate && npm run build"
+    "check": "python3 scripts/check_foundation.py && npm run typecheck && npm test && npm run content:validate && npm run build",
+    "test:db": "bash scripts/db_test.sh"
   }
 }

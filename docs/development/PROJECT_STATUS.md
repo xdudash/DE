@@ -10,6 +10,7 @@ Last updated: 2026-10-12
 - Content: 1 authored concept (V2), 9 planned concepts, 1 route, 1 gold-standard unit with 10 exercises; en (pivot, draft), ru/uk (machine drafts).
 - Web skeleton (`apps/web`, Next.js): language picker, catalogue (route + concept list), lesson page rendering all block types, interactive exercises using the shared evaluator; honest banners for review/translation/persistence state; PWA manifest.
 - Learning engine v1 (`packages/learning-engine`, DG-010): concept-state derivation, fixed-interval review scheduler, explainable recommendations with reason codes; 26 fixture tests (mutation-checked). Not yet wired to the app — needs persistence (DG-008/009).
+- Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, append-only evidence, server-only writes for derived state and entitlements, GDPR export function and cascade deletion; `supabase/tests` verify isolation, constraints and the policy inventory against a real PostgreSQL (mutation-checked, runs in CI). **No hosted Supabase project exists** — creating one needs owner authorization.
 - CI: foundation check, content validation, tests, typecheck, static build of all language × unit pages.
 
 ## Authored but NOT human-verified
@@ -18,7 +19,7 @@ Last updated: 2026-10-12
 - Rights confirmation for original content (owner).
 
 ## Not implemented
-Accounts, database, persistence, sync, engine integration in the UI, knowledge-map UI/search, lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
+Authentication, hosted database, persistence of real attempts, sync, engine integration in the UI, knowledge-map UI/search, lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
 
 ## Accepted decisions
 ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -26,7 +27,7 @@ ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localiza
 ## Blockers needing the owner
 1. Qualified reviewers for the gold unit (DG-007).
 2. Commit `package-lock.json` (DG-011) — the cloud session cannot reach the npm registry or artifact storage.
-3. Authorization before creating Supabase/Vercel projects (P2).
+3. Authorization before creating Supabase/Vercel projects (P2) — the schema and tests are ready to apply.
 
 ## Next recommended task
-DG-008: local Supabase stack, SQL migrations, RLS isolation tests (no hosted project), in parallel with DG-007 review and DG-012 graph mapping.
+DG-009: record attempts as append-only events with server re-evaluation, wiring `apps/web` to the schema and the learning engine (needs a hosted project or a local stack to run against end to end).
