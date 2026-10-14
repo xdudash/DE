@@ -1,0 +1,14 @@
+{
+  "name": "@deutschgo/learning-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DeutschGo learning engine v1: evidence -> concept states -> review schedule -> explainable recommendations. Pure functions, no I/O.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "node --test --experimental-strip-types \"test/**/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": { "@deutschgo/content-kit": "*" },
+  "devDependencies": { "@types/node": "^22.18.0", "typescript": "^5.9.3" }
+}
