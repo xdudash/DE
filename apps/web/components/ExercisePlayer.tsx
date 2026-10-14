@@ -2,12 +2,16 @@
 
 /**
  * Interactive exercise. Evaluation uses the same deterministic evaluator as the
- * content validator, so what the author validated is what the learner gets.
- * Attempts are NOT persisted in this build (see the banner on the page).
+ * content validator, so what the author validated is what the learner gets — and the
+ * server re-evaluates the same way before storing anything.
+ *
+ * Saving is opportunistic: feedback never waits for the network, and until sign-in
+ * exists the endpoint answers "not signed in", which the page states plainly.
  */
 import { useState } from "react";
 import { evaluate, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
 import type { Exercise } from "@deutschgo/content-kit/types";
+import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { inline } from "../lib/markdown";
 
 export interface PlayerText {
@@ -17,12 +21,15 @@ export interface PlayerText {
 interface Props {
   exercise: Exercise;
   text: PlayerText;
-  labels: { check: string; reset: string; tryAgain: string; yourAnswer: string };
+  labels: { check: string; reset: string; tryAgain: string; yourAnswer: string; saveFailed: string; stale: string };
+  /** Unit id and version, needed so the server can resolve exactly this exercise. */
+  unit: { id: string; version: string };
 }
 
 const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
-export function ExercisePlayer({ exercise, text, labels }: Props) {
+export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
+  const [save, setSave] = useState<SubmitState>({ status: "off" });
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [choice, setChoice] = useState<string>("");
   const [order, setOrder] = useState<number[]>([]);
@@ -49,11 +56,22 @@ export function ExercisePlayer({ exercise, text, labels }: Props) {
       setError(null);
     } catch (e) {
       setError((e as Error).message);
+      return;
     }
+    // One id per answer: a retry of the same answer must not count twice.
+    const eventId = crypto.randomUUID();
+    setSave({ status: "saving" });
+    void submitAttempt({
+      eventId,
+      unitId: unit.id,
+      exerciseId: exercise.id,
+      contentVersion: unit.version,
+      response,
+    }).then(setSave, () => setSave({ status: "failed", reason: "unexpected" }));
   }
 
   function reset() {
-    setResult(null); setChoice(""); setOrder([]); setFree(""); setError(null);
+    setResult(null); setChoice(""); setOrder([]); setFree(""); setError(null); setSave({ status: "off" });
     if (exercise.type === "cloze") setGaps(exercise.gaps.map(() => ""));
   }
 
@@ -148,6 +166,9 @@ export function ExercisePlayer({ exercise, text, labels }: Props) {
           {(result.correct || result.ruleFeedback) && <p className="why">{inline(tr(text, exercise.explanation))}</p>}
         </div>
       )}
+      {/* Saving never blocks feedback; only a real problem is worth a word. */}
+      {save.status === "failed" && <p className="muted small" role="status">{labels.saveFailed}</p>}
+      {save.status === "stale" && <p className="banner" role="status">{labels.stale}</p>}
     </section>
   );
 }

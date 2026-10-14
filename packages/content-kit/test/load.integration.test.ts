@@ -1,5 +1,9 @@
 /**
- * Integration tests: real YAML parsing + JSON Schema (needs npm dependencies; runs in CI).
+ * Integration tests: real YAML parsing + JSON Schema validation.
+ *
+ * These need the package's dependencies (yaml, ajv). Where they are not installed the
+ * suites skip with a reason instead of failing, so `npm test` is meaningful before
+ * `npm install`; CI installs them, so the checks are never silently lost.
  */
 import { strict as assert } from "node:assert";
 import { dirname, join } from "node:path";
@@ -7,13 +11,21 @@ import { before, describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import { runChecks } from "../src/checks.ts";
 import { compileBundle } from "../src/compile.ts";
-import { loadContent } from "../src/load.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(here, "../../../content");
 const INVALID = join(here, "fixtures/invalid-content");
 
-describe("repository content", () => {
+type LoadContent = typeof import("../src/load.ts").loadContent;
+let loadContent: LoadContent;
+let skip: string | false = false;
+try {
+  ({ loadContent } = await import("../src/load.ts"));
+} catch (err) {
+  skip = `loader dependencies missing (${(err as Error).message.split("\n")[0]}) — run npm install`;
+}
+
+describe("repository content", { skip }, () => {
   let repo: ReturnType<typeof loadContent>["repo"];
   let issues: ReturnType<typeof loadContent>["issues"];
   let report: ReturnType<typeof runChecks>;
@@ -41,7 +53,7 @@ describe("repository content", () => {
   });
 });
 
-describe("invalid fixtures", () => {
+describe("invalid fixtures", { skip }, () => {
   let issues: ReturnType<typeof loadContent>["issues"] = [];
   before(() => {
     ({ issues } = loadContent(INVALID));

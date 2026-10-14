@@ -31,6 +31,8 @@ export const en = {
   "exercise.reset": "Reset",
   "exercise.tryAgain": "Try again",
   "exercise.yourAnswer": "Your answer",
+  "exercise.saveFailed": "Your answer was checked, but saving it did not work. It will not appear in your progress.",
+  "exercise.stale": "This lesson has been updated. Reload the page to continue with the current version.",
   "exercise.progress": "Exercise {current} of {total}",
   "exercise.score": "{correct} of {total} correct",
 

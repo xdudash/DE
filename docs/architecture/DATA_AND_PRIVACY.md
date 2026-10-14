@@ -16,6 +16,9 @@ Data minimisation, purpose limitation, EU residency, user-owned data (export/del
 | `entitlements` | user_id, tier, source, valid_until | Written only by server (billing webhooks); readable by owner. |
 | `audit_log` | id, user_id?, action, at | Account-level actions (export, deletion) without learning content. |
 
+## Attempt recording (implemented, DG-009)
+`POST /api/attempts` takes an attempt without a verdict, verifies the session token (HS256, `lib/auth/jwt.ts`), re-evaluates the answer server-side with the same evaluator the content validator uses, inserts the event as the learner (RLS checks `user_id`; a replayed id is ignored, so an offline queue is safe), then recomputes the touched concepts from stored evidence and refreshes the derived caches as the service role. Statuses: 201 created · 200 replay · 400 malformed · 401 no/invalid session · 404 unknown content · 409 content version moved on · 422 response does not fit the exercise · 503 deployment without auth or database. A client clock ahead of the server is clamped to the server time.
+
 ## Authentication
 Email magic link + Google + Apple sign-in (Apple required for iOS store apps later). Anonymous preview without account stores nothing server-side; after sign-up, an optional one-time import of the local session is offered.
 

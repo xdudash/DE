@@ -21,6 +21,12 @@ import type {
   WordOrderExercise,
 } from "./types.ts";
 
+/**
+ * Bumped whenever normalization or any type's evaluation semantics change.
+ * Stored with every graded event so past results stay interpretable.
+ */
+export const EVALUATOR_VERSION = "1.0.0";
+
 export function normalizeAnswer(input: string): string {
   let s = input.normalize("NFC");
   s = s

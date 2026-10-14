@@ -12,7 +12,8 @@ Last updated: 2026-10-12
 - Learning engine v1 (`packages/learning-engine`, DG-010): concept-state derivation, fixed-interval review scheduler, explainable recommendations with reason codes; 26 fixture tests (mutation-checked). Not yet wired to the app — needs persistence (DG-008/009).
 - Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, append-only evidence, server-only writes for derived state and entitlements, GDPR export function and cascade deletion; `supabase/tests` verify isolation, constraints and the policy inventory against a real PostgreSQL (mutation-checked, runs in CI). **No hosted Supabase project exists** — creating one needs owner authorization.
 - Interface localization (`packages/i18n`, DG-014): typed catalogs for en (pivot), uk, ru and ar (preview, RTL), a dependency-free ICU-subset formatter with `Intl.PluralRules`, and tests that format every message of every catalog and enforce key/placeholder parity; the web app renders all its chrome from these catalogs and a cross-check test keeps the interface registry and `content/languages.yaml` in agreement.
-- CI: foundation check, content validation, tests, typecheck, static build of all locale × unit pages (including the Arabic preview locale).
+- Attempt recording (`packages/attempts`, `apps/web/lib/data`, `POST /api/attempts`, DG-009): request validation, server-side re-evaluation (the client's verdict is rejected outright), append-only events with idempotent retries, derived state and review schedule recomputed from stored evidence, and two separated database contexts (learner under RLS, service role for derived rows — ADR-0010). Verified by unit tests, statement-level SQL tests and an integration test against a real PostgreSQL in CI.
+- CI: foundation check, content validation, tests, typecheck, static build of all locale × unit pages (including the Arabic preview locale), plus migrations, RLS and attempt-recording tests against PostgreSQL 16.
 
 ## Authored but NOT human-verified
 - German correctness and pedagogy of the gold unit (`review.*: pending`).
@@ -20,10 +21,10 @@ Last updated: 2026-10-12
 - Rights confirmation for original content (owner).
 
 ## Not implemented
-Authentication, hosted database, persistence of real attempts, sync, engine integration in the UI, knowledge-map UI/search, Arabic explanations (interface only), lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
+Sign-in (so no browser can yet save progress — the endpoint answers "not signed in" and the lesson page says so), hosted database, offline queue and sync, recommendations in the UI, knowledge-map UI/search, Arabic explanations (interface only), lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
 
 ## Accepted decisions
-ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization. Proposed: ADR-0007 media, ADR-0008 billing.
+ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access. Proposed: ADR-0007 media, ADR-0008 billing.
 
 ## Blockers needing the owner
 1. Qualified reviewers for the gold unit (DG-007).
@@ -31,4 +32,4 @@ ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localiza
 3. Authorization before creating Supabase/Vercel projects (P2) — the schema and tests are ready to apply.
 
 ## Next recommended task
-DG-009: record attempts as append-only events with server re-evaluation, wiring `apps/web` to the schema and the learning engine (needs a hosted project or a local stack to run against end to end).
+DG-015: sign-in with Supabase Auth, which is the last piece between the finished recording pipeline and real saved progress. It needs the owner to create the hosted project first (see blockers).
