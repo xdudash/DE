@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.sch_st_sp
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: sch, and st / sp at the start of a word
+  summary: sch is one sound (Schule); at the beginning of a word or stem, st and sp are pronounced scht- and schp- (Straße, sprechen).

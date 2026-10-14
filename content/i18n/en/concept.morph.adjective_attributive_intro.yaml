@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.adjective_attributive_intro
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Adjectives before a noun: first endings'
+  summary: 'An adjective in front of a noun always takes an ending: die neue Wohnung, ein neuer Vertrag. A1 covers the most frequent patterns only.'

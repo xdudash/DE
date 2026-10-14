@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.umlauts
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: The umlauts ä, ö, ü
+  summary: 'Three vowels that do not exist in Slavic languages and change meaning: Mutter/Mütter, schon/schön. Lip rounding is what makes ö and ü.'

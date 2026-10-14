@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_inseparable_prefix
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Inseparable-prefix verbs
+  summary: 'Prefixes be-, ver-, er-, ent-, emp-, ge-, miss- never separate and are unstressed: Ich verstehe dich. They also form the participle without ge-.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_modals
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Modal verbs: können, müssen, wollen, dürfen, sollen, möchten'
+  summary: Modal verbs express ability, necessity, intention and permission. They are irregular in the singular and send the main verb to the end as an infinitive.

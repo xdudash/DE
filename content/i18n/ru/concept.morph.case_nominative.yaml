@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.case_nominative
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Nominativ: подлежащее'
+  summary: 'Падеж подлежащего и того, что стоит после sein/werden/bleiben: Der Vertrag ist neu. Отвечает на вопрос wer? или was?'

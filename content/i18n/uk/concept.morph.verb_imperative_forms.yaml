@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_imperative_forms
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Форми наказового способу (du, ihr, Sie)
+  summary: 'Як утворюються форми прохання й наказу: Komm! / Kommt! / Kommen Sie! — зокрема дієслова зі зміною кореня (nimm!) і sein (sei!).'

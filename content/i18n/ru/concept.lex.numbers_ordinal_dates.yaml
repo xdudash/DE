@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_ordinal_dates
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Порядковые числительные и даты
+  summary: 'der erste, der zweite …, а также как даты пишутся и произносятся в формулярах и при записи на приём: am 3. Mai, der 21.08.2026.'

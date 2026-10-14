@@ -1,0 +1,98 @@
+# Main A1 journey. Steps are a recommendation, not a lock: the learner may open any
+# concept at any time; the engine only explains missing prerequisites.
+# Pedagogical order (not a raw topological sort): grammar is interleaved with the
+# everyday situations that use it. Pronunciation and spelling run as optional steps
+# that can be woven in at any point.
+schema: deutschgo.route/1
+id: route.core.a1_core
+version: 0.1.0
+status: draft
+title: "@title"
+summary: "@summary"
+goals: [general, everyday, work]
+cefr: { from: A1, to: A2 }
+steps:
+  # 1 — Who does what: first words and the shape of a German sentence
+  - { concept: concept.morph.pronoun_nominative }
+  - { concept: concept.morph.verb_present_conjugation }
+  - { concept: concept.morph.verb_sein_haben }
+  - { concept: concept.morph.noun_gender }
+  - { concept: concept.ortho.noun_capitalization }
+  - { concept: concept.morph.article_definite }
+  - { concept: concept.morph.article_indefinite }
+  - { concept: concept.morph.case_nominative }
+  - { unit: unit.syntax.v2_declarative.a1 }
+  - { concept: concept.pron.long_short_vowels, optional: true }
+  - { concept: concept.pron.umlauts, optional: true }
+
+  # 2 — Asking, answering, saying no
+  - { concept: concept.syntax.w_questions }
+  - { concept: concept.syntax.question_words }
+  - { concept: concept.syntax.v1_yes_no_questions }
+  - { concept: concept.syntax.negation_nicht }
+  - { concept: concept.morph.article_negative_kein }
+  - { concept: concept.syntax.negation_kein_vs_nicht }
+  - { concept: concept.pron.ch_sounds, optional: true }
+
+  # 3 — Introducing yourself, numbers, time, politeness
+  - { concept: concept.lex.numbers_cardinal }
+  - { concept: concept.prag.spelling_on_the_phone }
+  - { concept: concept.lex.time_clock }
+  - { concept: concept.prag.du_vs_sie }
+  - { concept: concept.prag.greetings_dach }
+  - { concept: concept.morph.adjective_predicative }
+  - { concept: concept.morph.adverbs_frequency }
+  - { concept: concept.pron.sch_st_sp, optional: true }
+
+  # 4 — Objects: the accusative
+  - { concept: concept.morph.case_accusative }
+  - { concept: concept.morph.pronoun_accusative }
+  - { concept: concept.morph.verb_es_gibt }
+  - { concept: concept.morph.prepositions_accusative }
+  - { concept: concept.morph.verb_stem_change }
+  - { concept: concept.morph.noun_plural }
+  - { concept: concept.pron.final_devoicing, optional: true }
+
+  # 5 — Two-part verbs: modals, separable prefixes, requests
+  - { concept: concept.morph.verb_modals }
+  - { concept: concept.syntax.verbal_bracket }
+  - { concept: concept.morph.verb_separable_prefix }
+  - { concept: concept.pron.word_stress }
+  - { concept: concept.morph.verb_imperative_forms }
+  - { concept: concept.syntax.imperative }
+  - { concept: concept.prag.politeness_requests }
+
+  # 6 — The dative: people, places, appointments
+  - { concept: concept.morph.case_dative }
+  - { concept: concept.morph.pronoun_dative }
+  - { concept: concept.morph.prepositions_dative }
+  - { concept: concept.morph.case_dative_verbs }
+  - { concept: concept.morph.possessive_articles }
+  - { concept: concept.morph.possession_von_dative }
+  - { concept: concept.morph.prepositions_two_way }
+  - { concept: concept.morph.time_prepositions }
+  - { concept: concept.morph.adjective_attributive_intro }
+  - { concept: concept.lex.numbers_ordinal_dates }
+  - { concept: concept.ortho.eszett_and_ss, optional: true }
+  - { concept: concept.pron.r_and_final_er, optional: true }
+
+  # 7 — Talking about what happened
+  - { concept: concept.morph.verb_participle_weak }
+  - { concept: concept.morph.verb_participle_strong }
+  - { concept: concept.morph.verb_perfect_auxiliary }
+  - { concept: concept.morph.verb_praeteritum_sein_haben }
+
+  # 8 — Longer sentences
+  - { concept: concept.syntax.position_zero_conjunctions }
+  - { concept: concept.syntax.connective_adverbs }
+  - { concept: concept.syntax.verb_final_subordinate }
+  - { concept: concept.syntax.middle_field_order, optional: true }
+
+  # 9 — Rounding off A1
+  - { concept: concept.morph.verb_reflexive }
+  - { concept: concept.morph.verb_inseparable_prefix }
+  - { concept: concept.morph.verb_werden }
+  - { concept: concept.morph.noun_compounds }
+  - { concept: concept.morph.demonstrative_dieser }
+  - { concept: concept.morph.pronoun_man }
+  - { concept: concept.morph.comparison_basics, optional: true }

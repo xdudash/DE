@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.ch_sounds
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: The two ch sounds
+  summary: ich-sound after e, i, ä, ö, ü, l, r, n (ich, nicht) and ach-sound after a, o, u, au (Buch, auch). Neither is the Slavic х in all positions.

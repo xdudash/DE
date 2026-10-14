@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.greetings_dach
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Greetings across Germany, Austria and Switzerland
+  summary: Guten Tag, Hallo, Grüß Gott (south and Austria), Grüezi (Switzerland), Servus, Moin — which greeting fits which region and situation.

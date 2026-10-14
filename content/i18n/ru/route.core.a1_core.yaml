@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: route.core.a1_core
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Основной маршрут A1
+  summary: 'От первого предложения до рассказа о прошлом: всё, что нужно начинающему для повседневной жизни, общения с ведомствами и работы в Германии, Австрии и Швейцарии.'

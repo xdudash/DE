@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_reflexive
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Зворотні дієслова
+  summary: 'Дієслова із sich: sich freuen, sich anmelden, sich fühlen. Зворотний займенник узгоджується з підметом і зазвичай стоїть в Akkusativ.'

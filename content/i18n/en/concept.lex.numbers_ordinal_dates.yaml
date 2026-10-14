@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_ordinal_dates
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Ordinal numbers and dates
+  summary: 'der erste, der zweite …, and how dates are written and said in forms and appointments: am 3. Mai, der 21.08.2026.'

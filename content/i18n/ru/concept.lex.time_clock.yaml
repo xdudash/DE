@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.time_clock
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Как сказать время
+  summary: Официальное время (14:30 — vierzehn Uhr dreißig) и разговорное (halb drei, Viertel nach zwei); они различаются по стилю и региону.

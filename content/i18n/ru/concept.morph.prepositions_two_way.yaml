@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.prepositions_two_way
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Предлоги двойного управления (in, an, auf, über, unter, vor, hinter, neben, zwischen)
+  summary: 'Движение к месту требует Akkusativ (wohin?), нахождение — Dativ (wo?): Ich gehe in die Stadt / Ich bin in der Stadt.'

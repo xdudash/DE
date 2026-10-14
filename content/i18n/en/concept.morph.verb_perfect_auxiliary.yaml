@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_perfect_auxiliary
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Perfect tense: haben or sein?'
+  summary: 'The spoken past uses haben + participle, but verbs of movement and change of state use sein: Ich habe gearbeitet / Ich bin gefahren.'

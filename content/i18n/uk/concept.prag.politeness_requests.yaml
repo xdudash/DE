@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.politeness_requests
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Ввічливі прохання (bitte, Könnten Sie …, Ich hätte gern …)
+  summary: Як чемно попросити щось у віконці прийому, телефоном або в магазині і чому «чистий» наказовий спосіб часто звучить грубо.

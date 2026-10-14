@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.possession_von_dative
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Expressing possession with von + dative
+  summary: 'At A1, possession is usually expressed with von + dative or a possessive article instead of the genitive: die Nummer von meinem Chef.'

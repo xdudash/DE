@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_separable_prefix
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Дієслова з відокремлюваним префіксом
+  summary: 'Дієслова на кшталт anrufen, aufstehen, einkaufen у головному реченні розпадаються: префікс іде в кінець — Ich rufe dich an.'

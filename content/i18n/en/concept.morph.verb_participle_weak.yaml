@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_participle_weak
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Participle of weak verbs (ge-…-t)
+  summary: 'Regular verbs form the participle with ge- + stem + -t: arbeiten → gearbeitet, kaufen → gekauft.'

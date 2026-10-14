@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.spelling_on_the_phone
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Як назвати ім'я та адресу по літерах
+  summary: Німецький алфавіт, як продиктувати ім'я по літерах телефоном або у віконці прийому і як читати індекси та телефонні номери.

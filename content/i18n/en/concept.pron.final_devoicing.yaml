@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.final_devoicing
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Final devoicing (Auslautverhärtung)
+  summary: 'b, d, g at the end of a word or syllable sound like p, t, k: Tag, Kind, halb — but the spelling stays, as the plural shows (Tage).'

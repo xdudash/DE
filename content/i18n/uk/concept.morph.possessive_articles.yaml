@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.possessive_articles
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Присвійні артиклі (mein, dein, sein, ihr …)
+  summary: 'Показують належність і мають ті самі закінчення, що ein/kein: mein Vertrag, meine Wohnung, meinem Chef.'

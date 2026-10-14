@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_imperative_forms
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Формы повелительного наклонения (du, ihr, Sie)
+  summary: 'Как образуются формы просьбы и приказа: Komm! / Kommt! / Kommen Sie! — включая глаголы с изменением корня (nimm!) и sein (sei!).'

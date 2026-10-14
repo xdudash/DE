@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.time_prepositions
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Прийменники часу (am, im, um, von … bis, seit, für)
+  summary: 'Який прийменник уживається з днями, місяцями, годинами та періодами: am Montag, im Mai, um 9 Uhr, seit zwei Jahren.'

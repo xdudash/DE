@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.pronoun_nominative
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Особові займенники в Nominativ
+  summary: ich, du, er/sie/es, wir, ihr, sie/Sie — форми підмета, від яких залежить закінчення дієслова.

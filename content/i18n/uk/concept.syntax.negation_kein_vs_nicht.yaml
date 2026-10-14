@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.negation_kein_vs_nicht
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: kein чи nicht?
+  summary: kein заперечує іменник з неозначеним артиклем або без артикля; nicht заперечує все інше, зокрема іменники з означеним артиклем або присвійним словом.

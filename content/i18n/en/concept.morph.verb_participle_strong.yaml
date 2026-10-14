@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_participle_strong
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Participle of strong and mixed verbs (ge-…-en)
+  summary: 'Strong verbs end in -en and often change the stem vowel: sprechen → gesprochen, gehen → gegangen. These forms must be learned individually.'

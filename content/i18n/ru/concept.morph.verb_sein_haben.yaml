@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_sein_haben
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Глаголы sein и haben в настоящем времени
+  summary: 'Два самых частых неправильных глагола: ich bin / du bist …, ich habe / du hast … Они же служат вспомогательными глаголами в Perfekt.'

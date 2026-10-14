@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_cardinal
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Кількісні числівники
+  summary: Лічба від нуля до мільйонів, зокрема німецький порядок десятків і одиниць (einundzwanzig), а також читання цін і телефонних номерів.

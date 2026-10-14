@@ -75,7 +75,9 @@ Entity status: `planned → draft → needs_review → approved → published �
 npm run content:validate   # schema + semantic checks + coverage table; non-zero on errors
 npm run content:build      # refuses to build on errors; writes apps/web/generated/content.json
 ```
-Checks: schema; file name = id; global id uniqueness; local id uniqueness; references (concepts, units, objectives, signals, sources); source approval; prerequisite cycles; undeclared prerequisites (warning); untested objectives (warning); status gates; exercise self-checks; pivot completeness (error); non-pivot coverage (report); stale/orphan translation keys (warnings).
+Checks: schema; file name = id; global id uniqueness; local id uniqueness; references (concepts, units, objectives, signals, sources); source approval; prerequisite cycles; undeclared prerequisites (warning); untested objectives (warning); route step order — a step whose prerequisites come later or never (warning); status gates; exercise self-checks; pivot completeness (error); non-pivot coverage (report); stale/orphan translation keys (warnings).
+
+`npm run content:report` prints the curriculum coverage tables (per level, per strand, per language).
 
 **Schema-valid ≠ correct German ≠ good pedagogy ≠ cleared rights.** Those are human gates.
 

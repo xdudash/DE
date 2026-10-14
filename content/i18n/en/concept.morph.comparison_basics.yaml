@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.comparison_basics
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: 'Comparison: gern/lieber, gut/besser, wie/als'
+  summary: 'The first comparative forms and the two comparison words: so teuer wie, teurer als.'

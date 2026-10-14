@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.article_negative_kein
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Заперечний артикль kein
+  summary: 'kein заперечує іменник і відмінюється як ein, але має й форми множини: Ich habe keine Zeit. Das ist kein Problem.'

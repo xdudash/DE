@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_inseparable_prefix
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Глаголы с неотделяемой приставкой
+  summary: 'Приставки be-, ver-, er-, ent-, emp-, ge-, miss- никогда не отделяются и не несут ударения: Ich verstehe dich. Причастие у них образуется без ge-.'

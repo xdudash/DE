@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_praeteritum_sein_haben
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Past tense of sein and haben (war, hatte)
+  summary: 'Even at A1, sein and haben are normally used in the simple past rather than the perfect: Ich war krank. Wir hatten keine Zeit.'

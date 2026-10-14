@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.ch_sounds
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Два звуки ch
+  summary: М'який ich-Laut після e, i, ä, ö, ü, l, r, n (ich, nicht) і твердий ach-Laut після a, o, u, au (Buch, auch). Жоден із них не дорівнює українському «х» у всіх позиціях.

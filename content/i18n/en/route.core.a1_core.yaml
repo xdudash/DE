@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: route.core.a1_core
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Core A1 journey
+  summary: 'From the first sentence to talking about the past: everything a beginner needs for everyday life, authorities and work in Germany, Austria and Switzerland.'

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.syntax.question_words
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Question words (wer, was, wann, wo, wie, warum, welcher, wie viel)
+  summary: Which question word asks for what, including the difference between wo / wohin / woher and welcher / was für ein.

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.r_and_final_er
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: The German r and the ending -er
+  summary: r before a vowel is pronounced in the throat (Reise); after a vowel and in -er it becomes a vowel-like sound (Mutter, Uhr).

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_separable_prefix
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Separable-prefix verbs
+  summary: 'Verbs like anrufen, aufstehen, einkaufen split in a main clause: the prefix goes to the end — Ich rufe dich an.'

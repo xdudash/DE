@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.case_dative_verbs
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Глаголы с Dativ (helfen, danken, gefallen …)
+  summary: 'Ряд глаголов требует дополнения в Dativ там, где в других языках прямое дополнение: Ich helfe dir. Die Wohnung gefällt mir.'

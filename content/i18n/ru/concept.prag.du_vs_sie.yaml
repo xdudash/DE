@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.du_vs_sie
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: du или Sie?
+  summary: К кому обращаются на «ты», а к кому на «вы» в странах DACH, как перейти на «ты» и почему Sie — безопасный вариант в ведомствах, с арендодателем и на работе.

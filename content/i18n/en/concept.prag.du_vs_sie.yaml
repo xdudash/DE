@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.du_vs_sie
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: du or Sie?
+  summary: Who is addressed informally and who formally in DACH, how to switch, and why Sie is the safe default with authorities, landlords and at work.

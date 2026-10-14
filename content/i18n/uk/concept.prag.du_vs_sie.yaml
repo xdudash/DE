@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.du_vs_sie
+lang: uk
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: du чи Sie?
+  summary: До кого звертаються на «ти», а до кого на «Ви» в країнах DACH, як перейти на «ти» і чому Sie — безпечний варіант в установах, з орендодавцем і на роботі.

@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.verb_reflexive
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Возвратные глаголы
+  summary: 'Глаголы с sich: sich freuen, sich anmelden, sich fühlen. Возвратное местоимение согласуется с подлежащим и обычно стоит в Akkusativ.'

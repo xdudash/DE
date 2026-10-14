@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.ch_sounds
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Два звука ch
+  summary: Мягкий ich-Laut после e, i, ä, ö, ü, l, r, n (ich, nicht) и твёрдый ach-Laut после a, o, u, au (Buch, auch). Ни один из них не равен русскому «х» во всех положениях.

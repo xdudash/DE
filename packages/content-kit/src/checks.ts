@@ -5,7 +5,7 @@
 import { answersEqual, evaluate, findOrderFor } from "./evaluate.ts";
 import { findPrerequisiteCycles, prerequisitesOf } from "./graph.ts";
 import { collectKeys } from "./l10n.ts";
-import type { Block, ContentRepo, Exercise, Issue, Review, Unit } from "./types.ts";
+import type { Block, ContentRepo, Exercise, Issue, Review, Route, Unit } from "./types.ts";
 
 const ID_PREFIX = { concept: "concept.", unit: "unit.", route: "route." } as const;
 
@@ -124,12 +124,37 @@ function checkReferences(c: Collector, repo: ContentRepo): void {
   }
 
   for (const r of repo.routes.values()) {
+    checkRouteOrder(c, repo, r);
     r.steps.forEach((s, i) => {
       if (!!s.unit === !!s.concept) c.error("route.step", r.id, `step ${i}: exactly one of unit/concept is required`);
       if (s.unit && !repo.units.has(s.unit)) c.error("ref.unit", r.id, `step ${i}: unknown unit "${s.unit}"`);
       if (s.concept && !repo.concepts.has(s.concept)) c.error("ref.concept", r.id, `step ${i}: unknown concept "${s.concept}"`);
     });
   }
+}
+
+/**
+ * A route is a recommendation, so it may not lock anything — but a step whose
+ * prerequisites appear later (or nowhere) teaches in an order the learner cannot
+ * follow. Reported as a warning: a route may deliberately assume prior knowledge.
+ */
+function checkRouteOrder(c: Collector, repo: ContentRepo, route: Route): void {
+  const covered = new Set<string>();
+  route.steps.forEach((step, i) => {
+    const taught = step.unit ? (repo.units.get(step.unit)?.concepts ?? []) : step.concept ? [step.concept] : [];
+    const assumed = step.unit ? (repo.units.get(step.unit)?.prerequisites ?? []) : [];
+    for (const id of taught) {
+      const concept = repo.concepts.get(id);
+      for (const p of concept ? prerequisitesOf(concept) : []) {
+        if (covered.has(p) || assumed.includes(p)) continue;
+        const later = route.steps.some((s2, j) => j > i && (s2.concept === p || (s2.unit && repo.units.get(s2.unit)?.concepts.includes(p))));
+        c.warn("route.prerequisite_order", route.id, later
+          ? `step ${i} (${step.unit ?? step.concept}) needs "${p}", which the route teaches later`
+          : `step ${i} (${step.unit ?? step.concept}) needs "${p}", which the route never covers`);
+      }
+    }
+    for (const id of [...taught, ...assumed]) covered.add(id);
+  });
 }
 
 function checkStatuses(c: Collector, repo: ContentRepo): void {

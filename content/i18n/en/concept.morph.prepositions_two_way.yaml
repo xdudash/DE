@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: concept.morph.prepositions_two_way
+lang: en
+based_on_version: 0.1.0
+status: draft
+translator: claude (AI draft, 2026-10-12)
+strings:
+  title: Two-way prepositions (in, an, auf, über, unter, vor, hinter, neben, zwischen)
+  summary: 'Movement to a place takes the accusative (wohin?), position takes the dative (wo?): Ich gehe in die Stadt / Ich bin in der Stadt.'
