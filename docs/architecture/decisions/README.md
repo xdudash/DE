@@ -15,6 +15,7 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0008](./ADR-0008-billing.md) | Billing via merchant-of-record (Paddle) for web; RevenueCat when native | Proposed (decide in P7) |
 | [ADR-0009](./ADR-0009-ui-i18n.md) | Interface localization: typed catalogs + minimal in-house ICU subset | Accepted, implemented |
 | [ADR-0010](./ADR-0010-server-database-access.md) | Server-side database access with `pg` and per-request role switching | Accepted, implemented |
+| [ADR-0011](./ADR-0011-end-to-end-and-accessibility-testing.md) | End-to-end and accessibility testing with Playwright and axe-core | Accepted, implemented |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.

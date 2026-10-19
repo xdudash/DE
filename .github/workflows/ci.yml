@@ -78,6 +78,51 @@ jobs:
           path: package-lock.json
           if-no-files-found: ignore
 
+  e2e:
+    name: End-to-end journeys and accessibility (Playwright, axe)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        id: install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+      - name: Install Chromium with system dependencies
+        run: npm exec --workspace=@deutschgo/web -- playwright install --with-deps chromium
+      - name: Build the production web app
+        run: npm run build -w @deutschgo/web 2>&1 | tee -a e2e.log; exit ${PIPESTATUS[0]}
+        shell: bash
+      # Journeys run against `next start` of that build. The E2E specs assert the honest
+      # "progress is not saved" state, so no database is needed here.
+      - name: Run journeys (desktop) and accessibility checks
+        env:
+          CI: "true"
+        run: npm run e2e -w @deutschgo/web 2>&1 | tee -a e2e.log; exit ${PIPESTATUS[0]}
+        shell: bash
+      - name: Publish log tail as annotation on failure
+        if: failure()
+        shell: bash
+        run: |
+          tail -n 150 e2e.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=E2E log tail::'+d)"
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+          if-no-files-found: ignore
+
   database:
     name: Learner-data migrations, RLS and attempt recording
     runs-on: ubuntu-latest
