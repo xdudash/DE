@@ -17,8 +17,8 @@ test.describe("catalogue", () => {
 
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
-    const nav = page.getByRole("navigation");
-    await expect(nav.getByRole("link", { current: "page" })).toHaveAttribute("href", "/en");
+    // The picker marks the active language with aria-current="page" (see app/[lang]/page.tsx).
+    await expect(page.locator('nav a[aria-current="page"]')).toHaveAttribute("href", "/en");
   });
 });
 
