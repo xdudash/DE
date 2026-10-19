@@ -16,7 +16,7 @@
 | Native app path (Capacitor, P8) | Same test code can target the shell | Similar | — |
 | Licence | Apache-2.0 / MPL-2.0 (axe-core) | MIT | — |
 
-Option C fails the Definition of Done in [PROJECT_MANAGEMENT](../../development/PROJECT_MANAGEMENT.md). Option B adds a runtime that is less suited to WebKit checks, which matter for iOS.
+Option C fails the Definition of Done in `docs/development/PROJECT_MANAGEMENT.md`. Option B adds a runtime that is less suited to WebKit checks, which matter for iOS.
 
 ## Decision
 - **Playwright Test** runs browser journeys. Tests live in `apps/web/e2e/` and run against the production build (`next start`), not the dev server, so they test what ships.
