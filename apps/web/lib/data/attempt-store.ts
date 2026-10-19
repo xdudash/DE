@@ -70,7 +70,12 @@ export function attemptStore(userId: string): Store {
            on conflict (user_id, concept_id) do update
              set state = excluded.state, because = excluded.because, evidence = excluded.evidence,
                  engine_version = excluded.engine_version, updated_at = now()`,
-          [userId, JSON.stringify(rows)],
+          // Keys are the SQL column names: the domain rows are camelCase, and a mismatch
+          // silently writes NULL (found by the integration suite once it actually ran).
+          [userId, JSON.stringify(rows.map((r) => ({
+            concept_id: r.conceptId, state: r.state, because: r.because,
+            evidence: r.evidence, engine_version: r.engineVersion,
+          })))],
         ),
       );
     },
@@ -86,7 +91,10 @@ export function attemptStore(userId: string): Store {
            on conflict (user_id, item_ref) do update
              set step = excluded.step, interval_days = excluded.interval_days,
                  anchor_at = excluded.anchor_at, due_at = excluded.due_at, updated_at = now()`,
-          [userId, JSON.stringify(rows)],
+          [userId, JSON.stringify(rows.map((r) => ({
+            item_ref: r.itemRef, step: r.step, interval_days: r.intervalDays,
+            anchor_at: r.anchorAt, due_at: r.dueAt,
+          })))],
         ),
       );
     },
