@@ -24,7 +24,7 @@ export default defineConfig({
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] }, testIgnore: /mobile\.spec\.ts/ },
     // Phone width: the layout must not scroll sideways (see the mobile spec).
-    { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: /mobile\.spec\.ts/ },
+    { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: [/mobile\.spec\.ts/, /screenshots\.spec\.ts/] },
   ],
   webServer: {
     command: `npm run start -- -p ${PORT}`,
