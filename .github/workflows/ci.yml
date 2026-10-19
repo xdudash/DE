@@ -123,4 +123,5 @@ jobs:
         if: failure()
         shell: bash
         run: |
-          tail -n 120 db.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=Database job log tail::'+d)"
+          # Failing test names first: the tail alone often starts after the failure.
+          { grep -E "not ok|failureType|error:|AssertionError|expected:|actual:" db.log | head -40; echo "--- tail ---"; tail -n 120 db.log; } | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=Database job log tail::'+d)"
