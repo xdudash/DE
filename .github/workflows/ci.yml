@@ -117,6 +117,9 @@ jobs:
           # service container does not listen, and the driver would wait for it.
           DG_DB_URL: postgres://postgres:postgres@127.0.0.1:5432/deutschgo_integration
           DATABASE_SSL: disable
+          # `server-only` throws unless resolved under the react-server condition. Without
+          # this, the DB suites that import server modules were silently skipped.
+          NODE_OPTIONS: --conditions=react-server
         run: npm test -w @deutschgo/web 2>&1 | tee -a db.log; exit ${PIPESTATUS[0]}
         shell: bash
       - name: Publish log tail as annotation on failure
