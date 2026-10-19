@@ -22,24 +22,20 @@ let closePool: (() => Promise<void>) | undefined;
 const ALICE = randomUUID();
 const BOB = randomUUID();
 
-if (url) {
+/** Connects inside a hook, so a connection failure is reported as a named test failure. */
+async function connect(): Promise<void> {
+  if (!url) return;
   process.env.DATABASE_URL = url;
   process.env.DATABASE_SSL = "disable";
-  try {
-    const mod = await import("pg");
-    const pg = ((mod as { default?: unknown }).default ?? mod) as {
-      Client: new (c: { connectionString: string; connectionTimeoutMillis: number }) => Client;
-    };
-    admin = new pg.Client({ connectionString: url, connectionTimeoutMillis: 5_000 });
-    await admin.connect();
-    ({ ageGateStore } = await import("../lib/data/profile-store.ts"));
-    const { getPool } = await import("../lib/data/pg.ts");
-    closePool = () => getPool().end();
-  } catch (err) {
-    await admin?.end().catch(() => {});
-    admin = undefined;
-    throw new Error(`database unavailable: ${(err as Error).message.split("\n")[0]}`);
-  }
+  const mod = await import("pg");
+  const pg = ((mod as { default?: unknown }).default ?? mod) as {
+    Client: new (c: { connectionString: string; connectionTimeoutMillis: number }) => Client;
+  };
+  admin = new pg.Client({ connectionString: url, connectionTimeoutMillis: 5_000 });
+  await admin.connect();
+  ({ ageGateStore } = await import("../lib/data/profile-store.ts"));
+  const { getPool } = await import("../lib/data/pg.ts");
+  closePool = () => getPool().end();
 }
 
 const db = (): Client => {
@@ -54,6 +50,7 @@ describe("age gate against PostgreSQL", { skip, timeout: 30_000 }, () => {
   });
 
   before(async () => {
+    await connect();
     for (const id of [ALICE, BOB]) {
       await db().query("insert into auth.users (id, email) values ($1, $2)", [id, `${id}@example.test`]);
     }
