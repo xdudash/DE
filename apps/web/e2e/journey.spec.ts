@@ -11,7 +11,8 @@ test.describe("catalogue", () => {
   test("lists the A1 route with the gold unit and states that progress is not saved", async ({ page }) => {
     await page.goto("/en");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.locator(`a[href="${UNIT}"]`)).toBeVisible();
+    // The gold unit appears in more than one route, so take the first link to it.
+    await expect(page.locator(`a[href="${UNIT}"]`).first()).toBeVisible();
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
   });
 
