@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-12
+Last updated: 2026-10-19
 
 ## Current phase
 **P1 — Content contract & skeleton** (P0 foundation completed). See [roadmap](./ROADMAP.md).
@@ -23,13 +23,21 @@ Last updated: 2026-10-12
 ## Not implemented
 Sign-in (so no browser can yet save progress — the endpoint answers "not signed in" and the lesson page says so), hosted database, offline queue and sync, recommendations in the UI, knowledge-map UI/search, Arabic explanations (interface only), lexicon, reading/listening/writing/speaking activities, analytics, monitoring, deployment, billing.
 
+## In review (not yet on main)
+- DG-007 review packet for the gold unit: `docs/quality/GOLD_UNIT_REVIEW_PACKET.md` (PR #23). No human review recorded.
+- Project management operating model, milestones and labels: `docs/development/PROJECT_MANAGEMENT.md` (PR #25).
+- DG-013 browser journeys, phone layout and axe accessibility gate, with a new `e2e` CI job, ADR-0011 (PR #26). First CI run pending.
+- DG-015a 16+ age gate endpoint, provider-agnostic, unit-tested; PostgreSQL integration test runs in CI (PR #28).
+- Product decision: the app is free during build-out; monetization is one later change in P7 ([MONETIZATION](../product/MONETIZATION.md), PR #27).
+
 ## Accepted decisions
-ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access. Proposed: ADR-0007 media, ADR-0008 billing.
+ADR-0001 platform, ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access, ADR-0011 end-to-end and accessibility testing. Proposed: ADR-0007 media, ADR-0008 billing.
 
 ## Blockers needing the owner
-1. Qualified reviewers for the gold unit (DG-007).
-2. Commit `package-lock.json` (DG-011) — the cloud session cannot reach the npm registry or artifact storage.
-3. Authorization before creating Supabase/Vercel projects (P2) — the schema and tests are ready to apply.
+1. Qualified reviewers for the gold unit: one German, one pedagogical, uk and ru translation reviewers (DG-007, `status:blocked-owner`). Rights confirmation for the original text.
+2. Commit `package-lock.json` (DG-011). Branch `chore/dg-011-commit-lockfile` exists; the lockfile artifact from its CI run can be downloaded in the browser. The cloud session cannot reach the npm registry or artifact storage.
+3. Sign-in provider decision for DG-015: magic link, Google, Apple (an ADR is needed), and the hosted Supabase project with OAuth clients. Creating paid or external projects needs explicit authorization.
+4. Vercel preview authorization (DG-013, the preview part only; E2E itself does not need it).
 
 ## Next recommended task
-DG-015: sign-in with Supabase Auth, which is the last piece between the finished recording pipeline and real saved progress. It needs the owner to create the hosted project first (see blockers).
+DG-015 sign-in: the age gate is built (DG-015a); what remains (sign-in flows and session storage) waits for the provider decision (blocker 3). Owner-free work continues in the content track (DG-005 source vetting, A1 batches after DG-007).
