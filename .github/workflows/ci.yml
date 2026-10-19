@@ -113,6 +113,15 @@ jobs:
         shell: bash
         run: |
           tail -n 150 e2e.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=E2E log tail::'+d)"
+      # Real screenshots of the built app, uploaded on every run so anyone can look at the
+      # rendered product from the run page, without installing anything.
+      - name: Upload app screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: app-screenshots
+          path: apps/web/e2e-screenshots
+          if-no-files-found: warn
       - name: Upload Playwright report on failure
         if: failure()
         uses: actions/upload-artifact@v7
