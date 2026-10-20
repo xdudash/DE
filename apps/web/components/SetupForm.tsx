@@ -77,7 +77,11 @@ export function SetupForm({ lang, startHref, startTitle }: Props) {
         {status === "failed" && <p className="banner">{msg("setup.failed")}</p>}
         {status !== "failed" && saved && (
           <p className="small">
-            {msg("setup.saved", { goal: msg(GOAL_KEY[saved.goal]), minutes: saved.minutes })}{" "}
+            {msg("setup.saved", {
+              goal: msg(GOAL_KEY[saved.goal]),
+              // Pass the localized duration ("15 min", "15 хв"), not a bare number.
+              minutes: msg("setup.minutes", { minutes: saved.minutes }),
+            })}{" "}
             <span className="muted">{msg("setup.deviceOnly")}</span>
           </p>
         )}
