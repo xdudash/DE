@@ -91,10 +91,14 @@ body {
   text-underline-offset: 0.18em;
 }
 
-/* German, wherever it appears, is specimen text. */
+/* German, wherever it appears, is specimen text. German compounds are long
+   (Donaudampfschifffahrtsgesellschaft), so they hyphenate by their own rules and
+   break as a last resort instead of pushing a narrow phone off its edge. */
 [lang="de"], .de {
   font-family: var(--serif);
   font-feature-settings: "liga" 1;
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 /* German stays left-to-right inside a right-to-left interface. */
@@ -170,7 +174,9 @@ p { max-width: var(--measure); }
 .appbar .langs a {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
   padding-inline: 0.55rem;
   border-radius: 6px;
   font-size: var(--step--1);
@@ -546,6 +552,7 @@ mark { background: var(--slot); color: #111e2e; padding: 0 0.12em; border-radius
   border-bottom: var(--rail) solid var(--line-2);
   font-family: var(--serif);
   font-size: var(--step-1);
+  overflow-wrap: anywhere;
 }
 .tokens { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
 button.token { font-family: var(--serif); font-weight: 400; min-height: 44px; padding: 0.4rem 0.75rem; }
@@ -560,7 +567,8 @@ input.gap, input.free {
   background: var(--paper);
   color: var(--ink);
 }
-input.gap { width: 7.5rem; margin-inline: 0.2rem; }
+/* Gap fields are tap targets too (44px), and they shrink on a 320px screen. */
+input.gap { width: min(7.5rem, 100%); min-height: 44px; max-width: 100%; margin-inline: 0.2rem; box-sizing: border-box; }
 input.free { width: 100%; min-height: 48px; }
 input.ok { border-color: var(--ok); border-width: 2px; }
 input.bad { border-color: var(--bad); border-width: 2px; }

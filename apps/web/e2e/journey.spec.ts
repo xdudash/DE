@@ -66,6 +66,13 @@ test.describe("catalogue", () => {
 
   test("the gate offers to continue in the language this browser used last", async ({ page }) => {
     await page.goto("/uk");
+    // The language is written after the page hydrates. Wait for that write before leaving,
+    // otherwise the next navigation can interrupt it and the test races the browser.
+    await expect
+      .poll(() =>
+        page.evaluate(() => JSON.parse(localStorage.getItem("deutschgo.language.v1") ?? "null")),
+      )
+      .toBe("uk");
     await page.goto("/");
     const link = page.getByRole("link", { name: /Продовжити/ });
     await expect(link).toBeVisible();
