@@ -27,7 +27,7 @@ test.describe("sign-in and account, unconfigured deployment", () => {
   test("the session endpoint reports a signed-out browser without leaking anything", async ({ request }) => {
     const res = await request.get("/api/session");
     expect(res.status()).toBe(200);
-    expect(await res.json()).toEqual({ configured: false, signedIn: false, saved: false });
+    expect(await res.json()).toEqual({ configured: false, signedIn: false, saved: false, testLogin: false });
   });
 
   test("sign-out and account deletion accept only POST, so a link or image cannot trigger them", async ({ request }) => {
