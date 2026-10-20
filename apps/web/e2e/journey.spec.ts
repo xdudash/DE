@@ -36,11 +36,41 @@ test.describe("catalogue", () => {
     await expect(page.getByRole("radio", { name: "Work" })).toBeChecked();
   });
 
+  test("the start screen opens with the sentence the first lesson teaches", async ({ page }) => {
+    await page.goto("/en");
+    const hero = page.locator("figure.slotline");
+    await expect(hero).toBeVisible();
+    // Position 2 is the finite verb, and it is the only yellow thing in the app.
+    await expect(hero.locator("li.verb .pos")).toHaveText("2");
+    await expect(hero.locator("li.verb .word")).toHaveAttribute("lang", "de");
+  });
+
+  test("unreviewed content is labelled in the learner's language, not by its status code", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.getByText("Not reviewed").first()).toBeVisible();
+    await expect(page.getByText("needs_review")).toHaveCount(0);
+  });
+
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
     // The picker lives in the app header and marks the active language with aria-current="page".
     const picker = page.getByRole("navigation", { name: "Explanation language" });
     await expect(picker.locator('a[aria-current="page"]')).toHaveAttribute("href", "/en");
+  });
+
+  test("on a wide screen the header carries the navigation and the tab bar is hidden", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.getByRole("navigation", { name: "Main" })).toBeVisible();
+    await expect(page.locator("nav.tabbar")).toBeHidden();
+  });
+
+  test("the gate offers to continue in the language this browser used last", async ({ page }) => {
+    await page.goto("/uk");
+    await page.goto("/");
+    const link = page.getByRole("link", { name: /Продовжити/ });
+    await expect(link).toBeVisible();
+    await link.click();
+    await expect(page).toHaveURL(/\/uk$/);
   });
 
   test("the main navigation reaches the knowledge map, which searches topics", async ({ page }) => {
@@ -119,5 +149,50 @@ test.describe("interface languages", () => {
     await page.goto("/uk");
     await expect(page.locator("body")).not.toContainText("app.name");
     await expect(page.locator('[data-locale="uk"]')).toHaveAttribute("dir", "ltr");
+  });
+});
+
+test.describe("your own area", () => {
+  test("says there is no account yet and where the data actually lives", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByRole("heading", { level: 1, name: "You" })).toBeVisible();
+    await expect(page.getByText(/There are no accounts yet/)).toBeVisible();
+    await expect(page.getByText(/Running in a browser tab|Running as an installed app/)).toBeVisible();
+  });
+
+  test("progress stays empty until an exercise is answered, then counts it", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByText(/Your progress appears here/)).toBeVisible();
+
+    await page.goto(UNIT);
+    const exercise = firstExercise(page);
+    await exercise.getByRole("radio", { name: "Heute habe ich frei." }).check();
+    await exercise.getByRole("button", { name: "Check" }).click();
+    await expect(exercise.locator(".feedback.ok")).toBeVisible();
+
+    await page.goto("/en/me");
+    await expect(page.getByRole("progressbar")).toBeVisible();
+    await expect(page.getByText("answers", { exact: true })).toBeVisible();
+  });
+
+  test("deleting the data on this device asks first, then reports it is gone", async ({ page }) => {
+    await page.goto("/en");
+    await page.getByRole("radio", { name: "Work" }).check();
+    await page.getByRole("button", { name: "Save my plan" }).click();
+
+    await page.goto("/en/me");
+    await expect(page.getByText("Your plan on this device: Work, 10 min a day.")).toBeVisible();
+    await page.getByRole("button", { name: "Delete my data" }).click();
+    await expect(page.getByText("Delete it all? This cannot be undone.")).toBeVisible();
+    await page.getByRole("button", { name: "Delete my data" }).click();
+    await expect(page.getByText(/^Deleted\./)).toBeVisible();
+    await expect(page.getByText("No plan saved on this device yet.")).toBeVisible();
+  });
+
+  test("practice says plainly when there is nothing due", async ({ page }) => {
+    await page.goto("/en/practice");
+    await expect(page.getByRole("heading", { level: 1, name: "Practice" })).toBeVisible();
+    await expect(page.getByText("Nothing to practise yet.")).toBeVisible();
+    await expect(page.getByText(/spacing schedule/)).toBeVisible();
   });
 });

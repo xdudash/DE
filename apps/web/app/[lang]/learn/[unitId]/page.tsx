@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Block } from "@deutschgo/content-kit";
 import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
+import { LessonProgress } from "../../../../components/LessonProgress";
 import { LessonSummary } from "../../../../components/LessonSummary";
 import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
@@ -12,6 +13,9 @@ export function generateStaticParams() {
   return routableLocales().flatMap((l) => bundle().units.map((u) => ({ lang: l.code, unitId: u.id })));
 }
 export const dynamicParams = false;
+
+/** Content that has not passed human review is labelled wherever it is offered. */
+const REVIEWED = new Set(["approved", "published"]);
 
 /**
  * States how trustworthy the text on this page is: a machine draft, or English
@@ -87,8 +91,12 @@ function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: st
           <ul className="errors">
             {block.items.map((e) => (
               <li key={e.id}>
-                <span lang="de" className="wrong"><s>{e.wrong}</s></span> → <span lang="de" className="right">{e.right}</span>
-                <div className="small">{inline(t(d, e.explanation))}</div>
+                {/* Wrong above right, each on its own rail: no arrow glyph to translate. */}
+                <div className="pair">
+                  <span lang="de" className="wrong"><s>{e.wrong}</s></span>
+                  <span lang="de" className="right">{e.right}</span>
+                </div>
+                <div className="small muted">{inline(t(d, e.explanation))}</div>
               </li>
             ))}
           </ul>
@@ -151,18 +159,19 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
 
   return (
     <main className="page lesson">
-      <p><Link href={`/${lang}`}>← {msg("nav.allTopics")}</Link></p>
+      <p className="back"><Link href={`/${lang}`}>← {msg("nav.allTopics")}</Link></p>
       <h1>{t(d, unit.title)}</h1>
       <p className="lead">{t(d, unit.summary)}</p>
-      <p>
-        <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>{" "}
-        <span className="tag warn">{msg("status.label")}: {unit.status}</span>
-      </p>
+      <div className="meta">
+        <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>
+        {!REVIEWED.has(unit.status) && <span className="tag warn">{msg("status.draftTag")}</span>}
+      </div>
       {unit.review.linguistic.status !== "passed" && <p className="banner">{msg("status.notReviewed")}</p>}
       <TextNotice dict={d} msg={msg} pivotName={pivotName} />
       {unit.prerequisites.length > 0 && (
         <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
       )}
+      <LessonProgress lang={lang} unitId={unit.id} total={exerciseIds.length} />
       <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
       {unit.blocks.map((block) => (
         <section key={block.id} id={block.id}>

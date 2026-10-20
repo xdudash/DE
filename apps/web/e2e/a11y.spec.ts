@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 // WCAG 2.2 A and AA. Only serious and critical violations fail the gate (ADR-0011);
 // others are printed so they can be triaged without blocking every change.
-const PAGES = ["/en", "/en/learn/unit.syntax.v2_declarative.a1", "/ar", "/uk/learn/unit.syntax.v2_declarative.a1"];
+const PAGES = ["/", "/en", "/en/map", "/en/practice", "/en/me", "/en/learn/unit.syntax.v2_declarative.a1", "/ar", "/uk/learn/unit.syntax.v2_declarative.a1"];
 
 for (const path of PAGES) {
   test(`no serious accessibility violations on ${path}`, async ({ page }) => {

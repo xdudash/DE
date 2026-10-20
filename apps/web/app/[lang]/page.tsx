@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { graphFromBundle, routeFromBundle } from "@deutschgo/learning-engine";
+import { InstallPrompt } from "../../components/InstallPrompt";
 import type { TargetLink } from "../../components/NextStep";
 import { NextStep } from "../../components/NextStep";
 import { SetupForm } from "../../components/SetupForm";
+import { SlotLine } from "../../components/SlotLine";
 import { bundle, dictionaryFor, t } from "../../lib/content";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
-import { graphFromBundle, routeFromBundle } from "@deutschgo/learning-engine";
+
+/** Content that has not passed human review is labelled wherever it is offered. */
+const REVIEWED = new Set(["approved", "published"]);
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -12,11 +17,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const contentLang = contentLanguageFor(lang);
   const b = bundle();
   const units = new Map(b.units.map((u) => [u.id, u]));
+  const concepts = new Map(b.concepts.map((c) => [c.id, c]));
   const title = (id: string, entity: unknown, key: string) => t(dictionaryFor(id, entity, contentLang), key);
 
   // The first step of the first route that points at an authored unit: the natural starting point.
   const firstStep = b.routes.flatMap((r) => r.steps).find((s) => s.unit && units.has(s.unit));
   const firstUnit = firstStep?.unit ? units.get(firstStep.unit) : undefined;
+
+  // The hero is that lesson's own concept, shown as the sentence it teaches.
+  const heroConcept = firstUnit ? concepts.get(firstUnit.concepts[0] ?? "") : undefined;
+  const heroExample = heroConcept?.examples?.find((e) => e.highlight?.length === 1 && (e.highlight[0] ?? 0) >= 1);
 
   // Engine inputs and link targets, built once on the server.
   const graph = graphFromBundle(b);
@@ -30,12 +40,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   return (
     <main className="page">
       <header className="top">
-        <h1>{msg("app.name")}</h1>
-        <p className="muted">{msg("app.tagline")}</p>
+        <h1>{msg("app.tagline")}</h1>
       </header>
-      {localeInfo(lang).preview && (
-        <p className="banner">{msg("status.fallback", { language: "English" })}</p>
+
+      {heroConcept && heroExample && (
+        <SlotLine
+          example={heroExample}
+          caption={title(heroConcept.id, heroConcept, heroConcept.title)}
+          gloss={heroExample.gloss ? title(heroConcept.id, heroConcept, heroExample.gloss) : undefined}
+        />
       )}
+
+      {localeInfo(lang).preview && <p className="banner">{msg("status.fallback", { language: "English" })}</p>}
       <p className="banner">{msg("status.noPersistence")}</p>
 
       <section className="start" aria-labelledby="start-heading">
@@ -44,9 +60,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <SetupForm
           lang={lang}
           startHref={firstUnit ? `/${lang}/learn/${firstUnit.id}` : undefined}
-          startTitle={firstUnit ? `${msg("home.startCta")}: ${title(firstUnit.id, firstUnit, firstUnit.title)}` : undefined}
+          startTitle={firstUnit ? msg("home.startCta") : undefined}
+          startSub={firstUnit ? title(firstUnit.id, firstUnit, firstUnit.title) : undefined}
         />
         <p className="muted small">{msg("home.startNote")}</p>
+        <InstallPrompt lang={lang} />
       </section>
 
       {route.length > 0 && <NextStep lang={lang} graph={graph} route={route} targets={targets} />}
@@ -66,19 +84,23 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 if (!u) return null;
                 return (
                   <li key={i} className="step available">
-                    <Link href={`/${lang}/learn/${u.id}`}>{title(u.id, u, u.title)}</Link>{" "}
-                    <span className="tag">{msg("catalog.unitMeta", { level: u.cefr, minutes: u.estimated_minutes })}</span>{" "}
-                    <span className="tag warn">{u.status}</span>
+                    <Link href={`/${lang}/learn/${u.id}`}>{title(u.id, u, u.title)}</Link>
+                    <div className="step-meta">
+                      <span className="tag">{msg("catalog.unitMeta", { level: u.cefr, minutes: u.estimated_minutes })}</span>
+                      {!REVIEWED.has(u.status) && <span className="tag warn">{msg("status.draftTag")}</span>}
+                    </div>
                   </li>
                 );
               }
-              const c = b.concepts.find((x) => x.id === step.concept);
+              const c = concepts.get(step.concept ?? "");
               if (!c) return null;
               return (
                 <li key={i} className="step planned">
-                  {title(c.id, c, c.title)} <span className="tag">{c.cefr.introduced}</span>{" "}
-                  <span className="muted">— {msg("catalog.plannedConcept")}</span>
-                  {step.optional && <span className="tag">optional</span>}
+                  {title(c.id, c, c.title)}
+                  <div className="step-meta">
+                    <span className="tag">{c.cefr.introduced}</span>
+                    <span>{msg("catalog.plannedConcept")}</span>
+                  </div>
                 </li>
               );
             })}

@@ -3,9 +3,11 @@ import { beforeEach, describe, it } from "node:test";
 import {
   MAX_STORED_ATTEMPTS,
   readAttempts,
+  readLanguage,
   readLessonResults,
   readSetup,
   recordAttempt,
+  writeLanguage,
   writeSetup,
 } from "../lib/device-state.ts";
 
@@ -124,5 +126,34 @@ describe("attempts as learning evidence", () => {
     assert.equal(all.length, MAX_STORED_ATTEMPTS);
     assert.equal(all.at(-1)?.exerciseId, "fresh");
     assert.equal(all[0]?.id, "old1");
+  });
+});
+
+describe("remembered explanation language", () => {
+  const OFFERED = ["en", "uk", "ru"];
+  beforeEach(() => installStorage());
+
+  it("has no language before the learner picks one", () => {
+    assert.equal(readLanguage(OFFERED), null);
+  });
+
+  it("round-trips a language the app offers", () => {
+    assert.equal(writeLanguage("uk"), true);
+    assert.equal(readLanguage(OFFERED), "uk");
+  });
+
+  it("ignores a language that is no longer offered", () => {
+    writeLanguage("uk");
+    assert.equal(readLanguage(["en", "ru"]), null);
+  });
+
+  it("ignores a stored value that is not a language code", () => {
+    installStorage({ corrupt: { "deutschgo.language.v1": JSON.stringify({ code: "uk" }) } });
+    assert.equal(readLanguage(OFFERED), null);
+  });
+
+  it("reports a failed write instead of claiming success", () => {
+    installStorage({ failWrites: true });
+    assert.equal(writeLanguage("ru"), false);
   });
 });

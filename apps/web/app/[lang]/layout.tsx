@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { AppHeader } from "../../components/AppHeader";
+import { OfflineNotice } from "../../components/OfflineNotice";
+import { TabBar } from "../../components/TabBar";
 import { isRoutableLocale, localeInfo, routableLocales } from "../../lib/i18n";
 
 export function generateStaticParams() {
@@ -13,9 +15,11 @@ export default async function LangLayout({ children, params }: { children: React
   if (!isRoutableLocale(lang)) notFound();
   const info = localeInfo(lang);
   return (
-    <div lang={lang} dir={info.dir} data-locale={lang} data-preview={info.preview ? "true" : undefined}>
+    <div lang={lang} dir={info.dir} data-locale={lang} data-preview={info.preview ? "true" : undefined} className="shell">
+      <OfflineNotice lang={lang} />
       <AppHeader lang={lang} />
       {children}
+      <TabBar lang={lang} />
     </div>
   );
 }

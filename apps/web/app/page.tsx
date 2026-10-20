@@ -1,21 +1,25 @@
-import Link from "next/link";
-import { offeredLocales, ui } from "../lib/i18n";
+import { InstallPrompt } from "../components/InstallPrompt";
+import { LanguageGate } from "../components/LanguageGate";
+import { ui } from "../lib/i18n";
 
-/** Language gate: the only page without a locale in the URL. */
+/**
+ * The language gate: the only page without a locale in the URL, and the start URL
+ * of the installed app. It states what DeutschGo is before asking anything, so an
+ * installed app does not open on a bare list of languages.
+ */
 export default function Home() {
-  const locales = offeredLocales();
+  const msg = ui("en");
   return (
-    <main className="page">
-      <h1>{ui("en")("app.name")}</h1>
-      <p className="lead">{ui("en")("app.tagline")}</p>
-      <p className="muted">{locales.map((l) => ui(l.code)("app.chooseLanguage")).join(" · ")}</p>
-      <ul className="langs">
-        {locales.map((l) => (
-          <li key={l.code}>
-            <Link href={`/${l.code}`} lang={l.code} dir={l.dir}>{l.nativeName}</Link>
-          </li>
-        ))}
+    <main className="page gate-page">
+      <h1>{msg("app.name")}</h1>
+      <p className="lead">{msg("app.tagline")}</p>
+      <ul className="points">
+        <li>{msg("gate.point.explanations")}</li>
+        <li>{msg("gate.point.route")}</li>
+        <li>{msg("gate.point.free")}</li>
       </ul>
+      <LanguageGate />
+      <InstallPrompt lang="en" />
     </main>
   );
 }
