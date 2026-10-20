@@ -9,30 +9,22 @@
  * removes all of it. The confirmation is inline rather than a browser dialog.
  */
 import { useEffect, useState } from "react";
-import { localeInfo, translator, type MessageKey } from "@deutschgo/i18n";
-import { clearDeviceData, readSetup, type Goal, type Setup } from "../lib/device-state";
-
-const GOAL_KEY: Record<Goal, MessageKey> = {
-  life: "setup.goal.life",
-  work: "setup.goal.work",
-  study: "setup.goal.study",
-};
+import { localeInfo, translator } from "@deutschgo/i18n";
+import { clearDeviceData } from "../lib/device-state";
+import { SetupForm } from "./SetupForm";
 
 export function ProfilePanel({ lang }: { lang: string }) {
   const msg = translator(lang);
-  const [setup, setSetup] = useState<Setup | null>(null);
   const [standalone, setStandalone] = useState(false);
   const [asking, setAsking] = useState(false);
   const [result, setResult] = useState<"cleared" | "failed" | null>(null);
 
   useEffect(() => {
-    setSetup(readSetup());
     setStandalone(window.matchMedia("(display-mode: standalone)").matches);
   }, []);
 
   function clear() {
     const ok = clearDeviceData();
-    setSetup(ok ? null : readSetup());
     setResult(ok ? "cleared" : "failed");
     setAsking(false);
   }
@@ -40,15 +32,8 @@ export function ProfilePanel({ lang }: { lang: string }) {
   return (
     <>
       <section className="panel" aria-labelledby="plan-heading">
-        <h2 id="plan-heading">{msg("profile.plan")}</h2>
-        <p>
-          {setup
-            ? msg("setup.saved", {
-                goal: msg(GOAL_KEY[setup.goal]),
-                minutes: msg("setup.minutes", { minutes: setup.minutes }),
-              })
-            : msg("profile.planNone")}
-        </p>
+        <h2 id="plan-heading">{msg("dash.plan")}</h2>
+        <SetupForm lang={lang} />
       </section>
 
       <section className="panel" aria-labelledby="language-heading">

@@ -713,3 +713,75 @@ button.danger:hover { background: var(--bad-soft); }
   html, body { overscroll-behavior-y: none; }
   .appbar-inner { padding-block-start: env(safe-area-inset-top, 0px); }
 }
+
+/* ---------------------------------------------------------------- app panel and shell
+   Home reads as the learner's panel: one card to continue, the daily ring and three
+   figures. Phone: a slim top bar and bottom tabs. Wide screens: a left navigation
+   column instead of a website header. Flat surfaces, one shadow-free rhythm. */
+body { background: #f3f5f8; }
+.appbar, .tabbar { background: var(--paper); }
+
+.dash { display: grid; gap: 1rem; }
+.today-card {
+  display: grid; gap: 0.9rem; padding: 1.25rem;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 20px;
+}
+.today-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.today-head h1 { margin: 0; font-size: var(--step-2); line-height: 1.2; }
+.today-head p { margin: 0.35rem 0 0; }
+.ring { position: relative; flex: 0 0 auto; inline-size: 76px; block-size: 76px; }
+.ring svg { display: block; inline-size: 100%; block-size: 100%; transform: rotate(-90deg); }
+.ring .track { stroke: var(--blue-soft); }
+.ring .fill { stroke: var(--blue); transition: stroke-dashoffset 400ms ease; }
+.ring .count {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: var(--step-1); font-weight: 650; font-variant-numeric: tabular-nums; color: var(--ink);
+}
+.ring-caption { margin: 0; }
+.cta-big {
+  display: flex; align-items: center; justify-content: center;
+  min-block-size: 52px; border-radius: 14px;
+  background: var(--blue); color: var(--paper); font-weight: 600; text-decoration: none;
+}
+.cta-big:hover { background: var(--blue-2); }
+
+.stat-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.stat-row li {
+  display: grid; gap: 0.15rem; padding: 0.85rem 0.9rem;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+}
+.stat-row strong { font-size: var(--step-1); font-variant-numeric: tabular-nums; color: var(--ink); }
+.stat-row span { font-size: var(--step--1); color: var(--ink-2); }
+.stat-xp strong { color: var(--ok); }
+.stat-hearts strong { color: var(--bad); }
+.dash-note { margin: 0; }
+
+.tabbar a[aria-current="page"] { box-shadow: none; }
+
+@media (min-width: 48rem) {
+  .shell { padding-inline-start: 15.5rem; }
+  .shell:has(.flow) { padding-inline-start: 0; }
+  .appbar {
+    position: fixed; inset-block: 0; inset-inline-start: 0; z-index: 6;
+    inline-size: 15.5rem; block-size: 100dvh; overflow-y: auto;
+    border-bottom: 0; border-inline-end: 1px solid var(--line);
+  }
+  .appbar-inner {
+    flex-direction: column; flex-wrap: nowrap; align-items: stretch;
+    min-block-size: 100%; max-inline-size: none; gap: 1.25rem; padding-block: 1.5rem;
+  }
+  .brand { margin-inline-end: 0; padding-inline: 0.8rem; }
+  .mainnav { display: flex; flex-direction: column; gap: 0.2rem; }
+  .mainnav a { min-block-size: 44px; padding-inline: 0.8rem; }
+  .mainnav a[aria-current="page"] { background: var(--blue-soft); color: var(--blue); box-shadow: none; }
+  .appbar nav:has(> .langs) { margin-block-start: auto; }
+  .appbar .langs { justify-content: space-between; }
+  .appbar .langs a { flex: 1 1 0; }
+  .page { max-inline-size: 42rem; padding-block: 2rem 4rem; }
+  .dash { max-inline-size: 42rem; }
+  .dash .today-card { padding: 1.75rem; }
+}
+
+@media (display-mode: standalone) {
+  .shell:not(:has(.flow)) .page { padding-block-start: calc(env(safe-area-inset-top, 0px) + 1rem); }
+}

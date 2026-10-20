@@ -178,4 +178,11 @@ export const uk: Catalog = {
   "flow.step": "Крок {current} з {total}",
   "flow.answerFirst": "Відповідайте на вправу, щоб продовжити.",
   "flow.xp": "+{xp} XP за цей урок на цьому пристрої",
+  "dash.today": "Сьогодні",
+  "dash.todayOf": "{answered} з {goal} відповідей сьогодні",
+  "dash.xp": "XP",
+  "dash.streak": "днів поспіль",
+  "dash.hearts": "Серця",
+  "dash.start": "Почніть перший урок",
+  "dash.plan": "Ваш план",
 };

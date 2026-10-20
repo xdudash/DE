@@ -183,6 +183,13 @@ export const en = {
   "flow.step": "Step {current} of {total}",
   "flow.answerFirst": "Answer the exercise to continue.",
   "flow.xp": "+{xp} XP from this lesson, on this device",
+  "dash.today": "Today",
+  "dash.todayOf": "{answered} of {goal} answers today",
+  "dash.xp": "XP",
+  "dash.streak": "Day streak",
+  "dash.hearts": "Hearts",
+  "dash.start": "Start the first lesson",
+  "dash.plan": "Your plan",
 } as const;
 
 export type MessageKey = keyof typeof en;

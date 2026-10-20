@@ -190,4 +190,11 @@ export const ar: Catalog = {
   "flow.step": "الخطوة {current} من {total}",
   "flow.answerFirst": "أجب عن التمرين للمتابعة.",
   "flow.xp": "+{xp} XP من هذا الدرس على هذا الجهاز",
+  "dash.today": "اليوم",
+  "dash.todayOf": "{answered} من {goal} إجابات اليوم",
+  "dash.xp": "XP",
+  "dash.streak": "أيام متتالية",
+  "dash.hearts": "القلوب",
+  "dash.start": "ابدأ الدرس الأول",
+  "dash.plan": "خطتك",
 };

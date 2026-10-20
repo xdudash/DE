@@ -178,4 +178,11 @@ export const ru: Catalog = {
   "flow.step": "Шаг {current} из {total}",
   "flow.answerFirst": "Ответьте на упражнение, чтобы продолжить.",
   "flow.xp": "+{xp} XP за этот урок на этом устройстве",
+  "dash.today": "Сегодня",
+  "dash.todayOf": "{answered} из {goal} ответов сегодня",
+  "dash.xp": "XP",
+  "dash.streak": "дней подряд",
+  "dash.hearts": "Сердца",
+  "dash.start": "Начните первый урок",
+  "dash.plan": "Ваш план",
 };

@@ -16,16 +16,15 @@ test.describe("catalogue", () => {
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
   });
 
-  test("starts with an introduction and a one-tap start to the first lesson", async ({ page }) => {
+  test("the home card opens the first lesson in one tap", async ({ page }) => {
     await page.goto("/en");
-    await expect(page.getByRole("heading", { name: "Start here" })).toBeVisible();
-    await expect(page.getByText(/complete German course/)).toBeVisible();
+    await expect(page.getByRole("link", { name: /Start the first lesson/ })).toBeVisible();
     await page.getByRole("link", { name: /Start the first lesson/ }).click();
     await expect(page).toHaveURL(new RegExp(`${UNIT}$`));
   });
 
-  test("saves a first-visit plan in this browser and says it is device-only", async ({ page }) => {
-    await page.goto("/en");
+  test("saves a plan in this browser from the learner area and says it is device-only", async ({ page }) => {
+    await page.goto("/en/me");
     await page.getByRole("radio", { name: "Work" }).check();
     await page.getByRole("radio", { name: "15 min" }).check();
     await page.getByRole("button", { name: "Save my plan" }).click();
@@ -91,12 +90,10 @@ test.describe("catalogue", () => {
     await expect(page.getByText("States are based only on answers in this browser.")).toBeVisible();
   });
 
-  test("a new learner is pointed at the first route step, with the reason", async ({ page }) => {
+  test("a new learner sees the first lesson on the home card, with a draft label", async ({ page }) => {
     await page.goto("/en");
-    const section = page.locator("section.next-step");
-    await expect(section.getByRole("heading", { name: "Your next step" })).toBeVisible();
-    await expect(section.locator(`a[href="${UNIT}"]`)).toBeVisible();
-    await expect(section.getByText("Next step on your route")).toBeVisible();
+    await expect(page.locator(`a[href="${UNIT}"]`).first()).toBeVisible();
+    await expect(page.getByText("Not reviewed").first()).toBeVisible();
   });
 });
 
@@ -202,7 +199,7 @@ test.describe("your own area", () => {
   });
 
   test("deleting the data on this device asks first, then reports it is gone", async ({ page }) => {
-    await page.goto("/en");
+    await page.goto("/en/me");
     await page.getByRole("radio", { name: "Work" }).check();
     await page.getByRole("button", { name: "Save my plan" }).click();
 
