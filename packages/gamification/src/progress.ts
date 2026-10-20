@@ -58,7 +58,9 @@ export function streakFor(attempts: readonly Attempt[], now: number, timeZone: s
   let longest = 1;
   let run = 1;
   for (let i = 1; i < days.length; i++) {
-    run = days[i] === days[i - 1] + 1 ? run + 1 : 1;
+    const prev = days[i - 1];
+    const cur = days[i];
+    run = prev !== undefined && cur === prev + 1 ? run + 1 : 1;
     longest = Math.max(longest, run);
   }
 

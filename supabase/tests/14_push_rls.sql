@@ -3,8 +3,8 @@
 \set ON_ERROR_STOP on
 \pset tuples_only on
 \o /dev/null
-\set P '33333333-3333-4333-8333-333333333333'
-\set Q '44444444-4444-4444-8444-444444444444'
+\set P '55555555-5555-4555-8555-555555555555'
+\set Q '66666666-6666-4666-8666-666666666666'
 
 insert into auth.users (id, email) values (:'P', 'p@example.test'), (:'Q', 'q@example.test');
 
@@ -16,7 +16,7 @@ reset role;
 
 -- ----------------------------------------------------------- P sees only P
 set role authenticated;
-set request.jwt.claims = '{"sub":"33333333-3333-4333-8333-333333333333","role":"authenticated"}';
+set request.jwt.claims = '{"sub":"55555555-5555-4555-8555-555555555555","role":"authenticated"}';
 
 select public.dg_assert((select count(*) from public.push_subscriptions) = 1, 'P sees exactly one push subscription');
 select public.dg_assert((select endpoint from public.push_subscriptions) = 'https://push.example.test/p', 'P sees its own endpoint');
@@ -25,7 +25,7 @@ select public.dg_assert((select endpoint from public.push_subscriptions) = 'http
 do $$
 declare n integer;
 begin
-  delete from public.push_subscriptions where user_id = '44444444-4444-4444-8444-444444444444';
+  delete from public.push_subscriptions where user_id = '66666666-6666-4666-8666-666666666666';
   get diagnostics n = row_count;
   perform public.dg_assert(n = 0, 'P cannot delete Q subscription');
 end
@@ -36,7 +36,7 @@ do $$
 begin
   begin
     insert into public.push_subscriptions (user_id, endpoint, p256dh, auth)
-    values ('44444444-4444-4444-8444-444444444444', 'https://push.example.test/forged', repeat('B', 87), repeat('a', 22));
+    values ('66666666-6666-4666-8666-666666666666', 'https://push.example.test/forged', repeat('B', 87), repeat('a', 22));
     raise exception 'ASSERTION FAILED: P could subscribe for Q';
   exception when insufficient_privilege then null;
   end;
