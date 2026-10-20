@@ -177,6 +177,12 @@ export const en = {
   "reminders.failed": "The reminder could not be changed. Try again.",
   "reminders.pushTitle": "DeutschGo",
   "reminders.pushBody": "A few minutes of German today?",
+  "flow.close": "Leave the lesson",
+  "flow.continue": "Continue",
+  "flow.finish": "Finish",
+  "flow.step": "Step {current} of {total}",
+  "flow.answerFirst": "Answer the exercise to continue.",
+  "flow.xp": "+{xp} XP from this lesson, on this device",
 } as const;
 
 export type MessageKey = keyof typeof en;

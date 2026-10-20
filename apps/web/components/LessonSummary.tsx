@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { translator } from "@deutschgo/i18n";
+import { XP } from "@deutschgo/gamification";
 import { readLessonResults } from "../lib/device-state";
 
 interface Props {
@@ -28,6 +29,8 @@ export function LessonSummary({ lang, unitId, exerciseIds, next }: Props) {
   const answered = results ? exerciseIds.filter((id) => id in results).length : 0;
   const correct = results ? exerciseIds.filter((id) => results[id] === true).length : 0;
   const finished = results !== null && total > 0 && answered === total;
+  // XP from the latest answer per exercise, using the same rule as the Motivation strip.
+  const xp = results ? exerciseIds.reduce((sum, id) => (id in results ? sum + (results[id] ? XP.correct : XP.wrong) : sum), 0) : 0;
 
   return (
     <section className="summary" aria-labelledby="summary-heading">
@@ -35,6 +38,7 @@ export function LessonSummary({ lang, unitId, exerciseIds, next }: Props) {
       <div aria-live="polite">
         {results === null && <p className="muted">…</p>}
         {results !== null && finished && <p className="lead">{msg("exercise.score", { correct, total })}</p>}
+        {results !== null && finished && <p className="flow-xp">{msg("flow.xp", { xp })}</p>}
         {results !== null && !finished && (
           <p>{msg("lesson.notDone", { answered, total })}</p>
         )}

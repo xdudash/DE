@@ -184,4 +184,10 @@ export const ar: Catalog = {
   "reminders.failed": "تعذّر تغيير التذكير. حاول مرة أخرى.",
   "reminders.pushTitle": "DeutschGo",
   "reminders.pushBody": "بضع دقائق من الألمانية اليوم؟",
+  "flow.close": "الخروج من الدرس",
+  "flow.continue": "متابعة",
+  "flow.finish": "إنهاء",
+  "flow.step": "الخطوة {current} من {total}",
+  "flow.answerFirst": "أجب عن التمرين للمتابعة.",
+  "flow.xp": "+{xp} XP من هذا الدرس على هذا الجهاز",
 };

@@ -625,8 +625,6 @@ input.bad { border-color: var(--bad); border-width: 2px; }
 }
 .statelist li:last-child { border-bottom: 1px solid var(--line); }
 
-.lesson-progress { display: grid; gap: 0.35rem; margin: 1rem 0 1.5rem; max-width: var(--measure); }
-.lesson-progress p { margin: 0; }
 
 button.danger { border-color: var(--bad); color: var(--bad); font-weight: 600; }
 button.danger:hover { background: var(--bad-soft); }
@@ -658,4 +656,60 @@ button.danger:hover { background: var(--bad-soft); }
   font-size: var(--step--1);
   text-align: center;
   max-width: none;
+}
+
+/* ---------------------------------------------------------------- lesson mode (app shell)
+   A lesson is a guided run: the site header and tab bar step aside, and the learner has
+   one top bar (leave, progress, hearts) and one bottom action. */
+.shell:has(.flow) > .appbar,
+.shell:has(.flow) > .tabbar { display: none; }
+
+.flow { min-block-size: 100dvh; display: flex; flex-direction: column; }
+
+.flow-top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: calc(env(safe-area-inset-top, 0px) + 0.5rem) 1rem 0.5rem;
+  background: var(--paper); border-block-end: 1px solid var(--line);
+}
+.flow-close {
+  display: grid; place-items: center; flex: 0 0 auto;
+  min-inline-size: 44px; min-block-size: 44px; border-radius: 999px;
+  color: var(--ink); text-decoration: none; font-size: 1.6rem; line-height: 1;
+}
+.flow-close:hover { background: var(--surface); }
+.flow-bar {
+  flex: 1 1 auto; block-size: 0.6rem; border-radius: 999px;
+  background: var(--blue-soft); overflow: hidden; min-inline-size: 3rem;
+}
+.flow-bar span { display: block; block-size: 100%; background: var(--blue); border-radius: 999px; transition: inline-size 300ms ease; }
+.flow-tag { flex: 0 0 auto; }
+.flow-hearts { flex: 0 0 auto; font-weight: 600; color: var(--bad); white-space: nowrap; }
+
+.flow-body {
+  flex: 1 1 auto; inline-size: 100%; max-inline-size: var(--measure);
+  margin-inline: auto; padding: 1.25rem 1rem 1rem;
+}
+.flow-card { display: grid; gap: 0.75rem; }
+.flow-card > h1 { margin-block: 0; }
+.flow-caption { margin: 0; }
+.flow-title { margin-block: 0; }
+.flow-xp { font-weight: 600; color: var(--ok); margin: 0; }
+
+.flow-footer {
+  position: sticky; bottom: 0; z-index: 5;
+  display: grid; gap: 0.4rem;
+  padding: 0.75rem 1rem calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+  background: var(--paper); border-block-start: 1px solid var(--line);
+}
+.flow-hint { margin: 0; text-align: center; }
+.flow-continue { inline-size: 100%; min-block-size: 52px; font-size: 1.05rem; font-weight: 600; border-radius: 14px; }
+.flow-continue:disabled { opacity: 0.5; }
+
+@media (prefers-reduced-motion: reduce) { .flow-bar span { transition: none; } }
+
+/* Installed as an app: no pull-to-refresh bounce, and the top bar clears the status area. */
+@media (display-mode: standalone) {
+  html, body { overscroll-behavior-y: none; }
+  .appbar-inner { padding-block-start: env(safe-area-inset-top, 0px); }
 }

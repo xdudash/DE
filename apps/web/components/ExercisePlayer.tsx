@@ -20,18 +20,30 @@ export interface PlayerText {
   [key: string]: string;
 }
 
+export interface PlayerLabels {
+  check: string;
+  reset: string;
+  tryAgain: string;
+  yourAnswer: string;
+  saveFailed: string;
+  stale: string;
+  /** Contains the placeholder {minutes}, filled in on the client. */
+  outOfHearts: string;
+}
+
 interface Props {
   exercise: Exercise;
   text: PlayerText;
-  /** `outOfHearts` contains the placeholder {minutes}, filled in on the client. */
-  labels: { check: string; reset: string; tryAgain: string; yourAnswer: string; saveFailed: string; stale: string; outOfHearts: string };
+  labels: PlayerLabels;
   /** Unit id and version, needed so the server can resolve exactly this exercise. */
   unit: { id: string; version: string; concepts: string[] };
+  /** Tells the lesson flow whether the learner has answered, and whether it was right. */
+  onResult?: (correct: boolean) => void;
 }
 
 const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
-export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
+export function ExercisePlayer({ exercise, text, labels, unit, onResult }: Props) {
   const [save, setSave] = useState<SubmitState>({ status: "off" });
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [choice, setChoice] = useState<string>("");
@@ -63,6 +75,7 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
       const outcome = evaluate(exercise, response);
       setResult(outcome);
       setError(null);
+      onResult?.(outcome.correct);
       // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
       recordAttempt({ unitId: unit.id, exerciseId: exercise.id, conceptIds: unit.concepts, correct: outcome.correct });
     } catch (e) {

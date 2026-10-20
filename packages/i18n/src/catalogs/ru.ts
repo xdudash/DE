@@ -172,4 +172,10 @@ export const ru: Catalog = {
   "reminders.failed": "Не удалось изменить напоминание. Попробуйте ещё раз.",
   "reminders.pushTitle": "DeutschGo",
   "reminders.pushBody": "Несколько минут немецкого сегодня?",
+  "flow.close": "Выйти из урока",
+  "flow.continue": "Продолжить",
+  "flow.finish": "Завершить",
+  "flow.step": "Шаг {current} из {total}",
+  "flow.answerFirst": "Ответьте на упражнение, чтобы продолжить.",
+  "flow.xp": "+{xp} XP за этот урок на этом устройстве",
 };

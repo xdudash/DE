@@ -31,6 +31,7 @@ Last updated: 2026-10-20
 - DG-015 accounts (branch `feat/accounts-dg015`, ADR-0013): Google and Apple sign-in via Supabase Auth with PKCE, HttpOnly cookie session, 16+ confirmation at sign-up, account page, account deletion, progress saved to the account when signed in. Unit tests and E2E for the unconfigured state; the real provider round trip needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
 - DG-019 phone lesson polish (branch `feat/phone-lesson-polish`): 44px tap targets for the language picker and gap fields, hyphenation of German text, 320px and tap-target E2E checks.
 
+- App shell (same branch): a lesson is a guided run, one step at a time, with a top bar (leave, progress, hearts, draft tag), one bottom action that waits for an answer, and a result with XP. The site header and tab bar step aside during a lesson. Installed-app display adjustments. Not yet on a device: no sound, no motion design beyond the progress bar, no sequencing of exercise types beyond the four that exist.
 - DG-020 MVP (branch `feat/mvp-motivation-push`, ADR-0014 and ADR-0015): XP, level, streak and hearts derived from answers on this device; practice pauses at zero hearts while explanations stay open; daily push reminder for signed-in learners, off by default. Unit tests for the rules and the push validation. The push pipeline needs the owner steps in [REMINDERS_SETUP.md](./REMINDERS_SETUP.md) before anything is sent.
 
 ## Authored but NOT human-verified

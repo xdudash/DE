@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const UNIT = "/en/learn/unit.syntax.v2_declarative.a1";
 
@@ -100,26 +100,42 @@ test.describe("catalogue", () => {
   });
 });
 
+/** Moves through the lesson with "Continue" until the target is on screen. */
+async function continueUntil(page: Page, target: Locator) {
+  for (let i = 0; i < 40; i++) {
+    if (await target.isVisible().catch(() => false)) return;
+    await page.getByRole("button", { name: /^(Continue|Finish)$/ }).click();
+  }
+  await expect(target).toBeVisible();
+}
+
 test.describe("lesson page", () => {
-  test("shows review and persistence banners and marks German text as German", async ({ page }) => {
+  test("opens as a guided run: leave button, progress bar and an introduction with honest banners", async ({ page }) => {
     await page.goto(UNIT);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Leave the lesson" })).toBeVisible();
+    await expect(page.getByRole("progressbar")).toBeVisible();
     // The unit is not yet human-reviewed, so the honest banner must be there.
     await expect(page.locator("p.banner").first()).toBeVisible();
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
-    // German sentences carry lang="de" for screen readers and hyphenation.
+  });
+
+  test("German text is marked as German once the learner reaches it", async ({ page }) => {
+    await page.goto(UNIT);
+    await continueUntil(page, page.locator('[lang="de"]').first());
     expect(await page.locator('[lang="de"]').count()).toBeGreaterThan(0);
   });
 
-  test("the summary asks for every answer before it shows a score, and names the next step", async ({ page }) => {
+  test("an exercise cannot be left until it is answered", async ({ page }) => {
     await page.goto(UNIT);
-    await expect(page.getByRole("heading", { name: "Your result" })).toBeVisible();
-    await expect(page.getByText(/Answered so far: 0 of \d+/)).toBeVisible();
-    await expect(page.getByText(/Your result is kept in this browser only/)).toBeVisible();
+    await continueUntil(page, firstExercise(page));
+    await expect(page.getByRole("button", { name: /^Continue$/ })).toBeDisabled();
+    await expect(page.getByText("Answer the exercise to continue.")).toBeVisible();
   });
 
   test("a wrong answer is explained, the right answer is accepted, and reset clears it", async ({ page }) => {
     await page.goto(UNIT);
+    await continueUntil(page, firstExercise(page));
     const exercise = firstExercise(page);
     await exercise.getByRole("radio", { name: "Heute ich habe frei." }).check();
     await exercise.getByRole("button", { name: "Check", exact: true }).click();
@@ -128,10 +144,12 @@ test.describe("lesson page", () => {
     await exercise.getByRole("radio", { name: "Heute habe ich frei." }).check();
     await exercise.getByRole("button", { name: "Check", exact: true }).click();
     await expect(exercise.locator(".feedback.ok")).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Continue$/ })).toBeEnabled();
   });
 
   test("radio options work with the keyboard alone", async ({ page }) => {
     await page.goto(UNIT);
+    await continueUntil(page, firstExercise(page));
     const option = firstExercise(page).getByRole("radio", { name: "Heute habe ich frei." });
     await option.focus();
     await page.keyboard.press("Space");
@@ -172,6 +190,7 @@ test.describe("your own area", () => {
     await expect(page.getByText(/Your progress appears here/)).toBeVisible();
 
     await page.goto(UNIT);
+    await continueUntil(page, firstExercise(page));
     const exercise = firstExercise(page);
     await exercise.getByRole("radio", { name: "Heute habe ich frei." }).check();
     await exercise.getByRole("button", { name: "Check" }).click();

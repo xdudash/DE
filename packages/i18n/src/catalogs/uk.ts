@@ -172,4 +172,10 @@ export const uk: Catalog = {
   "reminders.failed": "Не вдалося змінити нагадування. Спробуйте ще раз.",
   "reminders.pushTitle": "DeutschGo",
   "reminders.pushBody": "Кілька хвилин німецької сьогодні?",
+  "flow.close": "Вийти з уроку",
+  "flow.continue": "Продовжити",
+  "flow.finish": "Завершити",
+  "flow.step": "Крок {current} з {total}",
+  "flow.answerFirst": "Відповідайте на вправу, щоб продовжити.",
+  "flow.xp": "+{xp} XP за цей урок на цьому пристрої",
 };
