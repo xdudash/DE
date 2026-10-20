@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { TargetLink } from "../../components/NextStep";
 import { NextStep } from "../../components/NextStep";
+import { InstallPrompt } from "../../components/InstallPrompt";
 import { SetupForm } from "../../components/SetupForm";
 import { bundle, dictionaryFor, t } from "../../lib/content";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
@@ -47,6 +48,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           startTitle={firstUnit ? `${msg("home.startCta")}: ${title(firstUnit.id, firstUnit, firstUnit.title)}` : undefined}
         />
         <p className="muted small">{msg("home.startNote")}</p>
+        <InstallPrompt lang={lang} />
       </section>
 
       {route.length > 0 && <NextStep lang={lang} graph={graph} route={route} targets={targets} />}

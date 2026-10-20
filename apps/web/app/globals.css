@@ -81,3 +81,93 @@ input.ok { border-color: var(--ok-line); } input.bad { border-color: var(--bad-l
 .feedback.bad { background: var(--bad); border: 1px solid var(--bad-line); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ---- Mobile app shell (ADR-0012) ------------------------------------------
+   Phone first: the header keeps the brand and the language picker, and the
+   sections move to a bottom bar within thumb reach. From 48rem the bottom bar
+   is replaced by the header navigation, so the two never show at once.
+   Safe-area insets keep content clear of notches and the home indicator. */
+
+.page {
+  padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
+  /* Room for the bottom bar plus the home indicator. */
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg);
+  padding-top: env(safe-area-inset-top);
+}
+.appbar-inner {
+  padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
+}
+
+/* Sections live in the bottom bar on phones. */
+.appbar .mainnav { display: none; }
+
+.tabbar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 6;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tabbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 46rem;
+  margin-inline: auto;
+  display: flex;
+}
+.tabbar li { flex: 1 1 0; }
+.tabbar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: .25rem .5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.tabbar a[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 700;
+  box-shadow: inset 0 2px 0 0 var(--accent);
+}
+
+@media (min-width: 48rem) {
+  .appbar .mainnav { display: flex; }
+  .tabbar { display: none; }
+  .page { padding-bottom: 4rem; }
+}
+
+/* ---- Language gate --------------------------------------------------------- */
+
+.points { padding-inline-start: 1.2rem; margin: 1rem 0 1.5rem; }
+.points li { margin: .4rem 0; }
+
+.gate-heading { font-size: 1rem; margin-bottom: .6rem; }
+
+.langcards { list-style: none; padding: 0; margin: 0; display: grid; gap: .6rem; }
+.langcards a {
+  display: grid;
+  gap: .15rem;
+  padding: .9rem 1rem;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--fg);
+}
+.langcards strong { color: var(--accent); }
+.langcards a:hover { border-color: var(--accent); }
+
+.install { margin-top: 1.5rem; }

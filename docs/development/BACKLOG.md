@@ -18,6 +18,7 @@ The GitHub issue tracker is the live list; this file mirrors the next tasks with
 | DG-012 (#15) | Map the A1 concept graph as `planned` concepts (+ en/uk/ru titles), coverage report | content track | — | **done** in PR (67 concepts, 2 routes, `content:report`) |
 | DG-013 (#16) | Playwright E2E + axe for the lesson page; preview deployments (Vercel) | P2 | — (E2E); owner authorizes Vercel (previews) | **in review** (PR #26, ADR-0011); previews blocked on owner |
 | DG-014 (#17) | UI i18n catalogs (ICU) + RTL layout check with an Arabic smoke test | P2 | — | **done** in PR (`packages/i18n`, ADR-0009) |
+| DG-016 (#38) | Installable PWA shell: manifest + icons, service worker (read opened pages offline), phone bottom navigation, language gate as start screen | P2 | — | **done** in PR (ADR-0012) |
 | DG-015 (#24) | Sign-in with Supabase Auth (magic link + Google/Apple) and session handling; removes the "progress is not saved" banner. Age gate part **done** in PR #28 (DG-015a) | P2 | DG-009 ✔, provider decision, hosted project | **needs owner** (provider decision, provisioning) |
 
 ## Process

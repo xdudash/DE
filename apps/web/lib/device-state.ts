@@ -114,3 +114,19 @@ export function readLessonResults(unitId: string): Record<string, boolean> {
   }
   return results;
 }
+
+const LANGUAGE_KEY = "deutschgo.language.v1";
+
+/**
+ * The explanation language this browser last used, so the language gate can offer
+ * to continue instead of asking again. `allowed` is passed in by the caller to keep
+ * this module free of catalogue imports; an unknown or removed code is ignored.
+ */
+export function readLanguage(allowed: readonly string[]): string | null {
+  const value = read<string>(LANGUAGE_KEY);
+  return typeof value === "string" && allowed.includes(value) ? value : null;
+}
+
+export function writeLanguage(code: string): boolean {
+  return write(LANGUAGE_KEY, code);
+}

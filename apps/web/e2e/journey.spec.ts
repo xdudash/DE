@@ -43,6 +43,21 @@ test.describe("catalogue", () => {
     await expect(picker.locator('a[aria-current="page"]')).toHaveAttribute("href", "/en");
   });
 
+  test("on a wide screen the header carries the navigation and the tab bar is hidden", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.getByRole("navigation", { name: "Main" })).toBeVisible();
+    await expect(page.locator("nav.tabbar")).toBeHidden();
+  });
+
+  test("the gate offers to continue in the language this browser used last", async ({ page }) => {
+    await page.goto("/uk");
+    await page.goto("/");
+    const link = page.getByRole("link", { name: /Продовжити/ });
+    await expect(link).toBeVisible();
+    await link.click();
+    await expect(page).toHaveURL(/\/uk$/);
+  });
+
   test("the main navigation reaches the knowledge map, which searches topics", async ({ page }) => {
     await page.goto("/en");
     await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Knowledge map" }).click();

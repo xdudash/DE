@@ -4,14 +4,22 @@
  * App-wide header: brand, main navigation and the explanation-language picker. The
  * current page is marked with aria-current; switching language keeps the same page.
  */
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { offeredLocales, translator } from "@deutschgo/i18n";
+import { writeLanguage } from "../lib/device-state";
 
 export function AppHeader({ lang }: { lang: string }) {
   const msg = translator(lang);
   const pathname = usePathname() ?? `/${lang}`;
   const home = `/${lang}`;
+
+  // Remember the language so the gate can offer to continue here next time.
+  useEffect(() => {
+    writeLanguage(lang);
+  }, [lang]);
+
   const map = `/${lang}/map`;
 
   // Same page in another language: replace the locale segment of the current path.

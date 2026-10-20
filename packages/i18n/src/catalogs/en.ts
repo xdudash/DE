@@ -78,6 +78,16 @@ export const en = {
   "map.noMatch": "No topics match this search.",
   "map.onDevice": "States are based only on answers in this browser.",
 
+  "nav.tabs": "App sections",
+  "gate.continue": "Continue · {language}",
+  "gate.point.explanations": "Clear rules, real sentences, and feedback that says why.",
+  "gate.point.route": "A route from your first sentence to talking about the past.",
+  "gate.point.free": "Free while it is being built.",
+  "pwa.install": "Install app",
+  "pwa.installHint": "Adds DeutschGo to your home screen. Lessons you have opened stay readable without a connection.",
+  "offline.title": "No connection",
+  "offline.body": "Pages you have already opened are still readable. Reconnect to open new ones.",
+
   "error.title": "Something went wrong",
   "error.retry": "Try again",
   "error.contentMissing": "This topic is not available yet.",
