@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SetupForm } from "../../components/SetupForm";
 import { bundle, dictionaryFor, t } from "../../lib/content";
 import { contentLanguageFor, localeInfo, offeredLocales, ui } from "../../lib/i18n";
 
@@ -36,13 +37,11 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
       <section className="start" aria-labelledby="start-heading">
         <h2 id="start-heading">{msg("home.start")}</h2>
         <p className="lead">{msg("home.intro")}</p>
-        {firstUnit && (
-          <p>
-            <Link className="cta" href={`/${lang}/learn/${firstUnit.id}`}>
-              {msg("home.startCta")}: {title(firstUnit.id, firstUnit, firstUnit.title)}
-            </Link>
-          </p>
-        )}
+        <SetupForm
+          lang={lang}
+          startHref={firstUnit ? `/${lang}/learn/${firstUnit.id}` : undefined}
+          startTitle={firstUnit ? `${msg("home.startCta")}: ${title(firstUnit.id, firstUnit, firstUnit.title)}` : undefined}
+        />
         <p className="muted small">{msg("home.startNote")}</p>
       </section>
 
