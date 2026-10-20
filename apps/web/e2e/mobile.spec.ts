@@ -17,6 +17,8 @@ test.describe("phone navigation", () => {
     await page.goto("/en");
     const tabs = page.getByRole("navigation", { name: "App sections" });
     await expect(tabs).toBeVisible();
+    // Every section of the app is reachable from the bottom bar.
+    await expect(tabs.getByRole("link")).toHaveCount(4);
     // The header navigation is hidden at this width, so there is one set of links.
     await expect(page.getByRole("navigation", { name: "Main" })).toBeHidden();
     await tabs.getByRole("link", { name: "Knowledge map" }).click();

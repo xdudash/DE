@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Block } from "@deutschgo/content-kit";
 import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
+import { LessonProgress } from "../../../../components/LessonProgress";
 import { LessonSummary } from "../../../../components/LessonSummary";
 import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
@@ -170,6 +171,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
       {unit.prerequisites.length > 0 && (
         <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
       )}
+      <LessonProgress lang={lang} unitId={unit.id} total={exerciseIds.length} />
       <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
       {unit.blocks.map((block) => (
         <section key={block.id} id={block.id}>

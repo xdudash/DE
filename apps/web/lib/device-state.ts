@@ -130,3 +130,52 @@ export function readLanguage(allowed: readonly string[]): string | null {
 export function writeLanguage(code: string): boolean {
   return write(LANGUAGE_KEY, code);
 }
+
+export interface AttemptStats {
+  /** Graded answers given on this device. */
+  answers: number;
+  correct: number;
+  /** Share of correct answers, or null before the first answer. */
+  accuracy: number | null;
+  /** Distinct exercises answered, so repeats do not inflate the count. */
+  exercises: number;
+  lessons: number;
+  lastAt: number | null;
+}
+
+export function attemptStats(): AttemptStats {
+  const attempts = readAttempts();
+  const exercises = new Set<string>();
+  const lessons = new Set<string>();
+  let correct = 0;
+  let lastAt: number | null = null;
+  for (const a of attempts) {
+    exercises.add(`${a.unitId}/${a.exerciseId}`);
+    lessons.add(a.unitId);
+    if (a.correct) correct += 1;
+    if (lastAt === null || a.at > lastAt) lastAt = a.at;
+  }
+  return {
+    answers: attempts.length,
+    correct,
+    accuracy: attempts.length === 0 ? null : correct / attempts.length,
+    exercises: exercises.size,
+    lessons: lessons.size,
+    lastAt,
+  };
+}
+
+/**
+ * Removes everything DeutschGo keeps in this browser: the plan, the remembered
+ * language and every recorded answer. Nothing was sent to a server, so this is the
+ * whole of the learner's data. Returns false if storage refused, so the caller can
+ * say the data is still there instead of claiming it is gone.
+ */
+export function clearDeviceData(): boolean {
+  try {
+    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY]) window.localStorage.removeItem(key);
+    return readAttempts().length === 0 && readSetup() === null;
+  } catch {
+    return false;
+  }
+}

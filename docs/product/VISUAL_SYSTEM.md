@@ -33,6 +33,11 @@ Arabic has no dedicated face yet; the preview locale falls back to the system Ar
 - **Lists over cards** — topics, examples and errors are hairline-separated rows. Cards are used only where something is genuinely a separate object (an exercise, a language choice).
 - **Common errors** — the wrong form on a red rail above the right form on a green rail. No arrow glyph, which would need translating and reads as template chrome.
 
+## Sections
+Four, in the bottom bar on a phone and in the header from 48rem: **Home** (where to start and what is next), **Practice** (what the scheduler says is due), **Knowledge map** (every topic and its prerequisites) and **You** (progress, plan, app status, and the learner's own data).
+
+A **panel** is the unit of the You screen: a heading and one idea, separated by space rather than boxed in a card. Numbers are set large and quiet, with a label that adds information instead of repeating the figure. A progress bar is a bar, not a ring: it is read at a glance and stays honest when it is nearly empty.
+
 ## Shell
 Phone first. Below 48rem the sections live in a bottom bar within thumb reach; from 48rem they move into the header and the bottom bar disappears. Safe-area insets on all four sides. Logical properties everywhere, so the Arabic preview mirrors without special cases.
 

@@ -37,20 +37,33 @@ export function AppHeader({ lang }: { lang: string }) {
         </Link>
         <nav aria-label={msg("nav.main")}>
           <ul className="mainnav">
-            <li>
-              <Link href={home} aria-current={pathname === home ? "page" : undefined}>{msg("nav.home")}</Link>
-            </li>
-            <li>
-              <Link href={map} aria-current={pathname === map ? "page" : undefined}>{msg("nav.knowledgeMap")}</Link>
-            </li>
+            {[
+              { href: home, label: msg("nav.home") },
+              { href: `/${lang}/practice`, label: msg("nav.practice") },
+              { href: map, label: msg("nav.knowledgeMap") },
+              { href: `/${lang}/me`, label: msg("nav.profile") },
+            ].map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
         <nav aria-label={msg("app.chooseLanguage")}>
           <ul className="langs inline">
             {offeredLocales().map((l) => (
               <li key={l.code}>
-                <Link href={switchTo(l.code)} lang={l.code} aria-current={l.code === lang ? "page" : undefined}>
-                  {l.nativeName}
+                {/* The code keeps the control compact on a phone; the accessible
+                    name stays the language's own name. */}
+                <Link
+                  href={switchTo(l.code)}
+                  lang={l.code}
+                  aria-label={l.nativeName}
+                  aria-current={l.code === lang ? "page" : undefined}
+                >
+                  <span aria-hidden="true">{l.code.toUpperCase()}</span>
                 </Link>
               </li>
             ))}

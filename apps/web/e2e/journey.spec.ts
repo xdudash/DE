@@ -151,3 +151,48 @@ test.describe("interface languages", () => {
     await expect(page.locator('[data-locale="uk"]')).toHaveAttribute("dir", "ltr");
   });
 });
+
+test.describe("your own area", () => {
+  test("says there is no account yet and where the data actually lives", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByRole("heading", { level: 1, name: "You" })).toBeVisible();
+    await expect(page.getByText(/There are no accounts yet/)).toBeVisible();
+    await expect(page.getByText(/Running in a browser tab|Running as an installed app/)).toBeVisible();
+  });
+
+  test("progress stays empty until an exercise is answered, then counts it", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByText(/Your progress appears here/)).toBeVisible();
+
+    await page.goto(UNIT);
+    const exercise = firstExercise(page);
+    await exercise.getByRole("radio", { name: "Heute habe ich frei." }).check();
+    await exercise.getByRole("button", { name: "Check" }).click();
+    await expect(exercise.locator(".feedback.ok")).toBeVisible();
+
+    await page.goto("/en/me");
+    await expect(page.getByRole("progressbar")).toBeVisible();
+    await expect(page.getByText("answers", { exact: true })).toBeVisible();
+  });
+
+  test("deleting the data on this device asks first, then reports it is gone", async ({ page }) => {
+    await page.goto("/en");
+    await page.getByRole("radio", { name: "Work" }).check();
+    await page.getByRole("button", { name: "Save my plan" }).click();
+
+    await page.goto("/en/me");
+    await expect(page.getByText("Your plan on this device: Work, 10 min a day.")).toBeVisible();
+    await page.getByRole("button", { name: "Delete my data" }).click();
+    await expect(page.getByText("Delete it all? This cannot be undone.")).toBeVisible();
+    await page.getByRole("button", { name: "Delete my data" }).click();
+    await expect(page.getByText(/^Deleted\./)).toBeVisible();
+    await expect(page.getByText("No plan saved on this device yet.")).toBeVisible();
+  });
+
+  test("practice says plainly when there is nothing due", async ({ page }) => {
+    await page.goto("/en/practice");
+    await expect(page.getByRole("heading", { level: 1, name: "Practice" })).toBeVisible();
+    await expect(page.getByText("Nothing to practise yet.")).toBeVisible();
+    await expect(page.getByText(/spacing schedule/)).toBeVisible();
+  });
+});
