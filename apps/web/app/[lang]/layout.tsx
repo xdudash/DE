@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { AppHeader } from "../../components/AppHeader";
 import { isRoutableLocale, localeInfo, routableLocales } from "../../lib/i18n";
 
 export function generateStaticParams() {
@@ -13,6 +14,7 @@ export default async function LangLayout({ children, params }: { children: React
   const info = localeInfo(lang);
   return (
     <div lang={lang} dir={info.dir} data-locale={lang} data-preview={info.preview ? "true" : undefined}>
+      <AppHeader lang={lang} />
       {children}
     </div>
   );
