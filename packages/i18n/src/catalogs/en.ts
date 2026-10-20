@@ -26,6 +26,7 @@ export const en = {
   "catalog.related": "Related topics",
   "catalog.conceptCount": "{count, plural, =0 {No topics yet} one {# topic} other {# topics}}",
 
+  "status.draftTag": "Not reviewed",
   "status.label": "Status",
   "status.notReviewed": "Not yet reviewed by a qualified human reviewer.",
   "status.machineDraft": "This translation is an unreviewed machine draft.",
@@ -79,7 +80,7 @@ export const en = {
   "map.onDevice": "States are based only on answers in this browser.",
 
   "nav.tabs": "App sections",
-  "gate.continue": "Continue · {language}",
+  "gate.continue": "Continue",
   "gate.point.explanations": "Clear rules, real sentences, and feedback that says why.",
   "gate.point.route": "A route from your first sentence to talking about the past.",
   "gate.point.free": "Free while it is being built.",

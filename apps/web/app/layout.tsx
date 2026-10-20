@@ -1,6 +1,27 @@
 import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { ServiceWorkerRegistration } from "../components/ServiceWorkerRegistration";
 import "./globals.css";
+
+/**
+ * One superfamily: the sans carries the interface in Latin and Cyrillic, the serif
+ * sets German example sentences so they read as specimens rather than UI text.
+ * next/font downloads these at build time and serves them from our own origin, so
+ * no learner's browser makes a request to a font host.
+ */
+const sans = IBM_Plex_Sans({
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+const serif = IBM_Plex_Serif({
+  // German is Latin-only, so the serif does not need the Cyrillic subset.
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "600"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: { default: "DeutschGo", template: "%s · DeutschGo" },
@@ -34,7 +55,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body>
         {children}
         <ServiceWorkerRegistration />

@@ -32,13 +32,15 @@ export function LanguageGate() {
         {last && (
           <p>
             <Link className="cta" href={`/${last.code}`} lang={last.code} dir={last.dir}>
-              {translator(last.code)("gate.continue", { language: last.nativeName })}
+              {translator(last.code)("gate.continue")}
+              <span className="sub">{last.nativeName}</span>
             </Link>
           </p>
         )}
       </div>
-      <h2 className="gate-heading">{LOCALES.map((l) => translator(l.code)("app.chooseLanguage")).join(" · ")}</h2>
-      <ul className="langcards">
+      {/* Each card names its own language, so the list needs a label only for
+          assistive technology. */}
+      <ul className="langcards" aria-label={translator("en")("app.chooseLanguage")}>
         {LOCALES.map((l) => (
           <li key={l.code}>
             <Link href={`/${l.code}`} lang={l.code} dir={l.dir}>

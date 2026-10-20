@@ -21,6 +21,7 @@ export const ru: Catalog = {
   "catalog.related": "Связанные темы",
   "catalog.conceptCount": "{count, plural, =0 {Тем пока нет} one {# тема} few {# темы} many {# тем} other {# темы}}",
 
+  "status.draftTag": "Не проверено",
   "status.label": "Статус",
   "status.notReviewed": "Ещё не проверено квалифицированным редактором.",
   "status.machineDraft": "Этот перевод — непроверенный машинный черновик.",
@@ -74,7 +75,7 @@ export const ru: Catalog = {
   "map.onDevice": "Состояние тем основано только на ответах в этом браузере.",
 
   "nav.tabs": "Разделы приложения",
-  "gate.continue": "Продолжить · {language}",
+  "gate.continue": "Продолжить",
   "gate.point.explanations": "Понятные правила, живые предложения и объяснение, почему именно так.",
   "gate.point.route": "Маршрут от первого предложения до рассказа о прошлом.",
   "gate.point.free": "Бесплатно, пока идёт разработка.",

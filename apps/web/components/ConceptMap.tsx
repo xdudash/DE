@@ -70,7 +70,7 @@ export function ConceptMap({ lang, items, graph }: Props) {
                 state && <span className="tag">{msg(STATE_KEY[state])}</span>
               )}
               {item.prerequisites.length > 0 && (
-                <div className="muted small">{msg("catalog.prerequisites")}: {item.prerequisites.join(", ")}</div>
+                <div className="step-meta">{msg("catalog.prerequisites")}: {item.prerequisites.join(", ")}</div>
               )}
             </li>
           );

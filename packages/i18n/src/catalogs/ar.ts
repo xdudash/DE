@@ -33,6 +33,7 @@ export const ar: Catalog = {
   "catalog.related": "موضوعات ذات صلة",
   "catalog.conceptCount": "{count, plural, =0 {لا توجد موضوعات بعد} one {موضوع واحد} two {موضوعان} few {# موضوعات} many {# موضوعًا} other {# موضوع}}",
 
+  "status.draftTag": "غير مُراجَع",
   "status.label": "الحالة",
   "status.notReviewed": "لم يراجعه مراجع مؤهل بعد.",
   "status.machineDraft": "هذه الترجمة مسودة آلية غير مراجعة.",
@@ -86,7 +87,7 @@ export const ar: Catalog = {
   "map.onDevice": "تستند حالات الموضوعات إلى إجاباتك في هذا المتصفح فقط.",
 
   "nav.tabs": "أقسام التطبيق",
-  "gate.continue": "تابع · {language}",
+  "gate.continue": "تابع",
   "gate.point.explanations": "قواعد واضحة وجمل حقيقية وتعليقات تشرح السبب.",
   "gate.point.route": "مسار من جملتك الأولى إلى الحديث عن الماضي.",
   "gate.point.free": "مجاني أثناء مرحلة البناء.",

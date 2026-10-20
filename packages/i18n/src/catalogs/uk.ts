@@ -21,6 +21,7 @@ export const uk: Catalog = {
   "catalog.related": "Пов'язані теми",
   "catalog.conceptCount": "{count, plural, =0 {Тем ще немає} one {# тема} few {# теми} many {# тем} other {# теми}}",
 
+  "status.draftTag": "Не перевірено",
   "status.label": "Статус",
   "status.notReviewed": "Ще не перевірено кваліфікованим редактором.",
   "status.machineDraft": "Цей переклад — неперевірена машинна чернетка.",
@@ -74,7 +75,7 @@ export const uk: Catalog = {
   "map.onDevice": "Стан тем базується лише на відповідях у цьому браузері.",
 
   "nav.tabs": "Розділи застосунку",
-  "gate.continue": "Продовжити · {language}",
+  "gate.continue": "Продовжити",
   "gate.point.explanations": "Зрозумілі правила, живі речення та пояснення, чому саме так.",
   "gate.point.route": "Маршрут від першого речення до розповіді про минуле.",
   "gate.point.free": "Безкоштовно, доки триває розробка.",

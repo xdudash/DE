@@ -36,6 +36,21 @@ test.describe("catalogue", () => {
     await expect(page.getByRole("radio", { name: "Work" })).toBeChecked();
   });
 
+  test("the start screen opens with the sentence the first lesson teaches", async ({ page }) => {
+    await page.goto("/en");
+    const hero = page.locator("figure.slotline");
+    await expect(hero).toBeVisible();
+    // Position 2 is the finite verb, and it is the only yellow thing in the app.
+    await expect(hero.locator("li.verb .pos")).toHaveText("2");
+    await expect(hero.locator("li.verb .word")).toHaveAttribute("lang", "de");
+  });
+
+  test("unreviewed content is labelled in the learner's language, not by its status code", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.getByText("Not reviewed").first()).toBeVisible();
+    await expect(page.getByText("needs_review")).toHaveCount(0);
+  });
+
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
     // The picker lives in the app header and marks the active language with aria-current="page".

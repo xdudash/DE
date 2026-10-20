@@ -28,7 +28,13 @@ export function AppHeader({ lang }: { lang: string }) {
   return (
     <header className="appbar">
       <div className="appbar-inner">
-        <Link href={home} className="brand">{msg("app.name")}</Link>
+        <Link href={home} className="brand">
+          {/* The mark is the app icon's chevron: one shape across icon and header. */}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M8 4l8 8-8 8" />
+          </svg>
+          {msg("app.name")}
+        </Link>
         <nav aria-label={msg("nav.main")}>
           <ul className="mainnav">
             <li>

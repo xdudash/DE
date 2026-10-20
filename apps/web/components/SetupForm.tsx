@@ -19,9 +19,11 @@ interface Props {
   lang: string;
   startHref?: string;
   startTitle?: string;
+  /** Secondary line on the start button: the name of the lesson it opens. */
+  startSub?: string;
 }
 
-export function SetupForm({ lang, startHref, startTitle }: Props) {
+export function SetupForm({ lang, startHref, startTitle, startSub }: Props) {
   const msg = translator(lang);
   const [saved, setSaved] = useState<Setup | null>(null);
   const [goal, setGoal] = useState<Goal>("life");
@@ -54,23 +56,28 @@ export function SetupForm({ lang, startHref, startTitle }: Props) {
       <form onSubmit={onSubmit} aria-label={msg("setup.goalLabel")}>
         <fieldset className="choices">
           <legend>{msg("setup.goalLabel")}</legend>
+          <div className="choice-row">
           {GOALS.map((g) => (
             <label key={g} className={`choice ${goal === g ? "selected" : ""}`}>
               <input type="radio" name="goal" value={g} checked={goal === g} onChange={() => setGoal(g)} />
               <span>{msg(GOAL_KEY[g])}</span>
             </label>
           ))}
+          </div>
         </fieldset>
         <fieldset className="choices">
           <legend>{msg("setup.minutesLabel")}</legend>
+          <div className="choice-row">
           {MINUTE_CHOICES.map((m) => (
             <label key={m} className={`choice ${minutes === m ? "selected" : ""}`}>
               <input type="radio" name="minutes" value={m} checked={minutes === m} onChange={() => setMinutes(m)} />
               <span>{msg("setup.minutes", { minutes: m })}</span>
             </label>
           ))}
+          </div>
         </fieldset>
-        <button type="submit" className="primary">{msg("setup.save")}</button>
+        {/* Secondary: the only filled action on this screen is starting the lesson. */}
+        <button type="submit">{msg("setup.save")}</button>
       </form>
 
       <div aria-live="polite">
@@ -89,7 +96,10 @@ export function SetupForm({ lang, startHref, startTitle }: Props) {
 
       {startHref && startTitle && (
         <p>
-          <Link className="cta" href={startHref}>{startTitle}</Link>
+          <Link className="cta" href={startHref}>
+            {startTitle}
+            {startSub && <span className="sub">{startSub}</span>}
+          </Link>
         </p>
       )}
     </div>
