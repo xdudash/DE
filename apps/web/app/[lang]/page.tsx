@@ -21,7 +21,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   // Engine inputs and link targets, built once on the server.
   const graph = graphFromBundle(b);
   const mainRoute = b.routes[0];
-  const route = mainRoute ? routeFromBundle(b, mainRoute.id) : [];
+  // Only steps with an authored lesson can be recommended: a planned topic cannot be studied yet.
+  const route = (mainRoute ? routeFromBundle(b, mainRoute.id) : []).filter((step) => step.kind === "unit");
   const targets: Record<string, TargetLink> = {};
   for (const u of b.units) targets[u.id] = { title: title(u.id, u, u.title), href: `/${lang}/learn/${u.id}` };
   for (const c of b.concepts) targets[c.id] = { title: title(c.id, c, c.title), href: `/${lang}/map#${c.id}` };
