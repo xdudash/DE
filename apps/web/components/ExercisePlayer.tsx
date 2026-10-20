@@ -12,7 +12,7 @@ import { useState } from "react";
 import { evaluate, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
 import type { Exercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
-import { recordExerciseResult } from "../lib/device-state";
+import { recordAttempt } from "../lib/device-state";
 import { inline } from "../lib/markdown";
 
 export interface PlayerText {
@@ -24,7 +24,7 @@ interface Props {
   text: PlayerText;
   labels: { check: string; reset: string; tryAgain: string; yourAnswer: string; saveFailed: string; stale: string };
   /** Unit id and version, needed so the server can resolve exactly this exercise. */
-  unit: { id: string; version: string };
+  unit: { id: string; version: string; concepts: string[] };
 }
 
 const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
@@ -56,8 +56,8 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
       const outcome = evaluate(exercise, response);
       setResult(outcome);
       setError(null);
-      // Latest answer per exercise, kept in this browser for the lesson summary.
-      recordExerciseResult(unit.id, exercise.id, outcome.correct);
+      // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
+      recordAttempt({ unitId: unit.id, exerciseId: exercise.id, conceptIds: unit.concepts, correct: outcome.correct });
     } catch (e) {
       setError((e as Error).message);
       return;

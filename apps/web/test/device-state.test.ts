@@ -1,6 +1,13 @@
 import { strict as assert } from "node:assert";
 import { beforeEach, describe, it } from "node:test";
-import { readLessonResults, readSetup, recordExerciseResult, writeSetup } from "../lib/device-state.ts";
+import {
+  MAX_STORED_ATTEMPTS,
+  readAttempts,
+  readLessonResults,
+  readSetup,
+  recordAttempt,
+  writeSetup,
+} from "../lib/device-state.ts";
 
 /** Minimal in-memory localStorage, installed on the global window for each test. */
 function installStorage(options: { failWrites?: boolean; corrupt?: Record<string, string> } = {}) {
@@ -17,6 +24,9 @@ function installStorage(options: { failWrites?: boolean; corrupt?: Record<string
   return data;
 }
 
+const EVENTS = "deutschgo.events.v1";
+const SETUP = "deutschgo.setup.v1";
+
 describe("first-visit setup", () => {
   beforeEach(() => installStorage());
 
@@ -30,14 +40,14 @@ describe("first-visit setup", () => {
   });
 
   it("ignores a stored plan with an unknown goal or an unsupported duration", () => {
-    installStorage({ corrupt: { "deutschgo.setup.v1": JSON.stringify({ goal: "fame", minutes: 10 }) } });
+    installStorage({ corrupt: { [SETUP]: JSON.stringify({ goal: "fame", minutes: 10 }) } });
     assert.equal(readSetup(), null);
-    installStorage({ corrupt: { "deutschgo.setup.v1": JSON.stringify({ goal: "life", minutes: 7 }) } });
+    installStorage({ corrupt: { [SETUP]: JSON.stringify({ goal: "life", minutes: 7 }) } });
     assert.equal(readSetup(), null);
   });
 
   it("treats unreadable stored JSON as no plan instead of throwing", () => {
-    installStorage({ corrupt: { "deutschgo.setup.v1": "{not json" } });
+    installStorage({ corrupt: { [SETUP]: "{not json" } });
     assert.equal(readSetup(), null);
   });
 
@@ -47,30 +57,72 @@ describe("first-visit setup", () => {
   });
 });
 
-describe("lesson results on this device", () => {
+describe("attempts as learning evidence", () => {
   beforeEach(() => installStorage());
 
-  it("is empty for a lesson nobody has answered", () => {
+  it("starts empty", () => {
+    assert.deepEqual(readAttempts(), []);
     assert.deepEqual(readLessonResults("unit.x"), {});
   });
 
-  it("keeps the latest answer per exercise and does not mix lessons", () => {
-    recordExerciseResult("unit.x", "ex1", false);
-    recordExerciseResult("unit.x", "ex1", true);
-    recordExerciseResult("unit.x", "ex2", false);
-    recordExerciseResult("unit.y", "ex9", true);
+  it("stores each attempt as an append-only engine event with its concepts", () => {
+    assert.equal(recordAttempt({ unitId: "unit.x", exerciseId: "ex1", conceptIds: ["concept.a"], correct: false }), true);
+    const [event] = readAttempts();
+    assert.ok(event);
+    assert.equal(event.kind, "attempt");
+    assert.equal(event.correct, false);
+    assert.equal(event.unitId, "unit.x");
+    assert.equal(event.exerciseId, "ex1");
+    assert.deepEqual(event.conceptIds, ["concept.a"]);
+    assert.equal(event.skill, "knowledge");
+    assert.equal(typeof event.at, "number");
+    assert.ok(event.id.length > 0);
+  });
+
+  it("derives the latest result per exercise and keeps lessons apart", () => {
+    recordAttempt({ unitId: "unit.x", exerciseId: "ex1", conceptIds: [], correct: false });
+    recordAttempt({ unitId: "unit.x", exerciseId: "ex1", conceptIds: [], correct: true });
+    recordAttempt({ unitId: "unit.x", exerciseId: "ex2", conceptIds: [], correct: false });
+    recordAttempt({ unitId: "unit.y", exerciseId: "ex9", conceptIds: [], correct: true });
     assert.deepEqual(readLessonResults("unit.x"), { ex1: true, ex2: false });
     assert.deepEqual(readLessonResults("unit.y"), { ex9: true });
   });
 
+  it("drops corrupt entries instead of trusting them", () => {
+    installStorage({
+      corrupt: {
+        [EVENTS]: JSON.stringify([
+          { kind: "attempt", id: "a", at: 1, unitId: "unit.x", exerciseId: "ex1", correct: true, conceptIds: [] },
+          { kind: "attempt", id: "b", at: 2, unitId: "unit.x", exerciseId: "ex2", correct: "yes", conceptIds: [] },
+          { kind: "exposure", id: "c" },
+          null,
+        ]),
+      },
+    });
+    assert.deepEqual(readLessonResults("unit.x"), { ex1: true });
+    assert.equal(readAttempts().length, 1);
+  });
+
+  it("treats a stored non-array as no evidence", () => {
+    installStorage({ corrupt: { [EVENTS]: "42" } });
+    assert.deepEqual(readAttempts(), []);
+  });
+
   it("reports a failed write so the caller can say so", () => {
     installStorage({ failWrites: true });
-    assert.equal(recordExerciseResult("unit.x", "ex1", true), false);
+    assert.equal(recordAttempt({ unitId: "unit.x", exerciseId: "ex1", conceptIds: [], correct: true }), false);
     assert.deepEqual(readLessonResults("unit.x"), {});
   });
 
-  it("treats a stored non-object as empty", () => {
-    installStorage({ corrupt: { "deutschgo.lesson.v1.unit.x": "42" } });
-    assert.deepEqual(readLessonResults("unit.x"), {});
+  it("bounds storage: only the most recent attempts are kept", () => {
+    const stored = Array.from({ length: MAX_STORED_ATTEMPTS }, (_, i) => ({
+      kind: "attempt", id: `old${i}`, at: i, unitId: "unit.old", exerciseId: `e${i}`, correct: true, conceptIds: [],
+    }));
+    installStorage({ corrupt: { [EVENTS]: JSON.stringify(stored) } });
+    recordAttempt({ unitId: "unit.new", exerciseId: "fresh", conceptIds: [], correct: false });
+    const all = readAttempts();
+    assert.equal(all.length, MAX_STORED_ATTEMPTS);
+    assert.equal(all.at(-1)?.exerciseId, "fresh");
+    assert.equal(all[0]?.id, "old1");
   });
 });

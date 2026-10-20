@@ -38,8 +38,28 @@ test.describe("catalogue", () => {
 
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
-    // The picker marks the active language with aria-current="page" (see app/[lang]/page.tsx).
-    await expect(page.locator('nav a[aria-current="page"]')).toHaveAttribute("href", "/en");
+    // The picker lives in the app header and marks the active language with aria-current="page".
+    const picker = page.getByRole("navigation", { name: "Explanation language" });
+    await expect(picker.locator('a[aria-current="page"]')).toHaveAttribute("href", "/en");
+  });
+
+  test("the main navigation reaches the knowledge map, which searches topics", async ({ page }) => {
+    await page.goto("/en");
+    await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Knowledge map" }).click();
+    await expect(page).toHaveURL(/\/en\/map$/);
+    const search = page.getByRole("searchbox", { name: "Search topics" });
+    await search.fill("zzz-no-such-topic");
+    await expect(page.getByText("No topics match this search.")).toBeVisible();
+    await search.fill("");
+    await expect(page.getByText("States are based only on answers in this browser.")).toBeVisible();
+  });
+
+  test("a new learner is pointed at the first route step, with the reason", async ({ page }) => {
+    await page.goto("/en");
+    const section = page.locator("section.next-step");
+    await expect(section.getByRole("heading", { name: "Your next step" })).toBeVisible();
+    await expect(section.locator(`a[href="${UNIT}"]`)).toBeVisible();
+    await expect(section.getByText("Next step on your route")).toBeVisible();
   });
 });
 

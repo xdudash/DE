@@ -70,6 +70,14 @@ export const en = {
   "lesson.next": "Next lesson",
   "lesson.noNext": "More lessons appear here once they are written and reviewed.",
 
+  "nav.home": "Home",
+  "nav.main": "Main",
+  "home.nextStep": "Your next step",
+  "home.nextEmpty": "Start the first lesson to see your next step here.",
+  "map.search": "Search topics",
+  "map.noMatch": "No topics match this search.",
+  "map.onDevice": "States are based only on answers in this browser.",
+
   "error.title": "Something went wrong",
   "error.retry": "Try again",
   "error.contentMissing": "This topic is not available yet.",

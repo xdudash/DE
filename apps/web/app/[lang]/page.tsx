@@ -1,33 +1,36 @@
 import Link from "next/link";
+import type { TargetLink } from "../../components/NextStep";
+import { NextStep } from "../../components/NextStep";
 import { SetupForm } from "../../components/SetupForm";
 import { bundle, dictionaryFor, t } from "../../lib/content";
-import { contentLanguageFor, localeInfo, offeredLocales, ui } from "../../lib/i18n";
+import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
+import { graphFromBundle, routeFromBundle } from "@deutschgo/learning-engine";
 
-export default async function Catalog({ params }: { params: Promise<{ lang: string }> }) {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const msg = ui(lang);
   const contentLang = contentLanguageFor(lang);
   const b = bundle();
   const units = new Map(b.units.map((u) => [u.id, u]));
-  const concepts = new Map(b.concepts.map((c) => [c.id, c]));
   const title = (id: string, entity: unknown, key: string) => t(dictionaryFor(id, entity, contentLang), key);
 
   // The first step of the first route that points at an authored unit: the natural starting point.
   const firstStep = b.routes.flatMap((r) => r.steps).find((s) => s.unit && units.has(s.unit));
   const firstUnit = firstStep?.unit ? units.get(firstStep.unit) : undefined;
 
+  // Engine inputs and link targets, built once on the server.
+  const graph = graphFromBundle(b);
+  const mainRoute = b.routes[0];
+  const route = mainRoute ? routeFromBundle(b, mainRoute.id) : [];
+  const targets: Record<string, TargetLink> = {};
+  for (const u of b.units) targets[u.id] = { title: title(u.id, u, u.title), href: `/${lang}/learn/${u.id}` };
+  for (const c of b.concepts) targets[c.id] = { title: title(c.id, c, c.title), href: `/${lang}/map#${c.id}` };
+
   return (
     <main className="page">
       <header className="top">
         <h1>{msg("app.name")}</h1>
         <p className="muted">{msg("app.tagline")}</p>
-        <nav aria-label={msg("app.chooseLanguage")} className="langs inline">
-          {offeredLocales().map((l) => (
-            <Link key={l.code} href={`/${l.code}`} lang={l.code} aria-current={l.code === lang ? "page" : undefined}>
-              {l.nativeName}
-            </Link>
-          ))}
-        </nav>
       </header>
       {localeInfo(lang).preview && (
         <p className="banner">{msg("status.fallback", { language: "English" })}</p>
@@ -44,6 +47,8 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
         />
         <p className="muted small">{msg("home.startNote")}</p>
       </section>
+
+      {route.length > 0 && <NextStep lang={lang} graph={graph} route={route} targets={targets} />}
 
       {b.routes.map((r) => (
         <section key={r.id}>
@@ -66,7 +71,7 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
                   </li>
                 );
               }
-              const c = concepts.get(step.concept!);
+              const c = b.concepts.find((x) => x.id === step.concept);
               if (!c) return null;
               return (
                 <li key={i} className="step planned">
@@ -79,30 +84,6 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
           </ol>
         </section>
       ))}
-
-      <section>
-        <h2>{msg("nav.knowledgeMap")}</h2>
-        <p className="muted">{msg("catalog.conceptCount", { count: b.concepts.length })}</p>
-        <ul className="graph">
-          {b.concepts.map((c) => {
-            const deps = (c.relations ?? [])
-              .filter((r) => r.type === "depends_on")
-              .map((r) => concepts.get(r.target))
-              .filter((x) => !!x);
-            return (
-              <li key={c.id}>
-                <strong>{title(c.id, c, c.title)}</strong> <span className="tag">{c.cefr.introduced}</span>{" "}
-                <span className={`tag ${c.status === "planned" ? "" : "warn"}`}>{c.status}</span>
-                {deps.length > 0 && (
-                  <span className="muted">
-                    {" · "}{msg("catalog.prerequisites")}: {deps.map((d) => title(d.id, d, d.title)).join(", ")}
-                  </span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
     </main>
   );
 }

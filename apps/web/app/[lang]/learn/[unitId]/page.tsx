@@ -30,7 +30,7 @@ function TextNotice({ dict, msg, pivotName }: { dict: Dictionary; msg: Translate
   );
 }
 
-function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: string; version: string }) {
+function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: string; version: string; concepts: string[] }) {
   switch (block.type) {
     case "explanation":
     case "summary":
@@ -166,7 +166,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
       <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
       {unit.blocks.map((block) => (
         <section key={block.id} id={block.id}>
-          {renderBlock(block, d, msg, { id: unit.id, version: unit.version })}
+          {renderBlock(block, d, msg, { id: unit.id, version: unit.version, concepts: unit.concepts })}
         </section>
       ))}
       <LessonSummary lang={lang} unitId={unit.id} exerciseIds={exerciseIds} next={next} />
