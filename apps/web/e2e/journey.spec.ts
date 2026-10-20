@@ -24,6 +24,18 @@ test.describe("catalogue", () => {
     await expect(page).toHaveURL(new RegExp(`${UNIT}$`));
   });
 
+  test("saves a first-visit plan in this browser and says it is device-only", async ({ page }) => {
+    await page.goto("/en");
+    await page.getByRole("radio", { name: "Work" }).check();
+    await page.getByRole("radio", { name: "15 min" }).check();
+    await page.getByRole("button", { name: "Save my plan" }).click();
+    await expect(page.getByText("Your plan on this device: Work, 15 min a day.")).toBeVisible();
+    await expect(page.getByText(/Saved only in this browser/)).toBeVisible();
+    // The choice survives a reload because it is stored in this browser.
+    await page.reload();
+    await expect(page.getByRole("radio", { name: "Work" })).toBeChecked();
+  });
+
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
     // The picker marks the active language with aria-current="page" (see app/[lang]/page.tsx).
@@ -40,6 +52,13 @@ test.describe("lesson page", () => {
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
     // German sentences carry lang="de" for screen readers and hyphenation.
     expect(await page.locator('[lang="de"]').count()).toBeGreaterThan(0);
+  });
+
+  test("the summary asks for every answer before it shows a score, and names the next step", async ({ page }) => {
+    await page.goto(UNIT);
+    await expect(page.getByRole("heading", { name: "Your result" })).toBeVisible();
+    await expect(page.getByText(/Answered so far: 0 of \d+/)).toBeVisible();
+    await expect(page.getByText(/Your result is kept in this browser only/)).toBeVisible();
   });
 
   test("a wrong answer is explained, the right answer is accepted, and reset clears it", async ({ page }) => {

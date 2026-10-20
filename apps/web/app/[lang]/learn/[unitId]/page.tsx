@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Block } from "@deutschgo/content-kit";
 import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
+import { LessonSummary } from "../../../../components/LessonSummary";
 import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
 import { contentLanguageFor, localeInfo, routableLocales, ui, type Translate } from "../../../../lib/i18n";
@@ -131,6 +132,23 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
     return c ? t(dictionaryFor(c.id, c, contentLang), c.title) : id;
   };
 
+  // Exercises in this lesson, in order, for the on-device summary.
+  const exerciseIds = unit.blocks.flatMap((block) => (block.type === "exercises" ? block.items.map((e) => e.id) : []));
+
+  // The next lesson on the first route that contains this one; none if this is the last.
+  let next: { href: string; title: string } | undefined;
+  for (const route of b.routes) {
+    const unitIds = route.steps.map((s) => s.unit).filter((u): u is string => !!u);
+    const at = unitIds.indexOf(unit.id);
+    if (at < 0) continue;
+    const nextId = unitIds[at + 1];
+    const nextUnit = nextId ? b.units.find((u) => u.id === nextId) : undefined;
+    if (nextUnit) {
+      next = { href: `/${lang}/learn/${nextUnit.id}`, title: t(dictionaryFor(nextUnit.id, nextUnit, contentLang), nextUnit.title) };
+    }
+    break;
+  }
+
   return (
     <main className="page lesson">
       <p><Link href={`/${lang}`}>← {msg("nav.allTopics")}</Link></p>
@@ -151,6 +169,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
           {renderBlock(block, d, msg, { id: unit.id, version: unit.version })}
         </section>
       ))}
+      <LessonSummary lang={lang} unitId={unit.id} exerciseIds={exerciseIds} next={next} />
       <p className="banner">{msg("status.noPersistence")}</p>
     </main>
   );

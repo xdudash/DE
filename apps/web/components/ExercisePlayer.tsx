@@ -12,6 +12,7 @@ import { useState } from "react";
 import { evaluate, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
 import type { Exercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
+import { recordExerciseResult } from "../lib/device-state";
 import { inline } from "../lib/markdown";
 
 export interface PlayerText {
@@ -52,8 +53,11 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
       case "transform": response = { type: "transform", text: free }; break;
     }
     try {
-      setResult(evaluate(exercise, response));
+      const outcome = evaluate(exercise, response);
+      setResult(outcome);
       setError(null);
+      // Latest answer per exercise, kept in this browser for the lesson summary.
+      recordExerciseResult(unit.id, exercise.id, outcome.correct);
     } catch (e) {
       setError((e as Error).message);
       return;
