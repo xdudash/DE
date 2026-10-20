@@ -16,6 +16,14 @@ test.describe("catalogue", () => {
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
   });
 
+  test("starts with an introduction and a one-tap start to the first lesson", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.getByRole("heading", { name: "Start here" })).toBeVisible();
+    await expect(page.getByText(/complete German course/)).toBeVisible();
+    await page.getByRole("link", { name: /Start the first lesson/ }).click();
+    await expect(page).toHaveURL(new RegExp(`${UNIT}$`));
+  });
+
   test("the language picker marks the current language", async ({ page }) => {
     await page.goto("/en");
     // The picker marks the active language with aria-current="page" (see app/[lang]/page.tsx).
