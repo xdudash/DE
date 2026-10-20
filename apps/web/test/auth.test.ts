@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { createHmac } from "node:crypto";
 import { describe, it } from "node:test";
-import { authConfig } from "../lib/auth/config.ts";
+import { authConfig, testLoginEnabled } from "../lib/auth/config.ts";
 import { clearCookie, COOKIE, readCookie, setCookie } from "../lib/auth/cookies.ts";
 import {
   AccountDeletionUnavailable,
@@ -10,6 +10,7 @@ import {
   deleteAuthUser,
   exchangeCode,
   isProvider,
+  signUpAnonymously,
 } from "../lib/auth/oauth.ts";
 import { challengeFor, newVerifier } from "../lib/auth/pkce.ts";
 import { AuthNotConfigured, sessionFrom } from "../lib/auth/session.ts";
@@ -201,5 +202,38 @@ describe("sessionFrom", () => {
 
   it("reports a missing secret as not configured when a token is present", () => {
     assert.throws(() => sessionFrom(at({ cookie: `dg_access=${good}` }), undefined, NOW), AuthNotConfigured);
+  });
+});
+
+describe("test sign-in gate", () => {
+  it("is off unless AUTH_TEST_LOGIN=1", () => {
+    assert.equal(testLoginEnabled({}), false);
+    assert.equal(testLoginEnabled({ AUTH_TEST_LOGIN: "true" }), false);
+    assert.equal(testLoginEnabled({ AUTH_TEST_LOGIN: "1" }), true);
+  });
+
+  it("is never on in the production deployment, even when the flag is set", () => {
+    assert.equal(testLoginEnabled({ AUTH_TEST_LOGIN: "1", VERCEL_ENV: "production" }), false);
+    assert.equal(testLoginEnabled({ AUTH_TEST_LOGIN: "1", VERCEL_ENV: "preview" }), true);
+  });
+
+  it("creates an anonymous account with the publishable key and returns its tokens", async () => {
+    let seen: { url: string; init?: RequestInit } | undefined;
+    const tokens = await signUpAnonymously(CFG, async (url, init) => {
+      seen = { url, init };
+      return new Response(JSON.stringify({ access_token: "a.b.c", refresh_token: "r", expires_in: 3600, user: {} }), { status: 200 });
+    });
+    assert.equal(seen?.url, "https://abc.supabase.co/auth/v1/signup");
+    assert.equal(seen?.init?.method, "POST");
+    assert.equal((seen?.init?.headers as Record<string, string>).apikey, "sb_publishable_test");
+    assert.equal(tokens.accessToken, "a.b.c");
+    assert.equal(tokens.email, undefined);
+  });
+
+  it("reports a refused anonymous sign-in instead of returning empty tokens", async () => {
+    await assert.rejects(
+      signUpAnonymously(CFG, async () => new Response("{}", { status: 422 })),
+      (err: unknown) => err instanceof AuthExchangeFailed && err.status === 422,
+    );
   });
 });

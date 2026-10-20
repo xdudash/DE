@@ -39,3 +39,12 @@ export function authConfig(env: Record<string, string | undefined> = process.env
     serviceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY?.trim() || undefined,
   };
 }
+
+/**
+ * The test sign-in button. Off unless AUTH_TEST_LOGIN=1 AND this is not the production
+ * deployment (Vercel sets VERCEL_ENV). It creates throwaway anonymous accounts, so it must
+ * never be reachable on the public site.
+ */
+export function testLoginEnabled(env: Record<string, string | undefined> = process.env): boolean {
+  return env.AUTH_TEST_LOGIN === "1" && env.VERCEL_ENV !== "production";
+}

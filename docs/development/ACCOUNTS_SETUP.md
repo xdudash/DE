@@ -41,6 +41,12 @@ Set them for **Production** and **Preview** in project `de` (Settings → Enviro
 
 `DATABASE_URL` must connect as a role that may `set role authenticated` and `set role service_role` (ADR-0010). Learner data is stored only when it is set; without it, sign-in works but the lesson keeps saying progress is not saved.
 
+## 4a. Test sign-in (until Google and Apple are set up)
+A "test sign-in" button creates a throwaway anonymous account, so you can try the account area without a provider. It is **preview-only**: it is refused on the production deployment even if the variable is set.
+1. Supabase: **Authentication → Sign In / Providers → Allow anonymous sign-ins**: enable it.
+2. Vercel: add `AUTH_TEST_LOGIN` = `1` for **Preview** only (not Production), then redeploy the preview.
+3. Each press creates a new account. Those accounts are not real learners; delete them from the Supabase Authentication page when you are done.
+
 ## 5. Check it on a preview (by hand)
 1. Open `/en/me`, tick "I am 16 or older", choose Google. You return signed in, and the page says so.
 2. Open a lesson and answer an exercise. The lesson shows "Your answers are saved to your account." (only when `DATABASE_URL` is set).

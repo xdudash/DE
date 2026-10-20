@@ -37,4 +37,5 @@ The owner chose **Google and Apple** as the providers (2026-10-20). A separate h
 ## Verification
 - Unit tests: PKCE against the RFC 7636 appendix B vector; configuration rules; cookie flags; token exchange and deletion against a fake fetch; forged, expired and missing-secret sessions (`apps/web/test/auth.test.ts`).
 - E2E in CI (unconfigured deployment): start refuses with `unavailable`; no provider buttons; POST-only write routes; session endpoint reports signed out.
+- Test sign-in (`POST /auth/test`) creates an anonymous Supabase user. It is gated by `AUTH_TEST_LOGIN=1` and refused when `VERCEL_ENV=production`; it is for previews only, and the Supabase anonymous-sign-in switch is what keeps it off elsewhere.
 - Not verifiable in CI: a real provider round trip. It is checked by hand on a configured preview before any production use.

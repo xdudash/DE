@@ -12,6 +12,7 @@ interface SessionStatus {
   signedIn: boolean;
   email?: string;
   saved: boolean;
+  testLogin?: boolean;
 }
 
 export interface AccountLabels {
@@ -91,6 +92,13 @@ export function AccountPanel({ lang, labels }: { lang: string; labels: AccountLa
               <button type="submit" name="provider" value="apple">{t("account.apple")}</button>
             </div>
           </form>
+          {status.testLogin && (
+            <form method="post" action="/auth/test" className="signin">
+              <input type="hidden" name="lang" value={lang} />
+              <button type="submit">{t("account.testLogin")}</button>
+              <p className="muted small">{t("account.testLoginNote")}</p>
+            </form>
+          )}
         </>
       )}
     </div>

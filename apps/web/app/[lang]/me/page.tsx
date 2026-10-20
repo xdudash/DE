@@ -11,7 +11,7 @@ const ACCOUNT_KEYS: MessageKey[] = [
   "account.title", "account.lead", "account.age", "account.google", "account.apple",
   "account.signedIn", "account.signedInAs", "account.signOut", "account.savedNote",
   "account.notSavedNote", "account.unavailable", "account.deleteTitle", "account.deleteConfirm",
-  "account.delete",
+  "account.delete", "account.testLogin", "account.testLoginNote",
   "account.notice.signedIn", "account.notice.signedOut", "account.notice.deleted",
   "account.notice.unavailable", "account.notice.age", "account.notice.provider",
   "account.notice.failed", "account.notice.confirm", "account.notice.deleteUnavailable",

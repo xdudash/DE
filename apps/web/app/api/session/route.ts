@@ -3,7 +3,7 @@
  * Pages are static (offline reading, ADR-0012), so they ask this endpoint on the client
  * instead of reading cookies while rendering.
  */
-import { authConfig } from "../../../lib/auth/config.ts";
+import { authConfig, testLoginEnabled } from "../../../lib/auth/config.ts";
 import { sessionFrom } from "../../../lib/auth/session.ts";
 import { isConfigured } from "../../../lib/data/pg.ts";
 
@@ -25,7 +25,7 @@ export function GET(request: Request): Response {
     }
   }
   return Response.json(
-    { configured: !!cfg, signedIn, email, saved: signedIn && isConfigured() },
+    { configured: !!cfg, signedIn, email, saved: signedIn && isConfigured(), testLogin: !!cfg && testLoginEnabled() },
     { headers: { "cache-control": "no-store" } },
   );
 }

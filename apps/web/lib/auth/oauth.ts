@@ -54,14 +54,19 @@ export async function exchangeCode(
     cache: "no-store",
   });
   if (!res.ok) throw new AuthExchangeFailed(res.status);
-  const body = (await res.json()) as {
+  return parseTokens(await res.json(), res.status);
+}
+
+/** Reads the token fields of an Auth response; anything else is a failed exchange. */
+function parseTokens(raw: unknown, status: number): Tokens {
+  const body = (raw ?? {}) as {
     access_token?: unknown;
     refresh_token?: unknown;
     expires_in?: unknown;
     user?: { email?: unknown };
   };
   if (typeof body.access_token !== "string" || typeof body.refresh_token !== "string") {
-    throw new AuthExchangeFailed(res.status);
+    throw new AuthExchangeFailed(status);
   }
   return {
     accessToken: body.access_token,
@@ -69,6 +74,22 @@ export async function exchangeCode(
     expiresIn: typeof body.expires_in === "number" ? body.expires_in : 3600,
     email: typeof body.user?.email === "string" ? body.user.email : undefined,
   };
+}
+
+/**
+ * Test sign-in: creates an anonymous learner in Supabase Auth and returns its real tokens.
+ * Only reachable when testLoginEnabled() allows it (preview deployments, never production),
+ * and it needs "Allow anonymous sign-ins" enabled in the Supabase project.
+ */
+export async function signUpAnonymously(cfg: AuthConfig, fetchImpl: FetchLike = fetch): Promise<Tokens> {
+  const res = await fetchImpl(`${cfg.url}/auth/v1/signup`, {
+    method: "POST",
+    headers: { apikey: cfg.publishableKey, "content-type": "application/json" },
+    body: "{}",
+    cache: "no-store",
+  });
+  if (!res.ok) throw new AuthExchangeFailed(res.status);
+  return parseTokens(await res.json(), res.status);
 }
 
 export class AccountDeletionUnavailable extends Error {

@@ -150,6 +150,8 @@ export const en = {
   "account.notice.failed": "Sign-in did not complete. Try again.",
   "account.notice.confirm": "Tick the confirmation box to delete the account.",
   "account.notice.deleteUnavailable": "Account deletion is not set up on this deployment yet.",
+  "account.testLogin": "Test sign-in (throwaway account)",
+  "account.testLoginNote": "Preview only. Creates a throwaway account for testing; nothing here is real learner data.",
   "account.notice.ageNotRecorded": "You are signed in, but the 16+ confirmation could not be saved. Sign out and sign in again to confirm it.",
 } as const;
 

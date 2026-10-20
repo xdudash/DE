@@ -43,4 +43,11 @@ test.describe("sign-in and account, unconfigured deployment", () => {
     expect(res.status()).toBe(303);
     expect(res.headers()["location"]).toBe("/en/me?auth=unavailable");
   });
+
+  test("the test sign-in is a POST that is unavailable on an unconfigured deployment", async ({ request }) => {
+    expect((await request.get("/auth/test", { maxRedirects: 0 })).status()).toBe(405);
+    const res = await request.post("/auth/test", { form: { lang: "en" }, maxRedirects: 0 });
+    expect(res.status()).toBe(303);
+    expect(res.headers()["location"]).toBe("/en/me?auth=unavailable");
+  });
 });

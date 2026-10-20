@@ -157,5 +157,7 @@ export const ar: Catalog = {
   "account.notice.failed": "لم يكتمل تسجيل الدخول. حاول مرة أخرى.",
   "account.notice.confirm": "ضع علامة على خانة التأكيد لحذف الحساب.",
   "account.notice.deleteUnavailable": "حذف الحسابات غير مُعدّ على هذا الإصدار بعد.",
+  "account.testLogin": "تسجيل دخول تجريبي (حساب مؤقت)",
+  "account.testLoginNote": "للمعاينة فقط. يُنشئ حسابًا مؤقتًا للاختبار؛ هذه ليست بيانات متعلم حقيقية.",
   "account.notice.ageNotRecorded": "أنت مسجّل الدخول، لكن تعذّر حفظ تأكيد 16+. سجّل الخروج ثم سجّل الدخول مرة أخرى لتأكيده.",
 };
