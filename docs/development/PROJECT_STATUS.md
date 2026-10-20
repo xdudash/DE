@@ -10,7 +10,7 @@ Last updated: 2026-10-20
 - Content: the **A1 graph is mapped** (DG-012): 67 concepts across 15 strands with dependencies, levels and en/uk/ru titles, 66 of them `planned` placeholders; 1 authored concept (V2) and the gold-standard unit with 10 exercises; 2 A1 routes. Coverage report: `npm run content:report`.
 - Learning engine v1 (`packages/learning-engine`, DG-010): concept-state derivation, review scheduler, explainable recommendations with reason codes, fixture tests. Wired to the app: the next step is recommended only from lessons that exist.
 - Attempt recording (`packages/attempts`, `apps/web/lib/data`, `POST /api/attempts`, DG-009): server-side re-evaluation, append-only events, derived state recomputed from stored evidence (ADR-0010). Verified by unit tests, SQL tests and a PostgreSQL 16 integration test in CI.
-- Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, GDPR export and cascade deletion. **No hosted Supabase project exists**; creating one needs owner authorization.
+- Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, GDPR export and cascade deletion. Applied to the hosted project `deutschgo` (EU, created 2026-10-20 under owner authorization); no advisor findings.
 - Interface localization (DG-014, `packages/i18n`): typed catalogs for en (pivot), uk, ru and ar (preview, RTL), an ICU-subset formatter with `Intl.PluralRules`, and parity tests across catalogs.
 - Web app (DG-016 to DG-018, merged in #33–#37, #39, #41):
   - Start screen with an introduction, the first-visit plan saved on this device, and a sentence-slot hero taken from the first lesson.
@@ -28,6 +28,7 @@ Last updated: 2026-10-20
 - A short custom domain is an owner decision (blocker 4). It is not created or attached without explicit authorization.
 
 ## In review (not yet on `main`)
+- DG-015 accounts (branch `feat/accounts-dg015`, ADR-0013): Google and Apple sign-in via Supabase Auth with PKCE, HttpOnly cookie session, 16+ confirmation at sign-up, account page, account deletion, progress saved to the account when signed in. Unit tests and E2E for the unconfigured state; the real provider round trip needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
 - DG-019 phone lesson polish (branch `feat/phone-lesson-polish`): 44px tap targets for the language picker and gap fields, hyphenation of German text, 320px and tap-target E2E checks.
 
 ## Authored but NOT human-verified
@@ -36,18 +37,18 @@ Last updated: 2026-10-20
 - Rights confirmation for original content (owner).
 
 ## Not implemented
-Sign-in (no browser can save progress yet: the endpoint answers "not signed in" and the lesson page says so); hosted database; offline queue and sync of attempts; lexicon; reading, listening, writing and speaking activities; an Arabic font for the preview locale; analytics; monitoring; billing.
+Sign-in works in code but is switched off until the owner completes the provider and Vercel steps ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md)); token refresh (the session lasts about an hour); email sign-in; hosted database; offline queue and sync of attempts; lexicon; reading, listening, writing and speaking activities; an Arabic font for the preview locale; analytics; monitoring; billing.
 
 ## Accepted decisions
-ADR-0001 platform (PWA first), ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access, ADR-0011 end-to-end and accessibility testing, ADR-0012 PWA installability and offline shell. Proposed: ADR-0007 media, ADR-0008 billing.
+ADR-0001 platform (PWA first), ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access, ADR-0011 end-to-end and accessibility testing, ADR-0012 PWA installability and offline shell, ADR-0013 sign-in and accounts. Proposed: ADR-0007 media, ADR-0008 billing.
 
 ## Blockers needing the owner
 1. Qualified reviewers for the gold unit: one German, one pedagogical, uk and ru translation reviewers (DG-007). Rights confirmation for the original text.
 2. Commit `package-lock.json` (DG-011). Branch `chore/dg-011-commit-lockfile` exists. The cloud session cannot reach the npm registry, so CI installs without a lockfile.
-3. Sign-in provider decision for DG-015 (magic link, Google, Apple; an ADR is needed) and the hosted Supabase project with OAuth clients. Creating paid or external projects needs explicit authorization.
+3. Accounts setup (DG-015): the provider decision is made (Google and Apple). Owner steps are in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md): Google OAuth client, Apple Developer account and Services ID (paid), Supabase redirect URLs, Vercel environment variables including `DATABASE_URL`. Secrets go straight into Vercel, never into chat or the repository.
 4. Product name, domain and legal entity before the first pilot (ROADMAP). This also decides the permanent custom address.
 
 Resolved: Vercel preview authorization (DG-013) was granted and previews are live.
 
 ## Next recommended task
-Merge DG-019 (`feat/phone-lesson-polish`) once CI is green. Then owner-free work: DG-005 source vetting, and A1 authoring only after DG-007 has recorded a review of the gold unit.
+Merge DG-019 (`feat/phone-lesson-polish`, #43) and DG-015 (`feat/accounts-dg015`) once CI is green. Then the owner completes ACCOUNTS_SETUP.md and the sign-in round trip is checked on a preview. Next increment: token refresh. Owner-free content work continues only after DG-007 has recorded a review of the gold unit.
