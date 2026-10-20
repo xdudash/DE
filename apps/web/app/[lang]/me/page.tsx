@@ -1,7 +1,9 @@
 import type { MessageKey } from "@deutschgo/i18n";
 import { graphFromBundle } from "@deutschgo/learning-engine";
 import { AccountPanel, type AccountLabels } from "../../../components/AccountPanel";
+import { MotivationStrip } from "../../../components/Motivation";
 import { ProfilePanel } from "../../../components/ProfilePanel";
+import { Reminders, type ReminderLabels } from "../../../components/Reminders";
 import { ProgressPanel } from "../../../components/ProgressPanel";
 import { bundle } from "../../../lib/content";
 import { ui } from "../../../lib/i18n";
@@ -42,6 +44,18 @@ export default async function You({ params }: { params: Promise<{ lang: string }
     // The email is substituted on the client, so the placeholder is kept literally here.
     text[key] = key === "account.signedInAs" ? msg(key, { email: "{email}" }) : msg(key);
   }
+  const reminderLabels: ReminderLabels = {
+    lead: msg("reminders.lead"),
+    on: msg("reminders.on"),
+    off: msg("reminders.off"),
+    enable: msg("reminders.enable"),
+    disable: msg("reminders.disable"),
+    needSignIn: msg("reminders.needSignIn"),
+    unsupported: msg("reminders.unsupported"),
+    blocked: msg("reminders.blocked"),
+    notConfigured: msg("reminders.notConfigured"),
+    failed: msg("reminders.failed"),
+  };
   const labels: AccountLabels = {
     text,
     notices: NOTICES,
@@ -51,6 +65,11 @@ export default async function You({ params }: { params: Promise<{ lang: string }
     <main className="page">
       <h1>{msg("profile.title")}</h1>
       <ProgressPanel lang={lang} graph={graphFromBundle(b)} totalTopics={b.concepts.length} />
+      <MotivationStrip lang={lang} />
+      <section className="panel" aria-labelledby="reminder-heading">
+        <h2 id="reminder-heading">{msg("reminders.title")}</h2>
+        <Reminders lang={lang} labels={reminderLabels} />
+      </section>
       <section className="panel" aria-labelledby="account-heading">
         <h2 id="account-heading">{msg("account.title")}</h2>
         <AccountPanel lang={lang} labels={labels} />

@@ -13,6 +13,7 @@ const SAMPLES: Record<string, string | number> = {
   language: "English", current: 1, total: 10, correct: 7, topic: "Word order", n: 1234,
   goal: "Work", answered: 3, percent: 80, answers: 5, lessons: 1,
   email: "learner@example.com",
+  xp: 120, days: 3, hearts: 4, max: 5,
 };
 
 describe("catalog completeness", () => {

@@ -30,6 +30,8 @@ export interface DeviceAttempt extends LearningEvent {
   exerciseId: string;
 }
 
+/** Fired on this window whenever the answers stored on this device change. */
+export const PROGRESS_EVENT = "deutschgo:progress";
 const SETUP_KEY = "deutschgo.setup.v1";
 const EVENTS_KEY = "deutschgo.events.v1";
 /** Bounds storage use on a device; the engine only needs recent evidence. */
@@ -103,7 +105,17 @@ export function recordAttempt(input: AttemptInput): boolean {
     unitId: input.unitId,
     exerciseId: input.exerciseId,
   };
-  return write(EVENTS_KEY, [...readAttempts(), event].slice(-MAX_STORED_ATTEMPTS));
+  const saved = write(EVENTS_KEY, [...readAttempts(), event].slice(-MAX_STORED_ATTEMPTS));
+  if (saved) notifyProgress();
+  return saved;
+}
+
+function notifyProgress(): void {
+  try {
+    window.dispatchEvent(new Event(PROGRESS_EVENT));
+  } catch {
+    // No window (server or test): nothing to notify.
+  }
 }
 
 /** Latest correctness per exercise id, for one unit. */
@@ -174,6 +186,7 @@ export function attemptStats(): AttemptStats {
 export function clearDeviceData(): boolean {
   try {
     for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY]) window.localStorage.removeItem(key);
+    notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {
     return false;

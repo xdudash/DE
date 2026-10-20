@@ -196,6 +196,18 @@ test.describe("your own area", () => {
     await expect(page.getByText("No plan saved on this device yet.")).toBeVisible();
   });
 
+  test("the XP strip starts empty and says it is counted in this browser", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByText("Answer an exercise to earn XP and start a streak.")).toBeVisible();
+    await expect(page.getByText(/Counted from answers in this browser only/)).toBeVisible();
+  });
+
+  test("reminders say plainly when push is not configured on this site", async ({ page }) => {
+    await page.goto("/en/me");
+    await expect(page.getByText("Reminders are not set up on this site yet.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Turn on daily reminder" })).toHaveCount(0);
+  });
+
   test("practice says plainly when there is nothing due", async ({ page }) => {
     await page.goto("/en/practice");
     await expect(page.getByRole("heading", { level: 1, name: "Practice" })).toBeVisible();

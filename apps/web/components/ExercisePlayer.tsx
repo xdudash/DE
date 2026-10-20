@@ -14,6 +14,7 @@ import type { Exercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { recordAttempt } from "../lib/device-state";
 import { inline } from "../lib/markdown";
+import { useHearts } from "./Motivation";
 
 export interface PlayerText {
   [key: string]: string;
@@ -22,7 +23,8 @@ export interface PlayerText {
 interface Props {
   exercise: Exercise;
   text: PlayerText;
-  labels: { check: string; reset: string; tryAgain: string; yourAnswer: string; saveFailed: string; stale: string };
+  /** `outOfHearts` contains the placeholder {minutes}, filled in on the client. */
+  labels: { check: string; reset: string; tryAgain: string; yourAnswer: string; saveFailed: string; stale: string; outOfHearts: string };
   /** Unit id and version, needed so the server can resolve exactly this exercise. */
   unit: { id: string; version: string; concepts: string[] };
 }
@@ -37,6 +39,10 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // Hearts limit practice only: the explanation stays visible after every answer.
+  const hearts = useHearts();
+  const outOfHearts = hearts !== null && hearts.hearts === 0;
+  const waitMinutes = hearts?.nextHeartAt != null ? Math.max(1, Math.ceil((hearts.nextHeartAt - Date.now()) / 60_000)) : 0;
 
   const ready =
     (exercise.type === "single_choice" && choice !== "") ||
@@ -45,6 +51,7 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
     (exercise.type === "transform" && free.trim() !== "");
 
   function check() {
+    if (outOfHearts) return;
     let response: Response;
     switch (exercise.type) {
       case "single_choice": response = { type: "single_choice", optionId: choice }; break;
@@ -158,10 +165,13 @@ export function ExercisePlayer({ exercise, text, labels, unit }: Props) {
       )}
 
       <div className="actions">
-        <button type="button" className="primary" onClick={check} disabled={!ready || locked}>{labels.check}</button>
+        <button type="button" className="primary" onClick={check} disabled={!ready || locked || outOfHearts}>{labels.check}</button>
         <button type="button" onClick={reset}>{result && !result.correct ? labels.tryAgain : labels.reset}</button>
       </div>
 
+      {outOfHearts && !locked && (
+        <p className="banner" role="status">{labels.outOfHearts.replace("{minutes}", String(waitMinutes))}</p>
+      )}
       {error && <p role="alert" className="feedback bad">{error}</p>}
       {result && (
         <div role="status" className={`feedback ${result.correct ? "ok" : "bad"}`}>

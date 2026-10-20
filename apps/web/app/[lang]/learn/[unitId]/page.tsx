@@ -113,6 +113,7 @@ function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: st
         yourAnswer: msg("exercise.yourAnswer"),
         saveFailed: msg("exercise.saveFailed"),
         stale: msg("exercise.stale"),
+        outOfHearts: msg("motivation.outOfHearts", { minutes: "{minutes}" }),
       };
       return (
         <>

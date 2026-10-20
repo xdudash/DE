@@ -22,6 +22,7 @@ The GitHub issue tracker is the live list; this file mirrors the next tasks with
 | DG-018 (#42) | Learner area (progress, plan, app status, data deletion), practice from the scheduler, lesson progress, offline indicator | P2 | DG-017 | **done** (PR #41 merged) |
 | DG-017 (#40) | Visual system and screen design: tokens, Plex typography, sentence-slot hero, route rail, honest status labels | P2 | DG-016 | **done** (PR #41 merged; [visual system](../product/VISUAL_SYSTEM.md)) |
 | DG-016 (#38) | Installable PWA shell: manifest + icons, service worker (read opened pages offline), phone bottom navigation, language gate as start screen | P2 | — | **done** (PR #39 merged, then in #41; ADR-0012) |
+| DG-020 | MVP: XP, levels, streaks and hearts on this device (ADR-0014), hearts limit practice only; daily push reminders with account-bound subscriptions (ADR-0015) | P2 | DG-015 (reminders), DG-009 | **in review** (branch `feat/mvp-motivation-push`); owner steps in [REMINDERS_SETUP.md](./REMINDERS_SETUP.md) |
 | DG-015 (#24) | Sign-in with Supabase Auth (Google + Apple, PKCE, HttpOnly cookie session, ADR-0013), account page, account deletion, progress saved to the account when signed in; removes the "progress is not saved" banner. Age gate part **done** in PR #28 (DG-015a) | P2 | DG-009 ✔, provider decision, hosted project | **in review** (branch `feat/accounts-dg015`; Google + Apple chosen, ADR-0013; owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md)) |
 
 ## Process

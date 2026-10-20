@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { graphFromBundle, routeFromBundle } from "@deutschgo/learning-engine";
 import { InstallPrompt } from "../../components/InstallPrompt";
+import { MotivationStrip } from "../../components/Motivation";
 import type { TargetLink } from "../../components/NextStep";
 import { NextStep } from "../../components/NextStep";
 import { SetupForm } from "../../components/SetupForm";
@@ -50,6 +51,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           gloss={heroExample.gloss ? title(heroConcept.id, heroConcept, heroExample.gloss) : undefined}
         />
       )}
+
+      <MotivationStrip lang={lang} />
 
       {localeInfo(lang).preview && <p className="banner">{msg("status.fallback", { language: "English" })}</p>}
       <p className="banner">{msg("status.noPersistence")}</p>
