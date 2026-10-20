@@ -24,6 +24,8 @@ export interface Setup {
 /** A graded exercise answer, as the learning engine reads it, plus where it came from. */
 export interface DeviceAttempt extends LearningEvent {
   kind: "attempt";
+  /** Every attempt has a verdict; the engine's field is optional for other event kinds. */
+  correct: boolean;
   unitId: string;
   exerciseId: string;
 }
