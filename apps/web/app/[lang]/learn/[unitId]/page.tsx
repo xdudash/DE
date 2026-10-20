@@ -5,6 +5,7 @@ import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
 import { LessonProgress } from "../../../../components/LessonProgress";
 import { LessonSummary } from "../../../../components/LessonSummary";
+import { SaveStatus } from "../../../../components/SaveStatus";
 import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
 import { contentLanguageFor, localeInfo, routableLocales, ui, type Translate } from "../../../../lib/i18n";
@@ -179,7 +180,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
         </section>
       ))}
       <LessonSummary lang={lang} unitId={unit.id} exerciseIds={exerciseIds} next={next} />
-      <p className="banner">{msg("status.noPersistence")}</p>
+      <SaveStatus notSavedText={msg("status.noPersistence")} savedText={msg("account.savedNote")} />
     </main>
   );
 }

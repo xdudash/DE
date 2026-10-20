@@ -634,6 +634,21 @@ button.danger:hover { background: var(--bad-soft); }
 .confirm p { margin: 0 0 0.5rem; font-weight: 600; }
 .confirm .actions { margin-top: 0; }
 
+/* Account: the consent checkbox and the provider buttons are tap targets (44px). */
+.account form { margin: 0.75rem 0; max-width: var(--measure); }
+.account .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+.account .actions button { min-height: 44px; }
+.account .check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  min-height: 44px;
+  padding-block: 0.4rem;
+  cursor: pointer;
+}
+.account .check input { width: 1.15rem; height: 1.15rem; margin: 0.2rem 0 0; accent-color: var(--blue); flex: none; }
+.account .confirm button { min-height: 44px; }
+
 .offlinebar {
   margin: 0;
   padding: 0.5rem max(1.25rem, env(safe-area-inset-left));
