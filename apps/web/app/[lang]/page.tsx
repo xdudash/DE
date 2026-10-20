@@ -11,6 +11,10 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
   const concepts = new Map(b.concepts.map((c) => [c.id, c]));
   const title = (id: string, entity: unknown, key: string) => t(dictionaryFor(id, entity, contentLang), key);
 
+  // The first step of the first route that points at an authored unit: the natural starting point.
+  const firstStep = b.routes.flatMap((r) => r.steps).find((s) => s.unit && units.has(s.unit));
+  const firstUnit = firstStep?.unit ? units.get(firstStep.unit) : undefined;
+
   return (
     <main className="page">
       <header className="top">
@@ -28,6 +32,19 @@ export default async function Catalog({ params }: { params: Promise<{ lang: stri
         <p className="banner">{msg("status.fallback", { language: "English" })}</p>
       )}
       <p className="banner">{msg("status.noPersistence")}</p>
+
+      <section className="start" aria-labelledby="start-heading">
+        <h2 id="start-heading">{msg("home.start")}</h2>
+        <p className="lead">{msg("home.intro")}</p>
+        {firstUnit && (
+          <p>
+            <Link className="cta" href={`/${lang}/learn/${firstUnit.id}`}>
+              {msg("home.startCta")}: {title(firstUnit.id, firstUnit, firstUnit.title)}
+            </Link>
+          </p>
+        )}
+        <p className="muted small">{msg("home.startNote")}</p>
+      </section>
 
       {b.routes.map((r) => (
         <section key={r.id}>

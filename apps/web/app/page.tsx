@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <main className="page">
       <h1>{ui("en")("app.name")}</h1>
+      <p className="lead">{ui("en")("app.tagline")}</p>
       <p className="muted">{locales.map((l) => ui(l.code)("app.chooseLanguage")).join(" · ")}</p>
       <ul className="langs">
         {locales.map((l) => (
