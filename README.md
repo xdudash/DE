@@ -6,7 +6,7 @@ DeutschGo is a deep, flexible German-learning system for people who need German 
 **Phase P2 — learner loop.** The content contract, validator, evaluator, learning engine, attempt recording, learner-data schema and an installable web app are in CI; one gold-standard unit exists and is not yet human-reviewed. Details: [project status](./docs/development/PROJECT_STATUS.md).
 
 ## Quick start
-Requires the Node.js version in `.nvmrc` (22.x, at least 22.18; `.npmrc` sets `engine-strict`, so older versions are refused) and Python 3 (for the doc check).
+Requires the Node.js version in `.nvmrc` (22.x, at least 22.18; npm warns `EBADENGINE` on other versions) and Python 3 (for the doc check).
 ```bash
 nvm use                      # or install the version in .nvmrc
 npm ci                       # install exactly what package-lock.json records
