@@ -29,7 +29,7 @@ Every issue should state problem/user value, scope/non-goals, dependencies and c
 `npm run check` runs everything CI runs (foundation check, content validation, tests, typecheck, web build). Use the narrower commands listed in CLAUDE.md for focused checks.
 
 ## Toolchain and dependencies
-- Node.js is pinned in `.nvmrc`; CI reads it (`node-version-file`). `package.json` `engines` (`^22.18.0`) is the supported range, also used by Vercel to choose the major version; `.npmrc` `engine-strict` refuses other versions.
+- Node.js is pinned in `.nvmrc`; CI reads it (`node-version-file`). `engines` `^22.18.0` in the root and in `apps/web/package.json` is the supported range; Vercel chooses its Node major from it. A mismatch is a warning, not an install failure: Vercel builds with its own Node 22.x, which does not have to equal `.nvmrc`.
 - Install with `npm ci`. `package-lock.json` is committed and CI fails if install, tests or the build change a tracked file.
 - Updating a dependency or Node is its own `chore/` change: change the range or `.nvmrc`, run `npm install` with the pinned Node, review the lockfile diff for new majors and new packages, run `npm run check`, and record notable upgrades in the PR.
 
