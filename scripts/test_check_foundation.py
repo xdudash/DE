@@ -12,7 +12,7 @@ import check_foundation
 class RelativeLinkTests(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
-        self.root = Path(self._tmp.name)
+        self.root = Path(self._tmp.name).resolve()
         self._original_root = check_foundation.ROOT
         check_foundation.ROOT = self.root
 

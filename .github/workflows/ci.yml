@@ -24,10 +24,8 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
-      - name: Validate foundation files and relative links
-        run: python scripts/check_foundation.py
-      - name: Foundation check self-tests
-        run: python -m unittest discover -s scripts -p "test_*.py"
+      - name: Validate foundation files and relative links, then the check's self-tests
+        run: python scripts/foundation.py
 
   app:
     name: Content contract, tests, and web build
@@ -60,11 +58,16 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
         shell: bash
-      # A build or install that rewrites tracked files (lockfile, tsconfig) means the
-      # committed state is not what CI tested.
-      - name: Tracked files unchanged by install, tests and build
+      # An install or build that rewrites a tracked file (lockfile, tsconfig) or leaves an
+      # unignored one means the committed state is not what CI tested.
+      - name: Working tree unchanged by install, tests and build
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: git diff --exit-code --stat 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        run: |
+          changes="$(git status --porcelain)"
+          if [ -n "$changes" ]; then
+            printf 'Changed or new files after install, tests and build:\n%s\n' "$changes" | tee -a ci.log
+            exit 1
+          fi
         shell: bash
       # Raw job logs live in blob storage; surfacing the tail as an annotation makes
       # failures readable through the GitHub API (used by Claude Code sessions).
