@@ -21,7 +21,8 @@ test.describe("sign-in and account, unconfigured deployment", () => {
 
   test("a notice from the auth routes is shown in the learner's language", async ({ page }) => {
     await page.goto("/en/me?auth=signed-out");
-    await expect(page.getByRole("status")).toHaveText("You have signed out.");
+    // The page has other live statuses (reminders), so pick the account notice by its text.
+    await expect(page.getByRole("status").filter({ hasText: /signed out/ })).toHaveText("You have signed out.");
   });
 
   test("the session endpoint reports a signed-out browser without leaking anything", async ({ request }) => {

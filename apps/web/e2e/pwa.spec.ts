@@ -56,7 +56,11 @@ test.describe("offline", () => {
     try {
       await page.reload();
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-      // German is still there: the cached page is the lesson, not a shell.
+      // The cached page is the whole lesson, not a shell: moving through its steps needs no
+      // network, and the German examples are there.
+      for (let i = 0; i < 20 && !(await page.locator('[lang="de"]').count()); i++) {
+        await page.locator("footer.flow-footer").getByRole("button", { name: /^(Continue|Finish)$/ }).click();
+      }
       expect(await page.locator('[lang="de"]').count()).toBeGreaterThan(0);
     } finally {
       await context.setOffline(false);
