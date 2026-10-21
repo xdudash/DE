@@ -1,10 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Block } from "@deutschgo/content-kit";
-import { ExercisePlayer } from "../../../../components/ExercisePlayer";
 import { GermanSentence } from "../../../../components/GermanSentence";
-import { LessonProgress } from "../../../../components/LessonProgress";
-import { LessonSummary } from "../../../../components/LessonSummary";
+import { LessonFlow, type FlowStep } from "../../../../components/LessonFlow";
+import { SaveStatus } from "../../../../components/SaveStatus";
 import { bundle, dictionaryFor, t, type Dictionary } from "../../../../lib/content";
 import { Markdown, inline } from "../../../../lib/markdown";
 import { contentLanguageFor, localeInfo, routableLocales, ui, type Translate } from "../../../../lib/i18n";
@@ -34,7 +32,8 @@ function TextNotice({ dict, msg, pivotName }: { dict: Dictionary; msg: Translate
   );
 }
 
-function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: string; version: string; concepts: string[] }) {
+/** One learning block as a card. Exercises are not rendered here; they become their own steps. */
+function renderBlock(block: Block, d: Dictionary) {
   switch (block.type) {
     case "explanation":
     case "summary":
@@ -45,7 +44,8 @@ function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: st
       return (
         <figure>
           <figcaption>{t(d, block.caption)}</figcaption>
-          <div className="table-wrap">
+          {/* Scrolls sideways on a narrow screen; focusable so the keyboard can scroll it too. */}
+          <div className="table-wrap" tabIndex={0} role="region" aria-label={t(d, block.caption)}>
             <table>
               <thead><tr>{block.columns.map((c, i) => <th key={i} scope="col">{t(d, c)}</th>)}</tr></thead>
               <tbody lang="de">
@@ -102,26 +102,8 @@ function renderBlock(block: Block, d: Dictionary, msg: Translate, unit: { id: st
           </ul>
         </>
       );
-    case "exercises": {
-      const text = Object.fromEntries(Object.entries(d).map(([k, v]) => [k, v.text]));
-      // Labels are resolved on the server: a client component cannot receive a function.
-      const labels = {
-        check: msg("exercise.check"),
-        reset: msg("exercise.reset"),
-        tryAgain: msg("exercise.tryAgain"),
-        yourAnswer: msg("exercise.yourAnswer"),
-        saveFailed: msg("exercise.saveFailed"),
-        stale: msg("exercise.stale"),
-      };
-      return (
-        <>
-          <h2>{t(d, block.title)}</h2>
-          {block.items.map((ex) => (
-            <ExercisePlayer key={ex.id} exercise={ex} text={text} labels={labels} unit={unit} />
-          ))}
-        </>
-      );
-    }
+    case "exercises":
+      return null;
   }
 }
 
@@ -139,9 +121,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
     const c = concepts.get(id);
     return c ? t(dictionaryFor(c.id, c, contentLang), c.title) : id;
   };
-
-  // Exercises in this lesson, in order, for the on-device summary.
-  const exerciseIds = unit.blocks.flatMap((block) => (block.type === "exercises" ? block.items.map((e) => e.id) : []));
+  const text = Object.fromEntries(Object.entries(d).map(([k, v]) => [k, v.text]));
 
   // The next lesson on the first route that contains this one; none if this is the last.
   let next: { href: string; title: string } | undefined;
@@ -157,29 +137,48 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
     break;
   }
 
+  // Step 1 is the introduction: what the lesson is, and the honest status notes.
+  const steps: FlowStep[] = [
+    {
+      kind: "learn",
+      id: "intro",
+      content: (
+        <>
+          <h1>{t(d, unit.title)}</h1>
+          <p className="lead">{t(d, unit.summary)}</p>
+          <div className="meta">
+            <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>
+            {!REVIEWED.has(unit.status) && <span className="tag warn">{msg("status.draftTag")}</span>}
+          </div>
+          {unit.review.linguistic.status !== "passed" && <p className="banner">{msg("status.notReviewed")}</p>}
+          <TextNotice dict={d} msg={msg} pivotName={pivotName} />
+          {unit.prerequisites.length > 0 && (
+            <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
+          )}
+          <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
+          <SaveStatus notSavedText={msg("status.noPersistence")} savedText={msg("account.savedNote")} />
+        </>
+      ),
+    },
+  ];
+  for (const block of unit.blocks) {
+    if (block.type === "exercises") {
+      for (const ex of block.items) {
+        steps.push({ kind: "exercise", id: ex.id, exercise: ex, caption: t(d, block.title) });
+      }
+    } else {
+      steps.push({ kind: "learn", id: block.id, content: <section id={block.id}>{renderBlock(block, d)}</section> });
+    }
+  }
+
   return (
-    <main className="page lesson">
-      <p className="back"><Link href={`/${lang}`}>← {msg("nav.allTopics")}</Link></p>
-      <h1>{t(d, unit.title)}</h1>
-      <p className="lead">{t(d, unit.summary)}</p>
-      <div className="meta">
-        <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>
-        {!REVIEWED.has(unit.status) && <span className="tag warn">{msg("status.draftTag")}</span>}
-      </div>
-      {unit.review.linguistic.status !== "passed" && <p className="banner">{msg("status.notReviewed")}</p>}
-      <TextNotice dict={d} msg={msg} pivotName={pivotName} />
-      {unit.prerequisites.length > 0 && (
-        <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>
-      )}
-      <LessonProgress lang={lang} unitId={unit.id} total={exerciseIds.length} />
-      <ul className="objectives">{unit.objectives.map((o) => <li key={o.id}>{inline(t(d, o.text))}</li>)}</ul>
-      {unit.blocks.map((block) => (
-        <section key={block.id} id={block.id}>
-          {renderBlock(block, d, msg, { id: unit.id, version: unit.version, concepts: unit.concepts })}
-        </section>
-      ))}
-      <LessonSummary lang={lang} unitId={unit.id} exerciseIds={exerciseIds} next={next} />
-      <p className="banner">{msg("status.noPersistence")}</p>
-    </main>
+    <LessonFlow
+      lang={lang}
+      unit={{ id: unit.id, version: unit.version, concepts: unit.concepts, title: t(d, unit.title), reviewed: REVIEWED.has(unit.status) }}
+      steps={steps}
+      text={text}
+      next={next}
+      saveNotice={{ notSaved: msg("status.noPersistence"), saved: msg("account.savedNote") }}
+    />
   );
 }

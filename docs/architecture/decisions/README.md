@@ -17,6 +17,9 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0010](./ADR-0010-server-database-access.md) | Server-side database access with `pg` and per-request role switching | Accepted, implemented |
 | [ADR-0011](./ADR-0011-end-to-end-and-accessibility-testing.md) | End-to-end and accessibility testing with Playwright and axe-core | Accepted, implemented |
 | [ADR-0012](./ADR-0012-pwa-installability-and-offline-shell.md) | Installable PWA shell; offline reading of opened pages only, sync stays P3 | Accepted, implemented |
+| [ADR-0013](./ADR-0013-sign-in-and-accounts.md) | Sign-in with Google or Apple via Supabase Auth, PKCE, HttpOnly cookie session, 16+ at sign-up, POST-only writes | Accepted, implemented |
+| [ADR-0014](./ADR-0014-motivation-xp-streaks-hearts.md) | XP, levels, streaks and hearts derived from evidence, with guardrails | Accepted, implementing |
+| [ADR-0015](./ADR-0015-daily-push-reminders.md) | Opt-in daily push reminder (Web Push, Vercel Cron, account-bound subscriptions) | Accepted, implementing |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.

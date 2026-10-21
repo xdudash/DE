@@ -1,6 +1,5 @@
 import { graphFromBundle } from "@deutschgo/learning-engine";
-import { PracticeList } from "../../../components/PracticeList";
-import type { TargetLink } from "../../../components/NextStep";
+import { PracticeList, type TargetLink } from "../../../components/PracticeList";
 import { bundle, dictionaryFor, t } from "../../../lib/content";
 import { contentLanguageFor, ui } from "../../../lib/i18n";
 

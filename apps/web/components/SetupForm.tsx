@@ -1,13 +1,14 @@
 "use client";
 
 /**
- * First-visit setup: what the learner needs German for and how much time they have.
- * The choice is remembered in this browser only, and the form says so.
+ * The learner's plan: what they need German for and how much time they have a day.
+ * The daily goal on the home screen follows the minutes. The choice is remembered in
+ * this browser only, and the form says so. When the data on this device is deleted,
+ * the form shows that there is no plan any more instead of the one it last saved.
  */
 import { useEffect, useState, type FormEvent } from "react";
-import Link from "next/link";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { GOALS, MINUTE_CHOICES, readSetup, writeSetup, type Goal, type Setup } from "../lib/device-state";
+import { GOALS, MINUTE_CHOICES, PROGRESS_EVENT, readSetup, writeSetup, type Goal, type Setup } from "../lib/device-state";
 
 const GOAL_KEY: Record<Goal, MessageKey> = {
   life: "setup.goal.life",
@@ -15,29 +16,27 @@ const GOAL_KEY: Record<Goal, MessageKey> = {
   study: "setup.goal.study",
 };
 
-interface Props {
-  lang: string;
-  startHref?: string;
-  startTitle?: string;
-  /** Secondary line on the start button: the name of the lesson it opens. */
-  startSub?: string;
-}
-
-export function SetupForm({ lang, startHref, startTitle, startSub }: Props) {
+export function SetupForm({ lang }: { lang: string }) {
   const msg = translator(lang);
   const [saved, setSaved] = useState<Setup | null>(null);
   const [goal, setGoal] = useState<Goal>("life");
   const [minutes, setMinutes] = useState<number>(10);
   const [status, setStatus] = useState<"idle" | "saved" | "failed">("idle");
 
-  // Read after mount so server and client render the same first frame.
+  // Read after mount so server and client render the same first frame; read again when
+  // this device's data changes (for example after "delete my data").
   useEffect(() => {
-    const previous = readSetup();
-    if (previous) {
+    const read = () => {
+      const previous = readSetup();
       setSaved(previous);
-      setGoal(previous.goal);
-      setMinutes(previous.minutes);
-    }
+      if (previous) {
+        setGoal(previous.goal);
+        setMinutes(previous.minutes);
+      }
+    };
+    read();
+    window.addEventListener(PROGRESS_EVENT, read);
+    return () => window.removeEventListener(PROGRESS_EVENT, read);
   }, []);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -57,30 +56,29 @@ export function SetupForm({ lang, startHref, startTitle, startSub }: Props) {
         <fieldset className="choices">
           <legend>{msg("setup.goalLabel")}</legend>
           <div className="choice-row">
-          {GOALS.map((g) => (
-            <label key={g} className={`choice ${goal === g ? "selected" : ""}`}>
-              <input type="radio" name="goal" value={g} checked={goal === g} onChange={() => setGoal(g)} />
-              <span>{msg(GOAL_KEY[g])}</span>
-            </label>
-          ))}
+            {GOALS.map((g) => (
+              <label key={g} className={`choice ${goal === g ? "selected" : ""}`}>
+                <input type="radio" name="goal" value={g} checked={goal === g} onChange={() => setGoal(g)} />
+                <span>{msg(GOAL_KEY[g])}</span>
+              </label>
+            ))}
           </div>
         </fieldset>
         <fieldset className="choices">
           <legend>{msg("setup.minutesLabel")}</legend>
           <div className="choice-row">
-          {MINUTE_CHOICES.map((m) => (
-            <label key={m} className={`choice ${minutes === m ? "selected" : ""}`}>
-              <input type="radio" name="minutes" value={m} checked={minutes === m} onChange={() => setMinutes(m)} />
-              <span>{msg("setup.minutes", { minutes: m })}</span>
-            </label>
-          ))}
+            {MINUTE_CHOICES.map((m) => (
+              <label key={m} className={`choice ${minutes === m ? "selected" : ""}`}>
+                <input type="radio" name="minutes" value={m} checked={minutes === m} onChange={() => setMinutes(m)} />
+                <span>{msg("setup.minutes", { minutes: m })}</span>
+              </label>
+            ))}
           </div>
         </fieldset>
-        {/* Secondary: the only filled action on this screen is starting the lesson. */}
-        <button type="submit">{msg("setup.save")}</button>
+        <button type="submit" className="primary">{msg("setup.save")}</button>
       </form>
 
-      <div aria-live="polite">
+      <div aria-live="polite" className="setup-status">
         {status === "failed" && <p className="banner">{msg("setup.failed")}</p>}
         {status !== "failed" && saved && (
           <p className="small">
@@ -92,16 +90,8 @@ export function SetupForm({ lang, startHref, startTitle, startSub }: Props) {
             <span className="muted">{msg("setup.deviceOnly")}</span>
           </p>
         )}
+        {status !== "failed" && !saved && <p className="small muted">{msg("profile.planNone")}</p>}
       </div>
-
-      {startHref && startTitle && (
-        <p>
-          <Link className="cta" href={startHref}>
-            {startTitle}
-            {startSub && <span className="sub">{startSub}</span>}
-          </Link>
-        </p>
-      )}
     </div>
   );
 }

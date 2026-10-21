@@ -15,7 +15,7 @@ It is built and operated by one founder with Claude Code. Every design choice mu
 | Fixed lesson chain, locked levels | Free navigation over a knowledge graph; prerequisites shown, never hidden walls |
 | Short rules of thumb | Precise rules with scope, limits, contrasts, exceptions, and learner-specific errors |
 | Right/wrong only | Explanatory feedback tied to the specific mistake and the concept it signals |
-| Streaks and XP as "progress" | Evidence-based states: exposure, practice, performance, delayed recall, transfer |
+| Streaks and XP as "progress" *(revised by [ADR-0014](../architecture/decisions/ADR-0014-motivation-xp-streaks-hearts.md): XP, levels, streaks and hearts are now part of the MVP, with guardrails)* | Evidence-based states: exposure, practice, performance, delayed recall, transfer |
 | One-size explanations, often English-only | Explanations in the learner's language, written for their transfer errors |
 | Germany-only or regionally blind | Standard German plus labelled Austrian/Swiss/regional usage and DACH life contexts |
 | Text-only "listening"/"speaking" | Real audio, real recordings; assessment claims limited to what is actually measured |
@@ -50,7 +50,7 @@ Secondary (later waves): Turkish-, Arabic-, Polish-, Romanian-, Persian-, and Sp
 8. **Sustainable** — free core learning plus a subscription for depth and volume ([monetization](./MONETIZATION.md)).
 
 ## Principles
-- Understanding over gamification. No streak pressure, no fake progress.
+- Understanding over gamification. No loss-pressure copy, no fake progress. *(Revised by ADR-0014: streaks, XP and hearts exist, but hearts never lock explanations and no message frames a missed day as a loss.)*
 - Reuse over duplication: a fact about German lives in exactly one place.
 - Honesty in UI: draft, unreviewed, machine-translated, unpersisted, or unavailable states are visible.
 - Privacy by default; minimal data; export and deletion are product features.

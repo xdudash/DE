@@ -46,8 +46,8 @@ export function ProgressPanel({ lang, graph, totalTopics }: Props) {
   const percentStarted = totalTopics > 0 ? Math.round((started / totalTopics) * 100) : 0;
 
   return (
-    <section className="panel" aria-labelledby="progress-heading">
-      <h2 id="progress-heading">{msg("progress.title")}</h2>
+    <section className="card" aria-labelledby="progress-heading">
+      <h2 id="progress-heading" className="card-title">{msg("progress.title")}</h2>
       <div aria-live="polite">
         {stats === null && <p className="muted">…</p>}
         {stats !== null && stats.answers === 0 && <p className="muted">{msg("progress.none")}</p>}

@@ -17,13 +17,15 @@
   "dependencies": {
     "@deutschgo/attempts": "*",
     "@deutschgo/content-kit": "*",
+    "@deutschgo/gamification": "*",
     "@deutschgo/i18n": "*",
     "@deutschgo/learning-engine": "*",
     "next": "^16.0.0",
     "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
@@ -32,6 +34,7 @@
     "@types/pg": "^8.15.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/web-push": "^3.6.4",
     "typescript": "^5.9.3"
   }
 }
