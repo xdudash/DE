@@ -55,4 +55,4 @@ Teaching text never lives in components; learner data never lives in `content/`.
 Static content on a CDN plus Postgres for per-user events comfortably serves thousands of active learners. Re-evaluate when: bundle > 5 MB per language, DB > 10 GB, p95 API latency > 300 ms, or monthly infra cost > €150 (triggers recorded in [OPERATIONS.md](../quality/OPERATIONS.md)).
 
 ## Portability (exit paths)
-Next.js can be self-hosted (Node server or container); Supabase is Postgres (pg_dump), auth users exportable; content is plain YAML in Git; evaluator/checks are dependency-light TypeScript. The single riskiest lock-in is Supabase Auth — mitigated by keeping auth calls inside `lib/data`.
+Next.js can be self-hosted (Node server or container); Supabase is Postgres (pg_dump), auth users exportable; content is plain YAML in Git; evaluator/checks are dependency-light TypeScript. The single riskiest lock-in is Supabase Auth — mitigated by keeping auth calls inside `apps/web/lib/auth` (ADR-0013) and database access inside `lib/data` (ADR-0010).

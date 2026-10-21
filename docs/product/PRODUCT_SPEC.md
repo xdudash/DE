@@ -95,19 +95,23 @@ Rules: F1–F8 only read content through the compiled bundle and the content-kit
 ### F14 Content system (P1 ✔ v1, continuous)
 - Authoring in Git, validation in CI, separate human review gates, compiled bundles ([content contract](../domain/CONTENT_CONTRACT.md), [content review](../quality/CONTENT_REVIEW.md)).
 
-## 3. Feature table (status as of 2026-10-12)
+## 3. Feature table (status as of 2026-10-22)
+
+Evidence per requirement: [project audit §3](../development/PROJECT_AUDIT_2026-10-22.md#3-requirements-and-implementation-matrix).
 
 | Area | Capability | Phase | Status |
 |---|---|---|---|
-| F14 | Content contract v1 (schemas, validator, evaluator, compiler) | P1 | Implemented, CI-verified on PR |
+| F14 | Content contract v1 (schemas, validator, evaluator, compiler) | P1 | Implemented, CI-verified |
 | F14 | Gold-standard unit V2 (en pivot, ru/uk drafts) | P1 | Authored, **not human-reviewed** |
-| F3/F4 | Lesson player + 4 exercise types (no persistence) | P1 | Implemented skeleton |
-| F10 | Language registry, per-entity l10n, coverage report | P1 | Implemented |
-| F9 | Accounts, persistence, sync | P2–P3 | Planned |
-| F7 | Evidence events, states, recommendations | P2–P3 | Planned |
-| F2 | Knowledge map UI, search | P2–P3 | Minimal list only |
-| F5 | Review scheduler | P3 | Planned |
+| F3/F4 | Lesson player + 4 exercise types | P1–P2 | Implemented |
+| F10 | Language registry, per-entity l10n, coverage report, UI catalogs + RTL | P1–P2 | Implemented; translations unreviewed |
+| F1 | Language, goal, daily minutes on this device | P2 | Partial (goal vocabulary differs from this spec; no region, no placement) |
+| F9 | Google/Apple sign-in, account deletion, attempts saved to the account | P2 | Implemented, not configured |
+| F9 | Session refresh, email sign-in, offline queue, sync, cross-device read, export UI | P2–P3 | Planned |
+| F7 | Evidence events, states, recommendations | P2 | Engine implemented; app reads device evidence only |
+| F2 | Knowledge map UI with title search | P2 | Implemented; route choice and catch-up planned |
+| F5 | Review scheduler v1 | P3 | Engine implemented; ineffective until recall events exist (DG-021) |
 | F6 | Reading pilot, dictionary, audio | P4–P5 | Planned |
 | F8 | Writing/speaking | P5 | Planned |
-| F11 | Freemium + billing | P7 | Planned |
-| F12/F13 | Analytics, monitoring, backups | P2+ | Planned |
+| F11 | Freemium + billing | P7 | Planned (free during build-out) |
+| F12/F13 | Analytics, monitoring, backups | P2–P3 | Planned (not started) |

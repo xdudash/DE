@@ -11,7 +11,7 @@ A green build proves only the checks that actually ran. Automated validation can
 | Unit + integration tests (incl. invalid fixtures) | `npm test` | ✔ |
 | Type check (content-kit, web) | `npm run typecheck` | ✔ |
 | Web build (static pages for every language × unit) | `npm run build` | ✔ |
-| E2E journeys + accessibility (Playwright + axe) | `npm run e2e` | P2 |
+| E2E journeys + accessibility (Playwright + axe; unconfigured-deployment state only, signed-in journey is DG-037) | `npm run e2e -w @deutschgo/web` | ✔ |
 | DB migrations + RLS/policy tests (PostgreSQL service container) | `npm run test:db` | ✔ |
 
 Run everything locally with `npm run check`.
