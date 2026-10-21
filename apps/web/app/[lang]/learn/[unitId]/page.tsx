@@ -44,7 +44,8 @@ function renderBlock(block: Block, d: Dictionary) {
       return (
         <figure>
           <figcaption>{t(d, block.caption)}</figcaption>
-          <div className="table-wrap">
+          {/* Scrolls sideways on a narrow screen; focusable so the keyboard can scroll it too. */}
+          <div className="table-wrap" tabIndex={0} role="region" aria-label={t(d, block.caption)}>
             <table>
               <thead><tr>{block.columns.map((c, i) => <th key={i} scope="col">{t(d, c)}</th>)}</tr></thead>
               <tbody lang="de">

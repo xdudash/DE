@@ -39,7 +39,7 @@
   --blue-soft-edge: #b9cdef;
 
   /* Verdicts */
-  --ok: #12804a;
+  --ok: #0f7040;               /* text-safe green: 5:1 or better on --ok-soft */
   --ok-fill: #12804a;
   --ok-edge: #0b5e35;
   --ok-soft: #dcf5e7;
