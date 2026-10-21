@@ -1,12 +1,14 @@
 /**
  * Review scheduler v1: fixed expanding intervals, transparent and testable (ADR-0016).
  * - Scheduling starts at the first correct graded result (attempt/recall/transfer).
- * - A review is any graded result given once the concept is due, plus every explicit
- *   `recall` event. Which screen produced the answer does not matter, and the client
- *   cannot declare it: the evidence and its timestamps decide.
+ * - A review is any graded result given once the concept is due, plus a failed explicit
+ *   `recall` at any time. Which screen produced the answer does not matter, and the
+ *   client cannot declare it: the evidence and its timestamps decide.
  * - A successful review given when due (or later) advances one step.
- * - A successful explicit recall before the due date does not advance (no credit for cramming).
+ * - A successful explicit recall before the due date is not a review: no step, no
+ *   mastery credit (no credit for cramming).
  * - A failed review ("again") resets to step 0, anchored at the failure.
+ * - Results with the same timestamp are taken wrong-first, so a tie never earns credit.
  * - Results before the due date that are not explicit recalls do not move the schedule
  *   (they affect state via accuracy).
  */
@@ -20,7 +22,7 @@ export interface ReviewOutcome {
   eventId: string;
   at: number;
   correct: boolean;
-  /** `recall`: an explicit review event; `due`: another graded result given while due. */
+  /** `recall`: an explicit recall event; `due`: another graded result given while due. */
   source: "recall" | "due";
 }
 
@@ -40,7 +42,9 @@ const isGraded = (e: LearningEvent): e is LearningEvent & { correct: boolean } =
 
 /** Events must belong to one concept; order is normalised here. */
 export function reviewHistory(events: LearningEvent[]): ReviewHistory {
-  const graded = events.filter(isGraded).sort((a, b) => a.at - b.at || a.id.localeCompare(b.id));
+  const graded = events
+    .filter(isGraded)
+    .sort((a, b) => a.at - b.at || Number(a.correct) - Number(b.correct) || a.id.localeCompare(b.id));
   let current: ReviewSchedule | null = null;
   const reviews: ReviewOutcome[] = [];
   for (const e of graded) {
@@ -49,11 +53,10 @@ export function reviewHistory(events: LearningEvent[]): ReviewHistory {
       continue;
     }
     const due = e.at >= current.dueAt;
-    if (e.kind !== "recall" && !due) continue;
+    const failedRecall = e.kind === "recall" && !e.correct;
+    if (!due && !failedRecall) continue;
     reviews.push({ eventId: e.id, at: e.at, correct: e.correct, source: e.kind === "recall" ? "recall" : "due" });
-    if (!e.correct) current = schedule(0, e.at);
-    else if (due) current = schedule(current.step + 1, e.at);
-    // early successful recall: keep schedule
+    current = e.correct ? schedule(current.step + 1, e.at) : schedule(0, e.at);
   }
   return { schedule: current, reviews };
 }

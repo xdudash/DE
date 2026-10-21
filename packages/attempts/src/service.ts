@@ -37,12 +37,20 @@ function resolve(bundle: ContentBundle, req: AttemptRequest): { unit: Unit; exer
 }
 
 /**
- * The event time is the client's, except that a clock running ahead of the server
- * is clamped: the schema rejects far-future rows, and a learner should not be able
- * to pull their next review into the past.
+ * How far before the server clock a client may date an answer. Answers are sent as they
+ * are given, so a few minutes covers slow networks and retries. Answers given while due
+ * count as reviews (ADR-0016), so an unbounded past would let a client fake spaced
+ * reviews in one sitting. The offline queue (DG-023) must replace this with a rule for
+ * answers that wait on the device.
+ */
+export const MAX_CLIENT_LAG_MS = 15 * 60_000;
+
+/**
+ * The event time is the client's, clamped into [now − MAX_CLIENT_LAG_MS, now]: the schema
+ * rejects far-future rows, and a learner must not be able to move a review in time.
  */
 function eventTime(occurredAt: string, now: number): string {
-  return new Date(Math.min(Date.parse(occurredAt), now)).toISOString();
+  return new Date(Math.min(Math.max(Date.parse(occurredAt), now - MAX_CLIENT_LAG_MS), now)).toISOString();
 }
 
 export async function recordAttempt(req: AttemptRequest, deps: RecordDeps): Promise<AttemptOutcome> {

@@ -69,10 +69,22 @@ describe("review scheduler v1", () => {
       assert.equal(h.reviews.length, 0);
       assert.equal(h.schedule!.step, 0);
     });
+    it("takes results with the same timestamp wrong-first, so a tie earns no credit", () => {
+      const tie = [ev("attempt", day(1), C, true, { id: "a" }), ev("attempt", day(1), C, false, { id: "z" })];
+      const h = reviewHistory([ev("attempt", day(0), C, true), ...tie]);
+      assert.deepEqual(h.reviews.map((r) => r.correct), [false]);
+      assert.equal(h.schedule!.step, 0);
+    });
+    it("a recall or transfer before the due date does not open the review early", () => {
+      const h = reviewHistory([ev("attempt", day(0), C, true), ev("transfer", day(0) + 1000, C, true), ev("recall", day(0) + 2000, C, true), ev("attempt", day(1), C, true)]);
+      assert.equal(h.reviews.length, 1);
+      assert.equal(h.schedule!.step, 1);
+      assert.equal(h.schedule!.anchorAt, day(1));
+    });
     it("records where each review came from and does not depend on input order", () => {
-      const events = [ev("attempt", day(0), C, true), ev("recall", day(1), C, true), ev("transfer", day(4), C, true)];
+      const events = [ev("attempt", day(0), C, true), ev("recall", day(1), C, true), ev("transfer", day(4), C, true), ev("recall", day(5), C, false)];
       const h = reviewHistory(events);
-      assert.deepEqual(h.reviews.map((r) => r.source), ["recall", "due"]);
+      assert.deepEqual(h.reviews.map((r) => r.source), ["recall", "due", "recall"]);
       assert.deepEqual(reviewHistory([...events].reverse()), h);
     });
   });

@@ -85,7 +85,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         }
         setError(null);
         // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
-        recordAttempt({ unitId: unit.id, exerciseId: exercise.id, conceptIds: unit.concepts, correct: outcome.correct });
+        recordAttempt({ unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct });
         // One id per answer: a retry of the same request must not count twice.
         setSave({ status: "saving" });
         void submitAttempt({

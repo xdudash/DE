@@ -10,10 +10,10 @@
  *  3. review due date passed                  → review_due
  *  4. ≥2 successful reviews ≥1 day apart and
  *     last review successful                  → provisionally_mastered
- *
- * A review is an explicit recall or any graded result given while the concept was due
- * (scheduler.ts, ADR-0016).
  *  5. otherwise                               → in_progress
+ *
+ * A review is a graded result given while the concept was due, or a failed explicit
+ * recall (scheduler.ts, ADR-0016).
  */
 import { DAY_MS, reviewHistory } from "./scheduler.ts";
 import type { ConceptState, ConceptStatus, EvidenceSummary, GraphConcept, LearningEvent, StateReason } from "./types.ts";

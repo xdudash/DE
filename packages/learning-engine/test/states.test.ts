@@ -101,8 +101,23 @@ describe("concept states v1", () => {
       assert.equal(s.evidence.recalls, 0);
     });
     it("a wrong answer while due revokes mastery", () => {
-      const e = [ev("attempt", day(0), V2, true), ev("attempt", day(1), V2, true), ev("attempt", day(4), V2, true), ev("attempt", day(11), V2, false)];
-      assert.notEqual(state(e, day(11) + 1).state, "provisionally_mastered");
+      const e = [ev("attempt", day(0), V2, true), ev("attempt", day(1), V2, true), ev("attempt", day(4), V2, true)];
+      assert.equal(state(e, day(10)).state, "provisionally_mastered");
+      const s = state([...e, ev("attempt", day(11), V2, false)], day(11) + 1);
+      assert.equal(s.state, "in_progress");
+      assert.equal(s.evidence.review!.dueAt, day(12));
+    });
+    it("an early explicit recall earns no mastery credit", () => {
+      const e = [ev("attempt", day(0), V2, true), ev("recall", day(0) + 60_000, V2, true), ev("attempt", day(1) + 3_600_000, V2, true)];
+      const s = state(e, day(2));
+      assert.equal(s.state, "in_progress");
+      assert.equal(s.evidence.recalls, 1);
+    });
+    it("an answer tagged with several concepts reviews each of them", () => {
+      const both = (at: number) => ev("attempt", at, V2, true, { conceptIds: [V2, W] });
+      const s = deriveConceptStates(graph, [both(day(0)), both(day(1)), both(day(4))], day(5));
+      assert.equal(s.get(V2)!.state, "provisionally_mastered");
+      assert.equal(s.get(W)!.state, "provisionally_mastered");
     });
   });
 });
