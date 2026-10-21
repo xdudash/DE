@@ -128,6 +128,16 @@ export function readLessonResults(unitId: string): Record<string, boolean> {
 }
 
 const LANGUAGE_KEY = "deutschgo.language.v1";
+const SOUND_KEY = "deutschgo.sound.v1";
+
+/** Sound effects in lessons: on unless the learner turned them off on this device. */
+export function readSound(): boolean {
+  return read<boolean>(SOUND_KEY) !== false;
+}
+
+export function writeSound(on: boolean): boolean {
+  return write(SOUND_KEY, on);
+}
 
 /**
  * The explanation language this browser last used, so the language gate can offer
@@ -185,7 +195,7 @@ export function attemptStats(): AttemptStats {
  */
 export function clearDeviceData(): boolean {
   try {
-    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY]) window.localStorage.removeItem(key);
+    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY]) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {

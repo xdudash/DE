@@ -112,6 +112,9 @@ jobs:
         if: failure()
         shell: bash
         run: |
+          # First every failing test with its first error lines, then the tail: the log itself is
+          # not readable from every place the result is reviewed, annotations are.
+          grep -E "^\s+[0-9]+\) \[|Error:|Expected|Received|waiting for|^\s+>\s+[0-9]+ \|" e2e.log | grep -v "Retry #" | head -120 | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=E2E failures::'+d)"
           tail -n 150 e2e.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=E2E log tail::'+d)"
       - name: Upload Playwright report on failure
         if: failure()

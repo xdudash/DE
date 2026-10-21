@@ -1,8 +1,9 @@
 import type { MessageKey } from "@deutschgo/i18n";
 import { graphFromBundle } from "@deutschgo/learning-engine";
 import { AccountPanel, type AccountLabels } from "../../../components/AccountPanel";
-import { MotivationStrip } from "../../../components/Motivation";
-import { ProfilePanel } from "../../../components/ProfilePanel";
+import { Icon } from "../../../components/Icon";
+import { ProfileHero } from "../../../components/Motivation";
+import { ProfileDevice, ProfileSettings } from "../../../components/ProfilePanel";
 import { Reminders, type ReminderLabels } from "../../../components/Reminders";
 import { ProgressPanel } from "../../../components/ProgressPanel";
 import { bundle } from "../../../lib/content";
@@ -62,19 +63,25 @@ export default async function You({ params }: { params: Promise<{ lang: string }
   };
 
   return (
-    <main className="page">
-      <h1>{msg("profile.title")}</h1>
+    <main className="page profile">
+      <ProfileHero lang={lang} />
       <ProgressPanel lang={lang} graph={graphFromBundle(b)} totalTopics={b.concepts.length} />
-      <MotivationStrip lang={lang} />
-      <section className="panel" aria-labelledby="reminder-heading">
-        <h2 id="reminder-heading">{msg("reminders.title")}</h2>
+      <ProfileSettings lang={lang} />
+      <section className="card" aria-labelledby="reminder-heading">
+        <h2 id="reminder-heading" className="card-title">
+          <Icon name="bell" size={20} />
+          {msg("reminders.title")}
+        </h2>
         <Reminders lang={lang} labels={reminderLabels} />
       </section>
-      <section className="panel" aria-labelledby="account-heading">
-        <h2 id="account-heading">{msg("account.title")}</h2>
+      <section className="card" aria-labelledby="account-heading">
+        <h2 id="account-heading" className="card-title">
+          <Icon name="user" size={20} />
+          {msg("account.title")}
+        </h2>
         <AccountPanel lang={lang} labels={labels} />
       </section>
-      <ProfilePanel lang={lang} />
+      <ProfileDevice lang={lang} />
     </main>
   );
 }

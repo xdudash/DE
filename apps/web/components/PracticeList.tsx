@@ -10,8 +10,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { deriveConceptStates, type ConceptState, type GraphConcept } from "@deutschgo/learning-engine";
 import { translator } from "@deutschgo/i18n";
-import type { TargetLink } from "./NextStep";
 import { readAttempts } from "../lib/device-state";
+import { Icon } from "./Icon";
+
+export interface TargetLink {
+  title: string;
+  href: string;
+}
 
 interface Props {
   lang: string;
@@ -44,15 +49,19 @@ export function PracticeList({ lang, graph, targets }: Props) {
     <div aria-live="polite">
       {groups === null && <p className="muted">…</p>}
       {empty && (
-        <>
-          <p>{msg("practice.empty")}</p>
+        <div className="card empty-state">
+          <span className="empty-icon" aria-hidden="true">
+            <Icon name="practice" size={34} />
+          </span>
+          <p className="empty-title">{msg("practice.empty")}</p>
           <p className="muted">{msg("practice.whenDue")}</p>
-        </>
+          <Link className="btn btn-primary" href={`/${lang}`}>{msg("done.home")}</Link>
+        </div>
       )}
       {groups !== null &&
         (["review_due", "needs_practice"] as const).map((group) =>
           groups[group].length === 0 ? null : (
-            <section key={group}>
+            <section key={group} className="practice-group">
               <h2>{msg(group === "review_due" ? "practice.due" : "practice.weak")}</h2>
               <ul className="topics">
                 {groups[group].map((id) => {

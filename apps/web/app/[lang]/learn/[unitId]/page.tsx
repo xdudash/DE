@@ -121,19 +121,6 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
     return c ? t(dictionaryFor(c.id, c, contentLang), c.title) : id;
   };
   const text = Object.fromEntries(Object.entries(d).map(([k, v]) => [k, v.text]));
-  // Labels are resolved on the server: a client component cannot receive a function.
-  const labels = {
-    check: msg("exercise.check"),
-    reset: msg("exercise.reset"),
-    tryAgain: msg("exercise.tryAgain"),
-    yourAnswer: msg("exercise.yourAnswer"),
-    saveFailed: msg("exercise.saveFailed"),
-    stale: msg("exercise.stale"),
-    outOfHearts: msg("motivation.outOfHearts", { minutes: "{minutes}" }),
-  };
-
-  // Exercises in this lesson, in order, for the on-device summary.
-  const exerciseIds = unit.blocks.flatMap((block) => (block.type === "exercises" ? block.items.map((e) => e.id) : []));
 
   // The next lesson on the first route that contains this one; none if this is the last.
   let next: { href: string; title: string } | undefined;
@@ -189,8 +176,6 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
       unit={{ id: unit.id, version: unit.version, concepts: unit.concepts, title: t(d, unit.title), reviewed: REVIEWED.has(unit.status) }}
       steps={steps}
       text={text}
-      labels={labels}
-      exerciseIds={exerciseIds}
       next={next}
       saveNotice={{ notSaved: msg("status.noPersistence"), saved: msg("account.savedNote") }}
     />

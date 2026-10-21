@@ -2,7 +2,7 @@
 
 /**
  * XP, level, streak and hearts for this device (ADR-0014). Every number is derived from
- * the answers stored in this browser, so the strip says so, and it never claims those
+ * the answers stored in this browser, so the profile says so, and it never claims those
  * numbers are saved to an account.
  *
  * The derived values are recomputed when an answer is recorded, when another tab changes
@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { translator } from "@deutschgo/i18n";
 import { HEARTS, minutesUntil, summarize, type Summary } from "@deutschgo/gamification";
 import { PROGRESS_EVENT, readAttempts } from "../lib/device-state";
+import { Icon } from "./Icon";
 
 const TICK_MS = 30_000;
 
@@ -43,41 +44,57 @@ export function useMotivation(): Summary | null {
   return summary;
 }
 
-/** Hearts left on this device and when the next one returns, for gating practice. */
-export function useHearts(): { hearts: number; nextHeartAt: number | null } | null {
-  const summary = useMotivation();
-  return summary ? { hearts: summary.hearts, nextHeartAt: summary.nextHeartAt } : null;
-}
-
-export function MotivationStrip({ lang }: { lang: string }) {
+/** The top of the learner's own page: who, which level, and the three motivation figures. */
+export function ProfileHero({ lang }: { lang: string }) {
   const msg = translator(lang);
   const s = useMotivation();
+  const span = s ? s.intoLevel + s.toNext : 1;
+  const percent = s ? Math.round((s.intoLevel / span) * 100) : 0;
 
   return (
-    <section className="motivation" aria-labelledby="motivation-heading">
-      <h2 id="motivation-heading">{msg("motivation.title")}</h2>
+    <section className="card hero-card" aria-labelledby="profile-title">
+      <div className="hero-top">
+        <span className="avatar" aria-hidden="true">
+          <Icon name="user" size={34} />
+        </span>
+        <div className="hero-name">
+          <h1 id="profile-title">{msg("profile.title")}</h1>
+          {s && <p className="level-line">{msg("motivation.level", { level: s.level })}</p>}
+        </div>
+      </div>
+
       {s === null ? null : s.answers === 0 ? (
         <p className="muted">{msg("motivation.empty")}</p>
       ) : (
-        <ul className="stats">
-          <li>
-            <strong>{msg("motivation.xp", { xp: s.xp })}</strong>
-            <span>{msg("motivation.level", { level: s.level })}</span>
-            <span className="small muted">{msg("motivation.toNext", { xp: s.toNext, level: s.level + 1 })}</span>
-          </li>
-          <li>
-            <strong>{msg("motivation.streak", { days: s.streak })}</strong>
-            <span className="small muted">{msg("motivation.longest", { days: s.longestStreak })}</span>
-          </li>
-          <li>
-            <strong>{msg("motivation.hearts", { hearts: s.hearts, max: HEARTS.max })}</strong>
-            {s.nextHeartAt !== null && (
-              <span className="small muted">
-                {msg("motivation.nextHeart", { minutes: minutesUntil(s.nextHeartAt, Date.now()) })}
-              </span>
-            )}
-          </li>
-        </ul>
+        <>
+          <div className="level-meter" aria-hidden="true">
+            <span style={{ inlineSize: `${percent}%` }} />
+          </div>
+          <p className="small muted level-next">{msg("motivation.toNext", { xp: s.toNext, level: s.level + 1 })}</p>
+          <ul className="figures">
+            <li className="fig-xp">
+              <Icon name="bolt" size={22} />
+              <strong>{s.xp}</strong>
+              <span>{msg("dash.xp")}</span>
+            </li>
+            <li className="fig-streak">
+              <Icon name="flame" size={22} />
+              <strong>{s.streak}</strong>
+              <span>{msg("dash.streak")}</span>
+            </li>
+            <li className="fig-hearts">
+              <Icon name="heart" size={22} />
+              <strong>
+                {s.hearts}/{HEARTS.max}
+              </strong>
+              <span>{msg("dash.hearts")}</span>
+            </li>
+          </ul>
+          <p className="small muted">{msg("motivation.longest", { days: s.longestStreak })}</p>
+          {s.nextHeartAt !== null && (
+            <p className="small muted">{msg("motivation.nextHeart", { minutes: minutesUntil(s.nextHeartAt, Date.now()) })}</p>
+          )}
+        </>
       )}
       <p className="small muted">{msg("motivation.note")}</p>
     </section>
