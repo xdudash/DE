@@ -26,6 +26,8 @@ jobs:
           python-version: "3.13"
       - name: Validate foundation files and relative links
         run: python scripts/check_foundation.py
+      - name: Foundation check self-tests
+        run: python -m unittest discover -s scripts -p "test_*.py"
 
   app:
     name: Content contract, tests, and web build
@@ -36,17 +38,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
-      # TODO(DG-011): switch to `npm ci` once package-lock.json is committed.
-      - name: Install dependencies
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies (exactly as locked)
         id: install
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
-          else
-            npm install --no-audit --no-fund 2>&1 | tee -a ci.log
-            echo "lock_generated=true" >> "$GITHUB_OUTPUT"
-          fi
+        run: npm ci --no-audit --no-fund 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
       - name: Content validation (schema, references, graph, exercises, localization coverage)
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run content:validate 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
@@ -63,6 +60,12 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
         shell: bash
+      # A build or install that rewrites tracked files (lockfile, tsconfig) means the
+      # committed state is not what CI tested.
+      - name: Tracked files unchanged by install, tests and build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: git diff --exit-code --stat 2>&1 | tee -a ci.log; exit ${PIPESTATUS[0]}
+        shell: bash
       # Raw job logs live in blob storage; surfacing the tail as an annotation makes
       # failures readable through the GitHub API (used by Claude Code sessions).
       - name: Publish log tail as annotation on failure
@@ -70,13 +73,6 @@ jobs:
         shell: bash
         run: |
           tail -n 150 ci.log | python3 -c "import sys; d=sys.stdin.read().replace('%','%25').replace('\r','%0D').replace('\n','%0A'); print('::error title=CI log tail::'+d)"
-      - name: Upload lockfile produced by this run (for DG-011)
-        if: always() && steps.install.outputs.lock_generated == 'true'
-        uses: actions/upload-artifact@v7
-        with:
-          name: package-lock
-          path: package-lock.json
-          if-no-files-found: ignore
 
   e2e:
     name: End-to-end journeys and accessibility (Playwright, axe)
@@ -87,15 +83,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
-      - name: Install dependencies
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies (exactly as locked)
         id: install
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
-          else
-            npm install --no-audit --no-fund
-          fi
+        run: npm ci --no-audit --no-fund
       - name: Install Chromium with system dependencies
         run: npm exec --workspace=@deutschgo/web -- playwright install --with-deps chromium
       - name: Build the production web app
@@ -150,10 +142,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
-      - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies (exactly as locked)
+        run: npm ci --no-audit --no-fund
       # The attempt pipeline against the real schema: server re-evaluation, append-only
       # events, idempotent retries and RLS isolation. Skips itself without DG_DB_URL.
       - name: Prepare a migrated database for the integration test

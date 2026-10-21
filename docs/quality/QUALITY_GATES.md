@@ -6,13 +6,15 @@ A green build proves only the checks that actually ran. Automated validation can
 ## Required CI checks (GitHub Actions, every push/PR)
 | Check | Command | Status |
 |---|---|---|
-| Foundation: required files, concise CLAUDE.md, relative links | `python3 scripts/check_foundation.py` | ✔ |
+| Install exactly as locked (Node from `.nvmrc`) | `npm ci` | ✔ |
+| Foundation: required files, concise CLAUDE.md, relative links (dependencies and build output skipped) + its self-tests | `npm run foundation` · `python -m unittest discover -s scripts -p "test_*.py"` | ✔ |
 | Content validation: schema, ids, references, cycles, exercises, status gates, l10n coverage | `npm run content:validate` | ✔ |
 | Unit + integration tests (incl. invalid fixtures) | `npm test` | ✔ |
 | Type check (content-kit, web) | `npm run typecheck` | ✔ |
 | Web build (static pages for every language × unit) | `npm run build` | ✔ |
 | E2E journeys + accessibility (Playwright + axe; unconfigured-deployment state only, signed-in journey is DG-037) | `npm run e2e -w @deutschgo/web` | ✔ |
 | DB migrations + RLS/policy tests (PostgreSQL service container) | `npm run test:db` | ✔ |
+| Install, tests and build leave tracked files unchanged | `git diff --exit-code` (CI `app` job) | ✔ |
 
 Run everything locally with `npm run check`.
 

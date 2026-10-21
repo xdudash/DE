@@ -44,6 +44,14 @@ REQUIRED_FILES = (
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 
+# Installed dependencies and build output are not repository docs; their READMEs link to
+# files that npm does not ship.
+SKIPPED_DIRS = frozenset({".git", "node_modules", ".next", "playwright-report", "test-results"})
+
+
+def is_skipped(path: Path) -> bool:
+    return any(part in SKIPPED_DIRS for part in path.relative_to(ROOT).parts)
+
 
 def check_required_files(errors: list[str]) -> None:
     for rel in REQUIRED_FILES:
@@ -62,7 +70,7 @@ def check_claude_instruction_size(errors: list[str]) -> None:
 
 def check_relative_markdown_links(errors: list[str]) -> None:
     for md_path in ROOT.rglob("*.md"):
-        if ".git" in md_path.parts:
+        if is_skipped(md_path):
             continue
         try:
             content = md_path.read_text(encoding="utf-8")
