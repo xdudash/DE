@@ -20,6 +20,7 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0013](./ADR-0013-sign-in-and-accounts.md) | Sign-in with Google or Apple via Supabase Auth, PKCE, HttpOnly cookie session, 16+ at sign-up, POST-only writes | Accepted, implemented |
 | [ADR-0014](./ADR-0014-motivation-xp-streaks-hearts.md) | XP, levels, streaks and hearts derived from evidence, with guardrails | Accepted, implemented (device-only numbers) |
 | [ADR-0015](./ADR-0015-daily-push-reminders.md) | Opt-in daily push reminder (Web Push, Vercel Cron, account-bound subscriptions) | Accepted, implemented; not configured (owner setup) |
+| [ADR-0016](./ADR-0016-review-evidence.md) | Answers given while a review is due count as reviews; derived in the engine, not declared by the client | Accepted, implemented (DG-021) |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.

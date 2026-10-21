@@ -84,4 +84,25 @@ describe("concept states v1", () => {
     assert.deepEqual(state(e, day(0) + 1), state([...e].reverse(), day(0) + 1));
     assert.equal(state(e, day(0) + 1).evidence.attempts, 1);
   });
+
+  describe("mastery from ordinary answers (ADR-0016)", () => {
+    it("a learner who only answers exercises reaches provisionally_mastered through due reviews", () => {
+      const e = [ev("attempt", day(0), V2, true), ev("attempt", day(1), V2, true), ev("attempt", day(4), V2, true)];
+      const s = state(e, day(5));
+      assert.equal(s.state, "provisionally_mastered");
+      assert.equal(s.evidence.recalls, 2);
+      assert.equal(s.evidence.successfulRecalls, 2);
+      assert.equal(state(e, day(11)).state, "review_due", "mastery still decays into review");
+    });
+    it("repeating a lesson the same day is practice, not proof", () => {
+      const e = [0, 1, 2, 3, 4, 5].map((i) => ev("attempt", day(0) + i * 60_000, V2, true));
+      const s = state(e, day(0) + 3_600_000);
+      assert.equal(s.state, "in_progress");
+      assert.equal(s.evidence.recalls, 0);
+    });
+    it("a wrong answer while due revokes mastery", () => {
+      const e = [ev("attempt", day(0), V2, true), ev("attempt", day(1), V2, true), ev("attempt", day(4), V2, true), ev("attempt", day(11), V2, false)];
+      assert.notEqual(state(e, day(11) + 1).state, "provisionally_mastered");
+    });
+  });
 });

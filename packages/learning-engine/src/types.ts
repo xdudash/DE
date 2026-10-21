@@ -33,6 +33,7 @@ export interface EvidenceSummary {
   /** Accuracy over the last RECENT_WINDOW graded results (attempt + recall + transfer); null if none. */
   recentAccuracy: number | null;
   recentGraded: number;
+  /** Reviews: explicit recalls plus graded results given while the concept was due (ADR-0016). */
   recalls: number;
   successfulRecalls: number;
   transfers: number;

@@ -12,7 +12,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | ID | Task | Stage | Depends on | Ready? |
 |---|---|---|---|---|
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
-| DG-021 | Recall events: when an answer counts as review | A | ADR (in task) | ready |
+| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
 | DG-026 | Session token verification hardening (exp/aud, signing method) | A | owner reads Supabase JWT setting | ready (verification step needs owner) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
@@ -72,7 +72,8 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Goal:** spaced repetition and mastery work for real learners. **State:** engine needs `recall` events (`scheduler.ts`, `states.ts`); app and `packages/attempts` only create `attempt` (finding E1).
 - **Changes:** short ADR: the **server** classifies a graded answer as `recall` when the concept had a due review at `occurredAt` (or the answer came from the review session), otherwise `attempt`; same rule in the device adapter until DG-024; `evaluator_version`/`engine_version` bump; fixtures.
 - **Acceptance:** a fixture learner moves through steps 1→3→7 days and reaches `provisionally_mastered`; a failed recall resets; client cannot force the kind.
-- **Checks:** learning-engine and attempts unit tests, attempt-store integration test (CI DB job), journey E2E. **Risks:** existing stored events stay `attempt` (append-only); document that mastery starts counting from the change. **Approval:** the ADR (technical; owner informed).
+- **Checks:** learning-engine and attempts unit tests, attempt-store integration test (CI DB job), journey E2E. **Risks:** existing stored events stay `attempt` (append-only). **Approval:** the ADR (technical; owner informed).
+- **Result (2026-10-22):** [ADR-0016](../architecture/decisions/ADR-0016-review-evidence.md) chose derivation-time classification instead of a server-side `recall` kind: the engine treats any graded result given while due as a review, so it is order-independent, identical on device and server, and needs no API or schema change; existing answers count retroactively. `ENGINE_VERSION` 1.1.0. Explicit `recall` events remain for the review session (DG-048).
 
 ### DG-026 Session token verification hardening
 - **Goal:** sign-in works with the hosted project and rejects weak tokens. **State:** `lib/auth/jwt.ts` accepts HS256 only, `exp` optional, no `aud`/`role` check; the hosted project's signing method is unverified.

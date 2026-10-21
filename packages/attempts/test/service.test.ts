@@ -76,7 +76,7 @@ describe("recordAttempt", () => {
     const d = deps();
     const out = await recordAttempt(request(), d);
     assert.deepEqual(out.states.map((s) => [s.conceptId, s.state]), [[V2, "in_progress"]]);
-    assert.equal(out.states[0]!.engineVersion, "1.0.0");
+    assert.equal(out.states[0]!.engineVersion, "1.1.0");
     assert.equal(out.nextReviewAt, iso(T0 + DAY_MS));
     assert.equal(d.store.reviews.get(V2)!.intervalDays, 1);
   });
@@ -145,5 +145,18 @@ describe("recomputeAll", () => {
     await recordAttempt(request(), d);
     const rows = await recomputeAll({ ...d, now: T0 + 2 * DAY_MS });
     assert.equal(rows.find((r) => r.conceptId === V2)!.state, "review_due");
+  });
+
+  it("answers given when a review is due advance the schedule and reach mastery (ADR-0016)", async () => {
+    const store = new MemoryStore();
+    const at = (ms: number) => recordAttempt(request({ occurredAt: iso(ms) }), deps(store, ms));
+    await at(T0);
+    const first = await at(T0 + DAY_MS);
+    assert.equal(first.nextReviewAt, iso(T0 + DAY_MS + 3 * DAY_MS));
+    const second = await at(T0 + 4 * DAY_MS);
+    assert.equal(second.states[0]!.state, "provisionally_mastered");
+    assert.equal(second.states[0]!.evidence.successfulRecalls, 2);
+    assert.equal(second.nextReviewAt, iso(T0 + 4 * DAY_MS + 7 * DAY_MS));
+    assert.ok([...store.events.values()].every((e) => e.kind === "attempt"), "stored evidence is unchanged: still attempts");
   });
 });
