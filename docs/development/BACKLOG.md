@@ -30,7 +30,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-035 | Motivation numbers from server evidence when signed in | B | DG-024 | after DG-024 |
 | DG-036 | Reminder timing, subscription uniqueness, hosted migration check | B | owner push setup | after setup |
 | DG-037 | E2E of the signed-in journey in CI | B | DG-024 | after DG-024 |
-| DG-038 | Changelog and incident template | B | — | ready (small) |
+| DG-038 | Changelog and incident template | B | — | **in review** (branch `docs/dg-038-changelog-incidents`) |
 | DG-040 | Email magic-link sign-in | B | Q2 | needs decision |
 | DG-041 | Contract v1.x adjustments from the gold review | C | DG-007 | blocked |
 | DG-042 | A1 sentence-structure batch 1 (≤5 units) | C | DG-041 | blocked |

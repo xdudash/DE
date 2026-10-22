@@ -19,7 +19,7 @@ Status: **Accepted** design (2026-10-12). Most items are implemented in P2–P3;
 ## Release process
 1. Small PRs from `feat/*`, `content/*`, `fix/*` branches; required checks green; owner review/merge.
 2. Production deploy from `main` (Vercel). Content-only changes follow the same path.
-3. Release notes: `docs/development/CHANGELOG.md` (from P2), user-visible changes and known limitations.
+3. Release notes: [CHANGELOG](../development/CHANGELOG.md), user-visible changes and known limitations; each PR that a learner can notice adds an entry.
 4. Rollback: redeploy previous production build (instant); DB migrations must be backward compatible for one release (expand → migrate → contract).
 5. Never deploy production, run migrations on production, or touch billing without explicit owner authorization.
 
@@ -38,4 +38,4 @@ Provider daily backups + weekly logical dump to separate EU storage (encrypted);
 Review architecture when any holds: bundle > 5 MB per language; DB > 10 GB; p95 API latency > 300 ms; monthly infrastructure > €150; build time > 10 min.
 
 ## Incident handling
-Severity levels, a short post-mortem template in `docs/development/` (P2), and user notification for any data incident per GDPR timelines.
+Severity levels, steps, the GDPR notification rules and a post-mortem template: [incidents](../development/INCIDENTS.md).

@@ -14,6 +14,7 @@ Which product/domain/architecture docs define expected behaviour?
 - [ ] Content/data validation run when applicable
 - [ ] Diff reviewed for unrelated changes
 - [ ] Documentation updated when decisions or behaviour changed
+- [ ] `docs/development/CHANGELOG.md` entry when a learner can notice the change
 - [ ] No secrets or private learner data added
 
 Commands and results:
