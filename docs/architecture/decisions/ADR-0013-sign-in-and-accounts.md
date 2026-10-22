@@ -20,7 +20,7 @@ The owner chose **Google and Apple** as the providers (2026-10-20). A separate h
 ## Decision
 1. **Providers:** Google and Apple via Supabase Auth. No password sign-in in P2.
 2. **Flow:** PKCE (RFC 7636, S256). `/auth/start` makes a 43+ character verifier, keeps it in an HttpOnly cookie for 10 minutes, and sends only its challenge to the provider. `/auth/callback` exchanges the one-time code together with that verifier at `POST /auth/v1/token?grant_type=pkce`. An intercepted code is useless without the cookie.
-3. **Session:** the access token lives in an HttpOnly, SameSite=Lax, Secure (on HTTPS) cookie `dg_access`, with a lifetime equal to the token's `expires_in`. Every server check verifies its signature with `SUPABASE_JWT_SECRET`. A token that is present but rejected is an error, never "anonymous".
+3. **Session:** the access token lives in an HttpOnly, SameSite=Lax, Secure (on HTTPS) cookie `dg_access`, with a lifetime equal to the token's `expires_in`. A second HttpOnly cookie, `dg_refresh`, is never exposed to JavaScript. `POST /auth/refresh` exchanges it with Supabase, verifies the returned access JWT and rotates both cookies; the refresh cookie is renewed for 30 days. The app invokes this route when its shell starts and retries a rejected attempt once after a successful refresh. A failed refresh clears both cookies. Every server check verifies its access token signature with `SUPABASE_JWT_SECRET`. A token that is present but rejected is an error, never "anonymous".
 4. **Registration is sign-in.** The first successful sign-in creates the Supabase Auth user. Registration is therefore gated by the same 16+ assertion as before: the learner ticks "16 or older" in the same request that starts sign-in, and the callback records it (`profiles.age_confirmed`). If the assertion cannot be stored, the learner sees that and is not told it was recorded.
 5. **Account deletion** calls the Auth admin API with the service-role key, which is a server-only secret. Every learner table references `auth.users` with `ON DELETE CASCADE` (migration 0001), so the data goes with the account. Deletion requires a typed confirmation and a session cookie.
 6. **Cross-site requests:** every state-changing route is POST-only, and cookies are SameSite=Lax, so a request from another site carries no session and cannot sign anyone out or delete an account.
@@ -30,12 +30,11 @@ The owner chose **Google and Apple** as the providers (2026-10-20). A separate h
 ## Consequences
 - + No SDK dependency; the flow is about 200 lines and fully unit-tested (`apps/web/test/auth.test.ts`).
 - + Tokens never reach JavaScript; cross-site writes are blocked by the cookie policy and the POST-only routes.
-- − The access token lasts about an hour and there is no refresh yet: after that the learner signs in again. A refresh route (refresh token in its own HttpOnly cookie) is the next increment.
 - − The configured redirect URLs in Supabase must list every origin that serves the app (production and previews); a missing entry fails sign-in with the provider's error.
 - − Apple requires a paid Apple Developer account and a verified domain; Google requires an OAuth client. Those are owner steps (`docs/development/ACCOUNTS_SETUP.md`).
 
 ## Verification
-- Unit tests: PKCE against the RFC 7636 appendix B vector; configuration rules; cookie flags; token exchange and deletion against a fake fetch; forged, expired and missing-secret sessions (`apps/web/test/auth.test.ts`).
+- Unit tests: PKCE against the RFC 7636 appendix B vector; configuration rules; cookie flags; token exchange, refresh rotation and deletion against a fake fetch; forged, expired and missing-secret sessions (`apps/web/test/auth.test.ts`, `apps/web/test/refresh-handler.test.ts`, `apps/web/test/browser-refresh.test.ts`).
 - E2E in CI (unconfigured deployment): start refuses with `unavailable`; no provider buttons; POST-only write routes; session endpoint reports signed out.
 - Test sign-in (`POST /auth/test`) creates an anonymous Supabase user. It is gated by `AUTH_TEST_LOGIN=1` and refused when `VERCEL_ENV=production`; it is for previews only, and the Supabase anonymous-sign-in switch is what keeps it off elsewhere.
 - Not verifiable in CI: a real provider round trip. It is checked by hand on a configured preview before any production use.

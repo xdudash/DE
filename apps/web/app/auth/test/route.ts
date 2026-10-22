@@ -3,8 +3,8 @@
  * POST-only so a link cannot create accounts or change the visitor's session.
  */
 import { authConfig, testLoginEnabled } from "../../../lib/auth/config.ts";
-import { COOKIE, setCookie } from "../../../lib/auth/cookies.ts";
 import { signUpAnonymously } from "../../../lib/auth/oauth.ts";
+import { sessionCookies } from "../../../lib/auth/refresh.ts";
 import { meUrl, redirectWith, safeLang } from "../../../lib/auth/redirect.ts";
 
 export const dynamic = "force-dynamic";
@@ -20,8 +20,7 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     const tokens = await signUpAnonymously(cfg);
-    const session = setCookie(COOKIE.access, tokens.accessToken, { maxAgeSeconds: tokens.expiresIn, secure });
-    return redirectWith(meUrl(lang, "signed-in"), [session]);
+    return redirectWith(meUrl(lang, "signed-in"), sessionCookies(tokens, secure));
   } catch {
     return redirectWith(meUrl(lang, "failed"), []);
   }

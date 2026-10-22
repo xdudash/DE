@@ -9,6 +9,7 @@
  *  - "not signed in" is an expected answer, not an error to show as a failure.
  */
 import type { Response } from "@deutschgo/content-kit/evaluate";
+import { refreshBrowserSession } from "../auth/browser-refresh.ts";
 
 export type SubmitState =
   | { status: "off" }          // nothing to save against yet (no session / no storage)
@@ -26,15 +27,25 @@ export interface SubmitInput {
 }
 
 export async function submitAttempt(input: SubmitInput, fetchImpl: typeof fetch = fetch): Promise<SubmitState> {
-  let res: globalThis.Response;
-  try {
-    res = await fetchImpl("/api/attempts", {
+  const send = () =>
+    fetchImpl("/api/attempts", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ ...input, occurredAt: new Date().toISOString() }),
     });
+
+  let res: globalThis.Response;
+  try {
+    res = await send();
   } catch {
     return { status: "failed", reason: "network" };
+  }
+  if (res.status === 401 && (await refreshBrowserSession(fetchImpl))) {
+    try {
+      res = await send();
+    } catch {
+      return { status: "failed", reason: "network" };
+    }
   }
   if (res.ok) return { status: "saved" };
   if (res.status === 401 || res.status === 503) return { status: "off" };
