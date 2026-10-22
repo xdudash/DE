@@ -42,6 +42,21 @@ describe("submitAttempt", () => {
     }
   });
 
+  it("refreshes an expired browser session and retries the same attempt once", async () => {
+    const urls: string[] = [];
+    let attempts = 0;
+    const fetchImpl = (async (url: string | URL | globalThis.Request) => {
+      const path = String(url);
+      urls.push(path);
+      if (path === "/auth/refresh") return new Response(null, { status: 204 });
+      attempts += 1;
+      return new Response("{}", { status: attempts === 1 ? 401 : 201 });
+    }) as unknown as typeof fetch;
+
+    assert.deepEqual(await submitAttempt(input, fetchImpl), { status: "saved" });
+    assert.deepEqual(urls, ["/api/attempts", "/auth/refresh", "/api/attempts"]);
+  });
+
   it("asks the learner to reload when the lesson version moved on", async () => {
     assert.deepEqual(await submitAttempt(input, stub({ status: 409 })), { status: "stale" });
   });

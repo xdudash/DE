@@ -10,6 +10,7 @@ import {
   deleteAuthUser,
   exchangeCode,
   isProvider,
+  refreshTokens,
   signUpAnonymously,
 } from "../lib/auth/oauth.ts";
 import { challengeFor, newVerifier } from "../lib/auth/pkce.ts";
@@ -150,6 +151,26 @@ describe("OAuth helpers", () => {
       exchangeCode(CFG, "c", "v", async () => new Response("{}", { status: 200 })),
       AuthExchangeFailed,
     );
+  });
+
+  it("rotates an HttpOnly refresh token into a new access and refresh token pair", async () => {
+    let seen: { url: string; init?: RequestInit } | undefined;
+    const tokens = await refreshTokens(CFG, "refresh-token-1", async (url, init) => {
+      seen = { url, init };
+      return new Response(
+        JSON.stringify({ access_token: "new.access.token", refresh_token: "refresh-token-2", expires_in: 1800, user: { email: "l@x.test" } }),
+        { status: 200 },
+      );
+    });
+
+    assert.equal(seen?.url, "https://abc.supabase.co/auth/v1/token?grant_type=refresh_token");
+    assert.deepEqual(JSON.parse(String(seen?.init?.body)), { refresh_token: "refresh-token-1" });
+    assert.deepEqual(tokens, {
+      accessToken: "new.access.token",
+      refreshToken: "refresh-token-2",
+      expiresIn: 1800,
+      email: "l@x.test",
+    });
   });
 
   it("refuses to delete an account without the service key, and never calls out", async () => {
