@@ -24,4 +24,7 @@ Entry format: `YYYY-MM-DD · #PR · what a learner notices` and, where it applie
 - #26 DG-013 · No learner-visible change: journeys and accessibility are checked automatically on desktop and phone.
 
 ## 2026-10-14
-- #18–#22 · First lesson (V2 word order, **not yet human-reviewed**) with interactive exercises, knowledge map of the A1 graph (66 of 67 concepts "planned"), interface in English, Ukrainian and Russian (machine drafts), Arabic preview.
+- #9 · First lesson (V2 word order, **not yet human-reviewed**) with interactive exercises, rendered from the content bundle.
+- #20 DG-012 · The A1 concept graph is mapped: 67 concepts, 66 of them shown as "planned".
+- #21 DG-014 · Interface in English, Ukrainian and Russian (uk/ru are machine drafts) and an Arabic right-to-left preview.
+- #18, #19, #22 · No learner-visible change yet: learning engine, learner-data schema and attempt recording behind the scenes.
