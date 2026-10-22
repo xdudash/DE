@@ -7,6 +7,8 @@
 export const COOKIE = {
   /** Access token of the signed-in learner. */
   access: "dg_access",
+  /** Refresh token used only by the server to rotate the access token. */
+  refresh: "dg_refresh",
   /** PKCE verifier while a sign-in is in progress. */
   pkce: "dg_pkce",
   /** The learner ticked "16 or older" before choosing a provider. */

@@ -33,6 +33,7 @@ Last updated: 2026-10-20
 
 - App shell and visual system "Linie" (same branch, [VISUAL_SYSTEM.md](../product/VISUAL_SYSTEM.md)): home is the learning line with stations and "you are here"; the lesson is a full-screen guided run with a bottom action bar, green/red verdicts, the right option marked, mistakes coming back at the end, and an arrival screen with XP, first-try accuracy and time; streak/XP/hearts in the top bar or navigation column; profile as cards with sound effects; empty states that offer the next step. Verified locally against a render harness: the repository's own journey and phone specs (44 of 45 pass; the 404 case needs the Next server) and screenshots at 320px, phone and desktop, light and dark, and the Arabic preview.
 - DG-020 MVP (branch `feat/mvp-motivation-push`, ADR-0014 and ADR-0015): XP, level, streak and hearts derived from answers on this device; practice pauses at zero hearts while explanations stay open; daily push reminder for signed-in learners, off by default. Unit tests for the rules and the push validation. The push pipeline needs the owner steps in [REMINDERS_SETUP.md](./REMINDERS_SETUP.md) before anything is sent.
+- Session refresh (branch `feat/token-refresh`, ADR-0013): access and refresh tokens are held separately in HttpOnly cookies; the browser refreshes its session at app start and retries one rejected attempt after rotation. The end-to-end provider round trip still needs the owner setup below.
 
 ## Authored but NOT human-verified
 - German correctness and pedagogy of the gold unit (`review.*: pending`).
@@ -40,7 +41,7 @@ Last updated: 2026-10-20
 - Rights confirmation for original content (owner).
 
 ## Not implemented
-Sign-in works in code but is switched off until the owner completes the provider and Vercel steps ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md)); token refresh (the session lasts about an hour); email sign-in; hosted database; offline queue and sync of attempts; lexicon; reading, listening, writing and speaking activities; an Arabic font for the preview locale; analytics; monitoring; billing.
+Sign-in works in code but is switched off until the owner completes the provider and Vercel steps ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md)); email sign-in; hosted database; offline queue and sync of attempts; lexicon; reading, listening, writing and speaking activities; an Arabic font for the preview locale; analytics; monitoring; billing.
 
 ## Accepted decisions
 ADR-0001 platform (PWA first), ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access, ADR-0011 end-to-end and accessibility testing, ADR-0012 PWA installability and offline shell, ADR-0013 sign-in and accounts. Proposed: ADR-0007 media, ADR-0008 billing.

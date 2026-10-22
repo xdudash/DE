@@ -4,9 +4,10 @@
  * learner's 16+ assertion when the sign-in began with one.
  */
 import { authConfig } from "../../../lib/auth/config.ts";
-import { COOKIE, clearCookie, readCookie, setCookie } from "../../../lib/auth/cookies.ts";
+import { COOKIE, clearCookie, readCookie } from "../../../lib/auth/cookies.ts";
 import { exchangeCode } from "../../../lib/auth/oauth.ts";
 import { verifyJwt } from "../../../lib/auth/jwt.ts";
+import { sessionCookies } from "../../../lib/auth/refresh.ts";
 import { meUrl, redirectWith, safeLang, type AuthNotice } from "../../../lib/auth/redirect.ts";
 import { ageGateStore } from "../../../lib/data/profile-store.ts";
 import { isConfigured } from "../../../lib/data/pg.ts";
@@ -30,7 +31,7 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const tokens = await exchangeCode(cfg, code, verifier);
     const claims = verifyJwt(tokens.accessToken, cfg.jwtSecret, Math.floor(Date.now() / 1000));
-    const session = setCookie(COOKIE.access, tokens.accessToken, { maxAgeSeconds: tokens.expiresIn, secure });
+    const session = sessionCookies(tokens, secure);
 
     let notice: AuthNotice = "signed-in";
     if (readCookie(request, COOKIE.age) === "1") {
@@ -44,7 +45,7 @@ export async function GET(request: Request): Promise<Response> {
         notice = "age-not-recorded";
       }
     }
-    return redirectWith(meUrl(lang, notice), [session, ...clears]);
+    return redirectWith(meUrl(lang, notice), [...session, ...clears]);
   } catch {
     return redirectWith(meUrl(lang, "failed"), clears);
   }
