@@ -1,6 +1,6 @@
 # Learner Data, Sync, Security, and Privacy
 
-Status: **Accepted** design (2026-10-12). Schema and policies implemented in [`supabase/migrations`](../../supabase/migrations/) and verified by [`supabase/tests`](../../supabase/tests/) (DG-008); no hosted project exists yet. Provider: [ADR-0002](./decisions/ADR-0002-backend-auth-database.md). No production learner data may be collected before the P3 privacy gate in [quality gates](../quality/QUALITY_GATES.md) passes.
+Status: **Accepted** design (2026-10-12). Schema and policies implemented in [`supabase/migrations`](../../supabase/migrations/) and verified by [`supabase/tests`](../../supabase/tests/) (DG-008); the hosted EU project `deutschgo` exists (2026-10-20), learner storage is switched on only by configuration ([accounts setup](../development/ACCOUNTS_SETUP.md)). Provider: [ADR-0002](./decisions/ADR-0002-backend-auth-database.md). No production learner data may be collected before the P3 privacy gate in [quality gates](../quality/QUALITY_GATES.md) passes.
 
 ## Principles
 Data minimisation, purpose limitation, EU residency, user-owned data (export/delete), server-side authorization, append-only learning evidence.

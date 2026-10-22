@@ -1,58 +1,56 @@
 # Project Status
 
-Last updated: 2026-10-20
+Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2026-10-22.md))
 
 ## Current phase
-**P2 — learner loop** (in progress). P1 content skeleton is done. The P2 web app is on `main` and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md).
+**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merges #46 `e99c7f9` and #52 `1ed94f3`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
 
-## Implemented (on `main`, verified in CI)
-- Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator, graph utilities (`packages/content-kit`) with unit and integration tests (valid and invalid fixtures).
-- Content: the **A1 graph is mapped** (DG-012): 67 concepts across 15 strands with dependencies, levels and en/uk/ru titles, 66 of them `planned` placeholders; 1 authored concept (V2) and the gold-standard unit with 10 exercises; 2 A1 routes. Coverage report: `npm run content:report`.
-- Learning engine v1 (`packages/learning-engine`, DG-010): concept-state derivation, review scheduler, explainable recommendations with reason codes, fixture tests. Wired to the app: the next step is recommended only from lessons that exist.
-- Attempt recording (`packages/attempts`, `apps/web/lib/data`, `POST /api/attempts`, DG-009): server-side re-evaluation, append-only events, derived state recomputed from stored evidence (ADR-0010). Verified by unit tests, SQL tests and a PostgreSQL 16 integration test in CI.
-- Learner-data schema (DG-008): `supabase/migrations` with RLS on every table, GDPR export and cascade deletion. Applied to the hosted project `deutschgo` (EU, created 2026-10-20 under owner authorization); no advisor findings.
-- Interface localization (DG-014, `packages/i18n`): typed catalogs for en (pivot), uk, ru and ar (preview, RTL), an ICU-subset formatter with `Intl.PluralRules`, and parity tests across catalogs.
-- Web app (DG-016 to DG-018, merged in #33–#37, #39, #41):
-  - Start screen with an introduction, the first-visit plan saved on this device, and a sentence-slot hero taken from the first lesson.
-  - Lesson page: all block types, interactive exercises using the shared evaluator, honest review/translation/persistence banners, a result summary and next lesson.
-  - Knowledge map with search and honest states; practice list driven by the scheduler; learner area with progress, plan, app status, and "delete my data" with confirmation.
-  - Visual system per [VISUAL_SYSTEM.md](../product/VISUAL_SYSTEM.md): IBM Plex type, route rail, status labels, light and dark themes.
-  - Installable PWA per ADR-0012: manifest, icons, service worker that keeps opened pages readable offline, offline indicator and fallback page.
-  - Phone layout: bottom tab bar, safe-area handling, no sideways scroll at phone width.
-- Quality gates: foundation check, content validation, unit tests, typecheck, static build of all locale × unit pages, Playwright journeys on desktop and phone with axe accessibility checks, PostgreSQL migration and RLS tests.
+## Implemented (on `main`)
+- Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
+- Content: A1 graph mapped (DG-012): 67 concepts, 66 of them `planned`; **one** authored concept (V2) and the gold unit with 10 exercises (`needs_review`); 2 A1 routes. `npm run content:report`.
+- Learning engine v1 (`packages/learning-engine`, DG-010): states, review scheduler, explainable recommendations.
+- Attempt recording (`packages/attempts`, `POST /api/attempts`, DG-009): server re-evaluation, append-only events, derived caches.
+- Learner-data schema (`supabase/migrations` 0001, 0002): RLS on every table, GDPR export function, cascade deletion. Hosted project `deutschgo` (EU) exists; 0001 is recorded as applied, 0002 (push subscriptions) is not recorded.
+- Interface localization (`packages/i18n`, DG-014): en pivot, uk, ru, ar preview (RTL).
+- Web app: start screen and plan, lesson as a guided run, knowledge map with search, practice list, learner area, delete device data, installable PWA with offline reading, phone layout with 44px targets (DG-016…DG-019).
+- Sign-in code (DG-015, ADR-0013): Google/Apple via Supabase Auth with PKCE, HttpOnly cookie, 16+ confirmation, account deletion, attempts saved to the account when signed in. **Not configured**: needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
+- Session refresh (DG-025, #52, ADR-0013): access and refresh tokens in separate HttpOnly cookies, rotation at app start, one retry of a rejected attempt after rotation. Needs the same owner setup as sign-in.
+- Motivation (DG-020, ADR-0014/0015): XP, levels, streak, hearts computed from answers on this device; daily push reminder code. **Push not configured**: [REMINDERS_SETUP.md](./REMINDERS_SETUP.md).
+- Quality gates in CI: foundation check, content validation, unit tests, typecheck, build, Playwright + axe on desktop and phone, PostgreSQL migration/RLS tests and the attempt integration test.
 
-## Production link
-- The permanent link is the **production deployment of `main`** on Vercel (ADR-0005). Every merge to `main` is deployed to it; a branch preview link (`de-git-<branch>-…`) is temporary and changes with each branch.
-- The `main` commit status "Vercel" reports "Deployment has completed" for `0d9fc16` (PR #41).
-- The address itself is not yet recorded here. Read it in the Vercel dashboard (project `de` → Domains). Record it here once the owner confirms it.
-- A short custom domain is an owner decision (blocker 4). It is not created or attached without explicit authorization.
+## Checks run on 2026-10-22 (audit, local Windows, Node 22.14)
+Foundation check (passes without `node_modules`; with dependencies installed it fails on third-party READMEs, DG-011), content validation (0 errors/warnings), typecheck, `npm test` (253 tests, 0 failures) and `npm run build` **passed**. `npm run test:db` and E2E were **not run here** (no PostgreSQL/Docker, no Playwright browser); they run in CI. CI status of `e99c7f9` was not verified (no `gh` CLI). Details: [audit §2](./PROJECT_AUDIT_2026-10-22.md#2-checks-run-for-this-audit).
 
-## In review (not yet on `main`)
-- DG-015 accounts (branch `feat/accounts-dg015`, ADR-0013): Google and Apple sign-in via Supabase Auth with PKCE, HttpOnly cookie session, 16+ confirmation at sign-up, account page, account deletion, progress saved to the account when signed in. Unit tests and E2E for the unconfigured state; the real provider round trip needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
-- DG-019 phone lesson polish (branch `feat/phone-lesson-polish`): 44px tap targets for the language picker and gap fields, hyphenation of German text, 320px and tap-target E2E checks.
-
-- App shell and visual system "Linie" (same branch, [VISUAL_SYSTEM.md](../product/VISUAL_SYSTEM.md)): home is the learning line with stations and "you are here"; the lesson is a full-screen guided run with a bottom action bar, green/red verdicts, the right option marked, mistakes coming back at the end, and an arrival screen with XP, first-try accuracy and time; streak/XP/hearts in the top bar or navigation column; profile as cards with sound effects; empty states that offer the next step. Verified locally against a render harness: the repository's own journey and phone specs (44 of 45 pass; the 404 case needs the Next server) and screenshots at 320px, phone and desktop, light and dark, and the Arabic preview.
-- DG-020 MVP (branch `feat/mvp-motivation-push`, ADR-0014 and ADR-0015): XP, level, streak and hearts derived from answers on this device; practice pauses at zero hearts while explanations stay open; daily push reminder for signed-in learners, off by default. Unit tests for the rules and the push validation. The push pipeline needs the owner steps in [REMINDERS_SETUP.md](./REMINDERS_SETUP.md) before anything is sent.
-- Session refresh (branch `feat/token-refresh`, ADR-0013): access and refresh tokens are held separately in HttpOnly cookies; the browser refreshes its session at app start and retries one rejected attempt after rotation. The end-to-end provider round trip still needs the owner setup below.
+## Known gaps that block the P2 exit
+- Progress, states, XP, streak and hearts are read from this browser only; the server is written but never read, so nothing continues on another device (DG-022, DG-024).
+- Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered` (DG-021).
+- Failed attempt sends are not retried; no offline queue (DG-022, DG-023).
+- Token verifier is HS256-only and the hosted project's signing method is unverified (DG-026). Session refresh itself is merged (#52).
+- No rate limiting, monitoring, analytics, backups with restore test, privacy notice or Impressum (DG-027, DG-031…DG-033, DG-030).
+- Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
 
 ## Authored but NOT human-verified
 - German correctness and pedagogy of the gold unit (`review.*: pending`).
-- uk/ru translations and the uk/ru/ar interface strings: machine drafts, not reviewed.
+- uk/ru translations (0 of 210 localization files reviewed) and the uk/ru/ar interface strings: machine drafts.
 - Rights confirmation for original content (owner).
 
-## Not implemented
-Sign-in works in code but is switched off until the owner completes the provider and Vercel steps ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md)); email sign-in; hosted database; offline queue and sync of attempts; lexicon; reading, listening, writing and speaking activities; an Arabic font for the preview locale; analytics; monitoring; billing.
+## Not implemented (product scope, later phases)
+Email sign-in; lexicon and saved vocabulary; reading, listening, writing and speaking activities; audio; placement; route personalisation; exercise types beyond the four; Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
-ADR-0001 platform (PWA first), ADR-0002 Supabase, ADR-0003 content format, ADR-0004 localization, ADR-0005 Vercel/GitHub Actions, ADR-0006 repo & tooling, ADR-0009 interface localization, ADR-0010 server database access, ADR-0011 end-to-end and accessibility testing, ADR-0012 PWA installability and offline shell, ADR-0013 sign-in and accounts. Proposed: ADR-0007 media, ADR-0008 billing.
+ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
 
 ## Blockers needing the owner
-1. Qualified reviewers for the gold unit: one German, one pedagogical, uk and ru translation reviewers (DG-007). Rights confirmation for the original text.
-2. Commit `package-lock.json` (DG-011). Branch `chore/dg-011-commit-lockfile` exists. The cloud session cannot reach the npm registry, so CI installs without a lockfile.
-3. Accounts setup (DG-015): the provider decision is made (Google and Apple). Owner steps are in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md): Google OAuth client, Apple Developer account and Services ID (paid), Supabase redirect URLs, Vercel environment variables including `DATABASE_URL`. Secrets go straight into Vercel, never into chat or the repository.
-4. Product name, domain and legal entity before the first pilot (ROADMAP). This also decides the permanent custom address.
+1. Reviewers for the gold unit (German, pedagogy, uk, ru) and rights confirmation (DG-007; audit Q5, Q10).
+2. Rule for production: sign-in and `DATABASE_URL` only on previews until the privacy gate passes, or not (audit Q1).
+3. Accounts and reminders setup ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md), [REMINDERS_SETUP.md](./REMINDERS_SETUP.md)); also read the JWT signing method in the Supabase dashboard (DG-026). Secrets go straight into Vercel, never into chat or the repository.
+4. Product name, domain and legal entity (needed for the Impressum and privacy notice, DG-030; audit Q9).
+5. Decisions Q2–Q4 and Q6–Q8 in [audit §7](./PROJECT_AUDIT_2026-10-22.md#7-decisions-needed-from-the-owner).
 
-Resolved: Vercel preview authorization (DG-013) was granted and previews are live.
+DG-011 (lockfile) is **no longer owner-blocked**: the audit installed from the npm registry locally.
+
+## Production link
+The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Merge DG-019 (`feat/phone-lesson-polish`, #43) and DG-015 (`feat/accounts-dg015`) once CI is green. Then the owner completes ACCOUNTS_SETUP.md and the sign-in round trip is checked on a preview. Next increment: token refresh. Owner-free content work continues only after DG-007 has recorded a review of the gold unit.
+**DG-011** (lockfile, pinned Node, `npm ci`), then **DG-021** (recall events). In parallel the owner works on blockers 1 and 2.
