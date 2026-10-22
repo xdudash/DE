@@ -35,7 +35,7 @@ Set them for **Production** and **Preview** in project `de` (Settings → Enviro
 |---|---|---|
 | `SUPABASE_URL` | `https://tfvdeleagvklolfvcvcx.supabase.co` | no |
 | `SUPABASE_PUBLISHABLE_KEY` | the publishable key from the Supabase dashboard (API settings) | public, but keep it in Vercel |
-| `SUPABASE_JWT_SECRET` | the JWT secret (Settings → API → JWT Keys, legacy secret) | **yes** |
+| `SUPABASE_JWT_SECRET` | only for a project that still signs with the legacy HS256 secret; `deutschgo` uses an ES256 signing key, verified through its public JWKS, so leave it unset (DG-026) | no |
 | `SUPABASE_SERVICE_ROLE_KEY` | the service-role key (API settings) | **yes** |
 | `DATABASE_URL` | a Postgres connection string for the project, from the Supabase "Connect" panel | **yes** |
 

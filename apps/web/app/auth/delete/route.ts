@@ -6,7 +6,7 @@
 import { authConfig } from "../../../lib/auth/config.ts";
 import { COOKIE, clearCookie } from "../../../lib/auth/cookies.ts";
 import { AccountDeletionUnavailable, deleteAuthUser } from "../../../lib/auth/oauth.ts";
-import { sessionFrom } from "../../../lib/auth/session.ts";
+import { AuthNotConfigured, sessionFrom, type Session } from "../../../lib/auth/session.ts";
 import { meUrl, redirectWith, safeLang } from "../../../lib/auth/redirect.ts";
 
 export const dynamic = "force-dynamic";
@@ -20,10 +20,12 @@ export async function POST(request: Request): Promise<Response> {
   const cfg = authConfig();
   if (!cfg) return redirectWith(meUrl(lang, "unavailable"), []);
 
-  let session: ReturnType<typeof sessionFrom> = null;
+  let session: Session | null = null;
   try {
-    session = sessionFrom(request, cfg.jwtSecret, Math.floor(Date.now() / 1000));
-  } catch {
+    session = await sessionFrom(request, cfg, Math.floor(Date.now() / 1000));
+  } catch (err) {
+    // Keys unavailable is not a bad session: keep the learner signed in and say so.
+    if (err instanceof AuthNotConfigured) return redirectWith(meUrl(lang, "unavailable"), []);
     session = null;
   }
   if (!session) return redirectWith(meUrl(lang, "failed"), [clearCookie(COOKIE.access, secure), clearCookie(COOKIE.refresh, secure)]);

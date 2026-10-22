@@ -11,7 +11,7 @@ export interface HandlerDeps {
   bundle(): ContentBundle;
   /** Null when this deployment has no database: the request is refused, not silently dropped. */
   storeFor(userId: string): Store | null;
-  session(request: Request): Session | null;
+  session(request: Request): Session | null | Promise<Session | null>;
   now(): number;
 }
 
@@ -32,10 +32,10 @@ export async function handleAttempt(request: Request, deps: HandlerDeps): Promis
 
   let session: Session | null;
   try {
-    session = deps.session(request);
+    session = await deps.session(request);
   } catch (err) {
-    if (err instanceof TokenInvalid) return problem(401, "invalid_token", err.message);
-    if (err instanceof AuthNotConfigured) return problem(503, "auth_not_configured", err.message);
+    if (err instanceof TokenInvalid) return problem(401, "invalid_token", "the session token was rejected; sign in again");
+    if (err instanceof AuthNotConfigured) return problem(503, "auth_not_configured", "sessions cannot be verified right now");
     throw err;
   }
   if (!session) {
