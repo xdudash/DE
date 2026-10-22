@@ -14,7 +14,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
 | DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
 | DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
-| DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
+| DG-027 | Rate limiting on write endpoints | A | Q7 decided (ADR-0017: Postgres table) | ready |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
 | DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
@@ -22,11 +22,11 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
-| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 | needs decision |
+| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | ready |
 | DG-031 | Error monitoring + uptime (EU, PII scrubbing) | B | Q6 | needs decision |
 | DG-032 | Backups and a recorded restore test | B | Q8 | needs owner |
 | DG-033 | Cookieless product analytics baseline | B | Q6, DG-030 | needs decision |
-| DG-034 | Hearts scope (lesson vs practice) | B | Q3 | needs decision |
+| DG-034 | Hearts scope (lesson vs practice) | B | Q3 decided (ADR-0017) | **in review** (branch `feat/dg-034-hearts-scope`) |
 | DG-035 | Motivation numbers from server evidence when signed in | B | DG-024 | after DG-024 |
 | DG-036 | Reminder timing, subscription uniqueness, hosted migration check | B | owner push setup | after setup |
 | DG-037 | E2E of the signed-in journey in CI | B | DG-024 | after DG-024 |

@@ -204,4 +204,5 @@ export const ru: Catalog = {
   "profile.sound": "Звуковые эффекты",
   "profile.soundNote": "Короткие сигналы для правильных и неправильных ответов.",
   "dash.goal": "Цель на день",
+  "flow.practiceNote": "Практика: неправильный ответ стоит одно сердце.",
 };

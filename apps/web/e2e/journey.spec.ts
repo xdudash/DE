@@ -117,12 +117,13 @@ test.describe("home: the line", () => {
 });
 
 test.describe("lesson: a guided run", () => {
-  test("opens with leave, progress and hearts, and an introduction with honest banners", async ({ page }) => {
+  test("opens with leave and progress, and an introduction with honest banners", async ({ page }) => {
     await page.goto(UNIT);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("link", { name: "Leave the lesson" })).toBeVisible();
     await expect(page.getByRole("progressbar")).toBeVisible();
-    await expect(page.getByRole("img", { name: "Hearts: 5 of 5" })).toBeVisible();
+    // Learning a lesson for the first time never costs hearts, so none are shown (ADR-0014).
+    await expect(page.getByRole("img", { name: /Hearts/ })).toHaveCount(0);
     // The unit is not yet human-reviewed, so the honest banner must be there.
     await expect(page.locator("p.banner").first()).toBeVisible();
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
@@ -155,10 +156,36 @@ test.describe("lesson: a guided run", () => {
     await expect(footer.getByText("Not quite", { exact: true })).toBeVisible();
     await expect(footer.getByText("This one comes back at the end of the lesson.")).toBeVisible();
     await expect(page.locator(".option.is-right")).toContainText("Heute habe ich frei.");
-    // A wrong answer costs a heart.
-    await expect(page.getByRole("img", { name: "Hearts: 4 of 5" })).toBeVisible();
+    // While learning, a wrong answer costs no heart and the lesson goes on.
+    await expect(page.getByRole("img", { name: /Hearts/ })).toHaveCount(0);
     await action(page, "Continue").click();
     await expect(page.locator("section.exercise")).not.toContainText("Heute ich habe frei.");
+  });
+
+  test("a lesson already finished on this device is practice: a wrong answer costs a heart", async ({ page }) => {
+    // Mark every exercise of the lesson as answered on this device, as after a first run.
+    const bundle = JSON.parse(readFileSync(join(process.cwd(), "generated", "content.json"), "utf8"));
+    const unit = bundle.units.find((u: { id: string }) => u.id === UNIT.split("/").pop());
+    const ids = (unit.blocks.find((b: { type: string }) => b.type === "exercises").items as { id: string }[]).map((e) => e.id);
+    await page.goto("/en");
+    await page.evaluate(
+      ({ unitId, ids }) => {
+        const at = Date.now() - 60_000;
+        const events = ids.map((exerciseId, i) => ({
+          id: `seed-${i}`, kind: "attempt", at, contentId: exerciseId, conceptIds: [], skill: "knowledge",
+          correct: true, unitId, exerciseId,
+        }));
+        localStorage.setItem("deutschgo.events.v1", JSON.stringify(events));
+      },
+      { unitId: unit.id as string, ids },
+    );
+    await page.goto(UNIT);
+    await expect(page.getByRole("img", { name: "Hearts: 5 of 5" })).toBeVisible();
+    await continueUntil(page, firstExercise(page));
+    await expect(page.getByText("Practice: a wrong answer costs a heart.")).toBeVisible();
+    await firstExercise(page).getByRole("radio", { name: "Heute ich habe frei." }).check();
+    await action(page, "Check").click();
+    await expect(page.getByRole("img", { name: "Hearts: 4 of 5" })).toBeVisible();
   });
 
   test("a right answer turns the bar green and moves on", async ({ page }) => {

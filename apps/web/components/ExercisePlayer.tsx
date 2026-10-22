@@ -42,6 +42,8 @@ interface Props {
   /** The verdict once checked; the answer area locks and marks right and wrong parts. */
   checked: EvaluationResult | null;
   onReadyChange: (ready: boolean) => void;
+  /** A practice run: wrong answers cost a heart (ADR-0014). */
+  practice: boolean;
   /** Enter in a text field asks the flow to check. */
   onSubmit: () => void;
   ref?: Ref<ExerciseHandle>;
@@ -49,7 +51,7 @@ interface Props {
 
 export const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
-export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyChange, onSubmit, ref }: Props) {
+export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyChange, onSubmit, ref, practice }: Props) {
   const [save, setSave] = useState<SubmitState>({ status: "off" });
   const [choice, setChoice] = useState<string>("");
   const [order, setOrder] = useState<number[]>([]);
@@ -91,7 +93,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         const eventId = crypto.randomUUID();
         const at = Date.now();
         // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
-        recordAttempt({ id: eventId, at, unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct, signals: signalledConcepts(outcome) });
+        recordAttempt({ id: eventId, at, unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct, signals: signalledConcepts(outcome), practice });
         setSave({ status: "saving" });
         const submission = { eventId, unitId: unit.id, exerciseId: exercise.id, contentVersion: unit.version, response, occurredAt: new Date(at).toISOString() };
         void sendWithOutbox(deviceKeyValue(), submission, (item) => submitAttempt(item), at).then(
@@ -101,7 +103,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         return outcome;
       },
     }),
-    [ready, locked, exercise, choice, order, gaps, free, unit],
+    [ready, locked, exercise, choice, order, gaps, free, unit, practice],
   );
 
   const enterChecks = (e: KeyboardEvent) => {
