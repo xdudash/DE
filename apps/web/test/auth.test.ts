@@ -183,7 +183,7 @@ describe("OAuth helpers", () => {
 
 describe("sessionFrom (legacy HS256 secret)", () => {
   const at = (headers: Record<string, string>) => new Request("https://example.test/api", { headers });
-  const LEARNER = { sub: USER, role: "authenticated", aud: "authenticated" };
+  const LEARNER = { sub: USER, role: "authenticated", aud: "authenticated", iss: "https://abc.supabase.co/auth/v1" };
   const good = sign({ ...LEARNER, exp: NOW + 600, email: "l@x.test" });
   // HS256 tokens are checked against the secret alone: a JWKS request here would be a bug.
   const noNetwork = { get: () => Promise.reject(new Error("no JWKS expected")), refresh: () => Promise.reject(new Error("no JWKS expected")) };

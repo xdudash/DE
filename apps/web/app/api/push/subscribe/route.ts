@@ -5,7 +5,7 @@
  */
 import { isConfigured } from "../../../../lib/data/pg.ts";
 import { authConfig } from "../../../../lib/auth/config.ts";
-import { sessionFrom } from "../../../../lib/auth/session.ts";
+import { AuthNotConfigured, sessionFrom } from "../../../../lib/auth/session.ts";
 import { pushConfig } from "../../../../lib/push/config.ts";
 import { removeSubscription, saveSubscription } from "../../../../lib/push/store.ts";
 import { parseSubscribe, parseUnsubscribe } from "../../../../lib/push/validate.ts";
@@ -25,7 +25,8 @@ async function learnerOrResponse(request: Request): Promise<{ userId: string } |
     const session = await sessionFrom(request, authConfig(), Math.floor(Date.now() / 1000));
     if (!session) return json(401, { error: "signed_out" });
     return { userId: session.userId };
-  } catch {
+  } catch (err) {
+    if (err instanceof AuthNotConfigured) return json(503, { error: "cannot_verify" });
     return json(401, { error: "invalid_session" });
   }
 }

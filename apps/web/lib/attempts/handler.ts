@@ -34,8 +34,8 @@ export async function handleAttempt(request: Request, deps: HandlerDeps): Promis
   try {
     session = await deps.session(request);
   } catch (err) {
-    if (err instanceof TokenInvalid) return problem(401, "invalid_token", err.message);
-    if (err instanceof AuthNotConfigured) return problem(503, "auth_not_configured", err.message);
+    if (err instanceof TokenInvalid) return problem(401, "invalid_token", "the session token was rejected; sign in again");
+    if (err instanceof AuthNotConfigured) return problem(503, "auth_not_configured", "sessions cannot be verified right now");
     throw err;
   }
   if (!session) {

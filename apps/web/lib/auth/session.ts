@@ -6,8 +6,8 @@
  */
 import type { AuthConfig } from "./config.ts";
 import { COOKIE, readCookie } from "./cookies.ts";
-import { TokenInvalid, UnknownSigningKey, verifyJwt, type Claims } from "./jwt.ts";
-import { KeysUnavailable, keySourceFor, type KeySource } from "./keys.ts";
+import { TokenInvalid, UnknownSigningKey, parseHeader, verifyJwt, type Claims } from "./jwt.ts";
+import { KeysUnavailable, issuerFor, keySourceFor, type KeySource } from "./keys.ts";
 
 export class AuthNotConfigured extends Error {
   constructor(message = "sign-in is not configured: this deployment cannot verify sessions") {
@@ -28,14 +28,6 @@ function bearer(request: Request): string | null {
   return match?.[1] ?? null;
 }
 
-function algorithmOf(token: string): unknown {
-  try {
-    return (JSON.parse(Buffer.from(token.split(".")[0] ?? "", "base64url").toString("utf8")) as { alg?: unknown }).alg;
-  } catch {
-    return undefined;
-  }
-}
-
 /**
  * Verifies an access token against the project's keys. HS256 tokens are checked against
  * the legacy secret without touching the network; others against the cached JWKS, with
@@ -48,15 +40,19 @@ export async function verifyAccessToken(
   nowSeconds: number,
   source: KeySource = keySourceFor(cfg),
 ): Promise<Claims> {
-  if (algorithmOf(token) === "HS256" && cfg.jwtSecret) {
-    return verifyJwt(token, { hs256Secret: cfg.jwtSecret, jwks: [] }, nowSeconds);
+  // A malformed token or an unsupported algorithm is rejected before any key is loaded.
+  const { alg } = parseHeader(token);
+  const options = { issuer: issuerFor(cfg.url) };
+  if (alg === "HS256") {
+    if (!cfg.jwtSecret) throw new TokenInvalid("HS256 token but no shared secret is configured");
+    return verifyJwt(token, { hs256Secret: cfg.jwtSecret, jwks: [] }, nowSeconds, options);
   }
   try {
     try {
-      return verifyJwt(token, await source.get(), nowSeconds);
+      return verifyJwt(token, await source.get(), nowSeconds, options);
     } catch (err) {
       if (!(err instanceof UnknownSigningKey)) throw err;
-      return verifyJwt(token, await source.refresh(), nowSeconds);
+      return verifyJwt(token, await source.refresh(), nowSeconds, options);
     }
   } catch (err) {
     if (err instanceof KeysUnavailable) throw new AuthNotConfigured(err.message);

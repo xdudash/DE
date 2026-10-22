@@ -2,6 +2,7 @@ import { strict as assert } from "node:assert";
 import { createHmac, generateKeyPairSync, sign as cryptoSign, type KeyObject } from "node:crypto";
 import { describe, it } from "node:test";
 import { CLOCK_SKEW_SECONDS, TokenInvalid, UnknownSigningKey, verifyJwt, type Jwk, type VerificationKeys } from "../lib/auth/jwt.ts";
+import { sign as derSign } from "node:crypto";
 
 const SECRET = "test-secret-not-a-real-one";
 const USER = "11111111-1111-4111-8111-111111111111";
@@ -112,5 +113,63 @@ describe("verifyJwt: claims", () => {
     rejects("not-a-token", /three dot-separated/);
     rejects("a.b.c", /header is not valid base64url JSON/);
     rejects(`${b64({ alg: "HS256" })}.not-json.${"x".repeat(43)}`, /signature|payload/);
+  });
+});
+
+describe("verifyJwt: hardening (DG-026 security review)", () => {
+  const body = (payload: object, header: object) => `${b64(header)}.${b64(payload)}`;
+
+  it("refuses a DER-encoded or wrong-length ES256 signature", () => {
+    const signed = body(LEARNER, { alg: "ES256", kid: "ec-1" });
+    const der = derSign("sha256", Buffer.from(signed), ec.privateKey).toString("base64url");
+    rejects(`${signed}.${der}`, /signature/);
+    rejects(`${signed}.${Buffer.alloc(63).toString("base64url")}`, /signature/);
+  });
+
+  it("refuses inherited property names as algorithms", () => {
+    for (const alg of ["constructor", "__proto__", "toString"]) rejects(hs256(LEARNER, SECRET, { alg }), /unsupported algorithm/);
+  });
+
+  it("requires a string key id for asymmetric tokens", () => {
+    const noKid = { ...EC_JWK, kid: undefined };
+    const signed = body(LEARNER, { alg: "ES256" });
+    const sig = cryptoSign("sha256", Buffer.from(signed), { key: ec.privateKey, dsaEncoding: "ieee-p1363" }).toString("base64url");
+    rejects(`${signed}.${sig}`, /key id/, { jwks: [noKid] });
+    const numeric = body(LEARNER, { alg: "ES256", kid: 5 });
+    const sig2 = cryptoSign("sha256", Buffer.from(numeric), { key: ec.privateKey, dsaEncoding: "ieee-p1363" }).toString("base64url");
+    rejects(`${numeric}.${sig2}`, /key id/, { jwks: [noKid] });
+  });
+
+  it("refuses RSA keys shorter than 2048 bits", () => {
+    const weak = generateKeyPairSync("rsa", { modulusLength: 1024 });
+    const weakJwk = jwk(weak.publicKey, "weak", "RS256");
+    rejects(asymmetric(LEARNER, "RS256", "weak", weak.privateKey), /too short/, { jwks: [weakJwk] });
+  });
+
+  it("accepts an RSA key published without alg and use", () => {
+    const { alg: _a, use: _u, ...bare } = RSA_JWK;
+    assert.equal(verifyJwt(asymmetric(LEARNER, "RS256", "rsa-1"), { jwks: [bare] }, NOW).sub, USER);
+  });
+
+  it("requires strict base64url segments", () => {
+    rejects(`${hs256(LEARNER)}!!`, /base64url/);
+    rejects(hs256(LEARNER).replace(".", ".="), /base64url/);
+  });
+
+  it("checks the issuer when one is expected", () => {
+    const iss = "https://abc.supabase.co/auth/v1";
+    assert.ok(verifyJwt(hs256({ ...LEARNER, iss }), KEYS, NOW, { issuer: iss }));
+    assert.throws(() => verifyJwt(hs256({ ...LEARNER, iss: "https://other.supabase.co/auth/v1" }), KEYS, NOW, { issuer: iss }), /issuer/);
+    assert.throws(() => verifyJwt(hs256(LEARNER), KEYS, NOW, { issuer: iss }), /issuer/);
+  });
+
+  it("accepts nbf within the skew window and refuses an audience list without the learner audience", () => {
+    assert.ok(verifyJwt(hs256({ ...LEARNER, nbf: NOW + CLOCK_SKEW_SECONDS - 1 }), KEYS, NOW));
+    rejects(hs256({ ...LEARNER, aud: ["anon", "service"] }), /audience/);
+  });
+
+  it("refuses a payload that is an array or null", () => {
+    rejects(hs256([LEARNER] as unknown as object), /payload is not an object|subject/);
+    rejects(hs256(null as unknown as object), /payload is not an object/);
   });
 });

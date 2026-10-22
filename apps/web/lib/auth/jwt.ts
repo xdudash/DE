@@ -50,16 +50,40 @@ export interface VerificationKeys {
   jwks: Jwk[];
 }
 
+export interface VerifyOptions {
+  /** Required `iss`, e.g. `https://<ref>.supabase.co/auth/v1`; unchecked when absent. */
+  issuer?: string;
+}
+
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-9a-f][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 /** Tolerance for clock skew between the auth server and this one. */
 export const CLOCK_SKEW_SECONDS = 30;
 /** Audience and role of a signed-in learner's access token (anonymous test users included). */
 export const LEARNER_AUDIENCE = "authenticated";
 
-const ASYMMETRIC: Record<string, { kty: string; crv?: string }> = {
-  ES256: { kty: "EC", crv: "P-256" },
-  RS256: { kty: "RSA" },
-};
+const ASYMMETRIC = new Map<string, { kty: string; crv?: string }>([
+  ["ES256", { kty: "EC", crv: "P-256" }],
+  ["RS256", { kty: "RSA" }],
+]);
+export const SUPPORTED_ALGORITHMS: ReadonlySet<string> = new Set(["HS256", ...ASYMMETRIC.keys()]);
+/** RSA keys below this size are refused even if the JWKS publishes them. */
+export const MIN_RSA_BITS = 2048;
+const SEGMENT = /^[A-Za-z0-9_-]+$/;
+
+/** Splits a compact JWS and reads its header, without checking anything else. */
+export function parseHeader(token: string): { alg: string; kid?: string; segments: [string, string, string] } {
+  const parts = token.split(".");
+  if (parts.length !== 3) throw new TokenInvalid("expected three dot-separated segments");
+  if (!parts.every((p) => SEGMENT.test(p))) throw new TokenInvalid("segments must be base64url");
+  const segments = parts as [string, string, string];
+  const header = decodeSegment(segments[0], "header") as { alg?: unknown; kid?: unknown } | null;
+  if (typeof header !== "object" || header === null || Array.isArray(header) || typeof header.alg !== "string") {
+    throw new TokenInvalid("header has no algorithm");
+  }
+  if (!SUPPORTED_ALGORITHMS.has(header.alg)) throw new TokenInvalid(`unsupported algorithm ${JSON.stringify(header.alg)}`);
+  if (header.alg !== "HS256" && typeof header.kid !== "string") throw new TokenInvalid("asymmetric token without a key id");
+  return { alg: header.alg, ...(typeof header.kid === "string" ? { kid: header.kid } : {}), segments };
+}
 
 function decodeSegment(segment: string, what: string): unknown {
   try {
@@ -70,7 +94,7 @@ function decodeSegment(segment: string, what: string): unknown {
 }
 
 function publicKeyFor(alg: string, kid: string | undefined, jwks: Jwk[]): KeyObject {
-  const want = ASYMMETRIC[alg]!;
+  const want = ASYMMETRIC.get(alg)!;
   const jwk = jwks.find(
     (k) =>
       k.kid === kid &&
@@ -80,11 +104,16 @@ function publicKeyFor(alg: string, kid: string | undefined, jwks: Jwk[]): KeyObj
       (k.use === undefined || k.use === "sig"),
   );
   if (!jwk) throw new UnknownSigningKey(kid);
+  let key: KeyObject;
   try {
-    return createPublicKey({ key: jwk, format: "jwk" });
+    key = createPublicKey({ key: jwk, format: "jwk" });
   } catch {
     throw new TokenInvalid(`signing key ${JSON.stringify(kid)} is not a usable public key`);
   }
+  if (want.kty === "RSA" && (key.asymmetricKeyDetails?.modulusLength ?? 0) < MIN_RSA_BITS) {
+    throw new TokenInvalid(`signing key ${JSON.stringify(kid)} is too short`);
+  }
+  return key;
 }
 
 function checkSignature(alg: string, kid: string | undefined, signed: string, signature: Buffer, keys: VerificationKeys): void {
@@ -96,7 +125,7 @@ function checkSignature(alg: string, kid: string | undefined, signed: string, si
     }
     return;
   }
-  if (!(alg in ASYMMETRIC)) throw new TokenInvalid(`unsupported algorithm ${JSON.stringify(alg)}`);
+  if (!ASYMMETRIC.has(alg)) throw new TokenInvalid(`unsupported algorithm ${JSON.stringify(alg)}`);
   const key = publicKeyFor(alg, kid, keys.jwks);
   // JWS ES256 signatures are the raw r‖s pair (RFC 7518 §3.4), not DER.
   const ok = alg === "ES256"
@@ -113,20 +142,14 @@ function hasAudience(aud: unknown): boolean {
  * Returns the claims of a valid learner token. `nowSeconds` is injected so tests do not
  * depend on the wall clock.
  */
-export function verifyJwt(token: string, keys: VerificationKeys, nowSeconds: number): Claims {
-  const parts = token.split(".");
-  if (parts.length !== 3) throw new TokenInvalid("expected three dot-separated segments");
-  const [headerB64, payloadB64, signatureB64] = parts as [string, string, string];
-
-  const header = decodeSegment(headerB64, "header") as { alg?: unknown; kid?: unknown };
-  if (typeof header !== "object" || header === null || typeof header.alg !== "string") {
-    throw new TokenInvalid("header has no algorithm");
-  }
-  const kid = typeof header.kid === "string" ? header.kid : undefined;
-  checkSignature(header.alg, kid, `${headerB64}.${payloadB64}`, Buffer.from(signatureB64, "base64url"), keys);
+export function verifyJwt(token: string, keys: VerificationKeys, nowSeconds: number, options: VerifyOptions = {}): Claims {
+  const { alg, kid, segments } = parseHeader(token);
+  const [headerB64, payloadB64, signatureB64] = segments;
+  checkSignature(alg, kid, `${headerB64}.${payloadB64}`, Buffer.from(signatureB64, "base64url"), keys);
 
   const claims = decodeSegment(payloadB64, "payload") as Partial<Claims> & Record<string, unknown>;
-  if (typeof claims !== "object" || claims === null) throw new TokenInvalid("payload is not an object");
+  if (typeof claims !== "object" || claims === null || Array.isArray(claims)) throw new TokenInvalid("payload is not an object");
+  if (options.issuer !== undefined && claims.iss !== options.issuer) throw new TokenInvalid("issued by another project (issuer)");
   if (typeof claims.sub !== "string" || !UUID.test(claims.sub)) throw new TokenInvalid("subject is not a user id");
   if (typeof claims.exp !== "number") throw new TokenInvalid("no expiry");
   if (nowSeconds > claims.exp + CLOCK_SKEW_SECONDS) throw new TokenInvalid("expired");

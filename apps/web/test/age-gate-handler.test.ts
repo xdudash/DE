@@ -39,7 +39,7 @@ const post = (body: unknown, headers: Record<string, string> = {}) =>
     body: typeof body === "string" ? body : JSON.stringify(body),
   });
 
-const signedIn = { authorization: `Bearer ${token({ sub: USER, role: "authenticated", aud: "authenticated", exp: NOW + 3600 })}` };
+const signedIn = { authorization: `Bearer ${token({ sub: USER, role: "authenticated", aud: "authenticated", iss: "https://abc.supabase.co/auth/v1", exp: NOW + 3600 })}` };
 
 describe("isOver16Assertion", () => {
   it("accepts exactly { over16: true }", () => {
@@ -75,7 +75,7 @@ describe("POST /api/profile/age-gate", () => {
   });
 
   it("answers 401 for a token signed with another secret, never downgrading to anonymous", async () => {
-    const forged = { authorization: `Bearer ${token({ sub: USER, role: "authenticated", aud: "authenticated", exp: NOW + 3600 }, "other")}` };
+    const forged = { authorization: `Bearer ${token({ sub: USER, role: "authenticated", aud: "authenticated", iss: "https://abc.supabase.co/auth/v1", exp: NOW + 3600 }, "other")}` };
     const store = new RecordingStore();
     const res = await handleAgeGate(post({ over16: true }, forged), deps({}, store));
     assert.equal(res.status, 401);
