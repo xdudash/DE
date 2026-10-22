@@ -12,13 +12,13 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | ID | Task | Stage | Depends on | Ready? |
 |---|---|---|---|---|
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
-| DG-021 | Recall events: when an answer counts as review | A | ADR (in task) | ready |
+| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
 | DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
 | DG-022 | One event identity + retry of failed sends | B | DG-021 | after DG-021 |
-| DG-023 | Offline queue and batched sync (IndexedDB) | B | DG-022 | after DG-022 |
+| DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
@@ -70,9 +70,10 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 
 ### DG-021 Recall events: when an answer counts as review
 - **Goal:** spaced repetition and mastery work for real learners. **State:** engine needs `recall` events (`scheduler.ts`, `states.ts`); app and `packages/attempts` only create `attempt` (finding E1).
-- **Changes:** short ADR: the **server** classifies a graded answer as `recall` when the concept had a due review at `occurredAt` (or the answer came from the review session), otherwise `attempt`; same rule in the device adapter until DG-024; `evaluator_version`/`engine_version` bump; fixtures.
-- **Acceptance:** a fixture learner moves through steps 1→3→7 days and reaches `provisionally_mastered`; a failed recall resets; client cannot force the kind.
-- **Checks:** learning-engine and attempts unit tests, attempt-store integration test (CI DB job), journey E2E. **Risks:** existing stored events stay `attempt` (append-only); document that mastery starts counting from the change. **Approval:** the ADR (technical; owner informed).
+- **Changes (as decided in ADR-0016):** the engine counts a graded answer given while the concept is due as a review, on device and server alike; the server bounds backdated answer times; device answers carry the exercise's concepts; `ENGINE_VERSION` 1.1.0; fixtures.
+- **Acceptance:** a fixture learner moves through steps 1→3→7 days and reaches `provisionally_mastered`; a failed review resets; the client can neither declare a review nor fake one by backdating.
+- **Checks:** learning-engine and attempts unit tests, attempt-store integration test (CI DB job), journey E2E. **Risks:** existing stored events stay `attempt` (append-only). **Approval:** the ADR (technical; owner informed).
+- **Result (2026-10-22):** [ADR-0016](../architecture/decisions/ADR-0016-review-evidence.md) chose derivation-time classification instead of a server-side `recall` kind: the engine treats any graded result given while due as a review, so it is order-independent, identical on device and server, and needs no API or schema change; existing answers count retroactively. `ENGINE_VERSION` 1.1.0. Explicit `recall` events remain for the review session (DG-048).
 
 ### DG-026 Session token verification hardening
 - **Goal:** sign-in works with the hosted project and rejects weak tokens. **State:** `lib/auth/jwt.ts` accepts HS256 only, `exp` optional, no `aud`/`role` check; the hosted project's signing method is unverified.
@@ -96,7 +97,7 @@ Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_P
 ## Stage B — close the learner loop (P2 exit)
 
 ### DG-022 One event identity + retry
-- **Goal:** one answer is one event everywhere. **State:** `ExercisePlayer.tsx` records a device event and sends a server event with a different `randomUUID`; failures are dropped.
+- **Goal:** one answer is one event everywhere. **State:** `ExercisePlayer.tsx` records a device event and sends a server event with a different `randomUUID`; failures are dropped; device events carry no error-rule `signals` (ADR-0016 consequence).
 - **Changes:** reuse the device event id as `eventId`; mark device events `synced`/`pending`; retry pending events with backoff on load/online (server is idempotent on id).
 - **Acceptance:** unit tests for retry and idempotency; a network failure followed by reload results in exactly one server row. **Depends:** DG-021. **Risks:** existing device events have no server twin; handled by DG-024 import.
 
