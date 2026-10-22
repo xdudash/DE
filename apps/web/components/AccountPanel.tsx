@@ -6,6 +6,7 @@
  * JavaScript; the strings come from the server-side catalogs (no teaching text here).
  */
 import { useEffect, useState } from "react";
+import { refreshBrowserSession } from "../lib/auth/browser-refresh.ts";
 
 interface SessionStatus {
   configured: boolean;
@@ -34,7 +35,8 @@ export function AccountPanel({ lang, labels }: { lang: string; labels: AccountLa
     setNotice(key ? labels.text[key] ?? null : null);
 
     let alive = true;
-    fetch("/api/session", { cache: "no-store" })
+    refreshBrowserSession()
+      .then(() => fetch("/api/session", { cache: "no-store" }))
       .then((res) => (res.ok ? (res.json() as Promise<SessionStatus>) : Promise.reject(new Error(String(res.status)))))
       .then((s) => {
         if (alive) setStatus(s);

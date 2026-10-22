@@ -5,7 +5,7 @@ Last rebuilt: 2026-10-22 by the project audit ([PROJECT_AUDIT_2026-10-22](./PROJ
 Ordering rule: tasks are ordered by dependency and risk, not by visibility. Stage A removes blockers and architectural risks, Stage B closes the learner loop, Stage C fills it with reviewed content, later stages extend the product. WIP limits: [project management](./PROJECT_MANAGEMENT.md).
 
 ## Done (history)
-DG-001 journey and release scope · DG-002 content contract + gold unit (review continues in DG-007) · DG-003 stack ADRs · DG-004 localization policy · DG-006 umbrella (split into 008–010) · DG-008 learner schema + RLS tests · DG-009 attempt recording · DG-010 learning engine v1 · DG-012 A1 concept graph (67 planned) · DG-013 Playwright + axe, Vercel previews · DG-014 UI catalogs + RTL · DG-016 installable PWA · DG-017 visual system · DG-018 learner area · DG-019 phone lesson polish (#43) · DG-015 sign-in code, Google/Apple, account deletion (merged with #46; not configured) · DG-020 XP, streaks, hearts, push reminders (#46; push not configured) · DG-AUDIT-001 this audit.
+DG-001 journey and release scope · DG-002 content contract + gold unit (review continues in DG-007) · DG-003 stack ADRs · DG-004 localization policy · DG-006 umbrella (split into 008–010) · DG-008 learner schema + RLS tests · DG-009 attempt recording · DG-010 learning engine v1 · DG-012 A1 concept graph (67 planned) · DG-013 Playwright + axe, Vercel previews · DG-014 UI catalogs + RTL · DG-016 installable PWA · DG-017 visual system · DG-018 learner area · DG-019 phone lesson polish (#43) · DG-015 sign-in code, Google/Apple, account deletion (merged with #46; not configured) · DG-020 XP, streaks, hearts, push reminders (#46; push not configured) · DG-025 session refresh (#52; not configured) · DG-AUDIT-001 this audit.
 
 ## Overview
 
@@ -20,7 +20,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
 | DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
-| DG-025 | Session refresh | B | DG-026 | after DG-026 |
+| DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
 | DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 | needs decision |
 | DG-031 | Error monitoring + uptime (EU, PII scrubbing) | B | Q6 | needs decision |

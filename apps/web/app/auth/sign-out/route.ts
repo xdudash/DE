@@ -9,5 +9,5 @@ export async function POST(request: Request): Promise<Response> {
   const form = await request.formData();
   const lang = safeLang(typeof form.get("lang") === "string" ? (form.get("lang") as string) : null);
   const secure = new URL(request.url).protocol === "https:";
-  return redirectWith(meUrl(lang, "signed-out"), [clearCookie(COOKIE.access, secure)]);
+  return redirectWith(meUrl(lang, "signed-out"), [clearCookie(COOKIE.access, secure), clearCookie(COOKIE.refresh, secure)]);
 }
