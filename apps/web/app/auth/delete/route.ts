@@ -26,7 +26,7 @@ export async function POST(request: Request): Promise<Response> {
   } catch {
     session = null;
   }
-  if (!session) return redirectWith(meUrl(lang, "failed"), [clearCookie(COOKIE.access, secure)]);
+  if (!session) return redirectWith(meUrl(lang, "failed"), [clearCookie(COOKIE.access, secure), clearCookie(COOKIE.refresh, secure)]);
   if (form.get("confirm") !== "delete") return redirectWith(meUrl(lang, "confirm"), []);
 
   try {
@@ -35,5 +35,5 @@ export async function POST(request: Request): Promise<Response> {
     if (err instanceof AccountDeletionUnavailable) return redirectWith(meUrl(lang, "delete-unavailable"), []);
     return redirectWith(meUrl(lang, "failed"), []);
   }
-  return redirectWith(meUrl(lang, "deleted"), [clearCookie(COOKIE.access, secure)]);
+  return redirectWith(meUrl(lang, "deleted"), [clearCookie(COOKIE.access, secure), clearCookie(COOKIE.refresh, secure)]);
 }

@@ -57,6 +57,22 @@ export async function exchangeCode(
   return parseTokens(await res.json(), res.status);
 }
 
+/** Exchanges a refresh token for the rotated session pair issued by Supabase Auth. */
+export async function refreshTokens(
+  cfg: AuthConfig,
+  refreshToken: string,
+  fetchImpl: FetchLike = fetch,
+): Promise<Tokens> {
+  const res = await fetchImpl(`${cfg.url}/auth/v1/token?grant_type=refresh_token`, {
+    method: "POST",
+    headers: { apikey: cfg.publishableKey, "content-type": "application/json" },
+    body: JSON.stringify({ refresh_token: refreshToken }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new AuthExchangeFailed(res.status);
+  return parseTokens(await res.json(), res.status);
+}
+
 /** Reads the token fields of an Auth response; anything else is a failed exchange. */
 function parseTokens(raw: unknown, status: number): Tokens {
   const body = (raw ?? {}) as {

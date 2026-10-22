@@ -3,7 +3,7 @@
 Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2026-10-22.md))
 
 ## Current phase
-**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merge #46, `e99c7f9`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merges #46 `e99c7f9` and #52 `1ed94f3`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
@@ -14,6 +14,7 @@ Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2
 - Interface localization (`packages/i18n`, DG-014): en pivot, uk, ru, ar preview (RTL).
 - Web app: start screen and plan, lesson as a guided run, knowledge map with search, practice list, learner area, delete device data, installable PWA with offline reading, phone layout with 44px targets (DG-016…DG-019).
 - Sign-in code (DG-015, ADR-0013): Google/Apple via Supabase Auth with PKCE, HttpOnly cookie, 16+ confirmation, account deletion, attempts saved to the account when signed in. **Not configured**: needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
+- Session refresh (DG-025, #52, ADR-0013): access and refresh tokens in separate HttpOnly cookies, rotation at app start, one retry of a rejected attempt after rotation. Needs the same owner setup as sign-in.
 - Motivation (DG-020, ADR-0014/0015): XP, levels, streak, hearts computed from answers on this device; daily push reminder code. **Push not configured**: [REMINDERS_SETUP.md](./REMINDERS_SETUP.md).
 - Quality gates in CI: foundation check, content validation, unit tests, typecheck, build, Playwright + axe on desktop and phone, PostgreSQL migration/RLS tests and the attempt integration test.
 
@@ -24,7 +25,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Progress, states, XP, streak and hearts are read from this browser only; the server is written but never read, so nothing continues on another device (DG-022, DG-024).
 - Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered` (DG-021).
 - Failed attempt sends are not retried; no offline queue (DG-022, DG-023).
-- Session ends after about an hour (no refresh, DG-025); token verifier is HS256-only and the hosted project's signing method is unverified (DG-026).
+- Token verifier is HS256-only and the hosted project's signing method is unverified (DG-026). Session refresh itself is merged (#52).
 - No rate limiting, monitoring, analytics, backups with restore test, privacy notice or Impressum (DG-027, DG-031…DG-033, DG-030).
 - Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
 
