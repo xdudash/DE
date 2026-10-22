@@ -20,12 +20,12 @@ The owner chose **Google and Apple** as the providers (2026-10-20). A separate h
 ## Decision
 1. **Providers:** Google and Apple via Supabase Auth. No password sign-in in P2.
 2. **Flow:** PKCE (RFC 7636, S256). `/auth/start` makes a 43+ character verifier, keeps it in an HttpOnly cookie for 10 minutes, and sends only its challenge to the provider. `/auth/callback` exchanges the one-time code together with that verifier at `POST /auth/v1/token?grant_type=pkce`. An intercepted code is useless without the cookie.
-3. **Session:** the access token lives in an HttpOnly, SameSite=Lax, Secure (on HTTPS) cookie `dg_access`, with a lifetime equal to the token's `expires_in`. Every server check verifies its signature with `SUPABASE_JWT_SECRET`. A token that is present but rejected is an error, never "anonymous".
+3. **Session:** the access token lives in an HttpOnly, SameSite=Lax, Secure (on HTTPS) cookie `dg_access`, with a lifetime equal to the token's `expires_in`. Every server check verifies its signature (see the amendment below: the project's public signing keys, or the legacy `SUPABASE_JWT_SECRET`). A token that is present but rejected is an error, never "anonymous".
 4. **Registration is sign-in.** The first successful sign-in creates the Supabase Auth user. Registration is therefore gated by the same 16+ assertion as before: the learner ticks "16 or older" in the same request that starts sign-in, and the callback records it (`profiles.age_confirmed`). If the assertion cannot be stored, the learner sees that and is not told it was recorded.
 5. **Account deletion** calls the Auth admin API with the service-role key, which is a server-only secret. Every learner table references `auth.users` with `ON DELETE CASCADE` (migration 0001), so the data goes with the account. Deletion requires a typed confirmation and a session cookie.
 6. **Cross-site requests:** every state-changing route is POST-only, and cookies are SameSite=Lax, so a request from another site carries no session and cannot sign anyone out or delete an account.
 7. **Pages stay static** (ADR-0012: offline reading). The signed-in state is read by the client from `GET /api/session`, which is `no-store`. No page calls `cookies()` while rendering.
-8. **Honest state:** when Supabase or the JWT secret is not configured, sign-in reports "not set up" and offers no provider button. When signed in but no database is configured, the lesson keeps saying progress is not saved.
+8. **Honest state:** when Supabase is not configured, sign-in reports "not set up" and offers no provider button. When signed in but no database is configured, the lesson keeps saying progress is not saved.
 
 ## Consequences
 - + No SDK dependency; the flow is about 200 lines and fully unit-tested (`apps/web/test/auth.test.ts`).
@@ -39,3 +39,11 @@ The owner chose **Google and Apple** as the providers (2026-10-20). A separate h
 - E2E in CI (unconfigured deployment): start refuses with `unavailable`; no provider buttons; POST-only write routes; session endpoint reports signed out.
 - Test sign-in (`POST /auth/test`) creates an anonymous Supabase user. It is gated by `AUTH_TEST_LOGIN=1` and refused when `VERCEL_ENV=production`; it is for previews only, and the Supabase anonymous-sign-in switch is what keeps it off elsewhere.
 - Not verifiable in CI: a real provider round trip. It is checked by hand on a configured preview before any production use.
+
+## Amendment (2026-10-22, DG-026): asymmetric signing keys
+The hosted project signs access tokens with an asymmetric key: its public JWKS (`/auth/v1/.well-known/jwks.json`, read 2026-10-22) lists one `ES256` (P-256) key. The original HS256-only verifier would have rejected every real sign-in.
+- Tokens are verified against the project's JWKS (`lib/auth/keys.ts`): cached for 10 minutes, refreshed once for an unknown key id (at most once a minute), and the last good keys are kept through an outage of the endpoint. ES256 and RS256 are accepted, each only with a key of its own type marked for signatures. HS256 is accepted only when `SUPABASE_JWT_SECRET` is set (older projects, the local stack), and never with a public key.
+- Claims: `exp` is required, `aud` must contain `authenticated`, and `role` must be `authenticated`, so anon and service-role tokens are never sessions. Anonymous test users (`/auth/test`) carry `role: authenticated` and still pass.
+- `SUPABASE_JWT_SECRET` is now optional. Sign-in is configured by `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`.
+- If no key can be loaded, a request carrying a token is answered as "cannot verify" (503 on the write APIs), never as signed out and never as valid.
+- No new dependency (`node:crypto` only). Tests: `apps/web/test/jwt.test.ts` (signatures, algorithm confusion, claims), `apps/web/test/keys.test.ts` (cache, refresh limit, outage, session path).

@@ -23,7 +23,7 @@ Use **`pg`** from server code only, behind `apps/web/lib/data/pg.ts`, which expo
 - `withLearner(userId, fn)` — `begin; set local role authenticated; set_config('request.jwt.claims', …, true)` so every statement is subject to RLS;
 - `withService(fn)` — `begin; set local role service_role` for rows the schema forbids learners to write; every statement there carries an explicit `user_id`, because RLS is no longer helping.
 
-Both reset the role on release, so a pooled connection is never handed out with a role attached. Session tokens are verified separately (`lib/auth/jwt.ts`, HS256, no dependency); the database never sees a token, only a claims string the server built.
+Both reset the role on release, so a pooled connection is never handed out with a role attached. Session tokens are verified separately (`lib/auth/jwt.ts`: JWKS ES256/RS256 or legacy HS256, no dependency; amended by DG-026, see ADR-0013); the database never sees a token, only a claims string the server built.
 
 Supabase's generated client remains an option for browser-side reads later; nothing in this decision prevents adding it for data that is genuinely public or genuinely user-scoped by RLS.
 

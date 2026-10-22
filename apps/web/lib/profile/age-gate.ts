@@ -17,7 +17,7 @@ export interface AgeGateStore {
 export interface AgeGateDeps {
   /** Null when this deployment has no database: the request is refused, not dropped. */
   storeFor(userId: string): AgeGateStore | null;
-  session(request: Request): Session | null;
+  session(request: Request): Session | null | Promise<Session | null>;
 }
 
 interface ErrorBody {
@@ -42,7 +42,7 @@ export async function handleAgeGate(request: Request, deps: AgeGateDeps): Promis
 
   let session: Session | null;
   try {
-    session = deps.session(request);
+    session = await deps.session(request);
   } catch (err) {
     if (err instanceof TokenInvalid) return problem(401, "invalid_token", err.message);
     if (err instanceof AuthNotConfigured) return problem(503, "auth_not_configured", err.message);

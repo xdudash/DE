@@ -1,63 +1,116 @@
 import { strict as assert } from "node:assert";
-import { createHmac } from "node:crypto";
+import { createHmac, generateKeyPairSync, sign as cryptoSign, type KeyObject } from "node:crypto";
 import { describe, it } from "node:test";
-import { CLOCK_SKEW_SECONDS, TokenInvalid, verifyJwt } from "../lib/auth/jwt.ts";
+import { CLOCK_SKEW_SECONDS, TokenInvalid, UnknownSigningKey, verifyJwt, type Jwk, type VerificationKeys } from "../lib/auth/jwt.ts";
 
 const SECRET = "test-secret-not-a-real-one";
 const USER = "11111111-1111-4111-8111-111111111111";
 const NOW = 1_800_000_000;
+const LEARNER = { sub: USER, role: "authenticated", aud: "authenticated", exp: NOW + 3600 };
 
 const b64 = (o: unknown) => Buffer.from(JSON.stringify(o)).toString("base64url");
-function sign(payload: object, secret = SECRET, header: object = { alg: "HS256", typ: "JWT" }): string {
+
+function hs256(payload: object, secret = SECRET, header: object = { alg: "HS256", typ: "JWT" }): string {
   const body = `${b64(header)}.${b64(payload)}`;
   return `${body}.${createHmac("sha256", secret).update(body).digest("base64url")}`;
 }
-const rejects = (token: string, match: RegExp, secret = SECRET) =>
-  assert.throws(() => verifyJwt(token, secret, NOW), (e: unknown) => {
+
+const ec = generateKeyPairSync("ec", { namedCurve: "P-256" });
+const rsa = generateKeyPairSync("rsa", { modulusLength: 2048 });
+const jwk = (key: KeyObject, kid: string, alg: string): Jwk => ({ ...(key.export({ format: "jwk" }) as Jwk), kid, alg, use: "sig" });
+const EC_JWK = jwk(ec.publicKey, "ec-1", "ES256");
+const RSA_JWK = jwk(rsa.publicKey, "rsa-1", "RS256");
+
+function asymmetric(payload: object, alg: "ES256" | "RS256", kid: string, key: KeyObject = alg === "ES256" ? ec.privateKey : rsa.privateKey): string {
+  const body = `${b64({ alg, kid, typ: "JWT" })}.${b64(payload)}`;
+  const sig = alg === "ES256" ? cryptoSign("sha256", Buffer.from(body), { key, dsaEncoding: "ieee-p1363" }) : cryptoSign("sha256", Buffer.from(body), key);
+  return `${body}.${sig.toString("base64url")}`;
+}
+
+const KEYS: VerificationKeys = { hs256Secret: SECRET, jwks: [EC_JWK, RSA_JWK] };
+const rejects = (token: string, match: RegExp, keys: VerificationKeys = KEYS) =>
+  assert.throws(() => verifyJwt(token, keys, NOW), (e: unknown) => {
     assert.ok(e instanceof TokenInvalid, `expected TokenInvalid, got ${String(e)}`);
     assert.match(e.message, match);
     return true;
   });
 
-describe("verifyJwt", () => {
-  it("accepts a correctly signed, unexpired token", () => {
-    const claims = verifyJwt(sign({ sub: USER, role: "authenticated", exp: NOW + 3600 }), SECRET, NOW);
+describe("verifyJwt: signatures", () => {
+  it("accepts an ES256 token signed by the project's key (hosted Supabase projects)", () => {
+    const claims = verifyJwt(asymmetric(LEARNER, "ES256", "ec-1"), { jwks: [EC_JWK] }, NOW);
     assert.equal(claims.sub, USER);
-    assert.equal(claims.role, "authenticated");
   });
 
-  it("refuses a token signed with another secret", () => {
-    rejects(sign({ sub: USER }, "other-secret"), /signature/);
+  it("accepts an RS256 token", () => {
+    assert.equal(verifyJwt(asymmetric(LEARNER, "RS256", "rsa-1"), KEYS, NOW).sub, USER);
+  });
+
+  it("accepts an HS256 token only when the legacy secret is configured", () => {
+    assert.equal(verifyJwt(hs256(LEARNER), KEYS, NOW).sub, USER);
+    rejects(hs256(LEARNER), /no shared secret/, { jwks: [EC_JWK] });
+  });
+
+  it("refuses an ES256 token signed by another key", () => {
+    const other = generateKeyPairSync("ec", { namedCurve: "P-256" });
+    rejects(asymmetric(LEARNER, "ES256", "ec-1", other.privateKey), /signature/);
+  });
+
+  it("reports an unknown key id so the caller can refresh the key set", () => {
+    assert.throws(() => verifyJwt(asymmetric(LEARNER, "ES256", "rotated"), KEYS, NOW), UnknownSigningKey);
+  });
+
+  it("never uses a key for another algorithm (no algorithm confusion)", () => {
+    rejects(asymmetric(LEARNER, "RS256", "ec-1"), /unknown signing key/);
+    const ecAsRs = { ...EC_JWK, kid: "rsa-1" };
+    rejects(asymmetric(LEARNER, "RS256", "rsa-1"), /unknown signing key/, { jwks: [ecAsRs] });
+    // The public key's JSON is not an HMAC secret.
+    rejects(hs256(LEARNER, JSON.stringify(EC_JWK)), /no shared secret/, { jwks: [EC_JWK] });
+  });
+
+  it("refuses a key that is not marked for signatures", () => {
+    rejects(asymmetric(LEARNER, "ES256", "ec-1"), /unknown signing key/, { jwks: [{ ...EC_JWK, use: "enc" }] });
   });
 
   it("refuses a tampered payload", () => {
-    const token = sign({ sub: USER, role: "authenticated" });
-    const [h, , s] = token.split(".");
-    rejects(`${h}.${b64({ sub: "22222222-2222-4222-8222-222222222222", role: "service_role" })}.${s}`, /signature/);
+    const [h, , s] = asymmetric(LEARNER, "ES256", "ec-1").split(".");
+    rejects(`${h}.${b64({ ...LEARNER, sub: "22222222-2222-4222-8222-222222222222" })}.${s}`, /signature/);
   });
 
-  it("refuses algorithms other than HS256, including none", () => {
-    rejects(sign({ sub: USER }, SECRET, { alg: "none", typ: "JWT" }), /unsupported algorithm/);
-    rejects(sign({ sub: USER }, SECRET, { alg: "RS256", typ: "JWT" }), /unsupported algorithm/);
-    rejects(sign({ sub: USER }, SECRET, { alg: "hs256", typ: "JWT" }), /unsupported algorithm/);
+  it("refuses unsupported algorithms, including none and lower-case names", () => {
+    rejects(hs256(LEARNER, SECRET, { alg: "none", typ: "JWT" }), /unsupported algorithm/);
+    rejects(hs256(LEARNER, SECRET, { alg: "hs256", typ: "JWT" }), /unsupported algorithm/);
+    rejects(hs256(LEARNER, SECRET, { alg: "ES512", typ: "JWT" }), /unsupported algorithm/);
+    rejects(hs256(LEARNER, SECRET, { typ: "JWT" }), /no algorithm/);
+  });
+});
+
+describe("verifyJwt: claims", () => {
+  it("requires an expiry and enforces it with a small skew allowance", () => {
+    const { exp: _, ...noExp } = LEARNER;
+    rejects(hs256(noExp), /no expiry/);
+    rejects(hs256({ ...LEARNER, exp: NOW - CLOCK_SKEW_SECONDS - 1 }), /expired/);
+    assert.ok(verifyJwt(hs256({ ...LEARNER, exp: NOW - 1 }), KEYS, NOW), "within skew is still accepted");
+    rejects(hs256({ ...LEARNER, nbf: NOW + CLOCK_SKEW_SECONDS + 10 }), /not valid yet/);
   });
 
-  it("enforces expiry and not-before, with a small skew allowance", () => {
-    rejects(sign({ sub: USER, exp: NOW - CLOCK_SKEW_SECONDS - 1 }), /expired/);
-    assert.ok(verifyJwt(sign({ sub: USER, exp: NOW - 1 }), SECRET, NOW), "within skew is still accepted");
-    rejects(sign({ sub: USER, nbf: NOW + CLOCK_SKEW_SECONDS + 10 }), /not valid yet/);
+  it("requires the learner audience and role", () => {
+    rejects(hs256({ ...LEARNER, aud: "other" }), /audience/);
+    const { aud: _, ...noAud } = LEARNER;
+    rejects(hs256(noAud), /audience/);
+    assert.ok(verifyJwt(hs256({ ...LEARNER, aud: ["x", "authenticated"] }), KEYS, NOW), "an audience list may contain it");
+    rejects(hs256({ ...LEARNER, role: "service_role" }), /role/);
+    rejects(hs256({ ...LEARNER, role: "anon" }), /role/);
   });
 
   it("requires a user id as subject", () => {
-    rejects(sign({ role: "authenticated" }), /subject/);
-    rejects(sign({ sub: "admin" }), /subject/);
-    rejects(sign({ sub: 42 }), /subject/);
+    rejects(hs256({ ...LEARNER, sub: undefined }), /subject/);
+    rejects(hs256({ ...LEARNER, sub: "admin" }), /subject/);
+    rejects(hs256({ ...LEARNER, sub: 42 }), /subject/);
   });
 
-  it("refuses malformed tokens and a missing secret", () => {
+  it("refuses malformed tokens", () => {
     rejects("not-a-token", /three dot-separated/);
     rejects("a.b.c", /header is not valid base64url JSON/);
     rejects(`${b64({ alg: "HS256" })}.not-json.${"x".repeat(43)}`, /signature|payload/);
-    rejects(sign({ sub: USER }), /no signing secret/, "");
   });
 });

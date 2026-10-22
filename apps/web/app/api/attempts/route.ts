@@ -8,6 +8,7 @@
 import { attemptStore } from "../../../lib/data/attempt-store.ts";
 import { isConfigured } from "../../../lib/data/pg.ts";
 import { handleAttempt } from "../../../lib/attempts/handler.ts";
+import { authConfig } from "../../../lib/auth/config.ts";
 import { sessionFrom } from "../../../lib/auth/session.ts";
 import { bundle } from "../../../lib/content.ts";
 
@@ -18,7 +19,7 @@ export function POST(request: Request): Promise<Response> {
   return handleAttempt(request, {
     bundle,
     storeFor: (userId) => (isConfigured() ? attemptStore(userId) : null),
-    session: (req) => sessionFrom(req, process.env.SUPABASE_JWT_SECRET, Math.floor(Date.now() / 1000)),
+    session: (req) => sessionFrom(req, authConfig(), Math.floor(Date.now() / 1000)),
     now: () => Date.now(),
   });
 }

@@ -4,6 +4,7 @@
  * Reminders belong to an account, so an unsigned request is refused (401), never stored.
  */
 import { isConfigured } from "../../../../lib/data/pg.ts";
+import { authConfig } from "../../../../lib/auth/config.ts";
 import { sessionFrom } from "../../../../lib/auth/session.ts";
 import { pushConfig } from "../../../../lib/push/config.ts";
 import { removeSubscription, saveSubscription } from "../../../../lib/push/store.ts";
@@ -18,10 +19,10 @@ function json(status: number, body: unknown): Response {
 }
 
 /** The learner behind the request, or the response that says why there is none. */
-function learnerOrResponse(request: Request): { userId: string } | Response {
+async function learnerOrResponse(request: Request): Promise<{ userId: string } | Response> {
   if (!pushConfig() || !isConfigured()) return json(503, { error: "not_configured" });
   try {
-    const session = sessionFrom(request, process.env.SUPABASE_JWT_SECRET, Math.floor(Date.now() / 1000));
+    const session = await sessionFrom(request, authConfig(), Math.floor(Date.now() / 1000));
     if (!session) return json(401, { error: "signed_out" });
     return { userId: session.userId };
   } catch {
@@ -38,7 +39,7 @@ async function readBody(request: Request): Promise<unknown> {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  const who = learnerOrResponse(request);
+  const who = await learnerOrResponse(request);
   if (who instanceof Response) return who;
   const parsed = parseSubscribe(await readBody(request), isRoutableLocale);
   if (!parsed.ok) return json(400, { error: parsed.reason });
@@ -51,7 +52,7 @@ export async function POST(request: Request): Promise<Response> {
 }
 
 export async function DELETE(request: Request): Promise<Response> {
-  const who = learnerOrResponse(request);
+  const who = await learnerOrResponse(request);
   if (who instanceof Response) return who;
   const parsed = parseUnsubscribe(await readBody(request));
   if (!parsed.ok) return json(400, { error: parsed.reason });

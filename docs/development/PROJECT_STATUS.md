@@ -24,7 +24,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Progress, states, XP, streak and hearts are read from this browser only; the server is written but never read, so nothing continues on another device (DG-022, DG-024).
 - Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered` (DG-021).
 - Failed attempt sends are not retried; no offline queue (DG-022, DG-023).
-- Session ends after about an hour (no refresh, DG-025); token verifier is HS256-only and the hosted project's signing method is unverified (DG-026).
+- Session ends after about an hour (no refresh, DG-025); the token verifier was HS256-only while the hosted project signs with ES256; **fix in review:** DG-026 (branch `feat/dg-026-session-verification`) verifies against the project's JWKS.
 - No rate limiting, monitoring, analytics, backups with restore test, privacy notice or Impressum (DG-027, DG-031…DG-033, DG-030).
 - Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
 
@@ -42,7 +42,7 @@ ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 bi
 ## Blockers needing the owner
 1. Reviewers for the gold unit (German, pedagogy, uk, ru) and rights confirmation (DG-007; audit Q5, Q10).
 2. Rule for production: sign-in and `DATABASE_URL` only on previews until the privacy gate passes, or not (audit Q1).
-3. Accounts and reminders setup ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md), [REMINDERS_SETUP.md](./REMINDERS_SETUP.md)); also read the JWT signing method in the Supabase dashboard (DG-026). Secrets go straight into Vercel, never into chat or the repository.
+3. Accounts and reminders setup ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md), [REMINDERS_SETUP.md](./REMINDERS_SETUP.md)). `SUPABASE_JWT_SECRET` is no longer needed (DG-026). Secrets go straight into Vercel, never into chat or the repository.
 4. Product name, domain and legal entity (needed for the Impressum and privacy notice, DG-030; audit Q9).
 5. Decisions Q2–Q4 and Q6–Q8 in [audit §7](./PROJECT_AUDIT_2026-10-22.md#7-decisions-needed-from-the-owner).
 

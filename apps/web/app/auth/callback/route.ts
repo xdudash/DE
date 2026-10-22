@@ -6,7 +6,7 @@
 import { authConfig } from "../../../lib/auth/config.ts";
 import { COOKIE, clearCookie, readCookie, setCookie } from "../../../lib/auth/cookies.ts";
 import { exchangeCode } from "../../../lib/auth/oauth.ts";
-import { verifyJwt } from "../../../lib/auth/jwt.ts";
+import { verifyAccessToken } from "../../../lib/auth/session.ts";
 import { meUrl, redirectWith, safeLang, type AuthNotice } from "../../../lib/auth/redirect.ts";
 import { ageGateStore } from "../../../lib/data/profile-store.ts";
 import { isConfigured } from "../../../lib/data/pg.ts";
@@ -29,7 +29,7 @@ export async function GET(request: Request): Promise<Response> {
 
   try {
     const tokens = await exchangeCode(cfg, code, verifier);
-    const claims = verifyJwt(tokens.accessToken, cfg.jwtSecret, Math.floor(Date.now() / 1000));
+    const claims = await verifyAccessToken(tokens.accessToken, cfg, Math.floor(Date.now() / 1000));
     const session = setCookie(COOKIE.access, tokens.accessToken, { maxAgeSeconds: tokens.expiresIn, secure });
 
     let notice: AuthNotice = "signed-in";
