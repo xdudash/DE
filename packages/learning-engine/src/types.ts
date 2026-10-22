@@ -7,7 +7,7 @@ export type Skill = "knowledge" | "reading" | "listening" | "writing" | "speakin
 export interface LearningEvent {
   id: string;
   kind: EventKind;
-  /** Epoch milliseconds (server-received time is authoritative for scheduling). */
+  /** Epoch milliseconds. On the server, the client's time clamped to a short window before receipt (ADR-0016). */
   at: number;
   contentId: string;
   localId?: string;
@@ -33,6 +33,7 @@ export interface EvidenceSummary {
   /** Accuracy over the last RECENT_WINDOW graded results (attempt + recall + transfer); null if none. */
   recentAccuracy: number | null;
   recentGraded: number;
+  /** Reviews: graded results given while the concept was due, plus failed explicit recalls (ADR-0016). */
   recalls: number;
   successfulRecalls: number;
   transfers: number;

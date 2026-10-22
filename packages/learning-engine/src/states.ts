@@ -8,15 +8,18 @@
  *  2. recent accuracy < 70 % (≥3 results) or
  *     ≥2 signalled errors in 7 days           → needs_practice
  *  3. review due date passed                  → review_due
- *  4. ≥2 successful recalls ≥1 day apart and
- *     last recall successful                  → provisionally_mastered
+ *  4. ≥2 successful reviews ≥1 day apart and
+ *     last review successful                  → provisionally_mastered
  *  5. otherwise                               → in_progress
+ *
+ * A review is a graded result given while the concept was due, or a failed explicit
+ * recall (scheduler.ts, ADR-0016).
  */
-import { DAY_MS, computeSchedule } from "./scheduler.ts";
+import { DAY_MS, reviewHistory } from "./scheduler.ts";
 import type { ConceptState, ConceptStatus, EvidenceSummary, GraphConcept, LearningEvent, StateReason } from "./types.ts";
 
 /** Bumped whenever state thresholds or transitions change; stored with derived rows. */
-export const ENGINE_VERSION = "1.0.0";
+export const ENGINE_VERSION = "1.1.0";
 
 export const RECENT_WINDOW = 5;
 export const MIN_GRADED_FOR_ACCURACY = 3;
@@ -37,7 +40,7 @@ export function summarize(conceptId: string, own: LearningEvent[], all: Learning
   const sorted = [...own].sort(byTime);
   const graded = sorted.filter(isGraded);
   const recent = graded.slice(-RECENT_WINDOW);
-  const recalls = sorted.filter((e) => e.kind === "recall");
+  const history = reviewHistory(sorted);
   const windowStart = now - SIGNAL_WINDOW_DAYS * DAY_MS;
   const recentSignals = all.filter(
     (e) => e.correct === false && e.at >= windowStart && e.at <= now && (e.signals ?? []).includes(conceptId),
@@ -47,21 +50,21 @@ export function summarize(conceptId: string, own: LearningEvent[], all: Learning
     correct: graded.filter((e) => e.correct).length,
     recentAccuracy: recent.length ? recent.filter((e) => e.correct).length / recent.length : null,
     recentGraded: recent.length,
-    recalls: recalls.length,
-    successfulRecalls: recalls.filter((e) => e.correct).length,
+    recalls: history.reviews.length,
+    successfulRecalls: history.reviews.filter((r) => r.correct).length,
     transfers: sorted.filter((e) => e.kind === "transfer").length,
     recentSignals,
     lastActivityAt: sorted.length ? sorted[sorted.length - 1]!.at : null,
-    review: computeSchedule(sorted),
+    review: history.schedule,
   };
 }
 
-/** ≥2 successful recalls at least one day apart, and the most recent recall succeeded. */
+/** ≥2 successful reviews at least one day apart, and the most recent review succeeded. */
 export function hasDelayedRecall(own: LearningEvent[]): boolean {
-  const recalls = own.filter((e) => e.kind === "recall").sort(byTime);
-  const last = recalls[recalls.length - 1];
+  const { reviews } = reviewHistory(own);
+  const last = reviews[reviews.length - 1];
   if (!last || !last.correct) return false;
-  const ok = recalls.filter((e) => e.correct);
+  const ok = reviews.filter((r) => r.correct);
   const first = ok[0];
   return ok.length >= 2 && !!first && last.at - first.at >= MIN_RECALL_GAP_MS;
 }

@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { DAY_MS } from "@deutschgo/learning-engine";
 import { AttemptError } from "../src/errors.ts";
 import { MemoryStore } from "../src/memory-store.ts";
-import { recordAttempt, recomputeAll } from "../src/service.ts";
+import { MAX_CLIENT_LAG_MS, recordAttempt, recomputeAll } from "../src/service.ts";
 import { T0, UNIT, UNIT_VERSION, V2, VERBS, bundle, iso, request } from "./fixtures.ts";
 
 const USER = "11111111-1111-4111-8111-111111111111";
@@ -76,7 +76,7 @@ describe("recordAttempt", () => {
     const d = deps();
     const out = await recordAttempt(request(), d);
     assert.deepEqual(out.states.map((s) => [s.conceptId, s.state]), [[V2, "in_progress"]]);
-    assert.equal(out.states[0]!.engineVersion, "1.0.0");
+    assert.equal(out.states[0]!.engineVersion, "1.1.0");
     assert.equal(out.nextReviewAt, iso(T0 + DAY_MS));
     assert.equal(d.store.reviews.get(V2)!.intervalDays, 1);
   });
@@ -107,10 +107,22 @@ describe("recordAttempt", () => {
     assert.equal([...d.store.events.values()][0]!.occurredAt, iso(T0));
   });
 
-  it("keeps an earlier client time, so an offline queue preserves history", async () => {
-    const d = deps(new MemoryStore(), T0 + DAY_MS);
+  it("keeps an earlier client time within the allowed lag (slow network, retry)", async () => {
+    const d = deps(new MemoryStore(), T0 + MAX_CLIENT_LAG_MS);
     await recordAttempt(request({ occurredAt: iso(T0) }), d);
     assert.equal([...d.store.events.values()][0]!.occurredAt, iso(T0));
+  });
+
+  it("clamps backdating beyond the allowed lag, so reviews cannot be faked in one sitting (ADR-0016)", async () => {
+    const store = new MemoryStore();
+    const now = T0 + 10 * DAY_MS;
+    const at = (ms: number) => recordAttempt(request({ occurredAt: iso(ms) }), deps(store, now));
+    await at(now - 6 * DAY_MS);
+    await at(now - 5 * DAY_MS);
+    const last = await at(now);
+    assert.equal([...store.events.values()][0]!.occurredAt, iso(now - MAX_CLIENT_LAG_MS));
+    assert.notEqual(last.states[0]!.state, "provisionally_mastered");
+    assert.equal(last.states[0]!.evidence.recalls, 0);
   });
 
   it("rejects unknown content, a version mismatch and a mismatched response", async () => {
@@ -145,5 +157,18 @@ describe("recomputeAll", () => {
     await recordAttempt(request(), d);
     const rows = await recomputeAll({ ...d, now: T0 + 2 * DAY_MS });
     assert.equal(rows.find((r) => r.conceptId === V2)!.state, "review_due");
+  });
+
+  it("answers given when a review is due advance the schedule and reach mastery (ADR-0016)", async () => {
+    const store = new MemoryStore();
+    const at = (ms: number) => recordAttempt(request({ occurredAt: iso(ms) }), deps(store, ms));
+    await at(T0);
+    const first = await at(T0 + DAY_MS);
+    assert.equal(first.nextReviewAt, iso(T0 + DAY_MS + 3 * DAY_MS));
+    const second = await at(T0 + 4 * DAY_MS);
+    assert.equal(second.states[0]!.state, "provisionally_mastered");
+    assert.equal(second.states[0]!.evidence.successfulRecalls, 2);
+    assert.equal(second.nextReviewAt, iso(T0 + 4 * DAY_MS + 7 * DAY_MS));
+    assert.ok([...store.events.values()].every((e) => e.kind === "attempt"), "stored evidence is unchanged: still attempts");
   });
 });
