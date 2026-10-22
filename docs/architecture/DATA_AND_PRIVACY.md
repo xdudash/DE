@@ -23,7 +23,7 @@ Data minimisation, purpose limitation, EU residency, user-owned data (export/del
 Email magic link + Google + Apple sign-in (Apple required for iOS store apps later). Anonymous preview without account stores nothing server-side; after sign-up, an optional one-time import of the local session is offered.
 
 ## Sync model
-Client keeps an offline queue of events (IndexedDB) → batched upload → server validates (schema, content id/version exists, re-evaluates closed exercises) → inserts → recomputes states. Conflicts cannot occur on events (append-only, unique ids); derived data is recomputed. Clock skew handled by storing both client and server timestamps.
+Implemented so far (DG-022): each answer has one client-generated id shared by the device record and the account copy; a write-ahead outbox in `localStorage` keeps submissions until the server gives a final answer and retries transient failures. Target design: client keeps an offline queue of events (IndexedDB, DG-023) → batched upload → server validates (schema, content id/version exists, re-evaluates closed exercises) → inserts → recomputes states. Conflicts cannot occur on events (append-only, unique ids); derived data is recomputed. Clock skew handled by storing both client and server timestamps.
 
 ## Security
 - RLS on every table, every policy scoped with `auth.uid()`; service-role key only in the server environment; no learner data accessible from static pages.

@@ -23,7 +23,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 ## Known gaps that block the P2 exit
 - Progress, states, XP, streak and hearts are read from this browser only; the server is written but never read, so nothing continues on another device (DG-022, DG-024).
 - Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered`. **Fix in review:** DG-021 / ADR-0016 (branch `feat/dg-021-review-evidence`) counts answers given while due as reviews.
-- Failed attempt sends are not retried; no offline queue (DG-022, DG-023).
+- Failed attempt sends were not retried; **fix in review:** DG-022 (branch `feat/dg-022-event-identity-retry`) adds one event identity and a write-ahead outbox with retries. Still no IndexedDB queue or batch sync (DG-023).
 - Session ends after about an hour (no refresh, DG-025); token verifier is HS256-only and the hosted project's signing method is unverified (DG-026).
 - No rate limiting, monitoring, analytics, backups with restore test, privacy notice or Impressum (DG-027, DG-031…DG-033, DG-030).
 - Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
@@ -52,4 +52,4 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Merge #47 (audit), then #48 (DG-011), then DG-021 (ADR-0016) once CI is green. Next owner-free task: **DG-026** (session token hardening; the signing-method check needs the owner to read one dashboard setting), then **DG-022** (one event identity + retry). In parallel the owner works on blockers 1 and 2.
+Merge in order: #47 (audit), #48 (DG-011), then #49 (DG-021) and #50 (DG-026), then DG-022. Next owner-free task: **DG-024** (server read path and device-history import), then DG-029 needs decision Q4. In parallel the owner works on blockers 1 and 2.

@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
-import { EvaluationError, assembleWordOrder, evaluate, findOrderFor, normalizeAnswer } from "../src/evaluate.ts";
+import { EvaluationError, assembleWordOrder, evaluate, findOrderFor, normalizeAnswer, signalledConcepts } from "../src/evaluate.ts";
 import type { ClozeExercise, SingleChoiceExercise, TransformExercise } from "../src/types.ts";
 import { wordOrder } from "./fixtures.ts";
 
@@ -87,5 +87,18 @@ describe("transform", () => {
   });
   it("rejects a response of the wrong type", () => {
     assert.throws(() => evaluate(ex, { type: "single_choice", optionId: "a" }), EvaluationError);
+  });
+});
+
+describe("signalledConcepts", () => {
+  const ex: ClozeExercise = { ...base, id: "c2", type: "cloze", feedback: { correct: "@ok", incorrect: "@no" }, text_de: "{{0}} {{1}}",
+    gaps: [{ accept: ["lerne"], rules: [{ match: ["ich"], feedback: "@g0", signals: "concept.x.y" }] }, { accept: ["ich"], rules: [{ match: ["lerne"], feedback: "@g1", signals: "concept.x.y" }] }] };
+  it("collects the whole-answer and gap signals of a wrong answer, once each", () => {
+    assert.deepEqual(signalledConcepts(evaluate(wordOrder, { type: "word_order", order: [2, 0, 3, 1] })), ["concept.syntax.v2"]);
+    assert.deepEqual(signalledConcepts(evaluate(ex, { type: "cloze", gaps: ["ich", "lerne"] })), ["concept.x.y"]);
+  });
+  it("is empty for a correct answer and for a wrong answer no rule explains", () => {
+    assert.deepEqual(signalledConcepts(evaluate(wordOrder, { type: "word_order", order: [2, 3, 0, 1] })), []);
+    assert.deepEqual(signalledConcepts(evaluate(ex, { type: "cloze", gaps: ["x", "y"] })), []);
   });
 });
