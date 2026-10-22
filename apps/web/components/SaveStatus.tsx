@@ -6,13 +6,15 @@
  * or failed check never claims that progress is saved.
  */
 import { useEffect, useState } from "react";
+import { refreshBrowserSession } from "../lib/auth/browser-refresh.ts";
 
 export function SaveStatus({ notSavedText, savedText }: { notSavedText: string; savedText: string }) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     let alive = true;
-    fetch("/api/session", { cache: "no-store" })
+    refreshBrowserSession()
+      .then(() => fetch("/api/session", { cache: "no-store" }))
       .then((res) => (res.ok ? (res.json() as Promise<{ saved: boolean }>) : null))
       .then((s) => {
         if (alive && s?.saved) setSaved(true);
