@@ -21,6 +21,11 @@ build/
 .next/
 out/
 
+# CI step logs (written to the checkout root by .github/workflows/ci.yml)
+/ci.log
+/e2e.log
+/db.log
+
 # Editor/OS files
 .DS_Store
 Thumbs.db

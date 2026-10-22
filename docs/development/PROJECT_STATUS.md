@@ -47,10 +47,10 @@ ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 bi
 4. Product name, domain and legal entity (needed for the Impressum and privacy notice, DG-030; audit Q9).
 5. Decisions Q2–Q4 and Q6–Q8 in [audit §7](./PROJECT_AUDIT_2026-10-22.md#7-decisions-needed-from-the-owner).
 
-DG-011 (lockfile) is **no longer owner-blocked**: the audit installed from the npm registry locally.
+DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore/dg-011-reproducible-builds`): pinned Node 22.23.4, committed lockfile, CI `npm ci`, foundation check fixed. Locally on Node 22.23.4 after a clean `npm ci`: `npm run check` passed and left no tracked file changed.
 
 ## Production link
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-**DG-011** (lockfile, pinned Node, `npm ci`), then **DG-021** (recall events). In parallel the owner works on blockers 1 and 2.
+Merge DG-011 once CI is green, then **DG-021** (recall events: ADR first). In parallel the owner works on blockers 1 and 2.

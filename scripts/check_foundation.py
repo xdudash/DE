@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 from pathlib import Path
@@ -44,6 +45,18 @@ REQUIRED_FILES = (
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 
+# Installed dependencies and build output are not repository docs; their READMEs link to
+# files that npm does not ship.
+SKIPPED_DIRS = frozenset({".git", "node_modules", ".next", "playwright-report", "test-results"})
+
+
+def markdown_files() -> list[Path]:
+    found: list[Path] = []
+    for directory, subdirs, files in os.walk(ROOT):
+        subdirs[:] = [d for d in subdirs if d not in SKIPPED_DIRS]
+        found.extend(Path(directory) / name for name in files if name.endswith(".md"))
+    return sorted(found)
+
 
 def check_required_files(errors: list[str]) -> None:
     for rel in REQUIRED_FILES:
@@ -61,9 +74,7 @@ def check_claude_instruction_size(errors: list[str]) -> None:
 
 
 def check_relative_markdown_links(errors: list[str]) -> None:
-    for md_path in ROOT.rglob("*.md"):
-        if ".git" in md_path.parts:
-            continue
+    for md_path in markdown_files():
         try:
             content = md_path.read_text(encoding="utf-8")
         except UnicodeDecodeError:

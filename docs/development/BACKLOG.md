@@ -11,7 +11,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 
 | ID | Task | Stage | Depends on | Ready? |
 |---|---|---|---|---|
-| DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **ready — recommended next** |
+| DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
 | DG-021 | Recall events: when an answer counts as review | A | ADR (in task) | ready |
 | DG-026 | Session token verification hardening (exp/aud, signing method) | A | owner reads Supabase JWT setting | ready (verification step needs owner) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
@@ -65,6 +65,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Goal:** reproducible installs and builds. **State:** no `package-lock.json`; CI uses `npm install`; `engines` says Node ≥ 22.18 but nothing pins it; the audit's install resolved Next 16.4.2, whose build rewrote `apps/web/tsconfig.json`.
 - **Changes:** generate and commit `package-lock.json` with Node 22.18+; add `.nvmrc`/`.node-version`; CI `npm ci` and `node-version-file`; remove the lockfile-artifact step; commit the tsconfig form Next expects so builds leave the tree clean; make `scripts/check_foundation.py` skip `node_modules` and `.next` (audit finding T4).
 - **Acceptance:** CI green with `npm ci`; `npm run build` leaves `git status` clean; `npm ci` on a fresh clone reproduces the same versions; `npm run check` passes locally with dependencies installed.
+- **Result (2026-10-22):** `.nvmrc` 22.23.4, `engines` `^22.18.0` in the root and `apps/web` (caps the major Vercel picks; a first version with `.npmrc` `engine-strict` failed the Vercel preview and was dropped), lockfile v3 (Next 16.4.2) with all platform binaries, CI `npm ci` + npm cache + a guard that fails when install/tests/build leave modified or new unignored files, Next's required tsconfig, foundation check prunes dependency/build directories and has self-tests (`scripts/foundation.py`), `npm run foundation` picks a working Python once (Windows has no real `python3`). Independent agent review: no blockers; its three minor findings were fixed. The stale branch `chore/dg-011-commit-lockfile` held no lockfile and was not reused.
 - **Checks:** `npm ci && npm run check`; CI all four jobs. **Risks:** a version bump hidden in the lock; review the diff of resolved majors. **Approval:** none (owner blocker removed: a local install from the registry works).
 
 ### DG-021 Recall events: when an answer counts as review

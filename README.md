@@ -3,12 +3,13 @@
 DeutschGo is a deep, flexible German-learning system for people who need German for life, work, and study in Germany, Austria, and Switzerland: a connected model of German, a curriculum from A1 to C1, practice in all four skills, explanations in the learner's language, and honest, evidence-based progress.
 
 ## Status
-**Phase P1 — content contract & application skeleton.** The content contract, validator, answer evaluator, a gold-standard unit (V2 word order; not yet human-reviewed), and a Next.js skeleton exist and are checked in CI. Accounts, persistence, and the learning engine come next. Details: [project status](./docs/development/PROJECT_STATUS.md).
+**Phase P2 — learner loop.** The content contract, validator, evaluator, learning engine, attempt recording, learner-data schema and an installable web app are in CI; one gold-standard unit exists and is not yet human-reviewed. Details: [project status](./docs/development/PROJECT_STATUS.md).
 
 ## Quick start
-Requires Node.js ≥ 22.18 and Python 3 (for the doc check).
+Requires the Node.js version in `.nvmrc` (22.x, at least 22.18; npm warns `EBADENGINE` on other versions) and Python 3 (for the doc check).
 ```bash
-npm install
+nvm use                      # or install the version in .nvmrc
+npm ci                       # install exactly what package-lock.json records
 npm run content:validate     # validate all content, show language coverage
 npm test                     # content-kit tests
 npm run dev -w @deutschgo/web  # http://localhost:3000 (builds the content bundle first)
