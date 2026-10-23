@@ -21,6 +21,7 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0014](./ADR-0014-motivation-xp-streaks-hearts.md) | XP, levels, streaks and hearts derived from evidence, with guardrails | Accepted, implemented (device-only numbers) |
 | [ADR-0015](./ADR-0015-daily-push-reminders.md) | Opt-in daily push reminder (Web Push, Vercel Cron, account-bound subscriptions) | Accepted, implemented; not configured (owner setup) |
 | [ADR-0016](./ADR-0016-review-evidence.md) | Answers given while a review is due count as reviews; derived in the engine, not declared by the client | Accepted, implemented (DG-021) |
+| [ADR-0017](./ADR-0017-delegated-decisions-2026-10-22.md) | Owner-delegated decisions: accounts on previews only until the privacy gate, hearts only in practice, spec goal set, Postgres rate limits | Accepted (Q3 implemented in DG-034) |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.

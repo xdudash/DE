@@ -31,6 +31,8 @@ export interface DeviceAttempt extends LearningEvent {
   correct: boolean;
   unitId: string;
   exerciseId: string;
+  /** Given in a practice run (a lesson already finished on this device): costs a heart if wrong. */
+  practice?: boolean;
 }
 
 /** Fired on this window whenever the answers stored on this device change. */
@@ -80,7 +82,8 @@ function isAttempt(value: unknown): value is DeviceAttempt {
     typeof v.correct === "boolean" &&
     Array.isArray(v.conceptIds) &&
     v.conceptIds.every((c) => typeof c === "string") &&
-    (v.signals === undefined || (Array.isArray(v.signals) && v.signals.every((c) => typeof c === "string")))
+    (v.signals === undefined || (Array.isArray(v.signals) && v.signals.every((c) => typeof c === "string"))) &&
+    (v.practice === undefined || typeof v.practice === "boolean")
   );
 }
 
@@ -101,6 +104,8 @@ export interface AttemptInput {
   at?: number;
   /** Concepts signalled by matched error rules (wrong answers only). */
   signals?: string[];
+  /** True in a practice run; only practice answers cost hearts (ADR-0014). */
+  practice?: boolean;
 }
 
 export function recordAttempt(input: AttemptInput): boolean {
@@ -116,6 +121,7 @@ export function recordAttempt(input: AttemptInput): boolean {
     exerciseId: input.exerciseId,
   };
   if (!input.correct && input.signals?.length) event.signals = [...input.signals];
+  if (input.practice) event.practice = true;
   const saved = write(EVENTS_KEY, [...readAttempts(), event].slice(-MAX_STORED_ATTEMPTS));
   if (saved) notifyProgress();
   return saved;

@@ -216,4 +216,5 @@ export const ar: Catalog = {
   "profile.sound": "المؤثرات الصوتية",
   "profile.soundNote": "نغمات قصيرة للإجابات الصحيحة والخاطئة.",
   "dash.goal": "هدف اليوم",
+  "flow.practiceNote": "تدريب: الإجابة الخاطئة تكلّف قلبًا واحدًا.",
 };

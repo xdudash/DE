@@ -10,7 +10,7 @@
  */
 import { useEffect, useState } from "react";
 import { translator } from "@deutschgo/i18n";
-import { HEARTS, minutesUntil, summarize, type Summary } from "@deutschgo/gamification";
+import { HEARTS, minutesUntil, summarizeScoped, type Summary } from "@deutschgo/gamification";
 import { PROGRESS_EVENT, readAttempts } from "../lib/device-state";
 import { Icon } from "./Icon";
 
@@ -29,7 +29,8 @@ export function useMotivation(): Summary | null {
   const [summary, setSummary] = useState<Summary | null>(null);
 
   useEffect(() => {
-    const refresh = () => setSummary(summarize(readAttempts(), Date.now(), timeZone()));
+    // Hearts count practice answers only; first passes through a lesson never cost one.
+    const refresh = () => setSummary(summarizeScoped(readAttempts(), Date.now(), timeZone()));
     refresh();
     window.addEventListener(PROGRESS_EVENT, refresh);
     window.addEventListener("storage", refresh);

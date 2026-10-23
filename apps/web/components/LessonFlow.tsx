@@ -3,13 +3,16 @@
 /**
  * The lesson as a guided run (the app's lesson mode).
  *
- *   top:    leave · progress · hearts
+ *   top:    leave · progress · hearts (practice runs only)
  *   middle: one card per step — a piece of the explanation, or one exercise
  *   bottom: one action. On an exercise it is "Check" until answered; then the bar turns
  *           green or red, says why, and offers "Continue".
  *
  * A wrongly answered exercise comes back once at the end of the run (lib/lesson-session).
- * Hearts limit practice only: at zero, checking pauses, and every explanation stays open.
+ * Hearts belong to practice, never to learning (ADR-0014, owner decision Q3). The first run
+ * through a lesson is learning: wrong answers cost nothing and it never pauses. A run of a
+ * lesson already finished on this device, or "Practise again", is practice: a wrong answer
+ * costs a heart, and at zero checking pauses while every explanation stays open.
  * Teaching text arrives from the server as content; this component only sequences it.
  */
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
@@ -21,6 +24,7 @@ import { HEARTS, minutesUntil } from "@deutschgo/gamification";
 import { clock, requeueIfWrong, sessionResult, type SessionAnswer } from "../lib/lesson-session";
 import { inline } from "../lib/markdown";
 import { play } from "../lib/sound";
+import { readLessonResults } from "../lib/device-state";
 import { ExercisePlayer, tr, type ExerciseHandle, type PlayerText } from "./ExercisePlayer";
 import { Icon } from "./Icon";
 import { useMotivation } from "./Motivation";
@@ -58,11 +62,18 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
   const [answers, setAnswers] = useState<SessionAnswer[]>([]);
   const [startedAt, setStartedAt] = useState(() => Date.now());
   const [finishedAt, setFinishedAt] = useState<number | null>(null);
+  // Practice when the lesson was already finished on this device before this run began.
+  const [practice, setPractice] = useState(false);
+  useEffect(() => {
+    const answered = readLessonResults(unit.id);
+    const ids = steps.flatMap((s) => (s.kind === "exercise" ? [s.exercise.id] : []));
+    setPractice(ids.length > 0 && ids.every((id) => id in answered));
+  }, [unit.id, steps]);
 
   const done = index >= queue.length;
   const step = done ? undefined : queue[index];
   const hearts = motivation?.hearts ?? HEARTS.max;
-  const outOfHearts = motivation !== null && hearts === 0;
+  const outOfHearts = practice && motivation !== null && hearts === 0;
   const isLast = index === queue.length - 1;
   const labels = { yourAnswer: msg("exercise.yourAnswer"), saveFailed: msg("exercise.saveFailed"), saveQueued: msg("exercise.saveQueued"), stale: msg("exercise.stale") };
 
@@ -92,6 +103,8 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
     setAnswers([]);
     setStartedAt(Date.now());
     setFinishedAt(null);
+    // Going through a finished lesson again is practice.
+    setPractice(true);
     window.scrollTo({ top: 0 });
   }
 
@@ -143,10 +156,12 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
         >
           <span style={{ inlineSize: `${total > 0 ? (position / total) * 100 : 0}%` }} />
         </div>
-        <span className={`pill hearts${hearts === 0 ? " empty" : ""}`} role="img" aria-label={msg("motivation.hearts", { hearts, max: HEARTS.max })}>
-          <Icon name="heart" size={20} />
-          <span aria-hidden="true">{hearts}</span>
-        </span>
+        {practice && (
+          <span className={`pill hearts${hearts === 0 ? " empty" : ""}`} role="img" aria-label={msg("motivation.hearts", { hearts, max: HEARTS.max })}>
+            <Icon name="heart" size={20} />
+            <span aria-hidden="true">{hearts}</span>
+          </span>
+        )}
       </header>
 
       <main className="flow-body lesson">
@@ -155,6 +170,7 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
             <div className="card-meta">
               {step.kind === "exercise" && <span className="caption">{step.caption}</span>}
               {step.kind === "exercise" && step.retry && <span className="chip retry">{msg("flow.retry")}</span>}
+              {step.kind === "exercise" && practice && <span className="chip">{msg("flow.practiceNote")}</span>}
               {/* The introduction states the review status itself; later cards keep a small label. */}
               {!unit.reviewed && step.id !== "intro" && <span className="tag warn">{msg("status.draftTag")}</span>}
             </div>
@@ -171,6 +187,7 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
                 checked={checked}
                 onReadyChange={setReady}
                 onSubmit={check}
+                practice={practice}
               />
             )}
           </div>

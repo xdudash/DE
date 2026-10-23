@@ -148,3 +148,19 @@ export function summarize(attempts: readonly Attempt[], now: number, timeZone: s
 export function minutesUntil(at: number, now: number): number {
   return Math.max(1, Math.ceil((at - now) / 60_000));
 }
+
+/**
+ * Hearts belong to practice, never to learning (ADR-0014 amendment, owner decision Q3):
+ * only answers marked as practice cost hearts. First passes through a lesson are learning
+ * and never pause, so their answers are left out of the hearts count; everything else in
+ * the summary still counts every answer.
+ */
+export function summarizeScoped(
+  attempts: readonly (Attempt & { practice?: boolean })[],
+  now: number,
+  timeZone: string,
+): Summary {
+  const summary = summarize(attempts, now, timeZone);
+  const hearts = heartsAt(attempts.filter((a) => a.practice === true), now);
+  return { ...summary, hearts: hearts.hearts, nextHeartAt: hearts.nextHeartAt };
+}

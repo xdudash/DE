@@ -209,6 +209,7 @@ export const en = {
   "profile.sound": "Sound effects",
   "profile.soundNote": "Short tones for right and wrong answers.",
   "dash.goal": "Daily goal",
+  "flow.practiceNote": "Practice: a wrong answer costs a heart.",
 } as const;
 
 export type MessageKey = keyof typeof en;

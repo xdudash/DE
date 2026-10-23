@@ -14,7 +14,7 @@ npx web-push generate-vapid-keys
 You get a public key and a private key. Keep the private key out of every repository.
 
 ## 3. Set environment variables in Vercel
-Project → Settings → Environment Variables. Use Production and/or Preview as you need.
+Project → Settings → Environment Variables. Use **Preview** only until the privacy gate passes (ADR-0017, Q1); reminders need accounts, and accounts stay off in production until then.
 
 | Name | Value | Secret? |
 |---|---|---|

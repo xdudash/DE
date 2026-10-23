@@ -21,6 +21,9 @@ The vision (`PRODUCT_VISION.md`) rejected "streaks and XP as progress" and strea
 7. **No AI features** in this MVP. Any AI explanation feature needs its own decision (provider, cost, content rights).
 8. **Device-only numbers:** XP, levels, streaks and hearts are computed from answers on this device for now, like progress. Syncing them across devices follows the server sync work, not this ADR.
 
+### Amendment 2026-10-22: hearts belong to practice (ADR-0017, Q3)
+The first run through a lesson is learning: wrong answers cost no heart, no heart count is shown, and the lesson never pauses. A run of a lesson already finished on this device, or "Practise again", is practice: answers are marked `practice` on the device, only those cost hearts (`summarizeScoped` in `packages/gamification`), and checking pauses at zero while explanations stay open. Answers stored before this change carry no mark and count as learning. XP and streaks still count every answer.
+
 ## Consequences
 - + The same numbers can be recomputed server-side later without a migration.
 - + Guardrails make the scheme safe to tune without re-deciding the principles.

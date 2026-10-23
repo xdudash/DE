@@ -29,7 +29,7 @@ Requires a paid Apple Developer account.
 A missing entry makes the provider sign-in fail after the consent screen.
 
 ## 4. Vercel environment variables
-Set them for **Production** and **Preview** in project `de` (Settings → Environment Variables), then redeploy.
+Set them for **Preview** only in project `de` (Settings → Environment Variables), then redeploy a preview. Production stays without accounts until the privacy gate passes (ADR-0017, Q1: privacy notice and Impressum, monitoring, backups with a restore test).
 
 | Name | Value | Secret? |
 |---|---|---|

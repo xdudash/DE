@@ -42,10 +42,10 @@ ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 bi
 
 ## Blockers needing the owner
 1. Reviewers for the gold unit (German, pedagogy, uk, ru) and rights confirmation (DG-007; audit Q5, Q10).
-2. Rule for production: sign-in and `DATABASE_URL` only on previews until the privacy gate passes, or not (audit Q1).
+2. Decided under the owner's delegation (ADR-0017): sign-in, `DATABASE_URL` and push on previews only until the privacy gate passes (Q1); hearts only in practice (Q3, DG-034 in review); the spec goal set (Q4); Postgres rate limits (Q7). The owner can overturn any of them.
 3. Accounts and reminders setup ([ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md), [REMINDERS_SETUP.md](./REMINDERS_SETUP.md)). `SUPABASE_JWT_SECRET` is no longer needed (DG-026). Secrets go straight into Vercel, never into chat or the repository.
 4. Product name, domain and legal entity (needed for the Impressum and privacy notice, DG-030; audit Q9).
-5. Decisions Q2–Q4 and Q6–Q8 in [audit §7](./PROJECT_AUDIT_2026-10-22.md#7-decisions-needed-from-the-owner).
+5. Decisions Q2, Q6 and Q8 (money or providers) in [audit §7](./PROJECT_AUDIT_2026-10-22.md#7-decisions-needed-from-the-owner).
 
 DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore/dg-011-reproducible-builds`): pinned Node 22.23.4, committed lockfile, CI `npm ci`, foundation check fixed. Locally on Node 22.23.4 after a clean `npm ci`: `npm run check` passed and left no tracked file changed.
 
