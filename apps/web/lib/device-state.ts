@@ -15,14 +15,8 @@
 import type { LearningEvent } from "@deutschgo/learning-engine";
 import { OUTBOX_KEY, type KeyValue } from "./attempts/outbox.ts";
 
-export type Goal = "life" | "work" | "study";
-export const GOALS: readonly Goal[] = ["life", "work", "study"];
-export const MINUTE_CHOICES: readonly number[] = [5, 10, 15, 20];
-
-export interface Setup {
-  goal: Goal;
-  minutes: number;
-}
+import { normalizeSetup, type Setup } from "./plan.ts";
+export { GOALS, MINUTE_CHOICES, REGIONS, normalizeSetup, type Goal, type Region, type Setup } from "./plan.ts";
 
 /** A graded exercise answer, as the learning engine reads it, plus where it came from. */
 export interface DeviceAttempt extends LearningEvent {
@@ -61,9 +55,7 @@ function write(key: string, value: unknown): boolean {
 }
 
 export function readSetup(): Setup | null {
-  const value = read<Setup>(SETUP_KEY);
-  if (!value || !GOALS.includes(value.goal) || !MINUTE_CHOICES.includes(value.minutes)) return null;
-  return value;
+  return normalizeSetup(read<unknown>(SETUP_KEY));
 }
 
 export function writeSetup(setup: Setup): boolean {
