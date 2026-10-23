@@ -20,5 +20,6 @@ Q2 (paid Apple Developer account, email provider), Q5 (reviewers and budget), Q6
 
 ## Consequences
 - Production stays without accounts for now; previews carry the full signed-in journey.
+- Q7 implemented in DG-027: `rate_limits` table (migration 0003, service role only), fixed windows, hashed subjects. Counter-store failures allow the request and log, so a missing table cannot block learners. Without a database (preview), limits are process-local and best effort.
 - Hearts can no longer block a learner who is learning something new.
 - Any of the four decisions can be reversed by the owner with a superseding ADR; none of them created data or costs that would need undoing.

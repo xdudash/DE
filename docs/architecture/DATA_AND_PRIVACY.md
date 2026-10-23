@@ -29,7 +29,7 @@ Implemented so far (DG-022): each answer has one client-generated id shared by t
 - RLS on every table, every policy scoped with `auth.uid()`; service-role key only in the server environment; no learner data accessible from static pages.
 - Defence in depth: besides the missing policies, UPDATE/DELETE are revoked from `authenticated` on `learning_events`, all writes are revoked on the server-maintained tables, and `anon` holds no privileges in `public`. A structural test asserts the whole policy inventory, so loosening one layer fails CI.
 - GDPR export runs through `export_my_data()` as `security invoker`, so RLS applies to it too; account deletion cascades from `auth.users` to every learner table (tested).
-- Input validation at API boundaries (shared schemas); rate limiting on write endpoints.
+- Input validation at API boundaries (shared schemas); rate limiting on write endpoints (DG-027: fixed windows in `rate_limits`; subjects are SHA-256 hashes of a learner id or client address; counters are deleted after their window plus one minute).
 - Secrets in Vercel/Supabase/GitHub secrets; never in the repo (public repository).
 - Logs exclude tokens, request bodies with free text (writing/speaking), and email addresses.
 - Writing texts and recordings: stored only when the feature needs it and the user opted in; never used for model training.

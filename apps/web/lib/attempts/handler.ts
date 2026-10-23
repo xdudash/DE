@@ -13,6 +13,8 @@ export interface HandlerDeps {
   storeFor(userId: string): Store | null;
   session(request: Request): Session | null | Promise<Session | null>;
   now(): number;
+  /** Per-learner write limit (DG-027). Returns the 429 response to send, or null to continue. */
+  limit?(userId: string): Promise<Response | null>;
 }
 
 interface ErrorBody {
@@ -40,6 +42,11 @@ export async function handleAttempt(request: Request, deps: HandlerDeps): Promis
   }
   if (!session) {
     return problem(401, "not_signed_in", "sign in to save progress", "answers are still checked in the browser");
+  }
+
+  if (deps.limit) {
+    const refused = await deps.limit(session.userId);
+    if (refused) return refused;
   }
 
   let body: unknown;
