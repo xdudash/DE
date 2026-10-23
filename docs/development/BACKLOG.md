@@ -17,7 +17,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
-| DG-022 | One event identity + retry of failed sends | B | DG-021 | after DG-021 |
+| DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
 | DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
@@ -100,6 +100,8 @@ Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_P
 - **Goal:** one answer is one event everywhere. **State:** `ExercisePlayer.tsx` records a device event and sends a server event with a different `randomUUID`; failures are dropped; device events carry no error-rule `signals` (ADR-0016 consequence).
 - **Changes:** reuse the device event id as `eventId`; mark device events `synced`/`pending`; retry pending events with backoff on load/online (server is idempotent on id).
 - **Acceptance:** unit tests for retry and idempotency; a network failure followed by reload results in exactly one server row. **Depends:** DG-021. **Risks:** existing device events have no server twin; handled by DG-024 import.
+
+- **Result (2026-10-22):** one id and one time per answer, shared by the device record and the account copy; a write-ahead outbox in this browser (`lib/attempts/outbox.ts`, `deutschgo.outbox.v1`) queues every submission before it is sent and removes it on a final answer (saved, not signed in, content changed, refused); network, 408/429 and 5xx failures retry with backoff (30 s doubling to 1 h, 8 tries) when a page opens, when the connection returns and once a minute (`OutboxSync`); the lesson says "this browser will send it again" instead of "it will not appear in your progress"; device events now carry error-rule signals through the evaluator's shared `signalledConcepts()`. Not included: IndexedDB, batching and dating of long-queued answers (DG-023); answers given while signed out are not uploaded later (DG-024 import).
 
 ### DG-023 Offline queue and batched sync
 - **Goal:** answers given offline reach the account. **Changes:** IndexedDB outbox, batch endpoint or batched calls, offline/unsynced states in the UI (USER_FLOWS cross-flow states).

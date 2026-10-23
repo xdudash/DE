@@ -66,3 +66,11 @@ describe("submitAttempt", () => {
     assert.deepEqual(await submitAttempt(input, stub({ status: 500 })), { status: "failed", reason: "http_500" });
   });
 });
+
+describe("submitAttempt with the answer's own time (DG-022)", () => {
+  it("sends the original occurredAt on a retry instead of now", async () => {
+    const seen: { body?: Record<string, unknown> } = {};
+    await submitAttempt({ ...input, occurredAt: "2026-10-22T08:00:00.000Z" }, stub({ status: 201 }, seen));
+    assert.equal(seen.body!.occurredAt, "2026-10-22T08:00:00.000Z");
+  });
+});

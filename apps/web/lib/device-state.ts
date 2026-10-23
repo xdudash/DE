@@ -1,6 +1,8 @@
 /**
- * What this browser remembers until accounts exist (DG-015 adds sign-in and server
- * storage). Nothing here is sent to the server, and the UI says so.
+ * What this browser remembers: the plan, the language, and every answer as evidence.
+ * Signed-in learners' answers are also sent to their account (lib/attempts/outbox.ts),
+ * with the same event id as the record kept here; the screens still read this record
+ * until the server read path exists (DG-024).
  *
  * Attempts are stored as append-only learning events (the same shape the learning
  * engine reads), so states and recommendations are computed from evidence, not
@@ -11,6 +13,7 @@
  * the page keeps working and can state the failure honestly.
  */
 import type { LearningEvent } from "@deutschgo/learning-engine";
+import { OUTBOX_KEY, type KeyValue } from "./attempts/outbox.ts";
 
 export type Goal = "life" | "work" | "study";
 export const GOALS: readonly Goal[] = ["life", "work", "study"];
@@ -76,7 +79,8 @@ function isAttempt(value: unknown): value is DeviceAttempt {
     typeof v.exerciseId === "string" &&
     typeof v.correct === "boolean" &&
     Array.isArray(v.conceptIds) &&
-    v.conceptIds.every((c) => typeof c === "string")
+    v.conceptIds.every((c) => typeof c === "string") &&
+    (v.signals === undefined || (Array.isArray(v.signals) && v.signals.every((c) => typeof c === "string")))
   );
 }
 
@@ -91,13 +95,19 @@ export interface AttemptInput {
   exerciseId: string;
   conceptIds: string[];
   correct: boolean;
+  /** The answer's event id, shared with the server copy; generated when absent. */
+  id?: string;
+  /** Epoch ms of the answer; now when absent. */
+  at?: number;
+  /** Concepts signalled by matched error rules (wrong answers only). */
+  signals?: string[];
 }
 
 export function recordAttempt(input: AttemptInput): boolean {
   const event: DeviceAttempt = {
-    id: crypto.randomUUID(),
+    id: input.id ?? crypto.randomUUID(),
     kind: "attempt",
-    at: Date.now(),
+    at: input.at ?? Date.now(),
     contentId: input.exerciseId,
     conceptIds: input.conceptIds,
     skill: "knowledge",
@@ -105,6 +115,7 @@ export function recordAttempt(input: AttemptInput): boolean {
     unitId: input.unitId,
     exerciseId: input.exerciseId,
   };
+  if (!input.correct && input.signals?.length) event.signals = [...input.signals];
   const saved = write(EVENTS_KEY, [...readAttempts(), event].slice(-MAX_STORED_ATTEMPTS));
   if (saved) notifyProgress();
   return saved;
@@ -188,14 +199,33 @@ export function attemptStats(): AttemptStats {
 }
 
 /**
+ * This browser's storage for the outbox, or a store that refuses every write when storage
+ * is blocked, so callers report "not queued" instead of throwing.
+ */
+export function deviceKeyValue(): KeyValue {
+  try {
+    const storage = window.localStorage;
+    return storage;
+  } catch {
+    return {
+      getItem: () => null,
+      setItem: () => {
+        throw new Error("storage unavailable");
+      },
+    };
+  }
+}
+
+/**
  * Removes everything DeutschGo keeps in this browser: the plan, the remembered
- * language and every recorded answer. Nothing was sent to a server, so this is the
- * whole of the learner's data. Returns false if storage refused, so the caller can
- * say the data is still there instead of claiming it is gone.
+ * language, every recorded answer and answers still waiting to be sent. An account's
+ * copy is not touched: deleting it is the account's own action. Returns false if
+ * storage refused, so the caller can say the data is still there instead of claiming
+ * it is gone.
  */
 export function clearDeviceData(): boolean {
   try {
-    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY]) window.localStorage.removeItem(key);
+    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY]) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {

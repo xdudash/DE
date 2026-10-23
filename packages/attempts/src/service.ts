@@ -7,7 +7,7 @@
  */
 import { unitExercises } from "@deutschgo/content-kit";
 import type { ContentBundle, Exercise, Unit } from "@deutschgo/content-kit";
-import { EVALUATOR_VERSION, EvaluationError, evaluate } from "@deutschgo/content-kit/evaluate";
+import { EVALUATOR_VERSION, EvaluationError, evaluate, signalledConcepts } from "@deutschgo/content-kit/evaluate";
 import { ENGINE_VERSION, deriveConceptStates, graphFromBundle } from "@deutschgo/learning-engine";
 import type { LearningEvent } from "@deutschgo/learning-engine";
 import { AttemptError } from "./errors.ts";
@@ -65,7 +65,7 @@ export async function recordAttempt(req: AttemptRequest, deps: RecordDeps): Prom
     throw err;
   }
 
-  const signals = result.correct ? [] : [...new Set([result.signals, ...(result.gaps ?? []).map((g) => g.signals)].filter((s): s is string => !!s))];
+  const signals = signalledConcepts(result);
   const event: StoredEvent = {
     id: req.eventId,
     userId,

@@ -2,6 +2,7 @@ import { strict as assert } from "node:assert";
 import { beforeEach, describe, it } from "node:test";
 import {
   MAX_STORED_ATTEMPTS,
+  clearDeviceData,
   readAttempts,
   readLanguage,
   readLessonResults,
@@ -21,7 +22,11 @@ function installStorage(options: { failWrites?: boolean; corrupt?: Record<string
         if (options.failWrites) throw new Error("QuotaExceededError");
         data.set(k, v);
       },
+      removeItem: (k: string) => {
+        data.delete(k);
+      },
     },
+    dispatchEvent: () => true,
   };
   return data;
 }
@@ -155,5 +160,37 @@ describe("remembered explanation language", () => {
   it("reports a failed write instead of claiming success", () => {
     installStorage({ failWrites: true });
     assert.equal(writeLanguage("ru"), false);
+  });
+});
+
+describe("one identity per answer (DG-022)", () => {
+  beforeEach(() => installStorage());
+
+  it("keeps the given event id and time, shared with the account's copy", () => {
+    const id = "123e4567-e89b-42d3-a456-426614174000";
+    recordAttempt({ id, at: 1_700_000_000_000, unitId: "unit.x", exerciseId: "ex1", conceptIds: ["concept.a"], correct: true });
+    const [event] = readAttempts();
+    assert.equal(event!.id, id);
+    assert.equal(event!.at, 1_700_000_000_000);
+  });
+
+  it("stores error-rule signals for wrong answers only, like the server", () => {
+    recordAttempt({ unitId: "unit.x", exerciseId: "ex1", conceptIds: ["concept.a"], correct: false, signals: ["concept.b"] });
+    recordAttempt({ unitId: "unit.x", exerciseId: "ex2", conceptIds: ["concept.a"], correct: true, signals: ["concept.b"] });
+    const [wrong, right] = readAttempts();
+    assert.deepEqual(wrong!.signals, ["concept.b"]);
+    assert.equal(right!.signals, undefined);
+  });
+
+  it("drops stored events whose signals are not a list of ids", () => {
+    const bad = { id: "e1", kind: "attempt", at: 1, unitId: "u", exerciseId: "x", correct: false, conceptIds: [], signals: "concept.b" };
+    installStorage({ corrupt: { [EVENTS]: JSON.stringify([bad]) } });
+    assert.deepEqual(readAttempts(), []);
+  });
+
+  it("deleting this device's data also empties the outbox of unsent answers", () => {
+    const data = installStorage({ corrupt: { "deutschgo.outbox.v1": "[]" } });
+    assert.equal(clearDeviceData(), true);
+    assert.equal(data.has("deutschgo.outbox.v1"), false);
   });
 });

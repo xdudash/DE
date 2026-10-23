@@ -184,6 +184,17 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
 }
 
 /**
+ * Concepts a wrong answer signals through matched error rules (whole answer and gaps),
+ * deduplicated. A correct answer signals nothing. Device and server both store these as
+ * the event's `signals`, so diagnosis does not depend on where the answer was recorded.
+ */
+export function signalledConcepts(result: EvaluationResult): string[] {
+  if (result.correct) return [];
+  const all = [result.signals, ...(result.gaps ?? []).map((g) => g.signals)];
+  return [...new Set(all.filter((s): s is string => !!s))];
+}
+
+/**
  * For word_order: find a token order that produces `sentence`, or undefined.
  * Used by the validator to prove each accepted sentence is buildable.
  */

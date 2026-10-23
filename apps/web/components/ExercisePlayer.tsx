@@ -10,10 +10,11 @@
  * the endpoint answers "not signed in", which the lesson states plainly.
  */
 import { useEffect, useImperativeHandle, useState, type KeyboardEvent, type Ref } from "react";
-import { evaluate, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
+import { evaluate, signalledConcepts, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
 import type { Exercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
-import { recordAttempt } from "../lib/device-state";
+import { sendWithOutbox } from "../lib/attempts/outbox";
+import { deviceKeyValue, recordAttempt } from "../lib/device-state";
 import { inline } from "../lib/markdown";
 
 export interface PlayerText {
@@ -23,6 +24,7 @@ export interface PlayerText {
 export interface PlayerLabels {
   yourAnswer: string;
   saveFailed: string;
+  saveQueued: string;
   stale: string;
 }
 
@@ -84,17 +86,18 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           return null;
         }
         setError(null);
+        // One id and one time per answer, shared by this browser's record and the account's
+        // copy; retries reuse both, so an answer is never counted twice.
+        const eventId = crypto.randomUUID();
+        const at = Date.now();
         // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
-        recordAttempt({ unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct });
-        // One id per answer: a retry of the same request must not count twice.
+        recordAttempt({ id: eventId, at, unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct, signals: signalledConcepts(outcome) });
         setSave({ status: "saving" });
-        void submitAttempt({
-          eventId: crypto.randomUUID(),
-          unitId: unit.id,
-          exerciseId: exercise.id,
-          contentVersion: unit.version,
-          response,
-        }).then(setSave, () => setSave({ status: "failed", reason: "unexpected" }));
+        const submission = { eventId, unitId: unit.id, exerciseId: exercise.id, contentVersion: unit.version, response, occurredAt: new Date(at).toISOString() };
+        void sendWithOutbox(deviceKeyValue(), submission, (item) => submitAttempt(item), at).then(
+          ({ state, queued }) => setSave(queued ? { status: "queued" } : state),
+          () => setSave({ status: "failed", reason: "unexpected" }),
+        );
         return outcome;
       },
     }),
@@ -219,6 +222,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
       {error && <p role="alert" className="banner">{error}</p>}
       {/* Saving never blocks feedback; only a real problem is worth a word. */}
       {save.status === "failed" && <p className="muted small" role="status">{labels.saveFailed}</p>}
+      {save.status === "queued" && <p className="muted small" role="status">{labels.saveQueued}</p>}
       {save.status === "stale" && <p className="banner" role="status">{labels.stale}</p>}
     </section>
   );
