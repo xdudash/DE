@@ -13,7 +13,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 |---|---|---|---|---|
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
 | DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
-| DG-026 | Session token verification hardening (exp/aud, signing method) | A | owner reads Supabase JWT setting | ready (verification step needs owner) |
+| DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 | needs decision |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
@@ -78,7 +78,8 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 ### DG-026 Session token verification hardening
 - **Goal:** sign-in works with the hosted project and rejects weak tokens. **State:** `lib/auth/jwt.ts` accepts HS256 only, `exp` optional, no `aud`/`role` check; the hosted project's signing method is unverified.
 - **Changes:** require `exp`; require `aud = authenticated` and `role = authenticated`; if the project uses asymmetric signing keys, verify via JWKS (maintained library or `node:crypto` ES256) and amend ADR-0013.
-- **Acceptance:** tests for missing `exp`, wrong `aud`, `alg` confusion, ES256 when enabled; a real token from a preview verifies. **Checks:** `test/jwt.test.ts`, `test/auth.test.ts`, manual preview sign-in. **Approval:** owner reads "JWT signing keys" in the Supabase dashboard (no secret in chat).
+- **Acceptance:** tests for missing `exp`, wrong `aud`, `alg` confusion, ES256 when enabled; a real token from a preview verifies. **Checks:** `test/jwt.test.ts`, `test/auth.test.ts`, manual preview sign-in. **Approval:** none: the signing method was read from the project's public JWKS.
+- **Result (2026-10-22):** the hosted project signs with **ES256** (public JWKS), so the HS256-only verifier would have rejected every real sign-in. Now: JWKS verification (ES256/RS256, cached, refresh-limited, outage-tolerant), HS256 only with the optional legacy secret, `exp`/`aud`/`role` required; `SUPABASE_JWT_SECRET` optional; ADR-0013 amended. Still open: a real provider round trip on a configured preview (owner setup).
 
 ### DG-027 Rate limiting on write endpoints
 - **Goal:** abuse and cost protection required by DATA_AND_PRIVACY. **State:** none.

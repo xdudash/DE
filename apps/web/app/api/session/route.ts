@@ -10,13 +10,13 @@ import { isConfigured } from "../../../lib/data/pg.ts";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export function GET(request: Request): Response {
+export async function GET(request: Request): Promise<Response> {
   const cfg = authConfig();
   let signedIn = false;
   let email: string | undefined;
   if (cfg) {
     try {
-      const session = sessionFrom(request, cfg.jwtSecret, Math.floor(Date.now() / 1000));
+      const session = await sessionFrom(request, cfg, Math.floor(Date.now() / 1000));
       signedIn = !!session;
       email = session?.email;
     } catch {

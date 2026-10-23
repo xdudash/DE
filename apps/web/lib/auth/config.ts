@@ -11,8 +11,11 @@ export interface AuthConfig {
   url: string;
   /** Publishable (anon) key: public by design, sent with auth requests. */
   publishableKey: string;
-  /** HS256 secret that signs access tokens; used to verify them here. */
-  jwtSecret: string;
+  /**
+   * Legacy HS256 secret (older projects, the local stack). Optional: projects with
+   * asymmetric signing keys are verified against their public JWKS instead (DG-026).
+   */
+  jwtSecret?: string;
   /** Needed only to delete an account; absent means deletion is reported as unavailable. */
   serviceRoleKey?: string;
 }
@@ -20,8 +23,8 @@ export interface AuthConfig {
 export function authConfig(env: Record<string, string | undefined> = process.env): AuthConfig | null {
   const rawUrl = env.SUPABASE_URL?.trim().replace(/\/+$/, "");
   const publishableKey = env.SUPABASE_PUBLISHABLE_KEY?.trim();
-  const jwtSecret = env.SUPABASE_JWT_SECRET?.trim();
-  if (!rawUrl || !publishableKey || !jwtSecret) return null;
+  const jwtSecret = env.SUPABASE_JWT_SECRET?.trim() || undefined;
+  if (!rawUrl || !publishableKey) return null;
   // Refuse a plain-HTTP project URL: tokens and codes must not travel unencrypted, and the
   // one legitimate exception (a local stack) is the loopback address.
   let parsed: URL;
@@ -35,7 +38,7 @@ export function authConfig(env: Record<string, string | undefined> = process.env
   return {
     url: rawUrl,
     publishableKey,
-    jwtSecret,
+    ...(jwtSecret ? { jwtSecret } : {}),
     serviceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY?.trim() || undefined,
   };
 }

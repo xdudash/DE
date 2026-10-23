@@ -45,10 +45,18 @@ describe("PKCE (RFC 7636)", () => {
 });
 
 describe("authConfig", () => {
-  it("is null when any required variable is missing (sign-in stays off)", () => {
+  it("is null when the project URL or publishable key is missing (sign-in stays off)", () => {
     assert.equal(authConfig({}), null);
-    assert.equal(authConfig({ SUPABASE_URL: "https://x.supabase.co", SUPABASE_PUBLISHABLE_KEY: "k" }), null);
+    assert.equal(authConfig({ SUPABASE_URL: "https://x.supabase.co" }), null);
     assert.equal(authConfig({ SUPABASE_PUBLISHABLE_KEY: "k", SUPABASE_JWT_SECRET: "s" }), null);
+  });
+
+  it("needs no JWT secret: projects with signing keys are verified against their JWKS (DG-026)", () => {
+    const cfg = authConfig({ SUPABASE_URL: "https://x.supabase.co", SUPABASE_PUBLISHABLE_KEY: "k" });
+    assert.notEqual(cfg, null);
+    assert.equal(cfg?.jwtSecret, undefined);
+    assert.equal(authConfig({ SUPABASE_URL: "https://x.supabase.co", SUPABASE_PUBLISHABLE_KEY: "k", SUPABASE_JWT_SECRET: " " })?.jwtSecret, undefined);
+    assert.equal(authConfig({ SUPABASE_URL: "https://x.supabase.co", SUPABASE_PUBLISHABLE_KEY: "k", SUPABASE_JWT_SECRET: "s" })?.jwtSecret, "s");
   });
 
   it("accepts HTTPS, trims a trailing slash, and keeps the service key optional", () => {
@@ -194,35 +202,43 @@ describe("OAuth helpers", () => {
   });
 });
 
-describe("sessionFrom", () => {
+describe("sessionFrom (legacy HS256 secret)", () => {
   const at = (headers: Record<string, string>) => new Request("https://example.test/api", { headers });
-  const good = sign({ sub: USER, exp: NOW + 600, email: "l@x.test" });
+  const LEARNER = { sub: USER, role: "authenticated", aud: "authenticated", iss: "https://abc.supabase.co/auth/v1" };
+  const good = sign({ ...LEARNER, exp: NOW + 600, email: "l@x.test" });
+  // HS256 tokens are checked against the secret alone: a JWKS request here would be a bug.
+  const noNetwork = { get: () => Promise.reject(new Error("no JWKS expected")), refresh: () => Promise.reject(new Error("no JWKS expected")) };
+  const session = (req: Request, cfg: typeof CFG | null = CFG) => sessionFrom(req, cfg, NOW, noNetwork);
 
-  it("is null when the request carries no credentials", () => {
-    assert.equal(sessionFrom(at({}), SECRET, NOW), null);
+  it("is null when the request carries no credentials", async () => {
+    assert.equal(await session(at({})), null);
   });
 
-  it("accepts the access-token cookie and exposes the user and email", () => {
-    const s = sessionFrom(at({ cookie: `dg_access=${good}` }), SECRET, NOW);
-    assert.deepEqual(s, { userId: USER, email: "l@x.test" });
+  it("accepts the access-token cookie and exposes the user and email", async () => {
+    assert.deepEqual(await session(at({ cookie: `dg_access=${good}` })), { userId: USER, email: "l@x.test" });
   });
 
-  it("accepts a Bearer token", () => {
-    assert.equal(sessionFrom(at({ authorization: `Bearer ${good}` }), SECRET, NOW)?.userId, USER);
+  it("accepts a Bearer token", async () => {
+    assert.equal((await session(at({ authorization: `Bearer ${good}` })))?.userId, USER);
   });
 
-  it("rejects a forged cookie instead of treating the request as anonymous", () => {
-    const forged = sign({ sub: USER, exp: NOW + 600 }, "attacker-secret-value-0123456789abcdef");
-    assert.throws(() => sessionFrom(at({ cookie: `dg_access=${forged}` }), SECRET, NOW), TokenInvalid);
+  it("rejects a forged cookie instead of treating the request as anonymous", async () => {
+    const forged = sign({ ...LEARNER, exp: NOW + 600 }, "attacker-secret-value-0123456789abcdef");
+    await assert.rejects(() => session(at({ cookie: `dg_access=${forged}` })), TokenInvalid);
   });
 
-  it("rejects an expired cookie", () => {
-    const expired = sign({ sub: USER, exp: NOW - 3600 });
-    assert.throws(() => sessionFrom(at({ cookie: `dg_access=${expired}` }), SECRET, NOW), TokenInvalid);
+  it("rejects an expired cookie and a token without expiry", async () => {
+    await assert.rejects(() => session(at({ cookie: `dg_access=${sign({ ...LEARNER, exp: NOW - 3600 })}` })), TokenInvalid);
+    await assert.rejects(() => session(at({ cookie: `dg_access=${sign(LEARNER)}` })), TokenInvalid);
   });
 
-  it("reports a missing secret as not configured when a token is present", () => {
-    assert.throws(() => sessionFrom(at({ cookie: `dg_access=${good}` }), undefined, NOW), AuthNotConfigured);
+  it("rejects a service-role or anon token presented as a session", async () => {
+    await assert.rejects(() => session(at({ cookie: `dg_access=${sign({ ...LEARNER, role: "service_role", exp: NOW + 600 })}` })), TokenInvalid);
+    await assert.rejects(() => session(at({ cookie: `dg_access=${sign({ ...LEARNER, aud: "anon", exp: NOW + 600 })}` })), TokenInvalid);
+  });
+
+  it("reports a deployment without sign-in as not configured when a token is present", async () => {
+    await assert.rejects(() => session(at({ cookie: `dg_access=${good}` }), null), AuthNotConfigured);
   });
 });
 

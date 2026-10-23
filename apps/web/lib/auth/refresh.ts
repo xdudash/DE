@@ -4,8 +4,8 @@
  */
 import type { AuthConfig } from "./config.ts";
 import { COOKIE, clearCookie, readCookie, setCookie } from "./cookies.ts";
-import { verifyJwt } from "./jwt.ts";
 import { type Tokens } from "./oauth.ts";
+import { verifyAccessToken } from "./session.ts";
 
 /** Refresh tokens are renewed on every successful exchange and kept for 30 days. */
 export const REFRESH_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
@@ -44,7 +44,9 @@ export async function handleRefresh(request: Request, deps: RefreshDeps): Promis
 
   try {
     const tokens = await deps.refresh(cfg, refreshToken);
-    verifyJwt(tokens.accessToken, cfg.jwtSecret, deps.now());
+    // A rotated token passes exactly the checks a new sign-in passes (DG-026): expiry,
+    // audience, role, issuer and the project's signing keys.
+    await verifyAccessToken(tokens.accessToken, cfg, deps.now());
     const headers = new Headers({ "cache-control": "no-store" });
     for (const cookie of sessionCookies(tokens, secure)) headers.append("set-cookie", cookie);
     return new Response(null, { status: 204, headers });
