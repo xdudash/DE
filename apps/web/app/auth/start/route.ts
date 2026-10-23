@@ -7,6 +7,9 @@ import { COOKIE, setCookie } from "../../../lib/auth/cookies.ts";
 import { authorizeUrl, isProvider } from "../../../lib/auth/oauth.ts";
 import { challengeFor, newVerifier } from "../../../lib/auth/pkce.ts";
 import { meUrl, redirectWith, safeLang } from "../../../lib/auth/redirect.ts";
+import { rateLimitStore } from "../../../lib/data/rate-limit-store.ts";
+import { POLICY } from "../../../lib/rate-limit/policy.ts";
+import { clientIp, guard, subjectKey } from "../../../lib/rate-limit/limit.ts";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -14,7 +17,9 @@ export const runtime = "nodejs";
 /** The whole sign-in round trip must finish within this window. */
 const WINDOW_SECONDS = 600;
 
-export function GET(request: Request): Response {
+export async function GET(request: Request): Promise<Response> {
+  const refused = await guard(rateLimitStore(), POLICY.authStart, subjectKey(clientIp(request)));
+  if (refused) return refused;
   const url = new URL(request.url);
   const lang = safeLang(url.searchParams.get("lang"));
   const secure = url.protocol === "https:";

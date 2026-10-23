@@ -100,3 +100,29 @@ describe("POST /api/attempts", () => {
     assert.match(body.message, new RegExp(UNIT.replace(/\./g, "\\.")));
   });
 });
+
+describe("POST /api/attempts rate limit (DG-027)", () => {
+  it("refuses a limited learner before recording anything", async () => {
+    const d = deps({
+      limit: async () => Response.json({ error: "rate_limited" }, { status: 429, headers: { "retry-after": "30" } }),
+    });
+    const res = await handleAttempt(post(attemptBody()), d);
+    assert.equal(res.status, 429);
+    assert.equal(res.headers.get("retry-after"), "30");
+    assert.equal(d.store.events.size, 0);
+  });
+
+  it("limits by the signed-in learner, after the session is verified", async () => {
+    const seen: string[] = [];
+    const d = deps({
+      session: () => null,
+      limit: async (userId) => {
+        seen.push(userId);
+        return null;
+      },
+    });
+    const res = await handleAttempt(post(attemptBody()), d);
+    assert.equal(res.status, 401);
+    assert.deepEqual(seen, []);
+  });
+});

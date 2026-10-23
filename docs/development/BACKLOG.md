@@ -14,7 +14,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
 | DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
 | DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
-| DG-027 | Rate limiting on write endpoints | A | Q7 decided (ADR-0017: Postgres table) | ready |
+| DG-027 | Rate limiting on write endpoints | A | Q7 decided (ADR-0017: Postgres table) | implemented (PR, owner applies migration 0003) |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
 | DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
@@ -86,6 +86,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Goal:** abuse and cost protection required by DATA_AND_PRIVACY. **State:** none.
 - **Changes:** per-user and per-IP limits for `/api/attempts`, `/auth/test`, `/auth/start`, `/api/push/subscribe`; store per Q7 (recommended: Postgres table with service role, no new provider); 429 with `Retry-After`; client treats 429 as retryable.
 - **Acceptance:** limits are documented, unit-tested, integration-tested against PostgreSQL; normal lesson pace is never limited. **Approval:** Q7.
+- **State:** implemented on `feat/dg-027-rate-limits`. Migration `0003_rate_limits.sql` and `supabase/tests/15_rate_limits.sql` (local PostgreSQL 16: all pass). Limits: attempts 120/min per learner, push 20/min per learner, sign-in start 30/min per address, test sign-in 5/hour per address. Subjects are hashed. 429 carries `Retry-After`; the outbox already retries 429. **Owner action:** apply `0003_rate_limits.sql` to the hosted Supabase project before setting `DATABASE_URL` on a deployment; until then the limiter logs and allows requests.
 
 ### DG-030 Privacy gate pack
 - **Goal:** lawful collection of learner data. **State:** no privacy notice, Impressum, processor list or retention statement in the app.

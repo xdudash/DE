@@ -10,6 +10,9 @@ import { pushConfig } from "../../../../lib/push/config.ts";
 import { removeSubscription, saveSubscription } from "../../../../lib/push/store.ts";
 import { parseSubscribe, parseUnsubscribe } from "../../../../lib/push/validate.ts";
 import { isRoutableLocale } from "../../../../lib/i18n.ts";
+import { rateLimitStore } from "../../../../lib/data/rate-limit-store.ts";
+import { POLICY } from "../../../../lib/rate-limit/policy.ts";
+import { guard, subjectKey } from "../../../../lib/rate-limit/limit.ts";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -42,6 +45,8 @@ async function readBody(request: Request): Promise<unknown> {
 export async function POST(request: Request): Promise<Response> {
   const who = await learnerOrResponse(request);
   if (who instanceof Response) return who;
+  const refused = await guard(rateLimitStore(), POLICY.pushSubscribe, subjectKey(who.userId));
+  if (refused) return refused;
   const parsed = parseSubscribe(await readBody(request), isRoutableLocale);
   if (!parsed.ok) return json(400, { error: parsed.reason });
   try {
@@ -55,6 +60,8 @@ export async function POST(request: Request): Promise<Response> {
 export async function DELETE(request: Request): Promise<Response> {
   const who = await learnerOrResponse(request);
   if (who instanceof Response) return who;
+  const refused = await guard(rateLimitStore(), POLICY.pushSubscribe, subjectKey(who.userId));
+  if (refused) return refused;
   const parsed = parseUnsubscribe(await readBody(request));
   if (!parsed.ok) return json(400, { error: parsed.reason });
   try {
