@@ -37,6 +37,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-043 | A1 batches 2–3 (to 10–15 reviewed units) | C | DG-042 | blocked |
 | DG-044 | Review records and content dashboard | C | — | ready |
 | DG-045 | Exercise types v2: matching, categorisation, error correction | C | contract §8 | ready (design) |
+| DG-046 | Lesson `depth` tag (core, standard, deep) in the contract, course tiers (fast, medium, full) in content-kit, and a per-tier, per-level count in the content report; tests for checkpoint per block | Schema fixtures; tests that each tier covers every level; report shows counts | DG-041, ADR-0018 |
 | DG-046 | Prerequisite guidance and catch-up path | D | DG-024 | P3 |
 | DG-047 | Route choice and personalisation | D | DG-029 | P3 |
 | DG-048 | Review session (daily load, "again") | D | DG-021, DG-024 | P3 |
