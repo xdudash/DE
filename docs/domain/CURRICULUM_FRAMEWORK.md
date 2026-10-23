@@ -20,16 +20,20 @@ CEFR A1–C1 is the product target; C2 is open-ended later work. Levels organise
 
 Reference frameworks used for **coverage checking only** (no copying): CEFR Companion Volume (Council of Europe), the German *Rahmencurriculum für Integrationskurse* (BAMF), exam specifications (Goethe, telc, ÖSD). Commercial inventories (e.g. Profile Deutsch, publisher word lists) are not reproduced; vocabulary lists are built from licensed frequency data plus editorial selection ([source register](../sources/SOURCE_REGISTER.md)).
 
-## Coverage matrix (planning targets)
-Counts are rough orders of magnitude used for planning and progress reporting; real numbers come from the validator.
+## Coverage matrix (targets, ADR-0018)
+Lesson counts are the canonical targets. Concept counts are still planning estimates until authored data exists.
 
-| Level | Grammar/syntax concepts (S1–S2) | Vocabulary senses (S3) | Scenarios (S7) | Units (est.) |
-|---|---|---|---|---|
-| A1 | ~60 | ~700 | ~15 | ~60 |
-| A2 | ~60 | ~1,300 | ~20 | ~70 |
-| B1 | ~70 | ~2,400 | ~25 | ~90 |
-| B2 | ~70 | ~4,000 | ~25 | ~90 |
-| C1 | ~60 | ~6,000+ | ~20 | ~70 |
+| Level | Lessons | Blocks (~25) | Grammar/syntax concepts (S1–S2) | Vocabulary senses (S3) | Scenarios (S7) |
+|---|---|---|---|---|---|
+| A0 (added track) | 150 | 6 | ~10 | ~300 | ~5 |
+| A1 | 600 | 24 | ~60 | ~700 | ~15 |
+| A2 | 750 | 30 | ~60 | ~1,300 | ~20 |
+| B1 | 1,000 | 40 | ~70 | ~2,400 | ~25 |
+| B2 | 1,000 | 40 | ~70 | ~4,000 | ~25 |
+| C1 | 1,000 | 40 | ~60 | ~6,000+ | ~20 |
+| C2 | 500 | 20 | open-ended | open-ended | open-ended |
+
+**Depth tags and tiers:** each lesson is `core` (about 30%), `standard` (about 40%) or `deep` (about 30%). Fast course = core; medium = core + standard; full = all 5000. Every tier passes every level and every block ends with a checkpoint.
 
 A generated coverage report exists: `npm run content:report` (add `-- --markdown` for a pasteable table) prints concepts per CEFR level and per strand with their status, units per level, and explanation-language completeness. Current state (2026-10-12): 67 concepts mapped at A1/A2 — 66 `planned`, 1 `needs_review` — in 15 strands, 1 unit, 2 routes, full en/uk/ru coverage of all titles and summaries.
 
