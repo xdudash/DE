@@ -8,18 +8,28 @@
  */
 import { useEffect, useState, type FormEvent } from "react";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { GOALS, MINUTE_CHOICES, PROGRESS_EVENT, readSetup, writeSetup, type Goal, type Setup } from "../lib/device-state";
+import { GOALS, MINUTE_CHOICES, PROGRESS_EVENT, REGIONS, readSetup, writeSetup, type Goal, type Region, type Setup } from "../lib/device-state";
 
 const GOAL_KEY: Record<Goal, MessageKey> = {
-  life: "setup.goal.life",
+  general: "setup.goal.general",
+  everyday: "setup.goal.everyday",
   work: "setup.goal.work",
   study: "setup.goal.study",
+  exam: "setup.goal.exam",
+};
+
+const REGION_KEY: Record<Region, MessageKey> = {
+  standard: "setup.region.standard",
+  "de-DE": "setup.region.de",
+  "de-AT": "setup.region.at",
+  "de-CH": "setup.region.ch",
 };
 
 export function SetupForm({ lang }: { lang: string }) {
   const msg = translator(lang);
   const [saved, setSaved] = useState<Setup | null>(null);
-  const [goal, setGoal] = useState<Goal>("life");
+  const [goal, setGoal] = useState<Goal>("general");
+  const [region, setRegion] = useState<Region>("standard");
   const [minutes, setMinutes] = useState<number>(10);
   const [status, setStatus] = useState<"idle" | "saved" | "failed">("idle");
 
@@ -31,6 +41,7 @@ export function SetupForm({ lang }: { lang: string }) {
       setSaved(previous);
       if (previous) {
         setGoal(previous.goal);
+        setRegion(previous.region);
         setMinutes(previous.minutes);
       }
     };
@@ -41,7 +52,7 @@ export function SetupForm({ lang }: { lang: string }) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const next = { goal, minutes };
+    const next: Setup = { goal, region, minutes };
     if (writeSetup(next)) {
       setSaved(next);
       setStatus("saved");
@@ -60,6 +71,17 @@ export function SetupForm({ lang }: { lang: string }) {
               <label key={g} className={`choice ${goal === g ? "selected" : ""}`}>
                 <input type="radio" name="goal" value={g} checked={goal === g} onChange={() => setGoal(g)} />
                 <span>{msg(GOAL_KEY[g])}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset className="choices">
+          <legend>{msg("setup.regionLabel")}</legend>
+          <div className="choice-row">
+            {REGIONS.map((r) => (
+              <label key={r} className={`choice ${region === r ? "selected" : ""}`}>
+                <input type="radio" name="region" value={r} checked={region === r} onChange={() => setRegion(r)} />
+                <span>{msg(REGION_KEY[r])}</span>
               </label>
             ))}
           </div>

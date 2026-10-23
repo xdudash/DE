@@ -22,7 +22,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
-| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | ready |
+| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | implemented on device (`feat/dg-029-goal-model`); profile sync with DG-024 |
 | DG-031 | Error monitoring + uptime (EU, PII scrubbing) | B | Q6 | needs decision |
 | DG-032 | Backups and a recorded restore test | B | Q8 | needs owner |
 | DG-033 | Cookieless product analytics baseline | B | Q6, DG-030 | needs decision |
