@@ -1,0 +1,11 @@
+# First route: the A0 start. One unit so far (alphabet). Draft until the unit is human-reviewed (DG-007).
+schema: deutschgo.route/1
+id: route.core.a0_start
+version: 0.1.0
+status: draft
+title: "@title"
+summary: "@summary"
+goals: [general, everyday]
+cefr: { from: A0, to: A0 }
+steps:
+  - { unit: unit.pron.alphabet_a0 }
