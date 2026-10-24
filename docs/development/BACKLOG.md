@@ -87,7 +87,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Acceptance:** chain verified by the generator; topics depend only on earlier topics; tier and choice rules tested in `apps/web/test/topic-choices.test.ts`.
 
 ### DG-053 Audio for lessons
-- **Goal:** listening and pronunciation audio for every example and exercise. **State:** not started. **Needs:** a text-to-speech provider decision (cost, licence, EU data handling) recorded as an ADR; a schema field for audio; storage for generated files.
+- **Goal:** listening and pronunciation audio for every example and exercise. **State:** not started. **Decided:** ADR-0019 (free Piper voice, generated offline). **Needs:** the generation script, a schema field for audio, storage for generated files.
 
 ### DG-054 Exercise types catalogue (many formats, like tests)
 - **Goal:** more exercise types beyond single choice, word order and cloze, such as matching, gap fill with a bank, categorisation, error correction, listening choice, dictation. **State:** four types exist. **Depends:** DG-045 and CONTENT_CONTRACT §8 for each new type (schema, evaluator tests, player).
