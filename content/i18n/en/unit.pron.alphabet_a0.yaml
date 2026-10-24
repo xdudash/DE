@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.pron.alphabet_a0
 lang: en
-based_on_version: 1.0.0
+based_on_version: 1.1.0
 status: draft
 translator: claude (AI draft, 2026-10-24)
 strings:
@@ -16,8 +16,13 @@ strings:
     Three letters are special: **Ä**, **Ö** and **Ü** have umlauts, and **ß** is a letter of its own.
   b.examples.title: "Spelling aloud"
   ex.berlin: "Berlin, spelt letter by letter."
+  ex.anna: "Anna, spelt letter by letter. Two N and two A."
   ex.umlaut: "Ö is said as the letter name; in a word it is the umlaut sound."
+  ex.uber: "Ü is said „ü“; in the word „über“ it is the same sound."
   ex.eszett: "ß is said as „eszett“ or „scharfes S“."
+  b.tip: |
+    Most letter names are just the vowel sound: **A** is „a“, **E** is „e“, **I** is „i“, **O** is „o“, **U** is „u“.
+    **Ä**, **Ö** and **Ü** are said with the umlaut: „ä“, „ö“, „ü“. **ß** is „eszett“.
   b.summary: "**Spelling is saying letter names.** Give each letter its name, with a pause between letters. Ä, Ö, Ü and ß have their own names."
   b.practice.title: "Practice"
   x.spell_name.prompt: "Which letter is named by the sound „ö“?"
@@ -28,6 +33,14 @@ strings:
   x.letter_names.b: "N, A and Y are not in this word. Spell the letters one by one: M, A, I."
   x.letter_names.c: "The second letter is A, not E. Its name is „a“."
   x.letter_names.explanation: "M – A – I: say the name of each letter in turn."
+  x.tuer.prompt: "How do you spell „Tür“ (door) aloud?"
+  x.tuer.b: "U is a different letter. This word has Ü, the letter with two dots."
+  x.tuer.c: "E is not in this word. The second letter is Ü, with two dots."
+  x.tuer.explanation: "T – Ü – R: say the name of each letter in order. Ü is „ü“."
+  x.haus.prompt: "How do you spell „Haus“ (house) aloud?"
+  x.haus.b: "Z is not in this word. The last letter is S, named „es“."
+  x.haus.c: "O is not in this word. The second letter is A."
+  x.haus.explanation: "H – A – U – S: say the name of each letter in order."
   x.eszett_letter.prompt: "Which single letter is the „scharfes S“?"
   x.eszett_letter.a: "ss is two letters. The single letter is ß."
   x.eszett_letter.c: "sz is not a German letter. The single letter is ß."

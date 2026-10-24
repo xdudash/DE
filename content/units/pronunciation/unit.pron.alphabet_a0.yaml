@@ -1,8 +1,8 @@
-# A0 calibration draft: the alphabet and how to spell words aloud.
+# A0 calibration unit: the alphabet and how to spell words aloud.
 # Status needs_review: structurally valid, NOT reviewed by a qualified human (DG-007).
 schema: deutschgo.unit/1
 id: unit.pron.alphabet_a0
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -10,7 +10,7 @@ cefr: A0
 concepts: [concept.pron.alphabet]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 12
 objectives:
   - { id: obj_letters, text: "@obj.letters", skill: knowledge }
   - { id: obj_spell, text: "@obj.spell", skill: knowledge }
@@ -25,8 +25,12 @@ blocks:
     title: "@b.examples.title"
     items:
       - { id: ex_berlin, de: "B – E – R – L – I – N", gloss: "@ex.berlin", highlight: [] }
+      - { id: ex_anna, de: "A – N – N – A", gloss: "@ex.anna", highlight: [] }
       - { id: ex_umlaut, de: "Ö wie in „schön“", gloss: "@ex.umlaut", highlight: [] }
+      - { id: ex_uber, de: "Ü wie in „über“", gloss: "@ex.uber", highlight: [] }
       - { id: ex_eszett, de: "ß – scharfes S", gloss: "@ex.eszett", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@b.tip" }
 
   - { type: explanation, id: b_summary, body: "@b.summary" }
 
@@ -61,6 +65,34 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x.letter_names.explanation"
 
+      - id: x_spell_tuer
+        type: single_choice
+        objective: obj_spell
+        concepts: [concept.pron.alphabet]
+        difficulty: 2
+        prompt: "@x.tuer.prompt"
+        stem_de: "Tür"
+        options:
+          - { id: a, de: "T – U – R", correct: false, feedback: "@x.tuer.b" }
+          - { id: b, de: "T – Ü – R", correct: true }
+          - { id: c, de: "T – U – E", correct: false, feedback: "@x.tuer.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.tuer.explanation"
+
+      - id: x_spell_haus
+        type: single_choice
+        objective: obj_spell
+        concepts: [concept.pron.alphabet]
+        difficulty: 2
+        prompt: "@x.haus.prompt"
+        stem_de: "Haus"
+        options:
+          - { id: a, de: "H – A – U – S", correct: true }
+          - { id: b, de: "H – A – U – Z", correct: false, feedback: "@x.haus.b" }
+          - { id: c, de: "H – O – U – S", correct: false, feedback: "@x.haus.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.haus.explanation"
+
       - id: x_eszett_letter
         type: single_choice
         objective: obj_letters
@@ -75,6 +107,6 @@ blocks:
         explanation: "@x.eszett_letter.explanation"
 
 review:
-  linguistic: { status: pending, notes: "A0 calibration draft. Needs a qualified reviewer (native speaker or teacher), see DG-007." }
-  pedagogical: { status: pending, notes: "Check that one block of about 10 minutes fits an absolute beginner." }
+  linguistic: { status: pending, notes: "A0 calibration unit. Needs a qualified reviewer (native speaker or teacher), see DG-007." }
+  pedagogical: { status: pending, notes: "Check that one block of about 12 minutes fits an absolute beginner." }
   rights: { status: pending, notes: "All German text authored for DeutschGo; owner confirmation pending." }
