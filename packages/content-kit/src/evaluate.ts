@@ -13,6 +13,7 @@
  */
 import type {
   ClozeExercise,
+  MultiChoiceExercise,
   Exercise,
   FeedbackRule,
   L10nRef,
@@ -51,6 +52,7 @@ export function answersEqual(a: string, b: string): boolean {
 
 export type Response =
   | { type: "single_choice"; optionId: string }
+  | { type: "multi_choice"; optionIds: string[] }
   | { type: "word_order"; order: number[] }
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string };
@@ -127,6 +129,30 @@ function evalSingleChoice(ex: SingleChoiceExercise, optionId: string): Evaluatio
   return r;
 }
 
+/**
+ * Multi-choice: the learner's selection must equal the set of correct options.
+ * Duplicates and unknown ids are rejected, not guessed. Scoring is all-or-nothing.
+ */
+function evalMultiChoice(ex: MultiChoiceExercise, optionIds: string[]): EvaluationResult {
+  const known = new Set(ex.options.map((o) => o.id));
+  const chosen = new Set<string>();
+  for (const id of optionIds) {
+    if (!known.has(id)) throw new EvaluationError(`multi_choice ${ex.id}: unknown option ${id}`);
+    if (chosen.has(id)) throw new EvaluationError(`multi_choice ${ex.id}: repeated option ${id}`);
+    chosen.add(id);
+  }
+  const correctIds = new Set(ex.options.filter((o) => o.correct).map((o) => o.id));
+  const correct = correctIds.size === chosen.size && [...correctIds].every((id) => chosen.has(id));
+  const normalized = [...chosen].sort().join(",");
+  const r = result(ex, correct, normalized);
+  if (!correct) {
+    // Targeted feedback for the first wrong option the learner picked, if the author wrote one.
+    const wrong = ex.options.find((o) => chosen.has(o.id) && !o.correct && o.feedback);
+    if (wrong?.feedback) r.ruleFeedback = wrong.feedback;
+  }
+  return r;
+}
+
 function evalWordOrder(ex: WordOrderExercise, order: number[]): EvaluationResult {
   const sentence = assembleWordOrder(ex, order);
   const correct = ex.accept.some((a) => answersEqual(a, sentence));
@@ -174,6 +200,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
   switch (ex.type) {
     case "single_choice":
       return evalSingleChoice(ex, (response as Extract<Response, { type: "single_choice" }>).optionId);
+    case "multi_choice":
+      return evalMultiChoice(ex, (response as Extract<Response, { type: "multi_choice" }>).optionIds);
     case "word_order":
       return evalWordOrder(ex, (response as Extract<Response, { type: "word_order" }>).order);
     case "cloze":

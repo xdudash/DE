@@ -480,6 +480,7 @@
         "type": {
           "enum": [
             "single_choice",
+            "multi_choice",
             "word_order",
             "cloze",
             "transform"
@@ -501,6 +502,53 @@
               "type": "array",
               "minItems": 2,
               "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "text": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "multi_choice"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
               "items": {
                 "type": "object",
                 "additionalProperties": false,

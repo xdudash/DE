@@ -102,3 +102,38 @@ describe("signalledConcepts", () => {
     assert.deepEqual(signalledConcepts(evaluate(ex, { type: "cloze", gaps: ["x", "y"] })), []);
   });
 });
+
+describe("multi_choice", () => {
+  const mc: import("../src/types.ts").MultiChoiceExercise = {
+    ...base,
+    id: "mc1",
+    type: "multi_choice",
+    feedback: { correct: "@ok", incorrect: "@no" },
+    options: [
+      { id: "a", de: "Brot", correct: true },
+      { id: "b", de: "Milch", correct: true },
+      { id: "c", de: "Auto", correct: false, feedback: "@car" },
+      { id: "d", de: "Haus", correct: false },
+    ],
+  } as import("../src/types.ts").MultiChoiceExercise;
+
+  it("is correct only when the selection equals the correct set", () => {
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a", "b"] }).correct, true);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["b", "a"] }).correct, true);
+  });
+  it("is incorrect for a missing correct option, an extra wrong option, or an empty selection", () => {
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a"] }).correct, false);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a", "b", "c"] }).correct, false);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: [] }).correct, false);
+  });
+  it("gives targeted feedback for a picked wrong option that has feedback", () => {
+    const r = evaluate(mc, { type: "multi_choice", optionIds: ["a", "b", "c"] });
+    assert.equal(r.ruleFeedback, "@car");
+    assert.equal(r.feedback, "@no");
+    assert.equal(r.score, 0);
+  });
+  it("rejects unknown and repeated ids instead of guessing", () => {
+    assert.throws(() => evaluate(mc, { type: "multi_choice", optionIds: ["a", "z"] }), EvaluationError);
+    assert.throws(() => evaluate(mc, { type: "multi_choice", optionIds: ["a", "a"] }), EvaluationError);
+  });
+});

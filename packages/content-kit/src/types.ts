@@ -130,6 +130,13 @@ export interface SingleChoiceExercise extends ExerciseBase {
   options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
 }
 
+export interface MultiChoiceExercise extends ExerciseBase {
+  type: "multi_choice";
+  stem_de?: string;
+  /** Two or more options may be correct; the learner must pick exactly the correct set. */
+  options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
+}
+
 export interface WordOrderExercise extends ExerciseBase {
   type: "word_order";
   /** Chunks presented to the learner in this (shuffled-for-display) order. */
@@ -153,7 +160,7 @@ export interface TransformExercise extends ExerciseBase {
   accept: string[];
 }
 
-export type Exercise = SingleChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise;
+export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }
