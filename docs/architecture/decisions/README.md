@@ -23,6 +23,7 @@ ADRs document significant decisions so future work does not silently reopen or c
 | [ADR-0016](./ADR-0016-review-evidence.md) | Answers given while a review is due count as reviews; derived in the engine, not declared by the client | Accepted, implemented (DG-021) |
 | [ADR-0017](./ADR-0017-delegated-decisions-2026-10-22.md) | Owner-delegated decisions: accounts on previews only until the privacy gate, hearts only in practice, spec goal set, Postgres rate limits | Accepted (Q3 implemented in DG-034) |
 | [ADR-0018](./ADR-0018-curriculum-scale-and-depth-tiers.md) | Curriculum scale: 5000 lessons from A0 to C2, depth tags (core, standard, deep) and course tiers (fast, medium, full) | Accepted, not yet implemented (DG-046) |
+| [ADR-0019](./ADR-0019-audio-generation-and-reviewer-roles.md) | Audio generated offline with German neural voices (Piper as licensed fallback); reviewer roles recorded as unassigned | Accepted, not yet implemented (DG-053) |
 
 ## When to write one
 Record choices affecting data ownership, privacy/security, deployability, operating cost, major dependencies, content format, provider lock-in, or difficult-to-reverse boundaries.
