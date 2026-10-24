@@ -36,6 +36,12 @@ The curriculum framework (CURRICULUM_FRAMEWORK.md) estimated about 60–90 units
 - Estimated full-course length is about 800 hours at 10 minutes per lesson. Cost and timeline estimates derive from this.
 - Learner progress and the content report must count lessons per tier and per level. The report is generated, not hand-maintained.
 
+## Amendment (2026-10-24): one chain and learner choices
+- The course is one chain. Every lesson's `previous` is the lesson before it in `curriculum/course.json`; the first lesson of each level follows the last of the level before. The generator fails if the chain breaks.
+- Topics are ordered by dependencies (`builds_on`). A topic may depend only on topics earlier in the course; the generator checks this.
+- The learner may mark a topic `want` (its lessons are added whatever the tier) or `skip` (its lessons are removed). A skipped topic that a kept lesson builds on is reported as a conflict, never hidden. Logic: `apps/web/lib/topic-choices.ts`.
+- Planning output under `curriculum/` is a draft for review. It holds topics and word targets, never teaching text. The app UI for choices is not built yet: it needs reviewed topic names.
+
 ## Verification
 - Documentation only. No content is added and the validator is unaffected.
 - Once DG-046 lands: schema fixtures for `depth`, and a test that every tier includes a checkpoint for each level.

@@ -82,6 +82,13 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Acceptance:** tests for missing `exp`, wrong `aud`, `alg` confusion, ES256 when enabled; a real token from a preview verifies. **Checks:** `test/jwt.test.ts`, `test/auth.test.ts`, manual preview sign-in. **Approval:** none: the signing method was read from the project's public JWKS.
 - **Result (2026-10-22):** the hosted project signs with **ES256** (public JWKS), so the HS256-only verifier would have rejected every real sign-in. Now: JWKS verification (ES256/RS256, cached, refresh-limited, outage-tolerant), HS256 only with the optional legacy secret, `exp`/`aud`/`role` required; `SUPABASE_JWT_SECRET` optional; ADR-0013 amended. Still open: a real provider round trip on a configured preview (owner setup).
 
+### DG-051 Continuous course plan (ADR-0018 amendment)
+- **Goal:** 5000 lessons in one chain from A0 to C2, with topic order, dependencies and word targets. **State:** plan generated under `curriculum/` (topics are a draft for review); `scripts/curriculum_plan.py --check` guards it.
+- **Acceptance:** chain verified by the generator; topics depend only on earlier topics; tier and choice rules tested in `apps/web/test/topic-choices.test.ts`.
+
+### DG-052 Learner topic choices in the app
+- **Goal:** want/skip per topic on the profile, with conflict messages. **State:** logic only (`lib/topic-choices.ts`). **Needs:** reviewed topic names; no UI until then.
+
 ### DG-027 Rate limiting on write endpoints
 - **Goal:** abuse and cost protection required by DATA_AND_PRIVACY. **State:** none.
 - **Changes:** per-user and per-IP limits for `/api/attempts`, `/auth/test`, `/auth/start`, `/api/push/subscribe`; store per Q7 (recommended: Postgres table with service role, no new provider); 429 with `Retry-After`; client treats 429 as retryable.
