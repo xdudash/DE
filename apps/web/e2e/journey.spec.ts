@@ -58,9 +58,9 @@ test.describe("home: the line", () => {
     await expect(hero.locator("li.verb .word")).toHaveAttribute("lang", "de");
   });
 
-  test("unreviewed content is labelled in the learner's language, not by its status code", async ({ page }) => {
+  test("pre-launch: no review label is shown to learners (ADR-0022), and no status code leaks", async ({ page }) => {
     await page.goto("/en");
-    await expect(page.getByText("Not reviewed").first()).toBeVisible();
+    await expect(page.getByText("Not reviewed")).toHaveCount(0);
     await expect(page.getByText("needs_review")).toHaveCount(0);
   });
 
