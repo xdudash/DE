@@ -44,3 +44,4 @@ Record choices affecting data ownership, privacy/security, deployability, operat
 ## Verification
 ~~~
 | [ADR-0022](./ADR-0022-pre-launch-learner-labels.md) | Pre-launch exception: no draft or review labels in the learner interface until launch | Accepted (owner decision), implemented |
+| [ADR-0023](./ADR-0023-exercise-catalogue-and-lesson-norms.md) | Exercise catalogue (35 types) in batches; lesson norms (8–12 min, 15–25 exercises for A0) | Accepted (owner decision), not yet implemented (DG-054) |
