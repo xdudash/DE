@@ -251,7 +251,7 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
     case "spelling_input":
     case "number_input":
     case "time_input":
-      return evalTextInput(ex as TextInputExercise, (response as Extract<Response, { type: "article_input" }>).text);
+      return evalTextInput(ex as TextInputExercise, (response as { text: string }).text);
     case "multi_choice":
       return evalMultiChoice(ex, (response as Extract<Response, { type: "multi_choice" }>).optionIds);
     case "word_order":
