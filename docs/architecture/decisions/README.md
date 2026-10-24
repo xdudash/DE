@@ -43,3 +43,4 @@ Record choices affecting data ownership, privacy/security, deployability, operat
 ## Consequences
 ## Verification
 ~~~
+| [ADR-0022](./ADR-0022-pre-launch-learner-labels.md) | Pre-launch exception: no draft or review labels in the learner interface until launch | Accepted (owner decision), implemented |

@@ -172,7 +172,6 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
               {step.kind === "exercise" && step.retry && <span className="chip retry">{msg("flow.retry")}</span>}
               {step.kind === "exercise" && practice && <span className="chip">{msg("flow.practiceNote")}</span>}
               {/* The introduction states the review status itself; later cards keep a small label. */}
-              {!unit.reviewed && step.id !== "intro" && <span className="tag warn">{msg("status.draftTag")}</span>}
             </div>
             {step.kind === "learn" ? (
               <div className="learn-card">{step.content}</div>

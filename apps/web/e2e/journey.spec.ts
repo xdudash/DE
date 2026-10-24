@@ -117,15 +117,13 @@ test.describe("home: the line", () => {
 });
 
 test.describe("lesson: a guided run", () => {
-  test("opens with leave and progress, and an introduction with honest banners", async ({ page }) => {
+  test("opens with leave and progress, and an introduction with its unsaved-progress notice", async ({ page }) => {
     await page.goto(UNIT);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("link", { name: "Leave the lesson" })).toBeVisible();
     await expect(page.getByRole("progressbar")).toBeVisible();
     // Learning a lesson for the first time never costs hearts, so none are shown (ADR-0014).
     await expect(page.getByRole("img", { name: /Hearts/ })).toHaveCount(0);
-    // The unit is not yet human-reviewed, so the honest banner must be there.
-    await expect(page.locator("p.banner").first()).toBeVisible();
     await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
     // The site's navigation steps aside during a lesson.
     await expect(page.getByRole("navigation", { name: "Main" })).toBeHidden();
