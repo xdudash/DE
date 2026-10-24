@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.long_short_vowels
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: Long and short vowels
-  summary: 'Vowel length distinguishes words (Staat/Stadt, Miete/Mitte). Spelling signals it: a doubled vowel or h lengthens, a doubled consonant shortens.'
+  title: "Long and short vowels"
+  summary: "A vowel is long or short. The consonant after it is often the clue."
+  pattern.scope: "A single vowel before a single consonant is usually long; before a double consonant it is usually short."
+  pattern.limits: "These are rules of thumb. Exceptions are learned with the words."
+  ex.tag: "Tag (day): long a, one vowel before one consonant."
+  ex.mann: "Mann (man): short a, before a double consonant."
+  ex.tier: "Tier (animal): ie is always a long i."

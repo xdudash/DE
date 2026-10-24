@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0107_vowels_aei
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Long and short a, e, i"
+  summary: "A single vowel before a single consonant is usually long; before a double consonant it is usually short."
+  obj: "Tell long a and short e apart in simple words."
+  intro: "Look at the consonant after the vowel. One consonant often means a long vowel; a double consonant often means a short one."
+  examples: "Words with long and short vowels."
+  summary_block: "**Count the consonants after the vowel.** One: long. Double: short."
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.tag: "Tag (day): long a, one consonant after it."
+  ex.mann: "Mann (man): short a, before a double consonant."
+  ex.tier: "Tier (animal): ie is always a long i."
+  x.long_a.expl: "Tag has a long a. Mann and Platz have short a."
+  x_long_a.prompt: "Which word has a long a?"
+  x.short_e.expl: "Bett has a short e before a double consonant. Tee and Leben have long e."
+  x_short_e.prompt: "Which word has a short e?"

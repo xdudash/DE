@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.long_short_vowels
 lang: uk
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: Довгі та короткі голосні
-  summary: 'Довгота голосного розрізняє слова (Staat/Stadt, Miete/Mitte). На письмі це видно: подвоєна голосна або h подовжують, подвоєна приголосна скорочує.'
+  title: "Довгі та короткі голосні"
+  summary: "Голосний буває довгим або коротким. Часто вирішує приголосний після нього."
+  pattern.scope: "Один голосний перед одним приголосним зазвичай довгий; перед подвійним приголосним зазвичай короткий."
+  pattern.limits: "Це орієнтири. Винятки вчать разом зі словами."
+  ex.tag: "Tag (день): довге a — один голосний перед одним приголосним."
+  ex.mann: "Mann (чоловік): коротке a перед подвійним приголосним."
+  ex.tier: "Tier (тварина): ie — завжди довге i."

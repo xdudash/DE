@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0106_eszett
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "ß и ss"
+  summary: "После долгой гласной пишем ß; после краткой — ss."
+  obj: "Выбирать ß или ss после долгой или краткой гласной."
+  intro: "ß и ss звучат одинаково. Гласная перед ними подсказывает, что писать."
+  examples: "Слова с ß и ss."
+  summary_block: "**Долгая гласная: ß. Краткая гласная: ss.** Смотрите на гласную перед звуком s."
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Это не то. Прочитайте пояснение."
+  fb.incorrect: "Не совсем. Посмотрите на слово ещё раз."
+  ex.strasse: "Straße (улица): ß после долгого a."
+  ex.fluss: "Fluss (река): ss после краткого u."
+  ex.gross: "groß (большой): ß после долгого o."
+  x.eszett.expl: "Straße: ß после долгого a. Strasse — швейцарский вариант, ß — немецкий."
+  x_eszett_long.prompt: "Какое слово написано правильно после долгой гласной?"
+  x.ss.expl: "Fluss: ss после краткого u. Flus — не немецкое написание."
+  x_ss_short.prompt: "Какое слово пишется с ss?"

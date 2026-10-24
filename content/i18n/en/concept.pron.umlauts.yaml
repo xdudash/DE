@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.umlauts
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: The umlauts ä, ö, ü
-  summary: 'Three vowels that do not exist in Slavic languages and change meaning: Mutter/Mütter, schon/schön. Lip rounding is what makes ö and ü.'
+  title: "Umlauts: ä, ö, ü"
+  summary: "Ä, Ö and Ü are vowels with two dots. Each has its own sound, which is not the same as plain a, o or u."
+  pattern.scope: "The umlaut vowels are written with two dots; each has its own sound."
+  pattern.limits: "Sounds are shown by example words; phonetic symbols are not used at A0."
+  ex.kaese: "Käse (cheese): ä sounds like the e in „bed“, but longer."
+  ex.schoen: "schön (nice): say e with rounded lips."
+  ex.ueber: "über (over): say ee with rounded lips."

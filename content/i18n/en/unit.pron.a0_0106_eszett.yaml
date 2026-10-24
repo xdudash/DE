@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0106_eszett
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "ß and ss"
+  summary: "After a long vowel write ß; after a short vowel write ss."
+  obj: "Choose ß or ss after a long or short vowel."
+  intro: "ß and ss sound the same. The vowel before them tells you which one to write."
+  examples: "Words with ß and ss."
+  summary_block: "**Long vowel: ß. Short vowel: ss.** Look at the vowel before the s sound."
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.strasse: "Straße (street): ß after the long a."
+  ex.fluss: "Fluss (river): ss after the short u."
+  ex.gross: "groß (big): ß after the long o."
+  x.eszett.expl: "Straße: ß after the long a. Strasse is the Swiss spelling; ß is the German one."
+  x_eszett_long.prompt: "Which word is spelt correctly after a long vowel?"
+  x.ss.expl: "Fluss: ss after the short u. Flus is not a German spelling."
+  x_ss_short.prompt: "Which word is spelt with ss?"

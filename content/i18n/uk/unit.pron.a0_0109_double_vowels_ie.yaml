@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0109_double_vowels_ie
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Подвійні голосні та ie"
+  summary: "Подвійні aa, ee, oo і ie — довгі. Вчіть їх як шаблон."
+  obj: "Розпізнавати aa, ee, oo і ie як довгі голосні."
+  intro: "aa, ee і oo — довгі голосні. ie завжди означає довге i. Слова з цими написаннями довгі."
+  examples: "Слова з aa, ee, oo і ie."
+  summary_block: "**aa, ee, oo і ie — довгі.** Запам'ятовуйте написання разом зі словом."
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Це не те слово. Прочитайте пояснення."
+  fb.incorrect: "Не зовсім. Подивіться на слово ще раз."
+  ex.saal: "Saal (зала): довге a, пишеться aa."
+  ex.see: "See (озеро): довге e, пишеться ee."
+  ex.bier: "Bier (пиво): довге i, пишеться ie."
+  x.ie.expl: "Bier має ie — довге i. mit і Bitte мають коротке i."
+  x_ie.prompt: "Яке слово має довге i, написане як ie?"
+  x.double.expl: "See має ee — довге e. Bett і Sonne мають короткі голосні перед подвійними приголосними."
+  x_double.prompt: "Яке слово має довгий голосний, написаний подвоєною буквою (aa, ee, oo)?"

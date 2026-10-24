@@ -9,3 +9,9 @@ goals: [general, everyday]
 cefr: { from: A0, to: A0 }
 steps:
   - { unit: unit.pron.alphabet_a0 }
+  - { unit: unit.pron.a0_0104_umlaute_laut }
+  - { unit: unit.pron.a0_0105_umlaute_woerter }
+  - { unit: unit.pron.a0_0107_vowels_aei }
+  - { unit: unit.pron.a0_0108_vowels_ou }
+  - { unit: unit.pron.a0_0109_double_vowels_ie }
+  - { unit: unit.pron.a0_0106_eszett }
