@@ -22,11 +22,9 @@ const REVIEWED = new Set(["approved", "published"]);
 function TextNotice({ dict, msg, pivotName }: { dict: Dictionary; msg: Translate; pivotName: string }) {
   const values = Object.values(dict);
   const fallback = values.some((v) => v.fallback);
-  const machine = values.some((v) => !v.fallback && v.status === "machine_draft");
-  if (!fallback && !machine) return null;
+  if (!fallback) return null;
   return (
     <p className="banner">
-      {machine && <>{msg("status.machineDraft")} </>}
       {fallback && <>{msg("status.fallback", { language: pivotName })}</>}
     </p>
   );
@@ -148,9 +146,7 @@ export default async function Lesson({ params }: { params: Promise<{ lang: strin
           <p className="lead">{t(d, unit.summary)}</p>
           <div className="meta">
             <span className="tag">{msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes })}</span>
-            {!REVIEWED.has(unit.status) && <span className="tag warn">{msg("status.draftTag")}</span>}
           </div>
-          {unit.review.linguistic.status !== "passed" && <p className="banner">{msg("status.notReviewed")}</p>}
           <TextNotice dict={d} msg={msg} pivotName={pivotName} />
           {unit.prerequisites.length > 0 && (
             <p className="muted">{msg("catalog.prerequisites")}: {unit.prerequisites.map(name).join(", ")}</p>

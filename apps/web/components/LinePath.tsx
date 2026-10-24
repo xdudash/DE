@@ -100,7 +100,6 @@ export function LinePath({ lang, line, stations, preview }: Props) {
                   {state === "current" && <span className="chip here">{msg("path.here")}</span>}
                   {state === "planned" && <span className="chip">{msg("path.planned")}</span>}
                   {reachable && s.meta && <span>{s.meta}</span>}
-                  {reachable && s.draft && <span className="tag warn">{msg("status.draftTag")}</span>}
                 </span>
                 {state === "current" && reachable && (
                   <div className="station-card">
