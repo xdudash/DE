@@ -197,6 +197,52 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (correct && !evaluate(ex, { type: "single_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct option does not evaluate as correct`);
             break;
           }
+          case "true_false": {
+            if (!ex.statement_de.trim()) c.error("exercise.empty_statement", u.id, `${where}: statement_de is empty`);
+            break;
+          }
+          case "match_pairs": {
+            const lefts = new Set(ex.pairs.map((p) => p.id));
+            const rights = new Set(ex.pairs.map((p) => p.right_de));
+            if (lefts.size !== ex.pairs.length) c.error("exercise.option_id", u.id, `${where}: duplicate pair id`);
+            if (rights.size !== ex.pairs.length) c.error("exercise.match_rights", u.id, `${where}: two pairs share the same right side`);
+            const all: Record<string, string> = {};
+            for (const p of ex.pairs) all[p.id] = p.id;
+            if (!evaluate(ex, { type: "match_pairs", matches: all }).correct) c.error("exercise.self_check", u.id, `${where}: the correct pairing does not evaluate as correct`);
+            break;
+          }
+          case "reply_choice": {
+            const n = ex.options.filter((o) => o.correct).length;
+            if (n !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct reply required, found ${n}`);
+            const correct = ex.options.find((o) => o.correct);
+            if (correct && !evaluate(ex, { type: "reply_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct reply does not evaluate as correct`);
+            break;
+          }
+          case "article_input":
+          case "form_input":
+          case "gap_fill_input":
+          case "spelling_input":
+          case "number_input":
+          case "time_input": {
+            if (ex.accept.length < 1) c.error("exercise.accept_empty", u.id, `${where}: accept list is empty`);
+            for (const a of ex.accept) if (!evaluate(ex, { type: ex.type, text: a }).correct) c.error("exercise.self_check", u.id, `${where}: accepted "${a}" does not evaluate as correct`);
+            break;
+          }
+          case "multi_choice": {
+            const nCorrect = ex.options.filter((o) => o.correct).length;
+            const nWrong = ex.options.length - nCorrect;
+            if (nCorrect < 1 || nWrong < 1) c.error("exercise.multi_correct_count", u.id, `${where}: needs at least one correct and one incorrect option, found ${nCorrect} correct`);
+            const ids = new Set<string>();
+            for (const o of ex.options) {
+              if (ids.has(o.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${o.id}`);
+              ids.add(o.id);
+              if (!o.de && !o.text) c.error("exercise.option_empty", u.id, `${where}: option ${o.id} needs "de" or "text"`);
+              if (!o.correct && !o.feedback) c.warn("exercise.distractor_feedback", u.id, `${where}: distractor ${o.id} has no targeted feedback`);
+            }
+            const correctIds = ex.options.filter((o) => o.correct).map((o) => o.id);
+            if (correctIds.length > 0 && !evaluate(ex, { type: "multi_choice", optionIds: correctIds }).correct) c.error("exercise.self_check", u.id, `${where}: the correct set does not evaluate as correct`);
+            break;
+          }
           case "word_order": {
             if (ex.tokens.length > 9) c.error("exercise.too_many_tokens", u.id, `${where}: at most 9 tokens supported`);
             for (const a of ex.accept) {

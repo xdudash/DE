@@ -130,6 +130,13 @@ export interface SingleChoiceExercise extends ExerciseBase {
   options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
 }
 
+export interface MultiChoiceExercise extends ExerciseBase {
+  type: "multi_choice";
+  stem_de?: string;
+  /** Two or more options may be correct; the learner must pick exactly the correct set. */
+  options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
+}
+
 export interface WordOrderExercise extends ExerciseBase {
   type: "word_order";
   /** Chunks presented to the learner in this (shuffled-for-display) order. */
@@ -153,7 +160,37 @@ export interface TransformExercise extends ExerciseBase {
   accept: string[];
 }
 
-export type Exercise = SingleChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise;
+/** Free-text answers checked against an accepted list (ADR-0023 batch 1). */
+export type TextInputType = "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input";
+
+export interface TextInputExercise extends ExerciseBase {
+  type: TextInputType;
+  stem_de?: string;
+  /** Accepted answers, compared with the usual normalisation. Never empty. */
+  accept: string[];
+}
+
+export interface TrueFalseExercise extends ExerciseBase {
+  type: "true_false";
+  statement_de: string;
+  correct: boolean;
+  /** Shown when the learner picks the wrong value. */
+  wrong_feedback?: L10nRef;
+}
+
+export interface MatchPairsExercise extends ExerciseBase {
+  type: "match_pairs";
+  pairs: { id: string; left_de: string; right_de: string }[];
+}
+
+export interface ReplyChoiceExercise extends ExerciseBase {
+  type: "reply_choice";
+  line_de: string;
+  options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
+}
+
+export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
+  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }
