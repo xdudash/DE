@@ -43,3 +43,4 @@ Record choices affecting data ownership, privacy/security, deployability, operat
 ## Consequences
 ## Verification
 ~~~
+| [ADR-0021](./ADR-0021-batch-drafting-before-gold-review.md) | Batch drafting of up to 10 lessons per PR before the gold review; approval unchanged | Proposed, awaiting owner decision |
