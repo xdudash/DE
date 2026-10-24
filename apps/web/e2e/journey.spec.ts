@@ -49,13 +49,12 @@ test.describe("home: the line", () => {
     await expect(planned.first().getByText("In preparation")).toBeVisible();
   });
 
-  test("the station opens with the sentence the lesson teaches", async ({ page }) => {
+  test("the line starts with the first lesson (the A0 alphabet)", async ({ page }) => {
+    // The sentence illustration (figure.slotline) appears only for a lesson whose concept has a
+    // verb-position example. The first station is now the alphabet (ADR-0018 route order), so it is
+    // not shown here; the verb-position illustration returns with the A1 sentence lessons.
     await page.goto("/en");
-    const hero = page.locator("figure.slotline");
-    await expect(hero).toBeVisible();
-    // Position 2 is the finite verb, and it is the only yellow thing in the app.
-    await expect(hero.locator("li.verb .pos")).toHaveText("2");
-    await expect(hero.locator("li.verb .word")).toHaveAttribute("lang", "de");
+    await expect(page.getByText("The alphabet: spelling words aloud").first()).toBeVisible();
   });
 
   test("unreviewed content is labelled in the learner's language, not by its status code", async ({ page }) => {
