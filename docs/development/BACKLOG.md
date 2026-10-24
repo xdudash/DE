@@ -53,7 +53,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-056 | Listening tasks and dictation | F | DG-055 | P5 |
 | DG-057 | Writing tasks with rubric | F | DG-045 | P5 |
 | DG-058 | Speaking practice (shadowing, prepared answers) | F | DG-055 | P5 |
-| DG-059 | DACH scenarios (Behörden, Wohnen, Arbeit) with regional notes | F | DG-029, DG-043 | P5 |
+| DG-059 | Regional German (Austria, Switzerland) after the general course, deferred by ADR-0020 | F | DG-043, ADR-0020 | deferred |
 | DG-060 | FSRS-class scheduler v2 with A/B | G | DG-021, history | P6 |
 | DG-061 | Learning analytics and item difficulty | G | DG-033 | P6 |
 | DG-062 | Wave-2 explanation languages | G | coverage policy | P6 |
@@ -188,7 +188,7 @@ CI job with PostgreSQL and a test-only token issuer (never in production builds)
 | DG-056 | Listening comprehension and dictation | Real audio, transcripts, replay | DG-055 |
 | DG-057 | Writing with purpose/audience/rubric; automatic checks only (no AI per ADR-0014 §7) | Rubric documented per task | DG-045 |
 | DG-058 | Speaking: shadowing, prepared answers, record and compare; no unvalidated scores | Honest labels | DG-055 |
-| DG-059 | DACH scenarios with regional notes (DE/AT/CH) | Reviewed by a regional reviewer | DG-029, DG-043 |
+| DG-059 | Regional German (Austria, Switzerland) after the general course, deferred by ADR-0020 | Reviewed regional notes only | DG-043, ADR-0020 |
 | DG-060 | FSRS-class scheduler v2, A/B against v1 | Pre-registered metric, rollback rule | DG-021, history |
 | DG-061 | Learning analytics, item difficulty, accepted-answer gaps | Aggregated, no personal identifiers | DG-033 |
 | DG-062 | Wave-2 languages (tr, ar, pl, ro) where coverage policy is met | Coverage disclosed | reviewers |

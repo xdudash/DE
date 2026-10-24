@@ -14,11 +14,11 @@ import type { Catalog } from "./en.ts";
  */
 export const ar: Catalog = {
   "app.name": "DeutschGo",
-  "app.tagline": "الألمانية للحياة والعمل والدراسة في ألمانيا والنمسا وسويسرا",
+  "app.tagline": "الألمانية للحياة والعمل والدراسة",
   "app.chooseLanguage": "لغة الشرح",
 
   "home.start": "ابدأ هنا",
-  "home.intro": "دورة ألمانية كاملة للحياة والعمل والدراسة في ألمانيا والنمسا وسويسرا. يشرح كل درس القاعدة، ويعرضها في جمل حقيقية، ويتحقق من إجاباتك مع توضيح السبب.",
+  "home.intro": "دورة ألمانية كاملة للحياة والعمل والدراسة. يشرح كل درس القاعدة، ويعرضها في جمل حقيقية، ويتحقق من إجاباتك مع توضيح السبب.",
   "home.startCta": "ابدأ الدرس الأول",
   "home.startNote": "درس كامل واحد جاهز الآن. تظهر الموضوعات الأخرى كمخططة حتى تُكتب وتُراجعها مراجعة بشرية.",
 
@@ -69,11 +69,6 @@ export const ar: Catalog = {
   "setup.goal.work": "العمل",
   "setup.goal.study": "الدراسة",
   "setup.goal.exam": "الاستعداد للامتحان",
-  "setup.regionLabel": "أين ستستخدم اللغة؟",
-  "setup.region.standard": "عامة (بدون دولة)",
-  "setup.region.de": "ألمانيا",
-  "setup.region.at": "النمسا",
-  "setup.region.ch": "سويسرا",
   "setup.minutesLabel": "الوقت في اليوم",
   "setup.minutes": "{minutes} د",
   "setup.save": "احفظ خطتي",

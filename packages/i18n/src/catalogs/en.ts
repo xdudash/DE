@@ -7,11 +7,11 @@
  */
 export const en = {
   "app.name": "DeutschGo",
-  "app.tagline": "German for life, work and study in Germany, Austria and Switzerland",
+  "app.tagline": "German for life, work and study",
   "app.chooseLanguage": "Explanation language",
 
   "home.start": "Start here",
-  "home.intro": "A complete German course for life, work and study in Germany, Austria and Switzerland. Each lesson explains the rule, shows it in real sentences, and checks your answers with reasons.",
+  "home.intro": "A complete German course for life, work and study. Each lesson explains the rule, shows it in real sentences, and checks your answers with reasons.",
   "home.startCta": "Start the first lesson",
   "home.startNote": "One complete lesson is ready now. Other topics show as planned until they are written and reviewed by a human reviewer.",
 
@@ -62,11 +62,6 @@ export const en = {
   "setup.goal.work": "Work",
   "setup.goal.study": "Study",
   "setup.goal.exam": "Exam preparation",
-  "setup.regionLabel": "Where will you use it?",
-  "setup.region.standard": "General (no country)",
-  "setup.region.de": "Germany",
-  "setup.region.at": "Austria",
-  "setup.region.ch": "Switzerland",
   "setup.minutesLabel": "Time per day",
   "setup.minutes": "{minutes} min",
   "setup.save": "Save my plan",

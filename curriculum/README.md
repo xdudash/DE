@@ -1,6 +1,6 @@
 # DeutschGo curriculum
 
-Status: **planned**. This folder is the course plan from A0 to C2 (ADR-0018). It contains the order of topics, the lesson chain and the word counts. It contains no teaching text. Every lesson is still to be written and reviewed.
+Status: **planned**. This folder is the course plan from A0 to C2 (ADR-0018). The course teaches general German first; regional German (Austria, Switzerland) is planned for later (ADR-0020). It contains the order of topics, the lesson chain and the word counts. It contains no teaching text. Every lesson is still to be written and reviewed.
 
 ## Levels
 | Level | Lessons | New words per lesson | Review words per lesson | Topics | Scenarios |
@@ -9,9 +9,9 @@ Status: **planned**. This folder is the course plan from A0 to C2 (ADR-0018). It
 | [A1](./A1/README.md) | 600 | 8 | 6 | 41 | 8 |
 | [A2](./A2/README.md) | 750 | 9 | 7 | 27 | 11 |
 | [B1](./B1/README.md) | 1000 | 10 | 8 | 21 | 9 |
-| [B2](./B2/README.md) | 1000 | 10 | 8 | 19 | 8 |
-| [C1](./C1/README.md) | 1000 | 10 | 8 | 15 | 7 |
-| [C2](./C2/README.md) | 500 | 10 | 8 | 15 | 6 |
+| [B2](./B2/README.md) | 1000 | 10 | 8 | 18 | 8 |
+| [C1](./C1/README.md) | 1000 | 10 | 8 | 14 | 7 |
+| [C2](./C2/README.md) | 500 | 10 | 8 | 13 | 6 |
 
 ## One continuous chain
 - Lessons are ordered A0.01.01 → C2. Each lesson lists the lesson before it in `Previous`. The first lesson of each level follows the last lesson of the level before.
