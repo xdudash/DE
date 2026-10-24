@@ -86,6 +86,12 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Goal:** 5000 lessons in one chain from A0 to C2, with topic order, dependencies and word targets. **State:** plan generated under `curriculum/` (topics are a draft for review); `scripts/curriculum_plan.py --check` guards it.
 - **Acceptance:** chain verified by the generator; topics depend only on earlier topics; tier and choice rules tested in `apps/web/test/topic-choices.test.ts`.
 
+### DG-053 Audio for lessons
+- **Goal:** listening and pronunciation audio for every example and exercise. **State:** not started. **Needs:** a text-to-speech provider decision (cost, licence, EU data handling) recorded as an ADR; a schema field for audio; storage for generated files.
+
+### DG-054 Exercise types catalogue (many formats, like tests)
+- **Goal:** more exercise types beyond single choice, word order and cloze, such as matching, gap fill with a bank, categorisation, error correction, listening choice, dictation. **State:** four types exist. **Depends:** DG-045 and CONTENT_CONTRACT §8 for each new type (schema, evaluator tests, player).
+
 ### DG-052 Learner topic choices in the app
 - **Goal:** want/skip per topic on the profile, with conflict messages. **State:** logic only (`lib/topic-choices.ts`). **Needs:** reviewed topic names; no UI until then.
 

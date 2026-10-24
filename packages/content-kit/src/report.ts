@@ -17,7 +17,7 @@ export function formatCoverage(report: CheckReport): string {
 
 /* ------------------------------------------------------------------ curriculum report */
 
-const LEVELS: Cefr[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+const LEVELS: Cefr[] = ["A0", "A1", "A2", "B1", "B2", "C1", "C2"];
 const STATUSES: ContentStatus[] = ["planned", "draft", "needs_review", "approved", "published", "deprecated"];
 
 export interface Tally {

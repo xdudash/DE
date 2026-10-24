@@ -1,0 +1,80 @@
+# A0 calibration draft: the alphabet and how to spell words aloud.
+# Status needs_review: structurally valid, NOT reviewed by a qualified human (DG-007).
+schema: deutschgo.unit/1
+id: unit.pron.alphabet_a0
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.pron.alphabet]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 10
+objectives:
+  - { id: obj_letters, text: "@obj.letters", skill: knowledge }
+  - { id: obj_spell, text: "@obj.spell", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_berlin, de: "B – E – R – L – I – N", gloss: "@ex.berlin", highlight: [] }
+      - { id: ex_umlaut, de: "Ö wie in „schön“", gloss: "@ex.umlaut", highlight: [] }
+      - { id: ex_eszett, de: "ß – scharfes S", gloss: "@ex.eszett", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@b.summary" }
+
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_spell_name
+        type: single_choice
+        objective: obj_spell
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x.spell_name.prompt"
+        options:
+          - { id: a, de: "Ö", correct: true }
+          - { id: b, de: "O", correct: false, feedback: "@x.spell_name.b" }
+          - { id: c, de: "Ä", correct: false, feedback: "@x.spell_name.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.spell_name.explanation"
+
+      - id: x_letter_names
+        type: single_choice
+        objective: obj_letters
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x.letter_names.prompt"
+        stem_de: "Wie buchstabiert man „Mai“?"
+        options:
+          - { id: a, de: "M – A – I", correct: true }
+          - { id: b, de: "N – A – Y", correct: false, feedback: "@x.letter_names.b" }
+          - { id: c, de: "M – E – I", correct: false, feedback: "@x.letter_names.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.letter_names.explanation"
+
+      - id: x_eszett_letter
+        type: single_choice
+        objective: obj_letters
+        concepts: [concept.pron.alphabet]
+        difficulty: 2
+        prompt: "@x.eszett_letter.prompt"
+        options:
+          - { id: a, de: "ss", correct: false, feedback: "@x.eszett_letter.a" }
+          - { id: b, de: "ß", correct: true }
+          - { id: c, de: "sz", correct: false, feedback: "@x.eszett_letter.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.eszett_letter.explanation"
+
+review:
+  linguistic: { status: pending, notes: "A0 calibration draft. Needs a qualified reviewer (native speaker or teacher), see DG-007." }
+  pedagogical: { status: pending, notes: "Check that one block of about 10 minutes fits an absolute beginner." }
+  rights: { status: pending, notes: "All German text authored for DeutschGo; owner confirmation pending." }
