@@ -1,9 +1,9 @@
 # A0 calibration unit: the alphabet and how to spell words aloud.
-# Status needs_review: structurally valid, NOT reviewed by a qualified human (DG-007).
+# Status approved: approved by the project owner on 2026-10-24. A native-speaker review is still advisable (DG-007).
 schema: deutschgo.unit/1
 id: unit.pron.alphabet_a0
 version: 1.1.0
-status: needs_review
+status: approved
 title: "@title"
 summary: "@summary"
 cefr: A0
@@ -107,6 +107,6 @@ blocks:
         explanation: "@x.eszett_letter.explanation"
 
 review:
-  linguistic: { status: pending, notes: "A0 calibration unit. Needs a qualified reviewer (native speaker or teacher), see DG-007." }
-  pedagogical: { status: pending, notes: "Check that one block of about 12 minutes fits an absolute beginner." }
-  rights: { status: pending, notes: "All German text authored for DeutschGo; owner confirmation pending." }
+  linguistic: { status: passed, reviewer: "project owner", date: 2026-10-24, notes: "Approved by the project owner, 2026-10-24. Not a native-speaker review; a qualified check is still advisable (DG-007)." }
+  pedagogical: { status: passed, reviewer: "project owner", date: 2026-10-24, notes: "Approved by the project owner, 2026-10-24, as the reference lesson for drafting. Check the 12-minute estimate in the first real lesson run." }
+  rights: { status: passed, reviewer: "project owner", date: 2026-10-24, notes: "Authored for DeutschGo; approved by the project owner, 2026-10-24." }
