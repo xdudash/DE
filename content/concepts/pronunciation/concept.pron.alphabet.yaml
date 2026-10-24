@@ -1,0 +1,29 @@
+# Canonical concept: the German alphabet, letter names and the umlaut letters (A0 track, ADR-0018).
+# German facts live here once; explanations live in content/i18n/<lang>/.
+schema: deutschgo.concept/1
+id: concept.pron.alphabet
+version: 1.0.0
+status: needs_review
+kind: pronunciation
+domain: pronunciation
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A0, expected_mastery: A1 }
+pattern:
+  schema_de: "[Buchstabe] – [Buchstabe] – … (jeder Buchstabe mit seinem Namen)"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_letters, de: "Ö", gloss: "@ex.letters", highlight: [], source: src.deutschgo_original }
+  - { id: ex_names, de: "M – A – I", gloss: "@ex.names", highlight: [], source: src.deutschgo_original }
+variety: [standard]
+register: neutral
+relations:
+  - { type: related_to, target: concept.pron.umlauts, note: "@rel.umlauts" }
+  - { type: related_to, target: concept.ortho.eszett_and_ss, note: "@rel.eszett" }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft for calibration. Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

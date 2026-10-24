@@ -1,0 +1,36 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.alphabet_a0
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "The alphabet: spelling words aloud"
+  summary: "Spell a German word letter by letter, the way you would give your name on the phone."
+  obj.letters: "Name the letters of the German alphabet, including Ä, Ö, Ü and ß."
+  obj.spell: "Spell a short word aloud using the German letter names."
+  b.intro: |
+    In German, each letter has a name. When you spell a word aloud, you say the **name** of each letter, not the sound it makes in the word.
+
+    Say the names with a short pause between them: **B – E – R – L – I – N**.
+    Three letters are special: **Ä**, **Ö** and **Ü** have umlauts, and **ß** is a letter of its own.
+  b.examples.title: "Spelling aloud"
+  ex.berlin: "Berlin, spelt letter by letter."
+  ex.umlaut: "Ö is said as the letter name; in a word it is the umlaut sound."
+  ex.eszett: "ß is said as „eszett“ or „scharfes S“."
+  b.summary: "**Spelling is saying letter names.** Give each letter its name, with a pause between letters. Ä, Ö, Ü and ß have their own names."
+  b.practice.title: "Practice"
+  x.spell_name.prompt: "Which letter is named by the sound „ö“?"
+  x.spell_name.b: "O is a different letter. The name of Ö is „ö“ with the umlaut."
+  x.spell_name.c: "Ä is a different letter. Look for the letter with two dots that sounds like „ö“."
+  x.spell_name.explanation: "Ö is the letter with two dots; you say it as „ö“."
+  x.letter_names.prompt: "How do you spell „Mai“ aloud?"
+  x.letter_names.b: "N, A and Y are not in this word. Spell the letters one by one: M, A, I."
+  x.letter_names.c: "The second letter is A, not E. Its name is „a“."
+  x.letter_names.explanation: "M – A – I: say the name of each letter in turn."
+  x.eszett_letter.prompt: "Which single letter is the „scharfes S“?"
+  x.eszett_letter.a: "ss is two letters. The single letter is ß."
+  x.eszett_letter.c: "sz is not a German letter. The single letter is ß."
+  x.eszett_letter.explanation: "ß is written as one letter, and its name is „eszett“."
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Say the name of each letter in order."

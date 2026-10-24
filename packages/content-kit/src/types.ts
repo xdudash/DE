@@ -9,7 +9,7 @@
  */
 
 export type L10nRef = `@${string}`;
-export type Cefr = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type Cefr = "A0" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
 /** Editorial lifecycle of a canonical entity. */
 export type ContentStatus =

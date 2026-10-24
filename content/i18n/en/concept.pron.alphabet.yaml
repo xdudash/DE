@@ -1,0 +1,15 @@
+schema: deutschgo.l10n/1
+entity: concept.pron.alphabet
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "The German alphabet and letter names"
+  summary: "German has 26 letters plus three umlauts and ß. Letter names are not the same as the sounds they make, so spelling a word aloud needs its own names."
+  rel.umlauts: "Ä, Ö and Ü are letters of their own; the next concept explains their sounds."
+  rel.eszett: "ß is a letter of its own, used after long vowels and diphthongs."
+  pattern.scope: "Letters are written with one name each, and the umlaut letters keep their dots in the name."
+  pattern.limits: "Letter names are said on their own; they do not work as sentences."
+  ex.letters: "Ö is the umlaut letter; say it as its own name."
+  ex.names: "M – A – I spells Mai."

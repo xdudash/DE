@@ -40,6 +40,8 @@ The curriculum framework (CURRICULUM_FRAMEWORK.md) estimated about 60–90 units
 - The course is one chain. Every lesson's `previous` is the lesson before it in `curriculum/course.json`; the first lesson of each level follows the last of the level before. The generator fails if the chain breaks.
 - Topics are ordered by dependencies (`builds_on`). A topic may depend only on topics earlier in the course; the generator checks this.
 - The learner may mark a topic `want` (its lessons are added whatever the tier) or `skip` (its lessons are removed). A skipped topic that a kept lesson builds on is reported as a conflict, never hidden. Logic: `apps/web/lib/topic-choices.ts`.
+- The CEFR enum gains `A0` (schema `common.schema.json`, `Cefr` type, coverage report). This is a contract change under CONTENT_CONTRACT §8; the first A0 entities are `concept.pron.alphabet` and `unit.pron.alphabet_a0`, both `needs_review`.
+- Explanation languages: every entity is written for en, uk and ru; the learner reads the one matching their interface language. Wave-2 languages come later.
 - Planning output under `curriculum/` is a draft for review. It holds topics and word targets, never teaching text. The app UI for choices is not built yet: it needs reviewed topic names.
 
 ## Verification
