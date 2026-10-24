@@ -30,6 +30,32 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
         throw new AttemptError("malformed_request", '"gaps" must be an array of strings');
       }
       return { type: "cloze", gaps: r.gaps as string[] };
+    case "multi_choice":
+      if (!Array.isArray(r.optionIds) || r.optionIds.some((x) => typeof x !== "string")) {
+        throw new AttemptError("malformed_request", '"optionIds" must be an array of strings');
+      }
+      return { type: "multi_choice", optionIds: r.optionIds as string[] };
+    case "true_false":
+      if (typeof r.value !== "boolean") throw new AttemptError("malformed_request", '"value" must be a boolean');
+      return { type: "true_false", value: r.value };
+    case "match_pairs": {
+      if (typeof r.matches !== "object" || r.matches === null || Array.isArray(r.matches)
+        || Object.values(r.matches as Record<string, unknown>).some((x) => typeof x !== "string")) {
+        throw new AttemptError("malformed_request", '"matches" must be an object of string to string');
+      }
+      return { type: "match_pairs", matches: r.matches as Record<string, string> };
+    }
+    case "reply_choice":
+      if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
+      return { type: "reply_choice", optionId: r.optionId };
+    case "article_input":
+    case "form_input":
+    case "gap_fill_input":
+    case "spelling_input":
+    case "number_input":
+    case "time_input":
+      if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
+      return { type: r.type, text: r.text };
     case "transform":
       if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
       return { type: "transform", text: r.text };

@@ -197,6 +197,37 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (correct && !evaluate(ex, { type: "single_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct option does not evaluate as correct`);
             break;
           }
+          case "true_false": {
+            if (!ex.statement_de.trim()) c.error("exercise.empty_statement", u.id, `${where}: statement_de is empty`);
+            break;
+          }
+          case "match_pairs": {
+            const lefts = new Set(ex.pairs.map((p) => p.id));
+            const rights = new Set(ex.pairs.map((p) => p.right_de));
+            if (lefts.size !== ex.pairs.length) c.error("exercise.option_id", u.id, `${where}: duplicate pair id`);
+            if (rights.size !== ex.pairs.length) c.error("exercise.match_rights", u.id, `${where}: two pairs share the same right side`);
+            const all: Record<string, string> = {};
+            for (const p of ex.pairs) all[p.id] = p.id;
+            if (!evaluate(ex, { type: "match_pairs", matches: all }).correct) c.error("exercise.self_check", u.id, `${where}: the correct pairing does not evaluate as correct`);
+            break;
+          }
+          case "reply_choice": {
+            const n = ex.options.filter((o) => o.correct).length;
+            if (n !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct reply required, found ${n}`);
+            const correct = ex.options.find((o) => o.correct);
+            if (correct && !evaluate(ex, { type: "reply_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct reply does not evaluate as correct`);
+            break;
+          }
+          case "article_input":
+          case "form_input":
+          case "gap_fill_input":
+          case "spelling_input":
+          case "number_input":
+          case "time_input": {
+            if (ex.accept.length < 1) c.error("exercise.accept_empty", u.id, `${where}: accept list is empty`);
+            for (const a of ex.accept) if (!evaluate(ex, { type: ex.type, text: a }).correct) c.error("exercise.self_check", u.id, `${where}: accepted "${a}" does not evaluate as correct`);
+            break;
+          }
           case "multi_choice": {
             const nCorrect = ex.options.filter((o) => o.correct).length;
             const nWrong = ex.options.length - nCorrect;

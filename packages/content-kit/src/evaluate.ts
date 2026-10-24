@@ -13,7 +13,11 @@
  */
 import type {
   ClozeExercise,
+  MatchPairsExercise,
   MultiChoiceExercise,
+  ReplyChoiceExercise,
+  TextInputExercise,
+  TrueFalseExercise,
   Exercise,
   FeedbackRule,
   L10nRef,
@@ -53,6 +57,10 @@ export function answersEqual(a: string, b: string): boolean {
 export type Response =
   | { type: "single_choice"; optionId: string }
   | { type: "multi_choice"; optionIds: string[] }
+  | { type: "true_false"; value: boolean }
+  | { type: "match_pairs"; matches: Record<string, string> }
+  | { type: "reply_choice"; optionId: string }
+  | { type: "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input"; text: string }
   | { type: "word_order"; order: number[] }
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string };
@@ -153,6 +161,37 @@ function evalMultiChoice(ex: MultiChoiceExercise, optionIds: string[]): Evaluati
   return r;
 }
 
+function evalTextInput(ex: TextInputExercise, text: string): EvaluationResult {
+  const correct = ex.accept.some((a) => answersEqual(a, text));
+  return result(ex, correct, normalizeAnswer(text), correct ? undefined : matchRule(ex.feedback.rules, text));
+}
+
+function evalTrueFalse(ex: TrueFalseExercise, value: boolean): EvaluationResult {
+  const correct = value === ex.correct;
+  const r = result(ex, correct, value ? "true" : "false");
+  if (!correct && ex.wrong_feedback) r.ruleFeedback = ex.wrong_feedback;
+  return r;
+}
+
+/**
+ * Pairs: every left id must map to its own right id. Unknown or repeated ids are rejected.
+ * A missing pair counts as wrong. Score is the share of correct pairs.
+ */
+function evalMatchPairs(ex: MatchPairsExercise, matches: Record<string, string>): EvaluationResult {
+  const lefts = new Set(ex.pairs.map((p) => p.id));
+  const rights = new Set(ex.pairs.map((p) => p.id));
+  for (const [l, rr] of Object.entries(matches)) {
+    if (!lefts.has(l) || !rights.has(rr)) throw new EvaluationError(`match_pairs ${ex.id}: unknown pair ${l}→${rr}`);
+  }
+  if (new Set(Object.values(matches)).size !== Object.values(matches).length) {
+    throw new EvaluationError(`match_pairs ${ex.id}: a right side is used twice`);
+  }
+  const nCorrect = ex.pairs.filter((p) => matches[p.id] === p.id).length;
+  const correct = nCorrect === ex.pairs.length;
+  const normalized = ex.pairs.map((p) => `${p.id}:${matches[p.id] ?? "-"}`).join(",");
+  return result(ex, correct, normalized, undefined, ex.pairs.length ? nCorrect / ex.pairs.length : 0);
+}
+
 function evalWordOrder(ex: WordOrderExercise, order: number[]): EvaluationResult {
   const sentence = assembleWordOrder(ex, order);
   const correct = ex.accept.some((a) => answersEqual(a, sentence));
@@ -200,6 +239,19 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
   switch (ex.type) {
     case "single_choice":
       return evalSingleChoice(ex, (response as Extract<Response, { type: "single_choice" }>).optionId);
+    case "true_false":
+      return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
+    case "match_pairs":
+      return evalMatchPairs(ex, (response as Extract<Response, { type: "match_pairs" }>).matches);
+    case "reply_choice":
+      return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "reply_choice" }>).optionId);
+    case "article_input":
+    case "form_input":
+    case "gap_fill_input":
+    case "spelling_input":
+    case "number_input":
+    case "time_input":
+      return evalTextInput(ex as TextInputExercise, (response as Extract<Response, { type: "article_input" }>).text);
     case "multi_choice":
       return evalMultiChoice(ex, (response as Extract<Response, { type: "multi_choice" }>).optionIds);
     case "word_order":
