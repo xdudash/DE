@@ -9,7 +9,7 @@ Status: **planned**. Topics and order are a draft for review. No lesson in this 
 | Blocks (about 25 slots each) | 40 |
 | Checkpoints (one per block) | 40 |
 | Scenario lessons (apply the grammar) | 160 |
-| Topics in the inventory | 19 |
+| Topics in the inventory | 18 |
 | New words per lesson | 10 |
 | Review words per lesson | 8 |
 | Word introductions in the level | 9600 |

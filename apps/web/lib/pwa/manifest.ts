@@ -41,7 +41,7 @@ export function appManifest(): AppManifest {
     id: "/",
     name: "DeutschGo",
     short_name: "DeutschGo",
-    description: "German for life, work and study in Germany, Austria and Switzerland.",
+    description: "German for life, work and study.",
     start_url: "/",
     scope: "/",
     display: "standalone",

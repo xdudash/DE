@@ -247,7 +247,7 @@ def overview(levels: dict, totals: dict[str, int]) -> str:
     )
     return f"""# DeutschGo curriculum
 
-Status: **planned**. This folder is the course plan from A0 to C2 (ADR-0018). It contains the order of topics, the lesson chain and the word counts. It contains no teaching text. Every lesson is still to be written and reviewed.
+Status: **planned**. This folder is the course plan from A0 to C2 (ADR-0018). The course teaches general German first; regional German (Austria, Switzerland) is planned for later (ADR-0020). It contains the order of topics, the lesson chain and the word counts. It contains no teaching text. Every lesson is still to be written and reviewed.
 
 ## Levels
 | Level | Lessons | New words per lesson | Review words per lesson | Topics | Scenarios |

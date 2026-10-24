@@ -2,209 +2,1589 @@
   "_about": "Topic inventory per CEFR level, in teaching order. Each concept lists the concepts it depends on (after). Concepts may depend on earlier levels. Planning data only: reviewed by a human before any lesson is written (CLAUDE.md, CONTENT_CONTRACT).",
   "levels": {
     "A0": {
-      "new_words": 5, "review_words": 3,
+      "new_words": 5,
+      "review_words": 3,
       "concepts": [
-        {"key": "alphabet", "de": "Alphabet und Buchstaben", "en": "Alphabet and letters", "weight": 1, "after": []},
-        {"key": "umlaute", "de": "Umlaute und ß", "en": "Umlauts and ß", "weight": 1, "after": ["alphabet"]},
-        {"key": "vowels_length", "de": "Vokale und Länge", "en": "Vowels and length", "weight": 1, "after": ["alphabet"]},
-        {"key": "consonants", "de": "Konsonanten (ch, sch, r)", "en": "Consonants (ch, sch, r)", "weight": 1, "after": ["alphabet"]},
-        {"key": "greetings", "de": "Begrüßung", "en": "Greetings", "weight": 1, "after": []},
-        {"key": "polite_phrases", "de": "Höfliche Wendungen", "en": "Polite phrases", "weight": 1, "after": ["greetings"]},
-        {"key": "numbers_0_20", "de": "Zahlen 0–20", "en": "Numbers 0–20", "weight": 2, "after": []},
-        {"key": "numbers_20_100", "de": "Zahlen 20–100", "en": "Numbers 20–100", "weight": 1, "after": ["numbers_0_20"]},
-        {"key": "days_months", "de": "Tage und Monate", "en": "Days and months", "weight": 1, "after": ["numbers_0_20"]},
-        {"key": "clock_time", "de": "Uhrzeit", "en": "Telling the time", "weight": 2, "after": ["numbers_20_100"]},
-        {"key": "personal_pronouns", "de": "Personalpronomen", "en": "Personal pronouns", "weight": 2, "after": ["greetings"]},
-        {"key": "self_intro", "de": "Sich vorstellen", "en": "Introducing yourself", "weight": 2, "after": ["personal_pronouns", "polite_phrases"]},
-        {"key": "verb_sein", "de": "Verb sein", "en": "The verb sein", "weight": 2, "after": ["personal_pronouns"]},
-        {"key": "verb_haben", "de": "Verb haben", "en": "The verb haben", "weight": 2, "after": ["verb_sein"]},
-        {"key": "yes_no_questions", "de": "Ja-/Nein-Fragen", "en": "Yes/no questions", "weight": 2, "after": ["verb_sein"]},
-        {"key": "w_questions", "de": "W-Fragen", "en": "Wh-questions", "weight": 2, "after": ["yes_no_questions"]},
-        {"key": "negation_nicht_kein", "de": "Verneinung mit nicht und kein", "en": "Negation with nicht and kein", "weight": 2, "after": ["verb_haben"]},
-        {"key": "basic_adjectives", "de": "Einfache Adjektive", "en": "Basic adjectives", "weight": 1, "after": ["verb_sein"]},
-        {"key": "colors_family", "de": "Farben und Familie", "en": "Colours and family", "weight": 1, "after": ["basic_adjectives"]},
-        {"key": "food_drink", "de": "Essen und Trinken", "en": "Food and drink", "weight": 1, "after": ["verb_haben"]},
-        {"key": "shopping_numbers", "de": "Einkaufen und Preise", "en": "Shopping and prices", "weight": 2, "after": ["numbers_20_100", "food_drink"]},
-        {"key": "articles_intro", "de": "Artikel der, die, das", "en": "Articles der, die, das", "weight": 2, "after": ["basic_adjectives"]},
-        {"key": "plural_intro", "de": "Plural", "en": "Plural", "weight": 1, "after": ["articles_intro"]},
-        {"key": "directions_basic", "de": "Wegbeschreibung", "en": "Giving directions", "weight": 1, "after": ["w_questions"]},
-        {"key": "daily_routine", "de": "Tagesablauf", "en": "Daily routine", "weight": 2, "after": ["clock_time", "verb_sein"]}
+        {
+          "key": "alphabet",
+          "de": "Alphabet und Buchstaben",
+          "en": "Alphabet and letters",
+          "weight": 1,
+          "after": []
+        },
+        {
+          "key": "umlaute",
+          "de": "Umlaute und ß",
+          "en": "Umlauts and ß",
+          "weight": 1,
+          "after": [
+            "alphabet"
+          ]
+        },
+        {
+          "key": "vowels_length",
+          "de": "Vokale und Länge",
+          "en": "Vowels and length",
+          "weight": 1,
+          "after": [
+            "alphabet"
+          ]
+        },
+        {
+          "key": "consonants",
+          "de": "Konsonanten (ch, sch, r)",
+          "en": "Consonants (ch, sch, r)",
+          "weight": 1,
+          "after": [
+            "alphabet"
+          ]
+        },
+        {
+          "key": "greetings",
+          "de": "Begrüßung",
+          "en": "Greetings",
+          "weight": 1,
+          "after": []
+        },
+        {
+          "key": "polite_phrases",
+          "de": "Höfliche Wendungen",
+          "en": "Polite phrases",
+          "weight": 1,
+          "after": [
+            "greetings"
+          ]
+        },
+        {
+          "key": "numbers_0_20",
+          "de": "Zahlen 0–20",
+          "en": "Numbers 0–20",
+          "weight": 2,
+          "after": []
+        },
+        {
+          "key": "numbers_20_100",
+          "de": "Zahlen 20–100",
+          "en": "Numbers 20–100",
+          "weight": 1,
+          "after": [
+            "numbers_0_20"
+          ]
+        },
+        {
+          "key": "days_months",
+          "de": "Tage und Monate",
+          "en": "Days and months",
+          "weight": 1,
+          "after": [
+            "numbers_0_20"
+          ]
+        },
+        {
+          "key": "clock_time",
+          "de": "Uhrzeit",
+          "en": "Telling the time",
+          "weight": 2,
+          "after": [
+            "numbers_20_100"
+          ]
+        },
+        {
+          "key": "personal_pronouns",
+          "de": "Personalpronomen",
+          "en": "Personal pronouns",
+          "weight": 2,
+          "after": [
+            "greetings"
+          ]
+        },
+        {
+          "key": "self_intro",
+          "de": "Sich vorstellen",
+          "en": "Introducing yourself",
+          "weight": 2,
+          "after": [
+            "personal_pronouns",
+            "polite_phrases"
+          ]
+        },
+        {
+          "key": "verb_sein",
+          "de": "Verb sein",
+          "en": "The verb sein",
+          "weight": 2,
+          "after": [
+            "personal_pronouns"
+          ]
+        },
+        {
+          "key": "verb_haben",
+          "de": "Verb haben",
+          "en": "The verb haben",
+          "weight": 2,
+          "after": [
+            "verb_sein"
+          ]
+        },
+        {
+          "key": "yes_no_questions",
+          "de": "Ja-/Nein-Fragen",
+          "en": "Yes/no questions",
+          "weight": 2,
+          "after": [
+            "verb_sein"
+          ]
+        },
+        {
+          "key": "w_questions",
+          "de": "W-Fragen",
+          "en": "Wh-questions",
+          "weight": 2,
+          "after": [
+            "yes_no_questions"
+          ]
+        },
+        {
+          "key": "negation_nicht_kein",
+          "de": "Verneinung mit nicht und kein",
+          "en": "Negation with nicht and kein",
+          "weight": 2,
+          "after": [
+            "verb_haben"
+          ]
+        },
+        {
+          "key": "basic_adjectives",
+          "de": "Einfache Adjektive",
+          "en": "Basic adjectives",
+          "weight": 1,
+          "after": [
+            "verb_sein"
+          ]
+        },
+        {
+          "key": "colors_family",
+          "de": "Farben und Familie",
+          "en": "Colours and family",
+          "weight": 1,
+          "after": [
+            "basic_adjectives"
+          ]
+        },
+        {
+          "key": "food_drink",
+          "de": "Essen und Trinken",
+          "en": "Food and drink",
+          "weight": 1,
+          "after": [
+            "verb_haben"
+          ]
+        },
+        {
+          "key": "shopping_numbers",
+          "de": "Einkaufen und Preise",
+          "en": "Shopping and prices",
+          "weight": 2,
+          "after": [
+            "numbers_20_100",
+            "food_drink"
+          ]
+        },
+        {
+          "key": "articles_intro",
+          "de": "Artikel der, die, das",
+          "en": "Articles der, die, das",
+          "weight": 2,
+          "after": [
+            "basic_adjectives"
+          ]
+        },
+        {
+          "key": "plural_intro",
+          "de": "Plural",
+          "en": "Plural",
+          "weight": 1,
+          "after": [
+            "articles_intro"
+          ]
+        },
+        {
+          "key": "directions_basic",
+          "de": "Wegbeschreibung",
+          "en": "Giving directions",
+          "weight": 1,
+          "after": [
+            "w_questions"
+          ]
+        },
+        {
+          "key": "daily_routine",
+          "de": "Tagesablauf",
+          "en": "Daily routine",
+          "weight": 2,
+          "after": [
+            "clock_time",
+            "verb_sein"
+          ]
+        }
       ],
-      "scenarios": ["Im Kurs sich vorstellen", "Im Café bestellen", "Auf dem Markt einkaufen", "Den Weg im Bahnhof erfragen", "Eine Uhrzeit am Telefon nennen"]
+      "scenarios": [
+        "Im Kurs sich vorstellen",
+        "Im Café bestellen",
+        "Auf dem Markt einkaufen",
+        "Den Weg im Bahnhof erfragen",
+        "Eine Uhrzeit am Telefon nennen"
+      ]
     },
     "A1": {
-      "new_words": 8, "review_words": 6,
+      "new_words": 8,
+      "review_words": 6,
       "concepts": [
-        {"key": "present_regular", "de": "Präsens regelmäßig", "en": "Regular present tense", "weight": 2, "after": ["personal_pronouns"]},
-        {"key": "present_irregular", "de": "Präsens unregelmäßig (fahren, sehen)", "en": "Irregular present (fahren, sehen)", "weight": 2, "after": ["present_regular"]},
-        {"key": "modal_koennen_muessen", "de": "Modalverben können, müssen", "en": "Modals können, müssen", "weight": 2, "after": ["present_regular"]},
-        {"key": "modal_wollen_moechten", "de": "Modalverben wollen, möchten", "en": "Modals wollen, möchten", "weight": 2, "after": ["modal_koennen_muessen"]},
-        {"key": "modal_duerfen_sollen", "de": "Modalverben dürfen, sollen", "en": "Modals dürfen, sollen", "weight": 1, "after": ["modal_wollen_moechten"]},
-        {"key": "separable_verbs", "de": "Trennbare Verben", "en": "Separable verbs", "weight": 2, "after": ["present_regular"]},
-        {"key": "imperative_sie", "de": "Imperativ (Sie-Form)", "en": "Imperative (Sie form)", "weight": 1, "after": ["separable_verbs"]},
-        {"key": "nominativ_akkusativ", "de": "Nominativ und Akkusativ", "en": "Nominative and accusative", "weight": 3, "after": ["articles_intro"]},
-        {"key": "definite_articles", "de": "Bestimmte Artikel (alle Fälle)", "en": "Definite articles (all cases)", "weight": 2, "after": ["nominativ_akkusativ"]},
-        {"key": "indefinite_articles", "de": "Unbestimmte Artikel und ein-Wörter", "en": "Indefinite articles and ein-words", "weight": 2, "after": ["definite_articles"]},
-        {"key": "possessive_articles", "de": "Possessivartikel", "en": "Possessive articles", "weight": 2, "after": ["indefinite_articles"]},
-        {"key": "negation_kein", "de": "kein und nicht im Satz", "en": "kein and nicht in sentences", "weight": 1, "after": ["indefinite_articles"]},
-        {"key": "accusative_pronouns", "de": "Personalpronomen im Akkusativ", "en": "Pronouns in the accusative", "weight": 2, "after": ["nominativ_akkusativ"]},
-        {"key": "dative_intro", "de": "Dativ: Grundlagen", "en": "Dative: basics", "weight": 2, "after": ["accusative_pronouns"]},
-        {"key": "dative_pronouns_verbs", "de": "Dativ-Pronomen und Verben mit Dativ", "en": "Dative pronouns and dative verbs", "weight": 2, "after": ["dative_intro"]},
-        {"key": "prepositions_akk", "de": "Präpositionen mit Akkusativ", "en": "Prepositions with accusative", "weight": 2, "after": ["nominativ_akkusativ"]},
-        {"key": "prepositions_dat", "de": "Präpositionen mit Dativ", "en": "Prepositions with dative", "weight": 2, "after": ["dative_intro"]},
-        {"key": "wechselpraepositionen_intro", "de": "Wechselpräpositionen (Grundlagen)", "en": "Two-way prepositions (basics)", "weight": 2, "after": ["prepositions_akk", "prepositions_dat"]},
-        {"key": "perfekt_haben", "de": "Perfekt mit haben", "en": "Perfect with haben", "weight": 3, "after": ["present_regular"]},
-        {"key": "perfekt_sein", "de": "Perfekt mit sein", "en": "Perfect with sein", "weight": 2, "after": ["perfekt_haben"]},
-        {"key": "praeteritum_sein_haben", "de": "Präteritum von sein und haben", "en": "Simple past of sein and haben", "weight": 2, "after": ["perfekt_haben"]},
-        {"key": "praeteritum_modals", "de": "Präteritum der Modalverben", "en": "Simple past of modals", "weight": 1, "after": ["praeteritum_sein_haben", "modal_koennen_muessen"]},
-        {"key": "word_order_v2", "de": "Wortstellung: Verb an Position 2", "en": "Word order: verb in second position", "weight": 2, "after": ["present_regular"]},
-        {"key": "w_questions_full", "de": "W-Fragen im Satz", "en": "Wh-questions in sentences", "weight": 1, "after": ["word_order_v2"]},
-        {"key": "main_clause_connectors", "de": "Hauptsatz-Konnektoren (und, aber, denn)", "en": "Main-clause connectors (und, aber, denn)", "weight": 1, "after": ["word_order_v2"]},
-        {"key": "adjectives_predicative", "de": "Adjektive nach sein", "en": "Adjectives after sein", "weight": 1, "after": ["basic_adjectives"]},
-        {"key": "comparative_basic", "de": "Komparativ (Grundlagen)", "en": "Comparative (basics)", "weight": 2, "after": ["adjectives_predicative"]},
-        {"key": "time_expressions", "de": "Zeitangaben", "en": "Time expressions", "weight": 2, "after": ["clock_time", "word_order_v2"]},
-        {"key": "numbers_100_million", "de": "Zahlen über 100", "en": "Numbers above 100", "weight": 1, "after": ["shopping_numbers"]},
-        {"key": "dates_ordinals", "de": "Datum und Ordinalzahlen", "en": "Dates and ordinals", "weight": 2, "after": ["days_months", "numbers_20_100"]},
-        {"key": "home_rooms", "de": "Wohnung und Zimmer", "en": "Home and rooms", "weight": 1, "after": ["nominativ_akkusativ"]},
-        {"key": "clothes_shopping", "de": "Kleidung kaufen", "en": "Buying clothes", "weight": 1, "after": ["indefinite_articles"]},
-        {"key": "body_parts", "de": "Körper und Gesundheit (Grundwortschatz)", "en": "Body and health (basic vocabulary)", "weight": 1, "after": ["colors_family"]},
-        {"key": "transport_basic", "de": "Verkehrsmittel", "en": "Means of transport", "weight": 1, "after": ["prepositions_dat"]},
-        {"key": "weather", "de": "Wetter", "en": "Weather", "weight": 1, "after": ["basic_adjectives"]},
-        {"key": "hobbies", "de": "Hobbys und Freizeit", "en": "Hobbies and free time", "weight": 1, "after": ["present_regular"]},
-        {"key": "travel_booking", "de": "Reisen und Buchen", "en": "Travel and booking", "weight": 1, "after": ["perfekt_haben"]},
-        {"key": "restaurant_order", "de": "Im Restaurant bestellen", "en": "Ordering in a restaurant", "weight": 1, "after": ["modal_wollen_moechten", "food_drink"]},
-        {"key": "pronunciation_stress", "de": "Wortakzent", "en": "Word stress", "weight": 1, "after": ["consonants"]},
-        {"key": "sentence_melody", "de": "Satzmelodie", "en": "Sentence melody", "weight": 1, "after": ["w_questions_full"]},
-        {"key": "capitalisation", "de": "Groß- und Kleinschreibung", "en": "Capitalisation", "weight": 1, "after": ["articles_intro"]}
+        {
+          "key": "present_regular",
+          "de": "Präsens regelmäßig",
+          "en": "Regular present tense",
+          "weight": 2,
+          "after": [
+            "personal_pronouns"
+          ]
+        },
+        {
+          "key": "present_irregular",
+          "de": "Präsens unregelmäßig (fahren, sehen)",
+          "en": "Irregular present (fahren, sehen)",
+          "weight": 2,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "modal_koennen_muessen",
+          "de": "Modalverben können, müssen",
+          "en": "Modals können, müssen",
+          "weight": 2,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "modal_wollen_moechten",
+          "de": "Modalverben wollen, möchten",
+          "en": "Modals wollen, möchten",
+          "weight": 2,
+          "after": [
+            "modal_koennen_muessen"
+          ]
+        },
+        {
+          "key": "modal_duerfen_sollen",
+          "de": "Modalverben dürfen, sollen",
+          "en": "Modals dürfen, sollen",
+          "weight": 1,
+          "after": [
+            "modal_wollen_moechten"
+          ]
+        },
+        {
+          "key": "separable_verbs",
+          "de": "Trennbare Verben",
+          "en": "Separable verbs",
+          "weight": 2,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "imperative_sie",
+          "de": "Imperativ (Sie-Form)",
+          "en": "Imperative (Sie form)",
+          "weight": 1,
+          "after": [
+            "separable_verbs"
+          ]
+        },
+        {
+          "key": "nominativ_akkusativ",
+          "de": "Nominativ und Akkusativ",
+          "en": "Nominative and accusative",
+          "weight": 3,
+          "after": [
+            "articles_intro"
+          ]
+        },
+        {
+          "key": "definite_articles",
+          "de": "Bestimmte Artikel (alle Fälle)",
+          "en": "Definite articles (all cases)",
+          "weight": 2,
+          "after": [
+            "nominativ_akkusativ"
+          ]
+        },
+        {
+          "key": "indefinite_articles",
+          "de": "Unbestimmte Artikel und ein-Wörter",
+          "en": "Indefinite articles and ein-words",
+          "weight": 2,
+          "after": [
+            "definite_articles"
+          ]
+        },
+        {
+          "key": "possessive_articles",
+          "de": "Possessivartikel",
+          "en": "Possessive articles",
+          "weight": 2,
+          "after": [
+            "indefinite_articles"
+          ]
+        },
+        {
+          "key": "negation_kein",
+          "de": "kein und nicht im Satz",
+          "en": "kein and nicht in sentences",
+          "weight": 1,
+          "after": [
+            "indefinite_articles"
+          ]
+        },
+        {
+          "key": "accusative_pronouns",
+          "de": "Personalpronomen im Akkusativ",
+          "en": "Pronouns in the accusative",
+          "weight": 2,
+          "after": [
+            "nominativ_akkusativ"
+          ]
+        },
+        {
+          "key": "dative_intro",
+          "de": "Dativ: Grundlagen",
+          "en": "Dative: basics",
+          "weight": 2,
+          "after": [
+            "accusative_pronouns"
+          ]
+        },
+        {
+          "key": "dative_pronouns_verbs",
+          "de": "Dativ-Pronomen und Verben mit Dativ",
+          "en": "Dative pronouns and dative verbs",
+          "weight": 2,
+          "after": [
+            "dative_intro"
+          ]
+        },
+        {
+          "key": "prepositions_akk",
+          "de": "Präpositionen mit Akkusativ",
+          "en": "Prepositions with accusative",
+          "weight": 2,
+          "after": [
+            "nominativ_akkusativ"
+          ]
+        },
+        {
+          "key": "prepositions_dat",
+          "de": "Präpositionen mit Dativ",
+          "en": "Prepositions with dative",
+          "weight": 2,
+          "after": [
+            "dative_intro"
+          ]
+        },
+        {
+          "key": "wechselpraepositionen_intro",
+          "de": "Wechselpräpositionen (Grundlagen)",
+          "en": "Two-way prepositions (basics)",
+          "weight": 2,
+          "after": [
+            "prepositions_akk",
+            "prepositions_dat"
+          ]
+        },
+        {
+          "key": "perfekt_haben",
+          "de": "Perfekt mit haben",
+          "en": "Perfect with haben",
+          "weight": 3,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "perfekt_sein",
+          "de": "Perfekt mit sein",
+          "en": "Perfect with sein",
+          "weight": 2,
+          "after": [
+            "perfekt_haben"
+          ]
+        },
+        {
+          "key": "praeteritum_sein_haben",
+          "de": "Präteritum von sein und haben",
+          "en": "Simple past of sein and haben",
+          "weight": 2,
+          "after": [
+            "perfekt_haben"
+          ]
+        },
+        {
+          "key": "praeteritum_modals",
+          "de": "Präteritum der Modalverben",
+          "en": "Simple past of modals",
+          "weight": 1,
+          "after": [
+            "praeteritum_sein_haben",
+            "modal_koennen_muessen"
+          ]
+        },
+        {
+          "key": "word_order_v2",
+          "de": "Wortstellung: Verb an Position 2",
+          "en": "Word order: verb in second position",
+          "weight": 2,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "w_questions_full",
+          "de": "W-Fragen im Satz",
+          "en": "Wh-questions in sentences",
+          "weight": 1,
+          "after": [
+            "word_order_v2"
+          ]
+        },
+        {
+          "key": "main_clause_connectors",
+          "de": "Hauptsatz-Konnektoren (und, aber, denn)",
+          "en": "Main-clause connectors (und, aber, denn)",
+          "weight": 1,
+          "after": [
+            "word_order_v2"
+          ]
+        },
+        {
+          "key": "adjectives_predicative",
+          "de": "Adjektive nach sein",
+          "en": "Adjectives after sein",
+          "weight": 1,
+          "after": [
+            "basic_adjectives"
+          ]
+        },
+        {
+          "key": "comparative_basic",
+          "de": "Komparativ (Grundlagen)",
+          "en": "Comparative (basics)",
+          "weight": 2,
+          "after": [
+            "adjectives_predicative"
+          ]
+        },
+        {
+          "key": "time_expressions",
+          "de": "Zeitangaben",
+          "en": "Time expressions",
+          "weight": 2,
+          "after": [
+            "clock_time",
+            "word_order_v2"
+          ]
+        },
+        {
+          "key": "numbers_100_million",
+          "de": "Zahlen über 100",
+          "en": "Numbers above 100",
+          "weight": 1,
+          "after": [
+            "shopping_numbers"
+          ]
+        },
+        {
+          "key": "dates_ordinals",
+          "de": "Datum und Ordinalzahlen",
+          "en": "Dates and ordinals",
+          "weight": 2,
+          "after": [
+            "days_months",
+            "numbers_20_100"
+          ]
+        },
+        {
+          "key": "home_rooms",
+          "de": "Wohnung und Zimmer",
+          "en": "Home and rooms",
+          "weight": 1,
+          "after": [
+            "nominativ_akkusativ"
+          ]
+        },
+        {
+          "key": "clothes_shopping",
+          "de": "Kleidung kaufen",
+          "en": "Buying clothes",
+          "weight": 1,
+          "after": [
+            "indefinite_articles"
+          ]
+        },
+        {
+          "key": "body_parts",
+          "de": "Körper und Gesundheit (Grundwortschatz)",
+          "en": "Body and health (basic vocabulary)",
+          "weight": 1,
+          "after": [
+            "colors_family"
+          ]
+        },
+        {
+          "key": "transport_basic",
+          "de": "Verkehrsmittel",
+          "en": "Means of transport",
+          "weight": 1,
+          "after": [
+            "prepositions_dat"
+          ]
+        },
+        {
+          "key": "weather",
+          "de": "Wetter",
+          "en": "Weather",
+          "weight": 1,
+          "after": [
+            "basic_adjectives"
+          ]
+        },
+        {
+          "key": "hobbies",
+          "de": "Hobbys und Freizeit",
+          "en": "Hobbies and free time",
+          "weight": 1,
+          "after": [
+            "present_regular"
+          ]
+        },
+        {
+          "key": "travel_booking",
+          "de": "Reisen und Buchen",
+          "en": "Travel and booking",
+          "weight": 1,
+          "after": [
+            "perfekt_haben"
+          ]
+        },
+        {
+          "key": "restaurant_order",
+          "de": "Im Restaurant bestellen",
+          "en": "Ordering in a restaurant",
+          "weight": 1,
+          "after": [
+            "modal_wollen_moechten",
+            "food_drink"
+          ]
+        },
+        {
+          "key": "pronunciation_stress",
+          "de": "Wortakzent",
+          "en": "Word stress",
+          "weight": 1,
+          "after": [
+            "consonants"
+          ]
+        },
+        {
+          "key": "sentence_melody",
+          "de": "Satzmelodie",
+          "en": "Sentence melody",
+          "weight": 1,
+          "after": [
+            "w_questions_full"
+          ]
+        },
+        {
+          "key": "capitalisation",
+          "de": "Groß- und Kleinschreibung",
+          "en": "Capitalisation",
+          "weight": 1,
+          "after": [
+            "articles_intro"
+          ]
+        }
       ],
-      "scenarios": ["Wohnungssuche und Besichtigung", "Arzt und Apotheke", "Fahrkarte und Verbindung", "Kleidung im Geschäft", "Einladung zu einem Fest", "Hotel buchen", "Wetter und Freizeit besprechen", "Ärger im Restaurant melden"]
+      "scenarios": [
+        "Wohnungssuche und Besichtigung",
+        "Arzt und Apotheke",
+        "Fahrkarte und Verbindung",
+        "Kleidung im Geschäft",
+        "Einladung zu einem Fest",
+        "Hotel buchen",
+        "Wetter und Freizeit besprechen",
+        "Ärger im Restaurant melden"
+      ]
     },
     "A2": {
-      "new_words": 9, "review_words": 7,
+      "new_words": 9,
+      "review_words": 7,
       "concepts": [
-        {"key": "perfekt_advanced", "de": "Perfekt (Vertiefung)", "en": "Perfect (deepening)", "weight": 2, "after": ["perfekt_sein"]},
-        {"key": "praeteritum_full", "de": "Präteritum (alle Verben)", "en": "Simple past (all verbs)", "weight": 2, "after": ["praeteritum_modals", "perfekt_advanced"]},
-        {"key": "nebensatz_weil", "de": "Nebensatz mit weil", "en": "Subordinate clause with weil", "weight": 2, "after": ["word_order_v2", "main_clause_connectors"]},
-        {"key": "nebensatz_dass", "de": "Nebensatz mit dass", "en": "Subordinate clause with dass", "weight": 2, "after": ["nebensatz_weil"]},
-        {"key": "nebensatz_wenn", "de": "Nebensatz mit wenn", "en": "Subordinate clause with wenn", "weight": 2, "after": ["nebensatz_weil"]},
-        {"key": "nebensatz_ob", "de": "Indirekte Fragen mit ob", "en": "Indirect questions with ob", "weight": 1, "after": ["nebensatz_dass"]},
-        {"key": "relative_clauses_nom_akk", "de": "Relativsätze (Nominativ, Akkusativ)", "en": "Relative clauses (nominative, accusative)", "weight": 3, "after": ["nebensatz_dass", "definite_articles"]},
-        {"key": "relative_clauses_dat_gen", "de": "Relativsätze (Dativ, Genitiv)", "en": "Relative clauses (dative, genitive)", "weight": 2, "after": ["relative_clauses_nom_akk", "dative_pronouns_verbs"]},
-        {"key": "adjective_endings_nom_akk", "de": "Adjektivendungen (Nominativ, Akkusativ)", "en": "Adjective endings (nominative, accusative)", "weight": 3, "after": ["definite_articles", "adjectives_predicative"]},
-        {"key": "adjective_endings_dat", "de": "Adjektivendungen (Dativ)", "en": "Adjective endings (dative)", "weight": 2, "after": ["adjective_endings_nom_akk"]},
-        {"key": "comparative_full", "de": "Komparativ (vollständig)", "en": "Comparative (complete)", "weight": 2, "after": ["comparative_basic", "adjective_endings_nom_akk"]},
-        {"key": "superlative", "de": "Superlativ", "en": "Superlative", "weight": 2, "after": ["comparative_full"]},
-        {"key": "reflexive_verbs", "de": "Reflexive Verben", "en": "Reflexive verbs", "weight": 2, "after": ["dative_pronouns_verbs", "accusative_pronouns"]},
-        {"key": "infinitive_zu", "de": "Infinitiv mit zu", "en": "Infinitive with zu", "weight": 2, "after": ["modal_wollen_moechten", "separable_verbs"]},
-        {"key": "genitive_intro", "de": "Genitiv: Grundlagen", "en": "Genitive: basics", "weight": 2, "after": ["adjective_endings_dat", "possessive_articles"]},
-        {"key": "genitive_prepositions", "de": "Präpositionen mit Genitiv", "en": "Prepositions with genitive", "weight": 1, "after": ["genitive_intro"]},
-        {"key": "wechselpraepositionen_full", "de": "Wechselpräpositionen (vollständig)", "en": "Two-way prepositions (complete)", "weight": 2, "after": ["wechselpraepositionen_intro"]},
-        {"key": "konjunktionen", "de": "Konjunktionen (obwohl, damit, sodass)", "en": "Conjunctions (obwohl, damit, sodass)", "weight": 2, "after": ["nebensatz_weil", "nebensatz_wenn"]},
-        {"key": "konnektoren_trotzdem", "de": "Konnektoren (trotzdem, deshalb)", "en": "Connectors (trotzdem, deshalb)", "weight": 1, "after": ["konjunktionen", "main_clause_connectors"]},
-        {"key": "passiv_praesens", "de": "Passiv Präsens", "en": "Passive, present", "weight": 3, "after": ["perfekt_advanced", "accusative_pronouns"]},
-        {"key": "futur_intro", "de": "Futur I (Grundlagen)", "en": "Future I (basics)", "weight": 1, "after": ["perfekt_advanced"]},
-        {"key": "verben_praepositionen", "de": "Verben mit Präpositionen", "en": "Verbs with prepositions", "weight": 2, "after": ["wechselpraepositionen_full"]},
-        {"key": "konjunktiv_ii_intro", "de": "Konjunktiv II: würde, hätte, wäre", "en": "Subjunctive II: würde, hätte, wäre", "weight": 2, "after": ["praeteritum_full"]},
-        {"key": "wuerde_konstruktion", "de": "Konjunktiv II mit würde", "en": "Subjunctive II with würde", "weight": 2, "after": ["konjunktiv_ii_intro"]},
-        {"key": "indefinite_pronouns", "de": "Indefinitpronomen (jemand, niemand, etwas)", "en": "Indefinite pronouns (jemand, niemand, etwas)", "weight": 1, "after": ["negation_kein"]},
-        {"key": "possessive_full", "de": "Possessivartikel (vollständig)", "en": "Possessive articles (complete)", "weight": 1, "after": ["possessive_articles", "genitive_intro"]},
-        {"key": "zu_infinitive_uses", "de": "Infinitiv mit zu in der Praxis", "en": "Infinitive with zu in practice", "weight": 1, "after": ["infinitive_zu"]}
+        {
+          "key": "perfekt_advanced",
+          "de": "Perfekt (Vertiefung)",
+          "en": "Perfect (deepening)",
+          "weight": 2,
+          "after": [
+            "perfekt_sein"
+          ]
+        },
+        {
+          "key": "praeteritum_full",
+          "de": "Präteritum (alle Verben)",
+          "en": "Simple past (all verbs)",
+          "weight": 2,
+          "after": [
+            "praeteritum_modals",
+            "perfekt_advanced"
+          ]
+        },
+        {
+          "key": "nebensatz_weil",
+          "de": "Nebensatz mit weil",
+          "en": "Subordinate clause with weil",
+          "weight": 2,
+          "after": [
+            "word_order_v2",
+            "main_clause_connectors"
+          ]
+        },
+        {
+          "key": "nebensatz_dass",
+          "de": "Nebensatz mit dass",
+          "en": "Subordinate clause with dass",
+          "weight": 2,
+          "after": [
+            "nebensatz_weil"
+          ]
+        },
+        {
+          "key": "nebensatz_wenn",
+          "de": "Nebensatz mit wenn",
+          "en": "Subordinate clause with wenn",
+          "weight": 2,
+          "after": [
+            "nebensatz_weil"
+          ]
+        },
+        {
+          "key": "nebensatz_ob",
+          "de": "Indirekte Fragen mit ob",
+          "en": "Indirect questions with ob",
+          "weight": 1,
+          "after": [
+            "nebensatz_dass"
+          ]
+        },
+        {
+          "key": "relative_clauses_nom_akk",
+          "de": "Relativsätze (Nominativ, Akkusativ)",
+          "en": "Relative clauses (nominative, accusative)",
+          "weight": 3,
+          "after": [
+            "nebensatz_dass",
+            "definite_articles"
+          ]
+        },
+        {
+          "key": "relative_clauses_dat_gen",
+          "de": "Relativsätze (Dativ, Genitiv)",
+          "en": "Relative clauses (dative, genitive)",
+          "weight": 2,
+          "after": [
+            "relative_clauses_nom_akk",
+            "dative_pronouns_verbs"
+          ]
+        },
+        {
+          "key": "adjective_endings_nom_akk",
+          "de": "Adjektivendungen (Nominativ, Akkusativ)",
+          "en": "Adjective endings (nominative, accusative)",
+          "weight": 3,
+          "after": [
+            "definite_articles",
+            "adjectives_predicative"
+          ]
+        },
+        {
+          "key": "adjective_endings_dat",
+          "de": "Adjektivendungen (Dativ)",
+          "en": "Adjective endings (dative)",
+          "weight": 2,
+          "after": [
+            "adjective_endings_nom_akk"
+          ]
+        },
+        {
+          "key": "comparative_full",
+          "de": "Komparativ (vollständig)",
+          "en": "Comparative (complete)",
+          "weight": 2,
+          "after": [
+            "comparative_basic",
+            "adjective_endings_nom_akk"
+          ]
+        },
+        {
+          "key": "superlative",
+          "de": "Superlativ",
+          "en": "Superlative",
+          "weight": 2,
+          "after": [
+            "comparative_full"
+          ]
+        },
+        {
+          "key": "reflexive_verbs",
+          "de": "Reflexive Verben",
+          "en": "Reflexive verbs",
+          "weight": 2,
+          "after": [
+            "dative_pronouns_verbs",
+            "accusative_pronouns"
+          ]
+        },
+        {
+          "key": "infinitive_zu",
+          "de": "Infinitiv mit zu",
+          "en": "Infinitive with zu",
+          "weight": 2,
+          "after": [
+            "modal_wollen_moechten",
+            "separable_verbs"
+          ]
+        },
+        {
+          "key": "genitive_intro",
+          "de": "Genitiv: Grundlagen",
+          "en": "Genitive: basics",
+          "weight": 2,
+          "after": [
+            "adjective_endings_dat",
+            "possessive_articles"
+          ]
+        },
+        {
+          "key": "genitive_prepositions",
+          "de": "Präpositionen mit Genitiv",
+          "en": "Prepositions with genitive",
+          "weight": 1,
+          "after": [
+            "genitive_intro"
+          ]
+        },
+        {
+          "key": "wechselpraepositionen_full",
+          "de": "Wechselpräpositionen (vollständig)",
+          "en": "Two-way prepositions (complete)",
+          "weight": 2,
+          "after": [
+            "wechselpraepositionen_intro"
+          ]
+        },
+        {
+          "key": "konjunktionen",
+          "de": "Konjunktionen (obwohl, damit, sodass)",
+          "en": "Conjunctions (obwohl, damit, sodass)",
+          "weight": 2,
+          "after": [
+            "nebensatz_weil",
+            "nebensatz_wenn"
+          ]
+        },
+        {
+          "key": "konnektoren_trotzdem",
+          "de": "Konnektoren (trotzdem, deshalb)",
+          "en": "Connectors (trotzdem, deshalb)",
+          "weight": 1,
+          "after": [
+            "konjunktionen",
+            "main_clause_connectors"
+          ]
+        },
+        {
+          "key": "passiv_praesens",
+          "de": "Passiv Präsens",
+          "en": "Passive, present",
+          "weight": 3,
+          "after": [
+            "perfekt_advanced",
+            "accusative_pronouns"
+          ]
+        },
+        {
+          "key": "futur_intro",
+          "de": "Futur I (Grundlagen)",
+          "en": "Future I (basics)",
+          "weight": 1,
+          "after": [
+            "perfekt_advanced"
+          ]
+        },
+        {
+          "key": "verben_praepositionen",
+          "de": "Verben mit Präpositionen",
+          "en": "Verbs with prepositions",
+          "weight": 2,
+          "after": [
+            "wechselpraepositionen_full"
+          ]
+        },
+        {
+          "key": "konjunktiv_ii_intro",
+          "de": "Konjunktiv II: würde, hätte, wäre",
+          "en": "Subjunctive II: würde, hätte, wäre",
+          "weight": 2,
+          "after": [
+            "praeteritum_full"
+          ]
+        },
+        {
+          "key": "wuerde_konstruktion",
+          "de": "Konjunktiv II mit würde",
+          "en": "Subjunctive II with würde",
+          "weight": 2,
+          "after": [
+            "konjunktiv_ii_intro"
+          ]
+        },
+        {
+          "key": "indefinite_pronouns",
+          "de": "Indefinitpronomen (jemand, niemand, etwas)",
+          "en": "Indefinite pronouns (jemand, niemand, etwas)",
+          "weight": 1,
+          "after": [
+            "negation_kein"
+          ]
+        },
+        {
+          "key": "possessive_full",
+          "de": "Possessivartikel (vollständig)",
+          "en": "Possessive articles (complete)",
+          "weight": 1,
+          "after": [
+            "possessive_articles",
+            "genitive_intro"
+          ]
+        },
+        {
+          "key": "zu_infinitive_uses",
+          "de": "Infinitiv mit zu in der Praxis",
+          "en": "Infinitive with zu in practice",
+          "weight": 1,
+          "after": [
+            "infinitive_zu"
+          ]
+        }
       ],
-      "scenarios": ["Behörden: Anmeldung beim Bürgeramt", "Wohnen: Mietvertrag lesen", "Arbeit: Krankmeldung schreiben", "Gesundheit: Termin beim Arzt beschreiben", "Bildung: Kursanmeldung", "Familie: Einladung und Geburtstag", "Bank und Versicherung: Konto eröffnen", "Mobilität: Fahrplan und Fahrrad", "Einkaufen: Reklamation", "Freizeit: Verein beitreten", "Medien: Nachricht zusammenfassen"]
+      "scenarios": [
+        "Behörden: Anmeldung beim Bürgeramt",
+        "Wohnen: Mietvertrag lesen",
+        "Arbeit: Krankmeldung schreiben",
+        "Gesundheit: Termin beim Arzt beschreiben",
+        "Bildung: Kursanmeldung",
+        "Familie: Einladung und Geburtstag",
+        "Bank und Versicherung: Konto eröffnen",
+        "Mobilität: Fahrplan und Fahrrad",
+        "Einkaufen: Reklamation",
+        "Freizeit: Verein beitreten",
+        "Medien: Nachricht zusammenfassen"
+      ]
     },
     "B1": {
-      "new_words": 10, "review_words": 8,
+      "new_words": 10,
+      "review_words": 8,
       "concepts": [
-        {"key": "konjunktiv_ii_full", "de": "Konjunktiv II (vollständig)", "en": "Subjunctive II (complete)", "weight": 3, "after": ["wuerde_konstruktion"]},
-        {"key": "konjunktiv_ii_wuensche", "de": "Wünsche und Ratschläge mit Konjunktiv II", "en": "Wishes and advice with subjunctive II", "weight": 1, "after": ["konjunktiv_ii_full"]},
-        {"key": "passiv_praeteritum", "de": "Passiv Präteritum", "en": "Passive, simple past", "weight": 2, "after": ["passiv_praesens", "praeteritum_full"]},
-        {"key": "passiv_perfekt", "de": "Passiv Perfekt", "en": "Passive, perfect", "weight": 2, "after": ["passiv_praeteritum"]},
-        {"key": "plusquamperfekt", "de": "Plusquamperfekt", "en": "Past perfect", "weight": 2, "after": ["perfekt_advanced", "praeteritum_full"]},
-        {"key": "relativsatz_praeposition", "de": "Relativsätze mit Präposition", "en": "Relative clauses with prepositions", "weight": 2, "after": ["relative_clauses_dat_gen", "verben_praepositionen"]},
-        {"key": "indirekte_rede_konj_i", "de": "Indirekte Rede (Konjunktiv I)", "en": "Reported speech (subjunctive I)", "weight": 3, "after": ["konjunktiv_ii_full"]},
-        {"key": "nominalisierung", "de": "Nominalisierung", "en": "Nominalisation", "weight": 2, "after": ["genitive_intro", "superlative"]},
-        {"key": "partizip", "de": "Partizip I und II als Attribut", "en": "Participles I and II as attributes", "weight": 2, "after": ["passiv_praeteritum"]},
-        {"key": "genitiv_full", "de": "Genitiv (vollständig)", "en": "Genitive (complete)", "weight": 2, "after": ["genitive_prepositions", "possessive_full"]},
-        {"key": "konnektoren_erweitert", "de": "Konnektoren erweitert (zwar, sowohl, jedoch)", "en": "Advanced connectors (zwar, sowohl, jedoch)", "weight": 2, "after": ["konnektoren_trotzdem", "konjunktionen"]},
-        {"key": "konditional_saetze", "de": "Konditionalsätze", "en": "Conditional clauses", "weight": 2, "after": ["konjunktiv_ii_full", "nebensatz_wenn"]},
-        {"key": "lassen_konstruktion", "de": "lassen-Konstruktion", "en": "The lassen construction", "weight": 1, "after": ["zu_infinitive_uses"]},
-        {"key": "modalverb_praeteritum", "de": "Modalverben im Präteritum und Perfekt", "en": "Modals in past and perfect", "weight": 1, "after": ["praeteritum_modals", "perfekt_advanced"]},
-        {"key": "formal_email", "de": "Formelle E-Mail schreiben", "en": "Writing a formal email", "weight": 2, "after": ["konnektoren_erweitert", "genitiv_full"]},
-        {"key": "bewerbung", "de": "Bewerbung", "en": "Job application", "weight": 1, "after": ["formal_email"]},
-        {"key": "telefonat", "de": "Telefonat führen", "en": "Making phone calls", "weight": 1, "after": ["modalverb_praeteritum"]},
-        {"key": "meinung_aeussern", "de": "Meinung äußern und begründen", "en": "Giving and justifying an opinion", "weight": 2, "after": ["konnektoren_erweitert"]},
-        {"key": "adjektivdeklination_full", "de": "Adjektivdeklination (vollständig)", "en": "Adjective declension (complete)", "weight": 2, "after": ["adjective_endings_dat", "genitiv_full"]},
-        {"key": "zeitangaben_erweitert", "de": "Zeitangaben und Zeitbeziehungen", "en": "Time expressions and time relations", "weight": 1, "after": ["plusquamperfekt"]},
-        {"key": "wortbildung_basis", "de": "Wortbildung (Präfixe, Suffixe)", "en": "Word formation (prefixes, suffixes)", "weight": 2, "after": ["nominalisierung"]}
+        {
+          "key": "konjunktiv_ii_full",
+          "de": "Konjunktiv II (vollständig)",
+          "en": "Subjunctive II (complete)",
+          "weight": 3,
+          "after": [
+            "wuerde_konstruktion"
+          ]
+        },
+        {
+          "key": "konjunktiv_ii_wuensche",
+          "de": "Wünsche und Ratschläge mit Konjunktiv II",
+          "en": "Wishes and advice with subjunctive II",
+          "weight": 1,
+          "after": [
+            "konjunktiv_ii_full"
+          ]
+        },
+        {
+          "key": "passiv_praeteritum",
+          "de": "Passiv Präteritum",
+          "en": "Passive, simple past",
+          "weight": 2,
+          "after": [
+            "passiv_praesens",
+            "praeteritum_full"
+          ]
+        },
+        {
+          "key": "passiv_perfekt",
+          "de": "Passiv Perfekt",
+          "en": "Passive, perfect",
+          "weight": 2,
+          "after": [
+            "passiv_praeteritum"
+          ]
+        },
+        {
+          "key": "plusquamperfekt",
+          "de": "Plusquamperfekt",
+          "en": "Past perfect",
+          "weight": 2,
+          "after": [
+            "perfekt_advanced",
+            "praeteritum_full"
+          ]
+        },
+        {
+          "key": "relativsatz_praeposition",
+          "de": "Relativsätze mit Präposition",
+          "en": "Relative clauses with prepositions",
+          "weight": 2,
+          "after": [
+            "relative_clauses_dat_gen",
+            "verben_praepositionen"
+          ]
+        },
+        {
+          "key": "indirekte_rede_konj_i",
+          "de": "Indirekte Rede (Konjunktiv I)",
+          "en": "Reported speech (subjunctive I)",
+          "weight": 3,
+          "after": [
+            "konjunktiv_ii_full"
+          ]
+        },
+        {
+          "key": "nominalisierung",
+          "de": "Nominalisierung",
+          "en": "Nominalisation",
+          "weight": 2,
+          "after": [
+            "genitive_intro",
+            "superlative"
+          ]
+        },
+        {
+          "key": "partizip",
+          "de": "Partizip I und II als Attribut",
+          "en": "Participles I and II as attributes",
+          "weight": 2,
+          "after": [
+            "passiv_praeteritum"
+          ]
+        },
+        {
+          "key": "genitiv_full",
+          "de": "Genitiv (vollständig)",
+          "en": "Genitive (complete)",
+          "weight": 2,
+          "after": [
+            "genitive_prepositions",
+            "possessive_full"
+          ]
+        },
+        {
+          "key": "konnektoren_erweitert",
+          "de": "Konnektoren erweitert (zwar, sowohl, jedoch)",
+          "en": "Advanced connectors (zwar, sowohl, jedoch)",
+          "weight": 2,
+          "after": [
+            "konnektoren_trotzdem",
+            "konjunktionen"
+          ]
+        },
+        {
+          "key": "konditional_saetze",
+          "de": "Konditionalsätze",
+          "en": "Conditional clauses",
+          "weight": 2,
+          "after": [
+            "konjunktiv_ii_full",
+            "nebensatz_wenn"
+          ]
+        },
+        {
+          "key": "lassen_konstruktion",
+          "de": "lassen-Konstruktion",
+          "en": "The lassen construction",
+          "weight": 1,
+          "after": [
+            "zu_infinitive_uses"
+          ]
+        },
+        {
+          "key": "modalverb_praeteritum",
+          "de": "Modalverben im Präteritum und Perfekt",
+          "en": "Modals in past and perfect",
+          "weight": 1,
+          "after": [
+            "praeteritum_modals",
+            "perfekt_advanced"
+          ]
+        },
+        {
+          "key": "formal_email",
+          "de": "Formelle E-Mail schreiben",
+          "en": "Writing a formal email",
+          "weight": 2,
+          "after": [
+            "konnektoren_erweitert",
+            "genitiv_full"
+          ]
+        },
+        {
+          "key": "bewerbung",
+          "de": "Bewerbung",
+          "en": "Job application",
+          "weight": 1,
+          "after": [
+            "formal_email"
+          ]
+        },
+        {
+          "key": "telefonat",
+          "de": "Telefonat führen",
+          "en": "Making phone calls",
+          "weight": 1,
+          "after": [
+            "modalverb_praeteritum"
+          ]
+        },
+        {
+          "key": "meinung_aeussern",
+          "de": "Meinung äußern und begründen",
+          "en": "Giving and justifying an opinion",
+          "weight": 2,
+          "after": [
+            "konnektoren_erweitert"
+          ]
+        },
+        {
+          "key": "adjektivdeklination_full",
+          "de": "Adjektivdeklination (vollständig)",
+          "en": "Adjective declension (complete)",
+          "weight": 2,
+          "after": [
+            "adjective_endings_dat",
+            "genitiv_full"
+          ]
+        },
+        {
+          "key": "zeitangaben_erweitert",
+          "de": "Zeitangaben und Zeitbeziehungen",
+          "en": "Time expressions and time relations",
+          "weight": 1,
+          "after": [
+            "plusquamperfekt"
+          ]
+        },
+        {
+          "key": "wortbildung_basis",
+          "de": "Wortbildung (Präfixe, Suffixe)",
+          "en": "Word formation (prefixes, suffixes)",
+          "weight": 2,
+          "after": [
+            "nominalisierung"
+          ]
+        }
       ],
-      "scenarios": ["Arbeit: Bewerbungsgespräch", "Wohnen: Probleme mit dem Vermieter melden", "Bildung: Kursbeschwerde", "Gesundheit: Beratung in der Apotheke", "Behörden: Antrag mit Nachweisen", "Medien: Artikel zusammenfassen", "Mobilität: Verspätung und Entschädigung", "Freizeit: Reise planen und buchen", "Einkaufen: Vertrag kündigen"]
+      "scenarios": [
+        "Arbeit: Bewerbungsgespräch",
+        "Wohnen: Probleme mit dem Vermieter melden",
+        "Bildung: Kursbeschwerde",
+        "Gesundheit: Beratung in der Apotheke",
+        "Behörden: Antrag mit Nachweisen",
+        "Medien: Artikel zusammenfassen",
+        "Mobilität: Verspätung und Entschädigung",
+        "Freizeit: Reise planen und buchen",
+        "Einkaufen: Vertrag kündigen"
+      ]
     },
     "B2": {
-      "new_words": 10, "review_words": 8,
+      "new_words": 10,
+      "review_words": 8,
       "concepts": [
-        {"key": "konjunktiv_i_full", "de": "Konjunktiv I (vollständig)", "en": "Subjunctive I (complete)", "weight": 2, "after": ["indirekte_rede_konj_i"]},
-        {"key": "passiv_modal", "de": "Passiv mit Modalverb", "en": "Passive with modal verbs", "weight": 2, "after": ["passiv_perfekt", "modal_duerfen_sollen"]},
-        {"key": "passiv_zustand", "de": "Zustandspassiv", "en": "Stative passive", "weight": 1, "after": ["passiv_perfekt"]},
-        {"key": "infinitiv_um_zu", "de": "Infinitivsätze mit um … zu", "en": "Infinitive clauses with um … zu", "weight": 2, "after": ["infinitive_zu", "konjunktionen"]},
-        {"key": "infinitiv_ohne_statt", "de": "ohne … zu und statt … zu", "en": "ohne … zu and statt … zu", "weight": 1, "after": ["infinitiv_um_zu"]},
-        {"key": "partizipialattribut", "de": "Partizipialattribute", "en": "Participial attributes", "weight": 3, "after": ["partizip"]},
-        {"key": "nominalstil", "de": "Nominalstil", "en": "Nominal style", "weight": 2, "after": ["nominalisierung", "partizipialattribut"]},
-        {"key": "argumentation", "de": "Argumentieren und Gegenargumente", "en": "Argumentation and counterarguments", "weight": 3, "after": ["meinung_aeussern", "konnektoren_erweitert"]},
-        {"key": "textsorten", "de": "Textsorten erkennen", "en": "Recognising text types", "weight": 2, "after": ["argumentation"]},
-        {"key": "kommentar_bericht", "de": "Kommentar und Bericht schreiben", "en": "Writing a commentary and a report", "weight": 2, "after": ["textsorten", "nominalstil"]},
-        {"key": "registerwechsel", "de": "Register wechseln", "en": "Switching register", "weight": 2, "after": ["formal_email", "textsorten"]},
-        {"key": "konnektoren_b2", "de": "Konnektoren auf B2-Niveau", "en": "Connectors at B2 level", "weight": 2, "after": ["konnektoren_erweitert"]},
-        {"key": "redewendungen_b2", "de": "Redewendungen im Alltag", "en": "Idioms in everyday use", "weight": 2, "after": ["registerwechsel"]},
-        {"key": "verben_praepositionen_b2", "de": "Verben mit Präpositionen (erweitert)", "en": "Verbs with prepositions (extended)", "weight": 1, "after": ["verben_praepositionen"]},
-        {"key": "regional_at_ch", "de": "Regionale Unterschiede: Österreich und Schweiz", "en": "Regional differences: Austria and Switzerland", "weight": 3, "after": ["registerwechsel"]},
-        {"key": "wortbildung_b2", "de": "Wortbildung (erweitert)", "en": "Word formation (extended)", "weight": 2, "after": ["wortbildung_basis"]},
-        {"key": "funktionsverbgefuege", "de": "Funktionsverbgefüge", "en": "Light-verb constructions", "weight": 2, "after": ["nominalstil"]},
-        {"key": "hypothese_b2", "de": "Hypothesen und Vermutungen", "en": "Hypotheses and speculation", "weight": 2, "after": ["konditional_saetze", "konjunktiv_i_full"]},
-        {"key": "konzessiv_adversativ", "de": "Konzessiv- und Adversativsätze", "en": "Concessive and adversative clauses", "weight": 2, "after": ["konnektoren_b2", "konjunktionen"]}
+        {
+          "key": "konjunktiv_i_full",
+          "de": "Konjunktiv I (vollständig)",
+          "en": "Subjunctive I (complete)",
+          "weight": 2,
+          "after": [
+            "indirekte_rede_konj_i"
+          ]
+        },
+        {
+          "key": "passiv_modal",
+          "de": "Passiv mit Modalverb",
+          "en": "Passive with modal verbs",
+          "weight": 2,
+          "after": [
+            "passiv_perfekt",
+            "modal_duerfen_sollen"
+          ]
+        },
+        {
+          "key": "passiv_zustand",
+          "de": "Zustandspassiv",
+          "en": "Stative passive",
+          "weight": 1,
+          "after": [
+            "passiv_perfekt"
+          ]
+        },
+        {
+          "key": "infinitiv_um_zu",
+          "de": "Infinitivsätze mit um … zu",
+          "en": "Infinitive clauses with um … zu",
+          "weight": 2,
+          "after": [
+            "infinitive_zu",
+            "konjunktionen"
+          ]
+        },
+        {
+          "key": "infinitiv_ohne_statt",
+          "de": "ohne … zu und statt … zu",
+          "en": "ohne … zu and statt … zu",
+          "weight": 1,
+          "after": [
+            "infinitiv_um_zu"
+          ]
+        },
+        {
+          "key": "partizipialattribut",
+          "de": "Partizipialattribute",
+          "en": "Participial attributes",
+          "weight": 3,
+          "after": [
+            "partizip"
+          ]
+        },
+        {
+          "key": "nominalstil",
+          "de": "Nominalstil",
+          "en": "Nominal style",
+          "weight": 2,
+          "after": [
+            "nominalisierung",
+            "partizipialattribut"
+          ]
+        },
+        {
+          "key": "argumentation",
+          "de": "Argumentieren und Gegenargumente",
+          "en": "Argumentation and counterarguments",
+          "weight": 3,
+          "after": [
+            "meinung_aeussern",
+            "konnektoren_erweitert"
+          ]
+        },
+        {
+          "key": "textsorten",
+          "de": "Textsorten erkennen",
+          "en": "Recognising text types",
+          "weight": 2,
+          "after": [
+            "argumentation"
+          ]
+        },
+        {
+          "key": "kommentar_bericht",
+          "de": "Kommentar und Bericht schreiben",
+          "en": "Writing a commentary and a report",
+          "weight": 2,
+          "after": [
+            "textsorten",
+            "nominalstil"
+          ]
+        },
+        {
+          "key": "registerwechsel",
+          "de": "Register wechseln",
+          "en": "Switching register",
+          "weight": 2,
+          "after": [
+            "formal_email",
+            "textsorten"
+          ]
+        },
+        {
+          "key": "konnektoren_b2",
+          "de": "Konnektoren auf B2-Niveau",
+          "en": "Connectors at B2 level",
+          "weight": 2,
+          "after": [
+            "konnektoren_erweitert"
+          ]
+        },
+        {
+          "key": "redewendungen_b2",
+          "de": "Redewendungen im Alltag",
+          "en": "Idioms in everyday use",
+          "weight": 2,
+          "after": [
+            "registerwechsel"
+          ]
+        },
+        {
+          "key": "verben_praepositionen_b2",
+          "de": "Verben mit Präpositionen (erweitert)",
+          "en": "Verbs with prepositions (extended)",
+          "weight": 1,
+          "after": [
+            "verben_praepositionen"
+          ]
+        },
+        {
+          "key": "wortbildung_b2",
+          "de": "Wortbildung (erweitert)",
+          "en": "Word formation (extended)",
+          "weight": 2,
+          "after": [
+            "wortbildung_basis"
+          ]
+        },
+        {
+          "key": "funktionsverbgefuege",
+          "de": "Funktionsverbgefüge",
+          "en": "Light-verb constructions",
+          "weight": 2,
+          "after": [
+            "nominalstil"
+          ]
+        },
+        {
+          "key": "hypothese_b2",
+          "de": "Hypothesen und Vermutungen",
+          "en": "Hypotheses and speculation",
+          "weight": 2,
+          "after": [
+            "konditional_saetze",
+            "konjunktiv_i_full"
+          ]
+        },
+        {
+          "key": "konzessiv_adversativ",
+          "de": "Konzessiv- und Adversativsätze",
+          "en": "Concessive and adversative clauses",
+          "weight": 2,
+          "after": [
+            "konnektoren_b2",
+            "konjunktionen"
+          ]
+        }
       ],
-      "scenarios": ["Arbeit: Konflikt im Team klären", "Behörden: Einspruch schreiben", "Medien: Kommentar zu einem Artikel", "Gesundheit: Behandlung und Aufklärung", "Wohnen: Eigentümerversammlung", "Bildung: Studienberatung", "Mobilität: Verkehrsplanung diskutieren", "Bank und Versicherung: Schadensmeldung"]
+      "scenarios": [
+        "Arbeit: Konflikt im Team klären",
+        "Behörden: Einspruch schreiben",
+        "Medien: Kommentar zu einem Artikel",
+        "Gesundheit: Behandlung und Aufklärung",
+        "Wohnen: Eigentümerversammlung",
+        "Bildung: Studienberatung",
+        "Mobilität: Verkehrsplanung diskutieren",
+        "Bank und Versicherung: Schadensmeldung"
+      ]
     },
     "C1": {
-      "new_words": 10, "review_words": 8,
+      "new_words": 10,
+      "review_words": 8,
       "concepts": [
-        {"key": "stilebenen", "de": "Stilebenen erkennen und wählen", "en": "Recognising and choosing style levels", "weight": 3, "after": ["registerwechsel"]},
-        {"key": "funktionsverbgefuege_c1", "de": "Funktionsverbgefüge (vertieft)", "en": "Light-verb constructions (deepened)", "weight": 2, "after": ["funktionsverbgefuege"]},
-        {"key": "nominalstil_c1", "de": "Nominalstil in Fachtexten", "en": "Nominal style in specialist texts", "weight": 2, "after": ["nominalstil", "stilebenen"]},
-        {"key": "satzgefuege_komplex", "de": "Komplexe Satzgefüge", "en": "Complex sentence structures", "weight": 3, "after": ["konzessiv_adversativ", "partizipialattribut"]},
-        {"key": "textkohaerenz", "de": "Textkohärenz und Verweise", "en": "Text cohesion and reference", "weight": 2, "after": ["satzgefuege_komplex"]},
-        {"key": "wissenschaftlich_argumentieren", "de": "Wissenschaftlich argumentieren", "en": "Arguing academically", "weight": 3, "after": ["argumentation", "textkohaerenz"]},
-        {"key": "fachtexte", "de": "Fachtexte verstehen", "en": "Understanding specialist texts", "weight": 3, "after": ["wissenschaftlich_argumentieren"]},
-        {"key": "praesentation", "de": "Präsentation halten", "en": "Giving a presentation", "weight": 2, "after": ["stilebenen", "argumentation"]},
-        {"key": "verhandlung", "de": "Verhandlung und Kompromiss", "en": "Negotiation and compromise", "weight": 2, "after": ["praesentation", "konjunktiv_i_full"]},
-        {"key": "literatur_lesen", "de": "Literarische Texte lesen", "en": "Reading literary texts", "weight": 2, "after": ["textkohaerenz"]},
-        {"key": "medienkritik", "de": "Medien kritisch bewerten", "en": "Critically assessing media", "weight": 2, "after": ["wissenschaftlich_argumentieren"]},
-        {"key": "konjunktiv_stil", "de": "Konjunktiv im Stil (Referat, Bericht)", "en": "Subjunctive in style (reports, summaries)", "weight": 2, "after": ["indirekte_rede_konj_i", "stilebenen"]},
-        {"key": "sprachvarianten", "de": "Sprachvarianten im DACH-Raum", "en": "Language varieties in the DACH region", "weight": 2, "after": ["regional_at_ch"]},
-        {"key": "wortschatz_nuancen", "de": "Wortschatz: feine Bedeutungsunterschiede", "en": "Vocabulary: fine differences in meaning", "weight": 3, "after": ["redewendungen_b2", "wortbildung_b2"]},
-        {"key": "idiomatik_c1", "de": "Idiomatik (vertieft)", "en": "Idiomatic language (deepened)", "weight": 2, "after": ["wortschatz_nuancen"]}
+        {
+          "key": "stilebenen",
+          "de": "Stilebenen erkennen und wählen",
+          "en": "Recognising and choosing style levels",
+          "weight": 3,
+          "after": [
+            "registerwechsel"
+          ]
+        },
+        {
+          "key": "funktionsverbgefuege_c1",
+          "de": "Funktionsverbgefüge (vertieft)",
+          "en": "Light-verb constructions (deepened)",
+          "weight": 2,
+          "after": [
+            "funktionsverbgefuege"
+          ]
+        },
+        {
+          "key": "nominalstil_c1",
+          "de": "Nominalstil in Fachtexten",
+          "en": "Nominal style in specialist texts",
+          "weight": 2,
+          "after": [
+            "nominalstil",
+            "stilebenen"
+          ]
+        },
+        {
+          "key": "satzgefuege_komplex",
+          "de": "Komplexe Satzgefüge",
+          "en": "Complex sentence structures",
+          "weight": 3,
+          "after": [
+            "konzessiv_adversativ",
+            "partizipialattribut"
+          ]
+        },
+        {
+          "key": "textkohaerenz",
+          "de": "Textkohärenz und Verweise",
+          "en": "Text cohesion and reference",
+          "weight": 2,
+          "after": [
+            "satzgefuege_komplex"
+          ]
+        },
+        {
+          "key": "wissenschaftlich_argumentieren",
+          "de": "Wissenschaftlich argumentieren",
+          "en": "Arguing academically",
+          "weight": 3,
+          "after": [
+            "argumentation",
+            "textkohaerenz"
+          ]
+        },
+        {
+          "key": "fachtexte",
+          "de": "Fachtexte verstehen",
+          "en": "Understanding specialist texts",
+          "weight": 3,
+          "after": [
+            "wissenschaftlich_argumentieren"
+          ]
+        },
+        {
+          "key": "praesentation",
+          "de": "Präsentation halten",
+          "en": "Giving a presentation",
+          "weight": 2,
+          "after": [
+            "stilebenen",
+            "argumentation"
+          ]
+        },
+        {
+          "key": "verhandlung",
+          "de": "Verhandlung und Kompromiss",
+          "en": "Negotiation and compromise",
+          "weight": 2,
+          "after": [
+            "praesentation",
+            "konjunktiv_i_full"
+          ]
+        },
+        {
+          "key": "literatur_lesen",
+          "de": "Literarische Texte lesen",
+          "en": "Reading literary texts",
+          "weight": 2,
+          "after": [
+            "textkohaerenz"
+          ]
+        },
+        {
+          "key": "medienkritik",
+          "de": "Medien kritisch bewerten",
+          "en": "Critically assessing media",
+          "weight": 2,
+          "after": [
+            "wissenschaftlich_argumentieren"
+          ]
+        },
+        {
+          "key": "konjunktiv_stil",
+          "de": "Konjunktiv im Stil (Referat, Bericht)",
+          "en": "Subjunctive in style (reports, summaries)",
+          "weight": 2,
+          "after": [
+            "indirekte_rede_konj_i",
+            "stilebenen"
+          ]
+        },
+        {
+          "key": "wortschatz_nuancen",
+          "de": "Wortschatz: feine Bedeutungsunterschiede",
+          "en": "Vocabulary: fine differences in meaning",
+          "weight": 3,
+          "after": [
+            "redewendungen_b2",
+            "wortbildung_b2"
+          ]
+        },
+        {
+          "key": "idiomatik_c1",
+          "de": "Idiomatik (vertieft)",
+          "en": "Idiomatic language (deepened)",
+          "weight": 2,
+          "after": [
+            "wortschatz_nuancen"
+          ]
+        }
       ],
-      "scenarios": ["Beruf: Fachvortrag halten", "Wissenschaft: Abstract schreiben", "Verwaltung: Stellungnahme verfassen", "Medien: Debatte moderieren", "Wirtschaft: Angebot verhandeln", "Literatur: Buchrezension", "Politik: Positionspapier"]
+      "scenarios": [
+        "Beruf: Fachvortrag halten",
+        "Wissenschaft: Abstract schreiben",
+        "Verwaltung: Stellungnahme verfassen",
+        "Medien: Debatte moderieren",
+        "Wirtschaft: Angebot verhandeln",
+        "Literatur: Buchrezension",
+        "Politik: Positionspapier"
+      ]
     },
     "C2": {
-      "new_words": 10, "review_words": 8,
+      "new_words": 10,
+      "review_words": 8,
       "concepts": [
-        {"key": "idiome", "de": "Idiome und feste Wendungen", "en": "Idioms and set phrases", "weight": 3, "after": ["idiomatik_c1"]},
-        {"key": "ironie_humor", "de": "Ironie und Humor erkennen", "en": "Recognising irony and humour", "weight": 2, "after": ["idiome"]},
-        {"key": "dialekt_grundlagen", "de": "Dialekte: Grundlagen", "en": "Dialects: basics", "weight": 2, "after": ["sprachvarianten"]},
-        {"key": "rhetorik", "de": "Rhetorische Mittel", "en": "Rhetorical devices", "weight": 2, "after": ["praesentation", "stilebenen"]},
-        {"key": "essay", "de": "Essay schreiben", "en": "Writing an essay", "weight": 3, "after": ["rhetorik", "satzgefuege_komplex"]},
-        {"key": "uebersetzung", "de": "Übersetzungsbewusstsein", "en": "Awareness of translation", "weight": 2, "after": ["essay"]},
-        {"key": "fachsprache_recht", "de": "Fachsprache: Recht", "en": "Specialist language: law", "weight": 2, "after": ["fachtexte"]},
-        {"key": "fachsprache_medizin", "de": "Fachsprache: Medizin", "en": "Specialist language: medicine", "weight": 2, "after": ["fachtexte"]},
-        {"key": "literatur_analyse", "de": "Literaturanalyse", "en": "Literary analysis", "weight": 2, "after": ["literatur_lesen"]},
-        {"key": "sprachvariation_dach", "de": "Sprachvariation im DACH-Raum vertieft", "en": "Language variation in the DACH region (deepened)", "weight": 3, "after": ["sprachvarianten", "dialekt_grundlagen"]},
-        {"key": "prosodie", "de": "Betonung und Prosodie", "en": "Stress and prosody", "weight": 2, "after": ["sprachvariation_dach"]},
-        {"key": "konflikt_kommunikation", "de": "Konfliktkommunikation", "en": "Conflict communication", "weight": 2, "after": ["verhandlung", "idiome"]},
-        {"key": "kulturelle_kontexte", "de": "Kulturelle Kontexte", "en": "Cultural contexts", "weight": 2, "after": ["sprachvariation_dach", "medienkritik"]},
-        {"key": "sprachgeschichte", "de": "Sprachgeschichte im Überblick", "en": "Language history overview", "weight": 1, "after": ["literatur_analyse"]},
-        {"key": "schreibstil", "de": "Eigener Schreibstil", "en": "Developing your own style", "weight": 2, "after": ["essay", "stilebenen"]}
+        {
+          "key": "idiome",
+          "de": "Idiome und feste Wendungen",
+          "en": "Idioms and set phrases",
+          "weight": 3,
+          "after": [
+            "idiomatik_c1"
+          ]
+        },
+        {
+          "key": "ironie_humor",
+          "de": "Ironie und Humor erkennen",
+          "en": "Recognising irony and humour",
+          "weight": 2,
+          "after": [
+            "idiome"
+          ]
+        },
+        {
+          "key": "rhetorik",
+          "de": "Rhetorische Mittel",
+          "en": "Rhetorical devices",
+          "weight": 2,
+          "after": [
+            "praesentation",
+            "stilebenen"
+          ]
+        },
+        {
+          "key": "essay",
+          "de": "Essay schreiben",
+          "en": "Writing an essay",
+          "weight": 3,
+          "after": [
+            "rhetorik",
+            "satzgefuege_komplex"
+          ]
+        },
+        {
+          "key": "uebersetzung",
+          "de": "Übersetzungsbewusstsein",
+          "en": "Awareness of translation",
+          "weight": 2,
+          "after": [
+            "essay"
+          ]
+        },
+        {
+          "key": "fachsprache_recht",
+          "de": "Fachsprache: Recht",
+          "en": "Specialist language: law",
+          "weight": 2,
+          "after": [
+            "fachtexte"
+          ]
+        },
+        {
+          "key": "fachsprache_medizin",
+          "de": "Fachsprache: Medizin",
+          "en": "Specialist language: medicine",
+          "weight": 2,
+          "after": [
+            "fachtexte"
+          ]
+        },
+        {
+          "key": "literatur_analyse",
+          "de": "Literaturanalyse",
+          "en": "Literary analysis",
+          "weight": 2,
+          "after": [
+            "literatur_lesen"
+          ]
+        },
+        {
+          "key": "prosodie",
+          "de": "Betonung und Prosodie",
+          "en": "Stress and prosody",
+          "weight": 2,
+          "after": [
+            "idiome"
+          ]
+        },
+        {
+          "key": "konflikt_kommunikation",
+          "de": "Konfliktkommunikation",
+          "en": "Conflict communication",
+          "weight": 2,
+          "after": [
+            "verhandlung",
+            "idiome"
+          ]
+        },
+        {
+          "key": "kulturelle_kontexte",
+          "de": "Kulturelle Kontexte",
+          "en": "Cultural contexts",
+          "weight": 2,
+          "after": [
+            "medienkritik"
+          ]
+        },
+        {
+          "key": "sprachgeschichte",
+          "de": "Sprachgeschichte im Überblick",
+          "en": "Language history overview",
+          "weight": 1,
+          "after": [
+            "literatur_analyse"
+          ]
+        },
+        {
+          "key": "schreibstil",
+          "de": "Eigener Schreibstil",
+          "en": "Developing your own style",
+          "weight": 2,
+          "after": [
+            "essay",
+            "stilebenen"
+          ]
+        }
       ],
-      "scenarios": ["Beruf: Rechtstext verstehen", "Medizin: Befund erklären", "Literatur: Vortrag über einen Roman", "Medien: Hörfunkbeitrag", "Politik: Leserbrief", "Kultur: Gespräch über Traditionen"]
+      "scenarios": [
+        "Beruf: Rechtstext verstehen",
+        "Medizin: Befund erklären",
+        "Literatur: Vortrag über einen Roman",
+        "Medien: Hörfunkbeitrag",
+        "Politik: Leserbrief",
+        "Kultur: Gespräch über Traditionen"
+      ]
     }
   }
 }
