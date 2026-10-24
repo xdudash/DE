@@ -1,0 +1,9 @@
+schema: deutschgo.l10n/1
+entity: route.core.a0_start
+lang: ru
+based_on_version: 0.1.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Начало: алфавит (A0)"
+  summary: "Названия букв и как диктовать слова, первый шаг до грамматики."
