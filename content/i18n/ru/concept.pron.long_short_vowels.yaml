@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.long_short_vowels
 lang: ru
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: Долгие и краткие гласные
-  summary: 'Долгота гласного различает слова (Staat/Stadt, Miete/Mitte). На письме это видно: удвоенная гласная или h удлиняют, удвоенная согласная сокращает.'
+  title: "Долгие и краткие гласные"
+  summary: "Гласная бывает долгой или краткой. Часто решает согласный после неё."
+  pattern.scope: "Одна гласная перед одной согласной обычно долгая; перед двойной согласной обычно краткая."
+  pattern.limits: "Это ориентиры. Исключения запоминаются вместе со словами."
+  ex.tag: "Tag (день): долгое a — одна гласная перед одной согласной."
+  ex.mann: "Mann (мужчина): краткое a перед двойной согласной."
+  ex.tier: "Tier (животное): ie — всегда долгое i."

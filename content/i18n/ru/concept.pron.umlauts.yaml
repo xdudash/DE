@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.umlauts
 lang: ru
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: Умлауты ä, ö, ü
-  summary: 'Три гласных, которых нет в славянских языках и которые меняют значение: Mutter/Mütter, schon/schön. ö и ü образуются округлением губ.'
+  title: "Умлауты: ä, ö, ü"
+  summary: "Ä, Ö и Ü — гласные с двумя точками. У каждой свой звук, он не совпадает с простым a, o или u."
+  pattern.scope: "Гласные с умлаутом пишутся с двумя точками; у каждой свой звук."
+  pattern.limits: "Звуки показаны на примерах слов; фонетические знаки на A0 не используются."
+  ex.kaese: "Käse (сыр): ä — как „е“ в „bed“, только длиннее."
+  ex.schoen: "schön (красивый): е с округлёнными губами."
+  ex.ueber: "über (над): и с округлёнными губами."

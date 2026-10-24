@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0104_umlaute_laut
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Umlauts: the sounds"
+  summary: "Ä, Ö and Ü each have their own sound. Learn them with a word."
+  obj: "Say the sounds of ä, ö and ü and tell them apart."
+  intro: "Ä, Ö and Ü are vowels with two dots. Say the vowel with the mouth shape shown in the word. Each umlaut is a letter of its own."
+  examples: "Words with umlauts, spelt and read aloud."
+  summary_block: "**Ä, Ö and Ü are letters of their own.** Learn each sound with its word."
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.kaese: "Käse (cheese): ä, the sound of e in „bed“, but longer."
+  ex.schoen: "schön (nice): e with rounded lips."
+  ex.ueber: "über (over): ee with rounded lips."
+  x.sound.expl: "Käse: ä sounds like the e in „bed“, but longer. ö and ü are different sounds."
+  x_umlaut_sound.prompt: "Which umlaut sounds like the long „e“ in „Käse“?"
+  x.ueber.expl: "über: ü is ee with rounded lips. u is a different letter and sound."
+  x_umlaut_ueber.prompt: "Which letter is in „über“?"

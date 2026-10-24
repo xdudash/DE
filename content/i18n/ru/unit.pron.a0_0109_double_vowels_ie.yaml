@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0109_double_vowels_ie
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Двойные гласные и ie"
+  summary: "Двойные aa, ee, oo и ie — долгие. Учите их как шаблон."
+  obj: "Распознавать aa, ee, oo и ie как долгие гласные."
+  intro: "aa, ee и oo — долгие гласные. ie всегда обозначает долгое i. Слова с этими написаниями долгие."
+  examples: "Слова с aa, ee, oo и ie."
+  summary_block: "**aa, ee, oo и ie — долгие.** Запоминайте написание вместе со словом."
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Это не то. Прочитайте пояснение."
+  fb.incorrect: "Не совсем. Посмотрите на слово ещё раз."
+  ex.saal: "Saal (зал): долгое a, пишется aa."
+  ex.see: "See (озеро): долгое e, пишется ee."
+  ex.bier: "Bier (пиво): долгое i, пишется ie."
+  x.ie.expl: "Bier имеет ie — долгое i. mit и Bitte — краткое i."
+  x_ie.prompt: "В каком слове долгое i пишется как ie?"
+  x.double.expl: "See имеет ee — долгое e. Bett и Sonne — краткие гласные перед двойными согласными."
+  x_double.prompt: "В каком слове долгая гласная пишется удвоенной буквой (aa, ee, oo)?"

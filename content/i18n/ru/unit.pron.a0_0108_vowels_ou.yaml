@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0108_vowels_ou
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Долгие и краткие o и u"
+  summary: "Двойная гласная и одна гласная перед одной согласной — долгие. Двойная согласная делает гласную краткой."
+  obj: "Различать долгое o и краткое u в простых словах."
+  intro: "Boot (лодка) имеет долгое o из-за двойного oo. Sonne (солнце) — краткое o из-за двойного nn."
+  examples: "Слова с долгими и краткими o и u."
+  summary_block: "**Двойная гласная или одна согласная: долгая. Двойная согласная: краткая.**"
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Это не то. Прочитайте пояснение."
+  fb.incorrect: "Не совсем. Посмотрите на слово ещё раз."
+  ex.boot: "Boot (лодка): долгое o, двойная гласная."
+  ex.sonne: "Sonne (солнце): краткое o перед двойной согласной."
+  ex.hut: "Hut (шляпа): долгое u."
+  x.long_o.expl: "Boot имеет долгое o двойной гласной. Sonne и Post — краткое o."
+  x_long_o.prompt: "В каком слове долгое o?"
+  x.short_u.expl: "Mutter имеет краткое u перед двойной согласной. Hut и Uhr — долгое u."
+  x_short_u.prompt: "В каком слове краткое u?"

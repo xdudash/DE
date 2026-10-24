@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.umlauts
 lang: uk
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: Умлаути ä, ö, ü
-  summary: 'Три голосних, яких немає у слов''янських мовах і які змінюють значення: Mutter/Mütter, schon/schön. ö та ü утворюються округленням губ.'
+  title: "Умлаути: ä, ö, ü"
+  summary: "Ä, Ö і Ü — голосні з двома крапками. Кожна має власний звук, він не дорівнює простому a, o чи u."
+  pattern.scope: "Голосні з умлаутом пишуться з двома крапками; кожна має власний звук."
+  pattern.limits: "Звуки показано на прикладах слів; фонетичні знаки на A0 не використовуються."
+  ex.kaese: "Käse (сир): ä — як „е“ в „bed“, тільки довше."
+  ex.schoen: "schön (гарний): е з округленими губами."
+  ex.ueber: "über (над): і з округленими губами."

@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0108_vowels_ou
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Long and short o and u"
+  summary: "Double vowels and single vowels before a single consonant are long. A double consonant makes the vowel short."
+  obj: "Tell long o and short u apart in simple words."
+  intro: "Boot (boat) is long because of the double vowel oo. Sonne (sun) is short because of the double consonant nn."
+  examples: "Words with long and short o and u."
+  summary_block: "**Double vowel or one consonant: long. Double consonant: short.**"
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.boot: "Boot (boat): long o, double vowel."
+  ex.sonne: "Sonne (sun): short o before a double consonant."
+  ex.hut: "Hut (hat): long u."
+  x.long_o.expl: "Boot has the long o of the double vowel. Sonne and Post have short o."
+  x_long_o.prompt: "Which word has a long o?"
+  x.short_u.expl: "Mutter has the short u before a double consonant. Hut and Uhr have long u."
+  x_short_u.prompt: "Which word has a short u?"

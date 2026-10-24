@@ -1,0 +1,63 @@
+# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007).
+schema: deutschgo.unit/1
+id: unit.pron.a0_0108_vowels_ou
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.pron.long_short_vowels]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 10
+objectives:
+  - { id: obj_length_ou, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_boot, de: "Boot", gloss: "@ex.boot", highlight: [] }
+      - { id: ex_sonne, de: "Sonne", gloss: "@ex.sonne", highlight: [] }
+      - { id: ex_hut, de: "Hut", gloss: "@ex.hut", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x_long_o
+        type: single_choice
+        objective: obj_length_ou
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x_long_o.prompt"
+        options:
+          - { id: a, de: "Boot", correct: true }
+          - { id: b, de: "Sonne", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Post", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.long_o.expl"
+      - id: x_short_u
+        type: single_choice
+        objective: obj_length_ou
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 2
+        prompt: "@x_short_u.prompt"
+        options:
+          - { id: a, de: "Mutter", correct: true }
+          - { id: b, de: "Hut", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Uhr", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.short_u.expl"
+
+review:
+  linguistic: { status: pending, notes: "Draft for calibration. Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
