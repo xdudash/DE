@@ -20,6 +20,11 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "single_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "single_choice", optionId: r.optionId };
+    case "verb_position":
+      if (!Number.isInteger(r.tokenIndex) || (r.tokenIndex as number) < 0) {
+        throw new AttemptError("malformed_request", '"tokenIndex" must be a non-negative integer');
+      }
+      return { type: "verb_position", tokenIndex: r.tokenIndex as number };
     case "word_order":
     case "token_bank_build":
       if (!Array.isArray(r.order) || r.order.some((i) => !Number.isInteger(i) || (i as number) < 0)) {

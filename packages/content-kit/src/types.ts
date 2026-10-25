@@ -171,6 +171,13 @@ export interface TokenBankBuildExercise extends ExerciseBase {
   final_punctuation: "." | "?" | "!";
 }
 
+export interface VerbPositionExercise extends ExerciseBase {
+  type: "verb_position";
+  /** German sentence chunks; the learner marks the finite verb. */
+  tokens: string[];
+  finite_verb_index: number;
+}
+
 export interface TransformExercise extends ExerciseBase {
   type: "transform";
   source_de: string;
@@ -242,7 +249,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

@@ -64,6 +64,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `transform` | `source_de`, `accept` sentences | accepted answers evaluate correct; source not already an answer |
 | `keyword_build` | `keywords`, `accept` sentences | each accepted sentence evaluates correct and uses every prompt keyword |
 | `token_bank_build` | `tokens`, `solutions` (token index sequences), `final_punctuation` | each solution uses unique valid token positions, evaluates correct, and does not duplicate another sentence |
+| `verb_position` | `tokens`, `finite_verb_index` | the marked verb index identifies a sentence chunk and evaluates as correct |
 
 ### Route (`deutschgo.route/1`)
 Recommended, editable sequence of `unit` or `concept` steps (planned concepts allowed and shown as planned). Routes never contain teaching text.
