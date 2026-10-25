@@ -196,6 +196,14 @@ export interface ListeningChoiceExercise extends ExerciseBase {
   options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
 }
 
+export interface DictationExercise extends ExerciseBase {
+  type: "dictation";
+  audio_text_de: string;
+  stem_de?: string;
+  /** Accepted sentences are compared with the usual answer normalization. */
+  accept: string[];
+}
+
 export interface ReplyChoiceExercise extends ExerciseBase {
   type: "reply_choice";
   line_de: string;
@@ -203,7 +211,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
+  | TextInputExercise | DictationExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

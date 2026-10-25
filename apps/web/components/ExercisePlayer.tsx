@@ -11,7 +11,7 @@
  */
 import { useEffect, useImperativeHandle, useState, type KeyboardEvent, type Ref } from "react";
 import { evaluate, signalledConcepts, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
-import type { Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
+import type { DictationExercise, Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { sendWithOutbox } from "../lib/attempts/outbox";
 import { ACCOUNT_PROGRESS_EVENT, deviceKeyValue, recordAttempt } from "../lib/device-state";
@@ -67,8 +67,9 @@ const TEXT_INPUT_TYPES: ReadonlySet<string> = new Set([
   "spelling_input",
   "number_input",
   "time_input",
+  "dictation",
 ]);
-const isTextInput = (e: Exercise): e is TextInputExercise => TEXT_INPUT_TYPES.has(e.type);
+const isTextInput = (e: Exercise): e is TextInputExercise | DictationExercise => TEXT_INPUT_TYPES.has(e.type);
 
 export const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
@@ -95,7 +96,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   }, [exercise.id]);
 
   const playGerman = () => {
-    if (exercise.type !== "listening_choice" || !speechAvailable) return;
+    if ((exercise.type !== "listening_choice" && exercise.type !== "dictation") || !speechAvailable) return;
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(exercise.audio_text_de);
     utterance.lang = "de-DE";
@@ -113,7 +114,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    ((exercise.type === "transform" || isTextInput(exercise)) && free.trim() !== "");
+    ((exercise.type === "transform" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
@@ -138,6 +139,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
+          case "dictation": response = { type: "dictation", text: free }; break;
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
@@ -229,6 +231,30 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
               );
             })}
           </fieldset>
+        </>
+      )}
+
+      {exercise.type === "dictation" && (
+        <>
+          <div className="listening-audio">
+            <button type="button" className="btn" onClick={playGerman} disabled={locked || !speechAvailable}>
+              {hasPlayed ? labels.playAgain : labels.playAudio}
+            </button>
+            <span className="muted small">{speechAvailable ? labels.speechNote : labels.speechUnavailable}</span>
+          </div>
+          {!speechAvailable && <p lang="de" className="de stem listening-transcript">{exercise.audio_text_de}</p>}
+          <input
+            className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
+            lang="de"
+            aria-label={labels.yourAnswer}
+            value={free}
+            disabled={locked}
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            onKeyDown={enterChecks}
+            onChange={(e) => setFree(e.target.value)}
+          />
         </>
       )}
 
@@ -403,7 +429,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {(exercise.type === "transform" || isTextInput(exercise)) && (
+      {(exercise.type === "transform" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
         <>
           {exercise.type === "transform" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>

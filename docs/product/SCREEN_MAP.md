@@ -29,3 +29,4 @@ Each saved record is keyed by `storyId:paragraphIndex:tokenIndex`, so a lemma us
 `content/reading/stories.json` is the original text set. `apps/web/lib/reading.ts` loads and checks its minimal structure at build/render time. `apps/web/lib/vocabulary.ts` owns local state operations; `ReadingLibrary.tsx` implements the three screens. Before account sync ships, saved vocabulary needs the lexicon/sense contract (DG-050) and a progress API migration. The pilot does not create misleading account progress events.
 
 Listening choice is now implemented in the exercise player, including German browser speech, replay, localized meaning choices, and a transcript fallback.
+The lesson player also supports full-sentence dictation with replay, normalized text evaluation, and a transcript fallback.
