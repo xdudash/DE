@@ -20,6 +20,8 @@ export function SpeakingWorkshop({ prompts, labels }: { prompts: Prompt[]; label
     stream.current?.getTracks().forEach((track) => track.stop());
   }, []);
 
+  if (!prompt) return null;
+
   function discard() {
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     setAudioUrl("");
@@ -52,7 +54,6 @@ export function SpeakingWorkshop({ prompts, labels }: { prompts: Prompt[]; label
     } catch { setError(true); }
   }
   function stopRecording() { recorder.current?.stop(); setRecording(false); }
-  if (!prompt) return null;
   return <section className="speaking-workshop">
     <div className="speaking-prompts" aria-label={labels.promptLabel}>{prompts.map((item,i)=><button key={item.id} type="button" className={active===i?"speaking-prompt active":"speaking-prompt"} aria-pressed={active===i} disabled={recording} onClick={()=>{discard();setActive(i);}}><span className="pill">{i+1}</span><strong>{item.title}</strong></button>)}</div>
     <article className="card speaking-cue"><span className="pill blue">{labels.promptLabel}</span><h2>{prompt.title}</h2><p>{prompt.cue}</p><p className="speaking-german" lang="de">{prompt.sentence}</p><button type="button" className="button secondary" onClick={sayPrompt}>{labels.speakPrompt}</button></article>
