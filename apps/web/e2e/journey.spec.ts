@@ -257,8 +257,10 @@ test.describe("lesson: a guided run", () => {
     await expect(arrive.getByText("Days in a row: 1")).toBeVisible();
     await expect(arrive.getByText(/Your result is kept in this browser only/)).toBeVisible();
 
-    // Back on the line, the station is ticked.
-    await arrive.getByRole("link", { name: "Back to the line" }).click();
+    // The next step is offered: the next lesson when the route has one, otherwise the line.
+    await expect(arrive.locator(".arrive-actions a.btn-primary")).toBeVisible();
+    // Back on the line, the station is ticked (the lesson is finished on this device).
+    await page.goto("/en");
     await expect(page.locator(".station.is-done").first()).toContainText("Done");
   });
 
