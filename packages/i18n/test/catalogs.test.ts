@@ -11,6 +11,7 @@ const keys = Object.keys(pivot) as MessageKey[];
 const SAMPLES: Record<string, string | number> = {
   from: "A1", to: "A2", steps: 3, level: "A1", minutes: 25, count: 2,
   language: "English", current: 1, total: 10, correct: 7, topic: "Word order", n: 1234,
+  word: "Bahnhof", title: "A morning at the station",
   goal: "Work", answered: 3, percent: 80, answers: 5, lessons: 1,
   email: "learner@example.com",
   xp: 120, days: 3, hearts: 4, max: 5, done: 1,
