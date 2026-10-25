@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.lex.numbers_cardinal
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: Cardinal numbers
-  summary: Counting from zero into the millions, including the German order of tens and units (einundzwanzig) and reading prices and phone numbers.
+  title: "Numbers 0 to 20"
+  summary: "The numbers from zero to twenty. Each one is a single word, and 13 to 19 end in -zehn."
+  pattern.scope: "Cardinal numbers 0 to 20, written as words and as digits."
+  pattern.limits: "Numbers from 21 upward are taught later in A0.02."
+  ex.sieben: "sieben (seven)."
+  ex.zwoelf: "zwölf (twelve): the ö is written with two dots."
+  ex.dreizehn: "dreizehn (thirteen): 13 to 19 end in -zehn."
