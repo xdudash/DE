@@ -22,6 +22,7 @@ import type {
   TokenBankBuildExercise,
   VerbPositionExercise,
   MultiChoiceExercise,
+  NegationExercise,
   ReplyChoiceExercise,
   TextInputExercise,
   TrueFalseExercise,
@@ -76,6 +77,7 @@ export type Response =
   | { type: "word_order"; order: number[] }
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string }
+  | { type: "negation"; text: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -331,6 +333,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalCloze(ex, (response as Extract<Response, { type: "cloze" }>).gaps);
     case "transform":
       return evalTransform(ex, (response as Extract<Response, { type: "transform" }>).text);
+    case "negation":
+      return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "negation" }>).text);
     case "keyword_build":
       return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "keyword_build" }>).text);
     case "token_bank_build":
