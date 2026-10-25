@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78, #79, and #80 merged; listening, dictation, and error-correction exercise types are in progress)
+Last updated: 2026-10-25 (PRs #78–#83 merged; browser voiced listening, dictation, and error correction are implemented)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -49,7 +49,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; dictation, writing and speaking activities; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; guided writing and speaking activities; minimal-pair practice; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -67,8 +67,8 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Finish the error-correction exercise. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Add transparent guided writing and speaking practice. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Current implementation block — error correction
-- Add a full-sentence correction input with accepted answers, targeted feedback, schema validation, and a gold-unit example.
-- Evaluator version: 1.4.0. Branch: `feat/dg-069-error-correction-exercise`.
+## Next implementation block — productive practice
+- Add guided writing and speaking practice with honest self-review, accessible controls, and clear explanation of what is and is not automatically assessed.
+- Continue with pronunciation contrasts and remaining planned exercise types.
