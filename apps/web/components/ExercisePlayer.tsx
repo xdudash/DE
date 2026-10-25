@@ -96,19 +96,24 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     };
   }, [exercise.id]);
 
-  const playGerman = () => {
-    if ((exercise.type !== "listening_choice" && exercise.type !== "dictation") || !speechAvailable) return;
+  const speakGerman = (sentence: string) => {
+    if (!speechAvailable) return;
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(exercise.audio_text_de);
+    const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.lang = "de-DE";
     const voice = window.speechSynthesis.getVoices().find((candidate) => candidate.lang.toLowerCase().startsWith("de"));
     if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
+  };
+
+  const playGerman = () => {
+    if ((exercise.type !== "listening_choice" && exercise.type !== "dictation" && exercise.type !== "minimal_pairs") || !speechAvailable) return;
+    speakGerman(exercise.audio_text_de);
     setHasPlayed(true);
   };
 
   const ready =
-    ((exercise.type === "single_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice") && choice !== "" && (exercise.type !== "listening_choice" || !speechAvailable || hasPlayed)) ||
+    ((exercise.type === "single_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
@@ -140,6 +145,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
+          case "minimal_pairs": response = { type: "minimal_pairs", optionId: choice }; break;
           case "dictation": response = { type: "dictation", text: free }; break;
           case "error_correction": response = { type: "error_correction", text: free }; break;
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
@@ -230,6 +236,36 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
                   <span className="option-key" aria-hidden="true">{i + 1}</span>
                   <span className="option-text" lang={o.de ? "de" : undefined}>{o.de ?? tr(text, o.text)}</span>
                 </label>
+              );
+            })}
+          </fieldset>
+        </>
+      )}
+
+      {exercise.type === "minimal_pairs" && (
+        <>
+          <div className="listening-audio">
+            <button type="button" className="btn" onClick={playGerman} disabled={locked || !speechAvailable}>
+              {hasPlayed ? labels.playAgain : labels.playAudio}
+            </button>
+            <span className="muted small">{speechAvailable ? labels.speechNote : labels.speechUnavailable}</span>
+          </div>
+          {!speechAvailable && <p lang="de" className="de stem listening-transcript">{exercise.audio_text_de}</p>}
+          <fieldset className="options minimal-pairs" disabled={locked}>
+            <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
+            {exercise.options.map((option, i) => {
+              const mark = locked ? (option.correct ? " is-right" : choice === option.id ? " is-wrong" : "") : "";
+              return (
+                <div key={option.id} className="minimal-pair-row">
+                  <label className={`option minimal-pair-option${choice === option.id ? " selected" : ""}${mark}`}>
+                    <input type="radio" name={exercise.id} value={option.id} checked={choice === option.id} onChange={() => setChoice(option.id)} />
+                    <span className="option-key" aria-hidden="true">{i + 1}</span>
+                    <span className="option-text" lang="de">{option.de}</span>
+                  </label>
+                  <button type="button" className="minimal-pair-play" onClick={() => speakGerman(option.de)} disabled={locked || !speechAvailable} aria-label={`${labels.playAudio}: ${option.de}`}>
+                    {labels.playAudio}
+                  </button>
+                </div>
               );
             })}
           </fieldset>

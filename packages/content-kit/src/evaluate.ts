@@ -17,6 +17,7 @@ import type {
   DictationExercise,
   ErrorCorrectionExercise,
   MatchPairsExercise,
+  MinimalPairsExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
   TextInputExercise,
@@ -33,7 +34,7 @@ import type {
  * Bumped whenever normalization or any type's evaluation semantics change.
  * Stored with every graded event so past results stay interpretable.
  */
-export const EVALUATOR_VERSION = "1.4.0";
+export const EVALUATOR_VERSION = "1.5.0";
 
 export function normalizeAnswer(input: string): string {
   let s = input.normalize("NFC");
@@ -64,6 +65,7 @@ export type Response =
   | { type: "match_pairs"; matches: Record<string, string> }
   | { type: "categorize"; assignments: Record<string, string> }
   | { type: "listening_choice"; optionId: string }
+  | { type: "minimal_pairs"; optionId: string }
   | { type: "dictation"; text: string }
   | { type: "error_correction"; text: string }
   | { type: "reply_choice"; optionId: string }
@@ -278,6 +280,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "reply_choice" }>).optionId);
     case "listening_choice":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "listening_choice" }>).optionId);
+    case "minimal_pairs":
+      return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "minimal_pairs" }>).optionId);
     case "dictation":
       return evalTextInput(ex as unknown as TextInputExercise, (response as Extract<Response, { type: "dictation" }>).text);
     case "error_correction":

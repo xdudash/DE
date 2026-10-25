@@ -1411,3 +1411,8 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .listening-audio { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 1rem 0; }
 .listening-audio .btn { min-height: 2.8rem; }
 .listening-transcript { border-inline-start: 3px solid var(--blue); padding-inline-start: 0.8rem; }
+
+
+.minimal-pair-row { display: flex; align-items: stretch; gap: 0.5rem; }
+.minimal-pair-option { flex: 1; }
+.minimal-pair-play { flex: none; min-height: 48px; padding-inline: 0.8rem; }

@@ -242,6 +242,23 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (correct && !evaluate(ex, { type: "listening_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct listening option does not evaluate as correct`);
             break;
           }
+          case "minimal_pairs": {
+            const correctOptions = ex.options.filter((option) => option.correct);
+            if (correctOptions.length !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct minimal-pair option required, found ${correctOptions.length}`);
+            const ids = new Set<string>();
+            const words = new Set<string>();
+            for (const option of ex.options) {
+              if (ids.has(option.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${option.id}`);
+              ids.add(option.id);
+              if (words.has(option.de.toLocaleLowerCase("de-DE"))) c.error("exercise.minimal_pair_duplicate", u.id, `${where}: duplicate pronunciation option ${option.de}`);
+              words.add(option.de.toLocaleLowerCase("de-DE"));
+            }
+            if (!ex.audio_text_de.trim()) c.error("exercise.empty_audio", u.id, `${where}: audio_text_de is empty`);
+            const correct = correctOptions[0];
+            if (correct && !answersEqual(correct.de, ex.audio_text_de)) c.error("exercise.minimal_pair_target", u.id, `${where}: correct spelling must match the spoken target`);
+            if (correct && !evaluate(ex, { type: "minimal_pairs", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: target option does not evaluate as correct`);
+            break;
+          }
           case "dictation": {
             if (!ex.audio_text_de.trim()) c.error("exercise.empty_audio", u.id, `${where}: audio_text_de is empty`);
             if (!ex.accept.length || ex.accept.some((answer) => !answer.trim())) c.error("exercise.empty_accept", u.id, `${where}: at least one non-empty accepted answer is required`);

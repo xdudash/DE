@@ -189,6 +189,13 @@ describe("batch 1 types (ADR-0023)", () => {
     assert.equal(evaluate(ex, { type: "listening_choice", optionId: "b" }).correct, false);
     assert.throws(() => evaluate(ex, { type: "listening_choice", optionId: "missing" }), EvaluationError);
   });
+  it("minimal_pairs: evaluates the selected sound contrast", () => {
+    const ex = { ...meta, id: "minimal", type: "minimal_pairs", audio_text_de: "schön", options: [
+      { id: "a", de: "schon", correct: false }, { id: "b", de: "schön", correct: true }] } as import("../src/types.ts").MinimalPairsExercise;
+    assert.equal(evaluate(ex, { type: "minimal_pairs", optionId: "b" }).correct, true);
+    assert.equal(evaluate(ex, { type: "minimal_pairs", optionId: "a" }).correct, false);
+    assert.throws(() => evaluate(ex, { type: "minimal_pairs", optionId: "missing" }), EvaluationError);
+  });
   it("dictation: checks full phrases using the shared sentence normalization", () => {
     const ex = { ...meta, id: "dict", type: "dictation", audio_text_de: "Am Montag fahre ich zur Arbeit.", accept: ["Am Montag fahre ich zur Arbeit."] } as import("../src/types.ts").DictationExercise;
     assert.equal(evaluate(ex, { type: "dictation", text: "am Montag fahre ich zur Arbeit" }).correct, true);

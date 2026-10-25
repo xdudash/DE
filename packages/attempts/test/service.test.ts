@@ -31,7 +31,7 @@ describe("recordAttempt", () => {
     assert.equal(stored.contentId, UNIT);
     assert.equal(stored.localId, "x_order");
     assert.deepEqual(stored.conceptIds, [V2]);
-    assert.equal(stored.evaluatorVersion, "1.4.0");
+    assert.equal(stored.evaluatorVersion, "1.5.0");
     assert.equal(stored.kind, "attempt");
   });
 

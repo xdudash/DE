@@ -196,6 +196,13 @@ export interface ListeningChoiceExercise extends ExerciseBase {
   options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
 }
 
+export interface MinimalPairsExercise extends ExerciseBase {
+  type: "minimal_pairs";
+  /** Spoken target word; the learner identifies its spelling from a minimal contrast. */
+  audio_text_de: string;
+  options: { id: string; de: string; correct: boolean; feedback?: L10nRef }[];
+}
+
 export interface DictationExercise extends ExerciseBase {
   type: "dictation";
   audio_text_de: string;
@@ -218,7 +225,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

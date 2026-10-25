@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78–#83 merged; browser voiced listening, dictation, and error correction are implemented)
+Last updated: 2026-10-25 (PRs #78–#84 merged; learner boards and three audio/writing exercise types are live)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
