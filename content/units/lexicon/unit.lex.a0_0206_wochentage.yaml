@@ -28,6 +28,7 @@ blocks:
       - { id: ex_4, de: "Bis Freitag!", gloss: "@ex.4", highlight: [] }
       - { id: ex_5, de: "Samstag und Sonntag sind Wochenende.", gloss: "@ex.5", highlight: [] }
       - { id: ex_6, de: "Mo.–Fr. 9–18 Uhr", gloss: "@ex.6", highlight: [] }
+      - { id: ex_7, de: "Welcher Tag ist heute?", gloss: "@ex.7", highlight: [] }
 
   - { type: explanation, id: b_tip, body: "@tip" }
 
@@ -37,208 +38,218 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x4
-        type: match_pairs
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        pairs:
-          - { id: a, left_de: "Montag", right_de: "Mo." }
-          - { id: b, left_de: "Dienstag", right_de: "Di." }
-          - { id: c, left_de: "Donnerstag", right_de: "Do." }
-          - { id: d, left_de: "Samstag", right_de: "Sa." }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
-      - id: x5
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x5.prompt"
-        options:
-          - { id: a, de: "Montag", correct: true }
-          - { id: b, de: "Mittwoch", correct: true }
-          - { id: c, de: "Freitag", correct: true }
-          - { id: d, de: "Sonntag", correct: false, feedback: "@x5.o4.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x5.expl"
-
       - id: x1
-        type: single_choice
+        type: reply_choice
         objective: obj_main
         concepts: [concept.lex.weekdays]
         difficulty: 1
         prompt: "@x1.prompt"
+        line_de: "Tschüss! Bis Freitag!"
         options:
-          - { id: a, de: "Dienstag", correct: true }
-          - { id: b, de: "Mittwoch", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "Sonntag", correct: false, feedback: "@x1.o3.fb" }
+          - { id: a, de: "Bis Freitag!", correct: true }
+          - { id: b, de: "Guten Tag!", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Am Januar!", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x2.prompt"
-        accept: ["Donnerstag"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Donerstag"], feedback: "@x2.r1" }
-          - { match: ["Dienstag"], feedback: "@x2.r2" }
-        explanation: "@x2.expl"
-
-      - id: x3
-        type: true_false
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        statement_de: "Samstag und Sonntag sind das Wochenende."
-        correct: true
-        wrong_feedback: "@x3.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x6
         type: gap_fill_input
         objective: obj_main
         concepts: [concept.lex.weekdays]
         difficulty: 1
+        prompt: "@x2.prompt"
+        stem_de: "Heute ist ___."
+        accept: ["Samstag", "Sonnabend"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["samstag"], feedback: "@x2.r1" }
+          - { match: ["Sonntag"], feedback: "@x2.r2" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        options:
+          - { id: a, de: "Montag", correct: true }
+          - { id: b, de: "Mittwoch", correct: true }
+          - { id: c, de: "Freitag", correct: true }
+          - { id: d, de: "Sonntag", correct: false, feedback: "@x3.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        statement_de: "Sonnabend ist ein anderes Wort für Samstag."
+        correct: true
+        wrong_feedback: "@x4.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: transform
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        source_de: "Sa."
+        accept: ["Samstag", "Sonnabend"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Sonntag"], feedback: "@x5.r1" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
         prompt: "@x6.prompt"
+        line_de: "Welcher Tag ist heute?"
+        options:
+          - { id: a, de: "Heute ist Dienstag.", correct: true }
+          - { id: b, de: "Heute ist Januar.", correct: false, feedback: "@x6.o2.fb" }
+          - { id: c, de: "Heute ist zehn Uhr.", correct: false, feedback: "@x6.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: word_order
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        tokens: ["Montag", "ist", "Heute"]
+        final_punctuation: "."
+        accept: ["Heute ist Montag."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        options:
+          - { id: a, de: "Sonntag", correct: true }
+          - { id: b, de: "Dienstag", correct: true }
+          - { id: c, de: "Januar", correct: false, feedback: "@x8.o3.fb" }
+          - { id: d, de: "Morgen", correct: false, feedback: "@x8.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: cloze
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        text_de: "Montag, Dienstag, {{0}}, Donnerstag, {{1}}, Samstag, Sonntag."
+        gaps:
+          - { accept: ["Mittwoch"] }
+          - { accept: ["Freitag"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        stem_de: "Mo.–Fr. 9–18 Uhr"
+        options:
+          - { id: a, text: "@x10.o1", correct: true }
+          - { id: b, text: "@x10.o2", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, text: "@x10.o3", correct: false, feedback: "@x10.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x11.prompt"
         stem_de: "___ Freitag"
         accept: ["am"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["an"], feedback: "@x6.r1" }
-          - { match: ["im"], feedback: "@x6.r2" }
-        explanation: "@x6.expl"
+          - { match: ["an"], feedback: "@x11.r1" }
+          - { match: ["im"], feedback: "@x11.r2" }
+          - { match: ["in"], feedback: "@x11.r3" }
+        explanation: "@x11.expl"
 
-      - id: x7
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x7.prompt"
-        line_de: "Welcher Tag ist heute?"
-        options:
-          - { id: a, de: "Heute ist Dienstag.", correct: true }
-          - { id: b, de: "Heute ist Januar.", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "Heute ist zehn Uhr.", correct: false, feedback: "@x7.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
-
-      - id: x10
-        type: number_input
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x10.prompt"
-        accept: ["5"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["6"], feedback: "@x10.r1" }
-        explanation: "@x10.expl"
-
-      - id: x9
+      - id: x12
         type: true_false
         objective: obj_main
         concepts: [concept.lex.weekdays]
         difficulty: 1
-        prompt: "@x9.prompt"
-        statement_de: "Donnerstag kommt vor Mittwoch."
-        correct: false
-        wrong_feedback: "@x9.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
-
-      - id: x8
-        type: word_order
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x8.prompt"
-        tokens: ["Montag", "ist", "Heute"]
-        final_punctuation: "."
-        accept: ["Heute ist Montag."]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
-
-      - id: x11
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "Mittwoch", correct: true }
-          - { id: b, de: "Montag", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "Donnerstag", correct: false, feedback: "@x11.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
-      - id: x14
-        type: cloze
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x14.prompt"
-        text_de: "Montag, Dienstag, {{0}}, Donnerstag, {{1}}, Samstag, Sonntag."
-        gaps:
-          - { accept: ["Mittwoch"] }
-          - { accept: ["Freitag"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
-
-      - id: x12
-        type: transform
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
         prompt: "@x12.prompt"
-        source_de: "Samstag"
-        accept: ["am Samstag"]
+        statement_de: "Samstag und Sonntag sind Wochenende."
+        correct: true
+        wrong_feedback: "@x12.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x12.expl"
 
-      - id: x15
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.lex.weekdays]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        line_de: "Tschüss! Bis Freitag!"
-        options:
-          - { id: a, de: "Bis Freitag!", correct: true }
-          - { id: b, de: "Guten Tag, Freitag!", correct: false, feedback: "@x15.o2.fb" }
-          - { id: c, de: "Bis Januar!", correct: false, feedback: "@x15.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
-
       - id: x13
-        type: multi_choice
+        type: spelling_input
         objective: obj_main
         concepts: [concept.lex.weekdays]
         difficulty: 1
         prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "Sonntag", correct: true }
-          - { id: b, de: "Dienstag", correct: true }
-          - { id: c, de: "Januar", correct: false, feedback: "@x13.o3.fb" }
-          - { id: d, de: "Morgen", correct: false, feedback: "@x13.o4.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        stem_de: "? ← Samstag"
+        accept: ["Freitag"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Sonntag"], feedback: "@x13.r1" }
+          - { match: ["Freitak"], feedback: "@x13.r2" }
         explanation: "@x13.expl"
+
+      - id: x14
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        stem_de: "Montag → ?"
+        options:
+          - { id: a, de: "Dienstag", correct: true }
+          - { id: b, de: "Mittwoch", correct: false, feedback: "@x14.o2.fb" }
+          - { id: c, de: "Sonntag", correct: false, feedback: "@x14.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.lex.weekdays]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        pairs:
+          - { id: a, left_de: "Montag", right_de: "1" }
+          - { id: b, left_de: "Mittwoch", right_de: "3" }
+          - { id: c, left_de: "Freitag", right_de: "5" }
+          - { id: d, left_de: "Sonntag", right_de: "7" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending, notes: "Welcher Tag ist heute?, Am Mittwoch ist Kurs and Mo.–Fr. 9–18 Uhr are glossed chunks; clock times are taught in A0.02.10." }
+  pedagogical: { status: pending, notes: "Glossed chunks: Welcher Tag ist heute?, Am Mittwoch ist Kurs, Mo.–Fr. 9–18 Uhr (clock times are taught in A0.02.10), sind Wochenende, ein anderes Wort für. Sonnabend is accepted wherever Samstag is the answer." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

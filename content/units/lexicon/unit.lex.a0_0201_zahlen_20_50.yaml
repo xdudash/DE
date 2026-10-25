@@ -9,7 +9,7 @@ cefr: A0
 concepts: [concept.lex.numbers_tens]
 prerequisites: [concept.lex.numbers_cardinal]
 goals: [general, everyday]
-estimated_minutes: 8
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -28,6 +28,7 @@ blocks:
       - { id: ex_4, de: "fünfzig Cent", gloss: "@ex.4", highlight: [] }
       - { id: ex_5, de: "einundzwanzig", gloss: "@ex.5", highlight: [] }
       - { id: ex_6, de: "Wie alt bist du? – Ich bin dreiunddreißig.", gloss: "@ex.6", highlight: [] }
+      - { id: ex_7, de: "Vierzig ist mehr als dreißig.", gloss: "@ex.7", highlight: [] }
 
   - { type: explanation, id: b_tip, body: "@tip" }
 
@@ -37,212 +38,214 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x5
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_tens]
-        difficulty: 1
-        prompt: "@x5.prompt"
-        options:
-          - { id: a, de: "vierzig", correct: true }
-          - { id: b, de: "fünfzig", correct: true }
-          - { id: c, de: "einunddreißig", correct: true }
-          - { id: d, de: "zwanzig", correct: false, feedback: "@x5.o4.fb" }
-          - { id: e, de: "dreizehn", correct: false, feedback: "@x5.o5.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x5.expl"
-
-      - id: x3
-        type: true_false
-        objective: obj_main
-        concepts: [concept.lex.numbers_tens]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        statement_de: "Einundzwanzig ist die Zahl 21."
-        correct: true
-        wrong_feedback: "@x3.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x4
+      - id: x1
         type: match_pairs
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x4.prompt"
+        prompt: "@x1.prompt"
         pairs:
           - { id: a, left_de: "zwanzig", right_de: "20" }
           - { id: b, left_de: "dreißig", right_de: "30" }
           - { id: c, left_de: "vierzig", right_de: "40" }
           - { id: d, left_de: "fünfzig", right_de: "50" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
+        explanation: "@x1.expl"
 
-      - id: x1
+      - id: x2
         type: single_choice
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x1.prompt"
+        prompt: "@x2.prompt"
         options:
           - { id: a, de: "dreißig", correct: true }
-          - { id: b, de: "dreizehn", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "dreizig", correct: false, feedback: "@x1.o3.fb" }
+          - { id: b, de: "dreizehn", correct: false, feedback: "@x2.o2.fb" }
+          - { id: c, de: "drei", correct: false, feedback: "@x2.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x1.expl"
+        explanation: "@x2.expl"
 
-      - id: x2
-        type: number_input
+      - id: x3
+        type: spelling_input
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x2.prompt"
-        accept: ["40"]
+        prompt: "@x3.prompt"
+        stem_de: "50"
+        accept: ["fünfzig", "fuenfzig"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["14"], feedback: "@x2.r1" }
-        explanation: "@x2.expl"
+          - { match: ["fünfzehn"], feedback: "@x3.r1" }
+          - { match: ["funfzig"], feedback: "@x3.r2" }
+        explanation: "@x3.expl"
 
-      - id: x9
-        type: true_false
+      - id: x4
+        type: multi_choice
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x9.prompt"
-        statement_de: "Vierundzwanzig ist 42."
-        correct: false
-        wrong_feedback: "@x9.wrong"
+        prompt: "@x4.prompt"
+        options:
+          - { id: a, de: "zwanzig", correct: true }
+          - { id: b, de: "vierzig", correct: true }
+          - { id: c, de: "fünfzig", correct: true }
+          - { id: d, de: "dreißig", correct: false, feedback: "@x4.o4.fb" }
+          - { id: e, de: "vierzehn", correct: false, feedback: "@x4.o5.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
+        explanation: "@x4.expl"
 
-      - id: x10
+      - id: x5
         type: gap_fill_input
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x10.prompt"
+        prompt: "@x5.prompt"
         stem_de: "___undzwanzig (21)"
         accept: ["ein"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["eins"], feedback: "@x10.r1" }
-          - { match: ["zwei"], feedback: "@x10.r2" }
-        explanation: "@x10.expl"
-
-      - id: x7
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_tens]
-        difficulty: 1
-        prompt: "@x7.prompt"
-        line_de: "Was kostet das?"
-        options:
-          - { id: a, de: "Vierzig Euro.", correct: true }
-          - { id: b, de: "Vierzehn Uhr.", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "Guten Tag.", correct: false, feedback: "@x7.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
+          - { match: ["eins"], feedback: "@x5.r1" }
+          - { match: ["zwei"], feedback: "@x5.r2" }
+        explanation: "@x5.expl"
 
       - id: x6
-        type: spelling_input
+        type: true_false
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
         prompt: "@x6.prompt"
-        accept: ["fünfzig"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["fünfzehn"], feedback: "@x6.r1" }
-          - { match: ["funfzig"], feedback: "@x6.r2" }
+        statement_de: "Zwanzig plus zehn ist dreißig."
+        correct: true
+        wrong_feedback: "@x6.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x6.expl"
 
-      - id: x8
+      - id: x7
         type: word_order
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x8.prompt"
-        tokens: ["Euro", "kostet", "Das", "dreißig"]
+        prompt: "@x7.prompt"
+        tokens: ["dreißig", "Bus", "Nummer"]
         final_punctuation: "."
-        accept: ["Das kostet dreißig Euro."]
+        accept: ["Bus Nummer dreißig."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
+        explanation: "@x7.expl"
 
-      - id: x15
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_tens]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        line_de: "Wie alt bist du?"
-        options:
-          - { id: a, de: "Ich bin dreiunddreißig.", correct: true }
-          - { id: b, de: "Ich bin dreiunddreißig Euro.", correct: false, feedback: "@x15.o2.fb" }
-          - { id: c, de: "Dreiunddreißig Uhr.", correct: false, feedback: "@x15.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
-
-      - id: x11
+      - id: x8
         type: single_choice
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x11.prompt"
+        prompt: "@x8.prompt"
         options:
-          - { id: a, de: "fünfunddreißig", correct: true }
-          - { id: b, de: "dreiundfünfzig", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "fünfzehn", correct: false, feedback: "@x11.o3.fb" }
+          - { id: a, text: "@x8.o1", correct: true }
+          - { id: b, text: "@x8.o2", correct: false, feedback: "@x8.o2.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
+        explanation: "@x8.expl"
 
-      - id: x12
+      - id: x9
         type: number_input
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x12.prompt"
+        prompt: "@x9.prompt"
+        stem_de: "siebenundvierzig"
         accept: ["47"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["74"], feedback: "@x12.r1" }
-        explanation: "@x12.expl"
+          - { match: ["74"], feedback: "@x9.r1" }
+        explanation: "@x9.expl"
 
-      - id: x13
-        type: multi_choice
+      - id: x10
+        type: reply_choice
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x13.prompt"
+        prompt: "@x10.prompt"
+        line_de: "Wie alt bist du?"
         options:
-          - { id: a, de: "einundzwanzig", correct: true }
-          - { id: b, de: "achtundzwanzig", correct: true }
-          - { id: c, de: "zweiunddreißig", correct: false, feedback: "@x13.o3.fb" }
-          - { id: d, de: "zwölf", correct: false, feedback: "@x13.o4.fb" }
+          - { id: a, de: "Ich bin dreiunddreißig.", correct: true }
+          - { id: b, de: "Ich bin dreißig drei.", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, de: "Dreiunddreißig Euro.", correct: false, feedback: "@x10.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
+        explanation: "@x10.expl"
 
-      - id: x14
+      - id: x11
+        type: transform
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        source_de: "33"
+        accept: ["dreiunddreißig", "dreiunddreissig"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["dreißigdrei"], feedback: "@x11.r1" }
+          - { match: ["drei und dreißig"], feedback: "@x11.r2" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        options:
+          - { id: a, de: "fünfunddreißig", correct: true }
+          - { id: b, de: "dreiundfünfzig", correct: false, feedback: "@x12.o2.fb" }
+          - { id: c, de: "dreißigfünf", correct: false, feedback: "@x12.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
         type: cloze
         objective: obj_main
         concepts: [concept.lex.numbers_tens]
         difficulty: 1
-        prompt: "@x14.prompt"
-        text_de: "Zehn plus {{0}} ist dreißig. Zwanzig plus zwanzig ist {{1}}."
+        prompt: "@x13.prompt"
+        text_de: "Das kostet {{0}} (40) Euro und {{1}} (20) Cent."
         gaps:
-          - { accept: ["zwanzig"] }
           - { accept: ["vierzig"] }
+          - { accept: ["zwanzig"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        statement_de: "Vierzig ist mehr als fünfzig."
+        correct: false
+        wrong_feedback: "@x14.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x14.expl"
 
+      - id: x15
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "einunddreißig", correct: true }
+          - { id: b, de: "vierzig", correct: true }
+          - { id: c, de: "neunundzwanzig", correct: false, feedback: "@x15.o3.fb" }
+          - { id: d, de: "dreizehn", correct: false, feedback: "@x15.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending, notes: "Wie alt bist du? and Das kostet … are glossed chunks; the verb sein is taught in A0.03." }
+  pedagogical: { status: pending, notes: "Glossed chunks before their grammar: Wie alt bist du? / Ich bin … (sein, A0.03), Das kostet …, mehr als. ue for ü and ss for ß are accepted (taught in A0.01.03; ss is the Swiss spelling)." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
