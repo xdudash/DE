@@ -48,6 +48,14 @@ describe("connector_choice", () => {
   });
 });
 
+describe("separable_verb", () => {
+  const exercise = { id: "x_separable", type: "separable_verb" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, source_de: "Ich muss um sieben Uhr aufstehen.", finite_form_de: "stehe", prefix_de: "auf", accept: ["Ich stehe um sieben Uhr auf."] };
+  it("accepts an authored sentence with the separated prefix and rejects wrong placement", () => {
+    assert.equal(evaluate(exercise, { type: "separable_verb", text: "Ich stehe um sieben Uhr auf." }).correct, true);
+    assert.equal(evaluate(exercise, { type: "separable_verb", text: "Ich aufstehe um sieben Uhr." }).correct, false);
+  });
+});
+
 describe("negation", () => {
   const exercise = { id: "x_negation", type: "negation" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, source_de: "Ich habe Hunger.", accept: ["Ich habe keinen Hunger."] };
   it("accepts authored negation and rejects wrong or unchanged sentences", () => {
