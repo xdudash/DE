@@ -19,7 +19,7 @@ export function TabBar({ lang }: { lang: string }) {
       <ul>
         {sectionsFor(lang).map((tab) => (
           <li key={tab.key}>
-            <Link href={tab.href} aria-current={pathname === tab.href ? "page" : undefined}>
+            <Link href={tab.href} aria-current={(tab.key === "home" ? pathname === tab.href : pathname.startsWith(tab.href)) ? "page" : undefined}>
               <span className="tab-icon">
                 <Icon name={tab.key} size={24} />
               </span>

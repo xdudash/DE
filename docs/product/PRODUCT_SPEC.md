@@ -107,11 +107,12 @@ Evidence per requirement: [project audit §3](../development/PROJECT_AUDIT_2026-
 | F10 | Language registry, per-entity l10n, coverage report, UI catalogs + RTL | P1–P2 | Implemented; translations unreviewed |
 | F1 | Language, goal, daily minutes on this device | P2 | Partial (goal vocabulary differs from this spec; no region, no placement) |
 | F9 | Google/Apple sign-in, account deletion, attempts saved to the account | P2 | Implemented, not configured |
-| F9 | Session refresh, email sign-in, offline queue, sync, cross-device read, export UI | P2–P3 | Planned |
-| F7 | Evidence events, states, recommendations | P2 | Engine implemented; app reads device evidence only |
+| F9 | Session refresh, browser outbox, account progress read/import, export | P2–P3 | Refresh/outbox/read/import implemented; full GDPR export/audit is DG-028; email sign-in not implemented |
+| F7 | Evidence events, states, recommendations | P2 | Engine, due-review classification, account/device merge, and explainable Home next step implemented (#77); later analytics remain planned |
 | F2 | Knowledge map UI with title search | P2 | Implemented; route choice and catch-up planned |
-| F5 | Review scheduler v1 | P3 | Engine implemented; ineffective until recall events exist (DG-021) |
-| F6 | Reading pilot, dictionary, audio | P4–P5 | Planned |
+| F5 | Review scheduler v1 and Review Room | P3 | Scheduler and due classification implemented; daily session in open PR #78 |
+| F6 | Reading library, contextual lookup, vocabulary review | P4 | Pilot implemented on device; lexicon and account sync remain planned |
+| F6 | Learner dictionary and audio | P4–P5 | Planned |
 | F8 | Writing/speaking | P5 | Planned |
 | F11 | Freemium + billing | P7 | Planned (free during build-out) |
 | F12/F13 | Analytics, monitoring, backups | P2–P3 | Planned (not started) |

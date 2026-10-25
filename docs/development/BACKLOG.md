@@ -12,12 +12,12 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | ID | Task | Stage | Depends on | Ready? |
 |---|---|---|---|---|
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
-| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
-| DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
+| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **done** (merged to `main`; ADR-0016 derivation-time classification) |
+| DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **implemented** (JWKS verifier on `main`; provider round trip needs setup) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 decided (ADR-0017: Postgres table) | implemented (PR, owner applies migration 0003) |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
-| DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
+| DG-022 | One event identity + retry of failed sends | B | DG-021 | **done** (merged to `main`; browser write-ahead outbox) |
 | DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | done (#77, merged to `main`; CI green) |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
@@ -45,8 +45,8 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-039 | Arabic font for the preview locale | D | — | ready (small) |
 | DG-005 | Vet first external sources (frequency data) | E | — | ready (research) |
 | DG-050 | Lexicon schema ADR + schema (lemma/sense/forms) | E | DG-005 | P4 |
-| DG-051 | Reading pilot (original texts) | E | DG-050, DG-043 | P4 |
-| DG-052 | Tap-to-look-up, saved vocabulary, vocabulary review | E | DG-050, DG-048 | P4 |
+| DG-051 | Reading pilot (original texts) | E | DG-050, DG-043 | **pilot implemented** (PR #78 branch; one original A1 story, 4 UI locales) |
+| DG-052 | Tap-to-look-up, saved vocabulary, vocabulary review | E | DG-050, DG-048 | **device pilot implemented** (PR #78 branch; context and interval logic; account sync/schema follow-up) |
 | DG-053 | Placement v1 with uncertainty | E | DG-043 | P4 |
 | DG-054 | Decide ADR-0007 media and audio | F | owner budget | P5 |
 | DG-055 | Audio pipeline (storage, manifests, player) | F | DG-054 | P5 |

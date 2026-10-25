@@ -1,16 +1,17 @@
 # Project Status
 
-Last updated: 2026-10-25 (DG-024 merged as #77; Review Room follow-up on `feat/dg-048-global-review`)
+Last updated: 2026-10-25 (DG-024 merged as #77; DG-048 and P4 reading/vocabulary pilot on open PR #78)
 
 ## Current phase
-**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merges #46 `e99c7f9` and #52 `1ed94f3`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`); PR #78 is open against `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
 
 ## Current branch result (DG-048 follow-up)
 - PR #77 is merged to `main` as `25548d5`; CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe.
 - DG-024 adds authenticated `GET /api/progress`, server-re-evaluated idempotent device-history import, and shared progress across Home, Practice, lessons, the map, and You.
 - Home explains the next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream. Account progress has eligible/legacy import counts and a JSON download; full GDPR export/audit is still DG-028.
-- Current branch adds a Review Room board and session over due concepts, sized daily queues, least-seen authored exercise selection, and shared answer persistence.
-- Screen maps, learner paths, and Home, Practice, Mission, Progress, and Review mockups are in [GLOBAL_EXPERIENCE.md](../product/GLOBAL_EXPERIENCE.md).
+- PR #78 is open and mergeable. It adds a Review Room board and session over due concepts, plus an original-text Library, contextual word lookup, local vocabulary scheduling, and an all-screen path map.
+- Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
+- Screen paths and behavior are in [SCREEN_MAP.md](../product/SCREEN_MAP.md); flow definitions are in [USER_FLOWS.md](../product/USER_FLOWS.md); mockups cover Home, Practice, Mission, Progress, Review, Library, and Vocabulary.
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
@@ -20,6 +21,7 @@ Last updated: 2026-10-25 (DG-024 merged as #77; Review Room follow-up on `feat/d
 - Learner-data schema (`supabase/migrations` 0001, 0002): RLS on every table, GDPR export function, cascade deletion. Hosted project `deutschgo` (EU) exists; 0001 is recorded as applied, 0002 (push subscriptions) is not recorded.
 - Interface localization (`packages/i18n`, DG-014): en pivot, uk, ru, ar preview (RTL).
 - Web app: start screen and plan, lesson as a guided run, knowledge map with search, practice list, learner area, delete device data, installable PWA with offline reading, phone layout with 44px targets (DG-016…DG-019).
+- Learner loop: DG-021 review scheduling, DG-022 shared event identity and retry outbox, and DG-024 account read/import across Home, Practice, lessons, map, and profile. DG-048's Review Room is proposed in open PR #78.
 - Sign-in code (DG-015, ADR-0013): Google/Apple via Supabase Auth with PKCE, HttpOnly cookie, 16+ confirmation, account deletion, attempts saved to the account when signed in. **Not configured**: needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
 - Session refresh (DG-025, #52, ADR-0013): access and refresh tokens in separate HttpOnly cookies, rotation at app start, one retry of a rejected attempt after rotation. Needs the same owner setup as sign-in.
 - Motivation (DG-020, ADR-0014/0015): signed-in XP/streak use merged account/device evidence; hearts remain device-local; daily push reminder code. **Push not configured**: [REMINDERS_SETUP.md](./REMINDERS_SETUP.md).
@@ -30,9 +32,8 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 
 ## Known gaps that block the P2 exit
 - The cross-device read/import path is now on `main`; provider credentials still need owner setup before production account sync can be exercised.
-- Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered`. **Fix in review:** DG-021 / ADR-0016 (branch `feat/dg-021-review-evidence`) counts answers given while due as reviews.
-- Failed attempt sends were not retried; **fix in review:** DG-022 (branch `feat/dg-022-event-identity-retry`) adds one event identity and a write-ahead outbox with retries; a send that meets an expired session refreshes it once (#52) and retries. Still no IndexedDB queue or batch sync (DG-023).
-- Session refresh is merged (#52). The token verifier was HS256-only while the hosted project signs with ES256; **fix in review:** DG-026 (branch `feat/dg-026-session-verification`) verifies against the project's JWKS, and the refresh route uses the same verification as sign-in.
+- Session refresh (#52) and JWKS token verification (DG-026) are implemented; a configured provider round trip still needs owner setup.
+- The offline outbox retries browser sends (DG-022). IndexedDB and batched sync remain open as DG-023.
 - No rate limiting, monitoring, analytics, backups with restore test, privacy notice or Impressum (DG-027, DG-031…DG-033, DG-030).
 - Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
 
@@ -42,7 +43,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; lexicon and saved vocabulary; reading, listening, writing and speaking activities; audio; placement; route personalisation; exercise types beyond the four; Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; listening, writing and speaking activities; audio; placement; route personalisation; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -60,4 +61,4 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Review and merge the Review Room branch after its implementation checks. Then continue with DG-028's complete export/audit path, DG-029 profile sync after Q4, and the remaining privacy/operations gates.
+Complete hosted CI review for open PR #78, then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.

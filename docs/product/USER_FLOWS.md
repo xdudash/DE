@@ -64,6 +64,14 @@
 2. Show one direct action with its reason in plain language.
 3. Let the learner continue along the line, choose another map topic, or dismiss the suggestion without losing the route.
 
+## K — Read, look up, and review a word (P4 pilot)
+1. Open **Library** from the desktop navigation or phone tab bar and choose an original, level-labelled short story.
+2. Read the German story. Marked words are keyboard buttons; opening a word shows its lemma, explanation-language meaning, and the complete sentence.
+3. Save a word with its story id, exact token occurrence, sense gloss, and sentence. A repeated tap on the same occurrence never creates a duplicate; a different occurrence remains a separate context record.
+4. Open **My vocabulary** from the library. Due words appear as cards, one at a time. The learner recalls before revealing the answer, then chooses **I remembered** or **Again**.
+5. A remembered word advances through 1, 3, 7, 16, and 35 day intervals. **Again** returns it in ten minutes. The board also lists scheduled and due words and allows removal.
+6. Vocabulary, context, and dates are local to this browser. They are excluded from account progress and cross-device claims until a lexicon/saved-vocabulary server contract is implemented.
+
 ## F — Listen, speak, and write
 - Listening tasks include real audio, controlled replay, and suitable comprehension checks.
 - Speaking tasks say whether they practise pronunciation, prepared speech, or conversation; assessment claims match actual capability.
