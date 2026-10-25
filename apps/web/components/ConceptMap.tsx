@@ -1,14 +1,14 @@
 "use client";
 
 /**
- * Knowledge map: every topic with its prerequisites and this browser's state for it,
+ * Knowledge map: every topic with its prerequisites and the shared account/device state for it,
  * plus a search box. States come from the learning engine; planned topics are shown
  * as planned, never as practised.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { deriveConceptStates, type ConceptState, type GraphConcept } from "@deutschgo/learning-engine";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { readAttempts } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
 
 export interface MapItem {
   id: string;
@@ -36,13 +36,11 @@ interface Props {
 export function ConceptMap({ lang, items, graph }: Props) {
   const msg = translator(lang);
   const [query, setQuery] = useState("");
-  const [states, setStates] = useState<Record<string, ConceptState>>({});
-
-  // Computed after mount: the server cannot read this browser's attempts.
-  useEffect(() => {
-    const derived = deriveConceptStates(graph, readAttempts(), Date.now());
-    setStates(Object.fromEntries([...derived].map(([id, s]) => [id, s.state])));
-  }, [graph]);
+  const { attempts, status } = useProgress();
+  const states = useMemo(() => {
+    const derived = deriveConceptStates(graph, attempts, Date.now());
+    return Object.fromEntries([...derived].map(([id, s]) => [id, s.state]));
+  }, [graph, attempts]);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -55,7 +53,7 @@ export function ConceptMap({ lang, items, graph }: Props) {
         <span>{msg("map.search")}</span>
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} />
       </label>
-      <p className="muted small">{msg("map.onDevice")}</p>
+      <p className="muted small">{msg(status === "account" ? "map.account" : "map.onDevice")}</p>
       {visible.length === 0 && <p>{msg("map.noMatch")}</p>}
       <ul className="topics">
         {visible.map((item) => {

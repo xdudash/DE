@@ -1,9 +1,8 @@
 "use client";
 
 /**
- * Streak, XP and hearts at a glance, always in reach (ADR-0014). Every number is derived
- * from this browser's answers; the full sentence for each is given to assistive
- * technology, and the profile explains where the numbers come from.
+ * Streak, XP and hearts at a glance, always in reach (ADR-0014). XP and streak use shared
+ * evidence; hearts remain device-local. Full labels support assistive technology.
  */
 import { translator } from "@deutschgo/i18n";
 import { HEARTS } from "@deutschgo/gamification";

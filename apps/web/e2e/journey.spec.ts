@@ -31,11 +31,11 @@ async function continueUntil(page: Page, target: Locator) {
 }
 
 test.describe("home: the line", () => {
-  test("shows the route as a line with the written lesson and says progress is not saved", async ({ page }) => {
+  test("shows the route as a line with the written lesson and explains local progress", async ({ page }) => {
     await page.goto("/en");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.locator(`a[href="${UNIT}"]`).first()).toBeVisible();
-    await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
+    await expect(page.getByText(/stored on this device/i)).toBeVisible();
   });
 
   test("marks where a new learner is, and opens that lesson in one tap", async ({ page }) => {
@@ -72,7 +72,7 @@ test.describe("home: the line", () => {
 
   test("streak, XP and hearts are always in reach and start honestly at zero", async ({ page }) => {
     await page.goto("/en");
-    const pills = page.getByRole("list", { name: "Your progress on this device" });
+    const pills = page.getByRole("list", { name: "Your learning progress" });
     await expect(pills).toBeVisible();
     await expect(pills.getByText("Days in a row: 0")).toHaveCount(1);
     await expect(pills.getByText("Hearts: 5 of 5")).toHaveCount(1);
@@ -123,14 +123,14 @@ test.describe("home: the line", () => {
 });
 
 test.describe("lesson: a guided run", () => {
-  test("opens with leave and progress, and an introduction with its unsaved-progress notice", async ({ page }) => {
+  test("opens with leave and progress, and explains where answers are stored", async ({ page }) => {
     await page.goto(UNIT);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("link", { name: "Leave the lesson" })).toBeVisible();
     await expect(page.getByRole("progressbar")).toBeVisible();
     // Learning a lesson for the first time never costs hearts, so none are shown (ADR-0014).
     await expect(page.getByRole("img", { name: /Hearts/ })).toHaveCount(0);
-    await expect(page.getByText(/progress is not saved yet/)).toBeVisible();
+    await expect(page.getByText(/stored on this device/i)).toBeVisible();
     // The site's navigation steps aside during a lesson.
     await expect(page.getByRole("navigation", { name: "Main" })).toBeHidden();
   });
@@ -267,6 +267,19 @@ test.describe("lesson: a guided run", () => {
   test("an unknown unit is a 404, not an empty page", async ({ page }) => {
     const response = await page.goto("/en/learn/unit.does.not.exist");
     expect(response?.status()).toBe(404);
+  });
+});
+
+test.describe("DACH missions", () => {
+  test("opens an authored conversation and checks the learner's reply", async ({ page }) => {
+    await page.goto("/en/practice");
+    await page.getByRole("link", { name: "Scenario: introduce yourself in a course" }).click();
+    await expect(page.getByRole("heading", { name: /Scenario: introduce yourself in a course/ })).toBeVisible();
+    await action(page, "Continue").click();
+    await expect(page.getByText("Hallo, ich heiße Peter.")).toBeVisible();
+    await page.getByRole("radio", { name: "Hallo, Peter! Ich heiße Anna." }).check();
+    await action(page, "Check").click();
+    await expect(page.getByRole("status").getByText("Right!")).toBeVisible();
   });
 });
 

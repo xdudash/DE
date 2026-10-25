@@ -2,12 +2,13 @@ import { DailyGoal } from "../../components/DailyGoal";
 import { InstallPrompt } from "../../components/InstallPrompt";
 import { LinePath, type Station } from "../../components/LinePath";
 import { SlotLine } from "../../components/SlotLine";
+import { NextStepCard } from "../../components/NextStepCard";
 import { bundle, dictionaryFor, t } from "../../lib/content";
 import { pickLine } from "../../lib/path";
+import { graphFromBundle, routeFromBundle } from "@deutschgo/learning-engine";
+import Link from "next/link";
+import { scenarioMissions } from "../../lib/missions";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
-
-/** Content that has not passed human review is labelled wherever it is offered. */
-const REVIEWED = new Set(["approved", "published"]);
 
 /**
  * Home: the learner's line. The route that holds a written lesson is drawn as a transit
@@ -42,7 +43,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           unitId: unit.id,
           href: `/${lang}/learn/${unit.id}`,
           meta: msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes }),
-          draft: !REVIEWED.has(unit.status),
           exerciseIds: unit.blocks.flatMap((block) => (block.type === "exercises" ? block.items.map((e) => e.id) : [])),
         },
       ];
@@ -57,6 +57,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const firstUnit = firstLesson?.unitId ? units.get(firstLesson.unitId) : undefined;
   const heroConcept = firstUnit ? concepts.get(firstUnit.concepts[0] ?? "") : undefined;
   const heroExample = heroConcept?.examples?.find((e) => e.highlight?.length === 1 && (e.highlight[0] ?? 0) >= 1);
+  const targets: Record<string, { title: string; href: string }> = {};
+  for (const unit of b.units) targets[unit.id] = { title: title(unit.id, unit, unit.title), href: `/${lang}/learn/${unit.id}` };
+  for (const concept of b.concepts) {
+    const unitId = unitForConcept.get(concept.id);
+    targets[concept.id] = unitId
+      ? { title: title(unitId, units.get(unitId), units.get(unitId)!.title), href: `/${lang}/learn/${unitId}` }
+      : { title: title(concept.id, concept, concept.title), href: `/${lang}/map#${concept.id}` };
+  }
+  const recommendationRoute = route ? routeFromBundle(b, route.id) : [];
+  const featuredMission = scenarioMissions(b, (id, ref) => {
+    const unit = units.get(id)!;
+    return title(id, unit, ref);
+  })[0];
 
   return (
     <main className="page home">
@@ -86,9 +99,15 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           )}
         </div>
         <aside className="home-side">
+          <NextStepCard lang={lang} graph={graphFromBundle(b)} route={recommendationRoute} targets={targets} />
+          {featuredMission && <section className="card next-step">
+            <h2 className="card-title">{msg("mission.title")}</h2>
+            <p className="lead">{featuredMission.title}</p>
+            <p className="muted small">{featuredMission.summary}</p>
+            <Link className="btn btn-primary" href={`/${lang}/mission/${featuredMission.unitId}`}>{msg("mission.homeCta")}</Link>
+          </section>}
           <DailyGoal lang={lang} />
           <InstallPrompt lang={lang} />
-          <p className="small muted footnote">{msg("status.noPersistence")}</p>
         </aside>
       </div>
     </main>

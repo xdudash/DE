@@ -7,7 +7,7 @@
 import { strict as assert } from "node:assert";
 import { randomUUID } from "node:crypto";
 import { after, before, describe, it } from "node:test";
-import { recordAttempt } from "@deutschgo/attempts";
+import { importAttempts, recordAttempt } from "@deutschgo/attempts";
 import { T0, UNIT_VERSION, V2, bundle, request as attemptBody } from "../../../packages/attempts/test/fixtures.ts";
 
 const url = process.env.DG_DB_URL;
@@ -104,6 +104,17 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     assert.equal(second.recorded, false);
     const { rowCount } = await db().query("select 1 from public.learning_events where id = $1", [body.eventId]);
     assert.equal(rowCount, 1);
+  });
+
+  it("imports a verified batch through one learner-scoped insert", async () => {
+    const requests = [attemptBody({ eventId: randomUUID() }), attemptBody({ eventId: randomUUID() })];
+    const first = await importAttempts(requests, { bundle: bundle(), store: attemptStore(ALICE), userId: ALICE, now: T0 });
+    const replay = await importAttempts(requests, { bundle: bundle(), store: attemptStore(ALICE), userId: ALICE, now: T0 + 60_000 });
+    assert.equal(first.imported, 2);
+    assert.equal(replay.imported, 0);
+    assert.equal(replay.duplicates, 2);
+    const rows = await db().query("select count(*)::int as n from public.learning_events where user_id = $1 and id = any($2::uuid[])", [ALICE, requests.map((r) => r.eventId)]);
+    assert.equal(rows.rows[0]!.n, 2);
   });
 
   it("recomputes state from stored evidence: three wrong answers mean needs_practice", async () => {

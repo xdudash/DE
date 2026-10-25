@@ -7,6 +7,7 @@
  */
 import { useEffect, useState } from "react";
 import { refreshBrowserSession } from "../lib/auth/browser-refresh.ts";
+import { useProgress } from "../lib/progress/client";
 
 interface SessionStatus {
   configured: boolean;
@@ -28,6 +29,42 @@ export function AccountPanel({ lang, labels }: { lang: string; labels: AccountLa
   const [status, setStatus] = useState<SessionStatus | null>(null);
   const [failed, setFailed] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const { attempts, remoteIds, refresh } = useProgress();
+  const [importing, setImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState("");
+  const [exportMessage, setExportMessage] = useState("");
+  const eligible = attempts.filter((a) => !remoteIds.has(a.id) && !!a.response && !!a.contentVersion);
+  const legacy = attempts.filter((a) => !remoteIds.has(a.id) && (!a.response || !a.contentVersion)).length;
+
+  async function importProgress() {
+    if (importing || eligible.length === 0) return;
+    setImporting(true); setImportMessage("");
+    try {
+      const response = await fetch("/api/progress/import", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ attempts: eligible.map((a) => ({ eventId: a.id, unitId: a.unitId, exerciseId: a.exerciseId, contentVersion: a.contentVersion, response: a.response, occurredAt: new Date(a.at).toISOString() })) }),
+      });
+      const body = await response.json() as { imported?: number; duplicates?: number; message?: string };
+      if (!response.ok) throw new Error(body.message ?? String(response.status));
+      await refresh();
+      setImportMessage(t("account.importDone").replace("{count}", String(body.imported ?? 0)));
+    } catch {
+      setImportMessage(t("account.importFailed"));
+    } finally { setImporting(false); }
+  }
+
+  async function exportProgress() {
+    setExportMessage("");
+    try {
+      const response = await fetch("/api/progress", { cache: "no-store" });
+      if (!response.ok) throw new Error(String(response.status));
+      const data = { product: "DeutschGo", exportedAt: new Date().toISOString(), ...(await response.json()) };
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      const anchor = document.createElement("a");
+      anchor.href = url; anchor.download = `deutschgo-progress-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.click(); window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+    } catch { setExportMessage(t("account.exportFailed")); }
+  }
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("auth");
@@ -64,6 +101,15 @@ export function AccountPanel({ lang, labels }: { lang: string; labels: AccountLa
             {status.email && <> {t("account.signedInAs").replace("{email}", status.email)}</>}
           </p>
           <p className="muted small">{status.saved ? t("account.savedNote") : t("account.notSavedNote")}</p>
+          {(eligible.length > 0 || legacy > 0) && <div className="account-import">
+            <h3>{t("account.importTitle")}</h3>
+            {eligible.length > 0 && <p className="muted small">{t("account.importBody").replace("{count}", String(eligible.length))}</p>}
+            {legacy > 0 && <p className="muted small">{t("account.importLegacy").replace("{count}", String(legacy))}</p>}
+            {eligible.length > 0 && <button type="button" disabled={importing} onClick={() => void importProgress()}>{importing ? t("account.importing") : t("account.importAction").replace("{count}", String(eligible.length))}</button>}
+            {importMessage && <p role="status" className="small">{importMessage}</p>}
+          </div>}
+          <button type="button" onClick={() => void exportProgress()}>{t("account.exportAction")}</button>
+          {exportMessage && <p role="status" className="small">{exportMessage}</p>}
           <form method="post" action="/auth/sign-out">
             <input type="hidden" name="lang" value={lang} />
             <button type="submit">{t("account.signOut")}</button>

@@ -2,6 +2,7 @@ import { graphFromBundle } from "@deutschgo/learning-engine";
 import { PracticeList, type TargetLink } from "../../../components/PracticeList";
 import { bundle, dictionaryFor, t } from "../../../lib/content";
 import { contentLanguageFor, ui } from "../../../lib/i18n";
+import { scenarioMissions } from "../../../lib/missions";
 
 export default async function Practice({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -28,7 +29,7 @@ export default async function Practice({ params }: { params: Promise<{ lang: str
     <main className="page">
       <h1>{msg("practice.title")}</h1>
       <p className="lead">{msg("practice.lead")}</p>
-      <PracticeList lang={lang} graph={graphFromBundle(b)} targets={targets} />
+      <PracticeList lang={lang} graph={graphFromBundle(b)} targets={targets} missions={scenarioMissions(b, (id, ref) => title(id, b.units.find((u) => u.id === id), ref))} />
     </main>
   );
 }

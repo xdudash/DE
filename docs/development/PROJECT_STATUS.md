@@ -1,9 +1,16 @@
 # Project Status
 
-Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2026-10-22.md))
+Last updated: 2026-10-25 (global learner-loop implementation on `feat/dg-024-global-experience`; not yet merged to `main`)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merges #46 `e99c7f9` and #52 `1ed94f3`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+
+## Current branch result (awaiting PR)
+- DG-024 implementation adds authenticated `GET /api/progress`, a server-re-evaluated, idempotent device-history import, and a shared progress source across Home, Practice, lessons, the map, and You.
+- The home screen now explains its next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream.
+- The account screen offers eligible/legacy import counts and a JSON download of account progress. This is not the full GDPR export/audit-log work tracked by DG-028.
+- Screen maps, learner paths, and Home, Practice, Mission, and Progress mockups are in [GLOBAL_EXPERIENCE.md](../product/GLOBAL_EXPERIENCE.md).
+- Local `npm run check` passed. Hosted CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration checks, and Playwright + axe after correcting stale UI expectations and two journey-test assumptions.
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
@@ -22,7 +29,7 @@ Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2
 Foundation check (passes without `node_modules`; with dependencies installed it fails on third-party READMEs, DG-011), content validation (0 errors/warnings), typecheck, `npm test` (253 tests, 0 failures) and `npm run build` **passed**. `npm run test:db` and E2E were **not run here** (no PostgreSQL/Docker, no Playwright browser); they run in CI. CI status of `e99c7f9` was not verified (no `gh` CLI). Details: [audit §2](./PROJECT_AUDIT_2026-10-22.md#2-checks-run-for-this-audit).
 
 ## Known gaps that block the P2 exit
-- Progress, states, XP, streak and hearts are read from this browser only; the server is written but never read, so nothing continues on another device (DG-022, DG-024).
+- Until the current branch merges, production progress remains browser-only. The cross-device read/import path is implemented on `feat/dg-024-global-experience` and awaits PR review.
 - Only `attempt` events are produced, so the review schedule never advances past one day and no concept can become `provisionally_mastered`. **Fix in review:** DG-021 / ADR-0016 (branch `feat/dg-021-review-evidence`) counts answers given while due as reviews.
 - Failed attempt sends were not retried; **fix in review:** DG-022 (branch `feat/dg-022-event-identity-retry`) adds one event identity and a write-ahead outbox with retries; a send that meets an expired session refreshes it once (#52) and retries. Still no IndexedDB queue or batch sync (DG-023).
 - Session refresh is merged (#52). The token verifier was HS256-only while the hosted project signs with ES256; **fix in review:** DG-026 (branch `feat/dg-026-session-verification`) verifies against the project's JWKS, and the refresh route uses the same verification as sign-in.
@@ -53,4 +60,4 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Merge in order: #47 (audit), #48 (DG-011), then #49 (DG-021) and #50 (DG-026), then DG-022. Next owner-free task: **DG-024** (server read path and device-history import), then DG-029 needs decision Q4. In parallel the owner works on blockers 1 and 2.
+Review and merge the global learner-loop branch. Its foundation, build, PostgreSQL integration, and corrected browser journeys pass in CI. Then continue with DG-028's complete export/audit path, DG-029 profile sync after Q4, and the remaining privacy/operations gates.

@@ -33,6 +33,32 @@ export function attemptStore(userId: string): Store {
       return { inserted: rowCount === 1 };
     },
 
+    async insertEvents(events: StoredEvent[]) {
+      if (events.some((event) => event.userId !== userId)) throw new Error("event belongs to another learner");
+      if (events.length === 0) return 0;
+      const { rowCount } = await withLearner(userId, (c) =>
+        c.query(
+          `insert into public.learning_events
+             (id, user_id, kind, occurred_at, content_id, local_id, content_version,
+              concept_ids, signals, skill, correct, score, evaluator_version)
+           select u.id, $1, u.kind::dg_event_kind, u.occurred_at, u.content_id, u.local_id, u.content_version,
+                  u.concept_ids, u.signals, u.skill::dg_skill, u.correct, u.score, u.evaluator_version
+             from jsonb_to_recordset($2::jsonb)
+                  as u(id uuid, kind text, occurred_at timestamptz, content_id text, local_id text,
+                       content_version text, concept_ids text[], signals text[], skill text, correct boolean,
+                       score numeric, evaluator_version text)
+           on conflict (id) do nothing`,
+          [userId, JSON.stringify(events.map(({ userId: _userId, ...event }) => ({
+            id: event.id, kind: event.kind, occurred_at: event.occurredAt, content_id: event.contentId,
+            local_id: event.localId, content_version: event.contentVersion, concept_ids: event.conceptIds,
+            signals: event.signals, skill: event.skill, correct: event.correct, score: event.score,
+            evaluator_version: event.evaluatorVersion,
+          })))],
+        ),
+      );
+      return rowCount ?? 0;
+    },
+
     async eventsForConcepts(conceptIds: string[]): Promise<LearningEvent[]> {
       const { rows } = await withLearner(userId, (c) =>
         c.query(

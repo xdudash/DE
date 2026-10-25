@@ -14,7 +14,7 @@ import { evaluate, signalledConcepts, type EvaluationResult, type Response } fro
 import type { Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { sendWithOutbox } from "../lib/attempts/outbox";
-import { deviceKeyValue, recordAttempt } from "../lib/device-state";
+import { ACCOUNT_PROGRESS_EVENT, deviceKeyValue, recordAttempt } from "../lib/device-state";
 import { inline } from "../lib/markdown";
 
 export interface PlayerText {
@@ -129,11 +129,14 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         const eventId = crypto.randomUUID();
         const at = Date.now();
         // Evidence for the learning engine, kept in this browser (see lib/device-state.ts).
-        recordAttempt({ id: eventId, at, unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct, signals: signalledConcepts(outcome), practice });
+        recordAttempt({ id: eventId, at, unitId: unit.id, exerciseId: exercise.id, conceptIds: exercise.concepts, correct: outcome.correct, signals: signalledConcepts(outcome), practice, response, contentVersion: unit.version });
         setSave({ status: "saving" });
         const submission = { eventId, unitId: unit.id, exerciseId: exercise.id, contentVersion: unit.version, response, occurredAt: new Date(at).toISOString() };
         void sendWithOutbox(deviceKeyValue(), submission, (item) => submitAttempt(item), at).then(
-          ({ state, queued }) => setSave(queued ? { status: "queued" } : state),
+          ({ state, queued }) => {
+            setSave(queued ? { status: "queued" } : state);
+            if (state.status === "saved") window.dispatchEvent(new Event(ACCOUNT_PROGRESS_EVENT));
+          },
           () => setSave({ status: "failed", reason: "unexpected" }),
         );
         return outcome;

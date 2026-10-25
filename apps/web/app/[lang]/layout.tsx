@@ -3,6 +3,7 @@ import { AppHeader } from "../../components/AppHeader";
 import { OfflineNotice } from "../../components/OfflineNotice";
 import { OutboxSync } from "../../components/OutboxSync";
 import { SessionRefresher } from "../../components/SessionRefresher";
+import { ProgressProvider } from "../../lib/progress/client";
 import { TabBar } from "../../components/TabBar";
 import { isRoutableLocale, localeInfo, routableLocales } from "../../lib/i18n";
 
@@ -23,9 +24,11 @@ export default async function LangLayout({ children, params }: { children: React
           refresh instead of starting a second one (lib/auth/browser-refresh.ts). */}
       <SessionRefresher />
       <OutboxSync />
-      <AppHeader lang={lang} />
-      {children}
-      <TabBar lang={lang} />
+      <ProgressProvider>
+        <AppHeader lang={lang} />
+        {children}
+        <TabBar lang={lang} />
+      </ProgressProvider>
     </div>
   );
 }

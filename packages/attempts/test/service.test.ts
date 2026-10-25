@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { DAY_MS } from "@deutschgo/learning-engine";
 import { AttemptError } from "../src/errors.ts";
 import { MemoryStore } from "../src/memory-store.ts";
-import { MAX_CLIENT_LAG_MS, recordAttempt, recomputeAll } from "../src/service.ts";
+import { MAX_CLIENT_LAG_MS, importAttempts, recordAttempt, recomputeAll } from "../src/service.ts";
 import { T0, UNIT, UNIT_VERSION, V2, VERBS, bundle, iso, request } from "./fixtures.ts";
 
 const USER = "11111111-1111-4111-8111-111111111111";
@@ -139,6 +139,43 @@ describe("recordAttempt", () => {
     await assert.rejects(() => recordAttempt(request({ contentVersion: "0.9.0" }), deps(store)));
     assert.equal(store.events.size, 0);
     assert.equal(store.states.size, 0);
+  });
+});
+
+describe("importAttempts", () => {
+  it("re-evaluates imported answers and dates them at import time", async () => {
+    const d = deps();
+    const first = request({ occurredAt: iso(T0 - 200 * DAY_MS) });
+    const wrong = request({ response: { type: "word_order", order: [2, 0, 3, 1] }, occurredAt: iso(T0 - 100 * DAY_MS) });
+    const result = await importAttempts([first, wrong], d);
+
+    assert.equal(result.imported, 2);
+    assert.equal(result.duplicates, 0);
+    assert.deepEqual([...d.store.events.values()].map((e) => e.correct).sort(), [false, true]);
+    assert.ok([...d.store.events.values()].every((e) => e.occurredAt === iso(T0)));
+    assert.equal(result.states.find((s) => s.conceptId === V2)?.evidence.attempts, 2);
+  });
+
+  it("validates the whole batch before writing any event", async () => {
+    const d = deps();
+    await assert.rejects(() => importAttempts([
+      request(),
+      request({ contentVersion: "0.9.0" }),
+    ], d), (e: unknown) => e instanceof AttemptError && e.code === "version_mismatch");
+    assert.equal(d.store.events.size, 0);
+    assert.equal(d.store.states.size, 0);
+  });
+
+  it("is idempotent across imports and duplicate ids in the same batch", async () => {
+    const d = deps();
+    const item = request();
+    const first = await importAttempts([item, item], d);
+    const replay = await importAttempts([item], d);
+    assert.equal(first.imported, 1);
+    assert.equal(first.duplicates, 1);
+    assert.equal(replay.imported, 0);
+    assert.equal(replay.duplicates, 1);
+    assert.equal(d.store.events.size, 1);
   });
 });
 

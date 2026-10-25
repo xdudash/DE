@@ -16,6 +16,17 @@ export class MemoryStore implements Store {
     return { inserted: true };
   }
 
+  async insertEvents(events: StoredEvent[]): Promise<number> {
+    this.insertCalls++;
+    let inserted = 0;
+    for (const event of events) {
+      if (this.events.has(event.id)) continue;
+      this.events.set(event.id, { ...event });
+      inserted += 1;
+    }
+    return inserted;
+  }
+
   async eventsForConcepts(conceptIds: string[]): Promise<LearningEvent[]> {
     const wanted = new Set(conceptIds);
     return [...this.events.values()]

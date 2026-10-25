@@ -36,6 +36,26 @@
 4. Let weak or frequently missed concepts influence recommendations.
 5. Explain recommendations and allow the learner to override them.
 
+## H — Practical mission
+1. Open Practice or the Home recommendation and choose a real-life DACH mission.
+2. Read the setting and the goal of the conversation.
+3. Respond to each authored German line using the supported reply exercise.
+4. See the same targeted feedback and explanation as in a lesson.
+5. Save each answer to the same learning history; replay the mission or open its full lesson.
+
+## I — Account progress and device import
+1. A signed-in learner fetches account events with a no-store request; the same progress appears on Home, Practice, the map, and You.
+2. Device answers remain visible while offline and are marked local or waiting until the account confirms them.
+3. Before importing, show eligible answers that include their original response and older answers that cannot be rechecked.
+4. Ask for an explicit import action. The server validates the whole batch, re-evaluates each answer against the current lesson, ignores repeated event IDs, and dates imported evidence at import time.
+5. On success, refresh account progress. On failure, keep local answers and show a retry action.
+6. A second device reads the saved account history; signing out returns to that device's local history.
+
+## J — Explainable next step
+1. Rank a due review, repeated error, prerequisite catch-up, then the next available route step.
+2. Show one direct action with its reason in plain language.
+3. Let the learner continue along the line, choose another map topic, or dismiss the suggestion without losing the route.
+
 ## F — Listen, speak, and write
 - Listening tasks include real audio, controlled replay, and suitable comprehension checks.
 - Speaking tasks say whether they practise pronunciation, prepared speech, or conversation; assessment claims match actual capability.
@@ -49,4 +69,4 @@
 4. Label regional usage and retain the distinction from general standard German.
 
 ## Required cross-flow states
-Loading, empty, success, validation error, recoverable failure, and offline/unsynced states where relevant. Provide accessible keyboard navigation and mobile layouts. Never claim persistence or sync unless implemented and tested.
+Loading, empty, success, validation error, recoverable failure, offline/unsynced, local-only, signed-out, import-ready, and synced states where relevant. Provide accessible keyboard navigation and mobile layouts. Never claim persistence or sync unless implemented and tested.
