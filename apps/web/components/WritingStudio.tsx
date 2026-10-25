@@ -12,7 +12,7 @@ export interface WritingPrompt {
 
 interface WritingLabels {
   noGrade: string; localOnly: string; choosePrompt: string; draftStarted: string; draftEmpty: string;
-  situation: string; tasks: string; answer: string; wordCount: (count: number) => string; placeholder: string;
+  situation: string; tasks: string; answer: string; wordCount: string; placeholder: string;
   selfReview: string; markReviewed: string; reviewed: string; reset: string; saved: string; saveError: string;
 }
 
@@ -124,7 +124,7 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
           <section className="card writing-editor" aria-labelledby="writing-answer-label">
             <div className="writing-editor-heading">
               <label id="writing-answer-label" htmlFor="writing-draft">{labels.answer}</label>
-              <span className="pill">{labels.wordCount(wordCount)}</span>
+              <span className="pill">{labels.wordCount.replace("{count}", String(wordCount))}</span>
             </div>
             <textarea id="writing-draft" lang="de" value={draft} disabled={!hydrated} onChange={(event) => updateDraft(event.target.value)} placeholder={labels.placeholder} rows={8} />
             <div className="row writing-save-row">

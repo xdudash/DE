@@ -11,7 +11,7 @@ export default async function WritingPage({ params }: { params: Promise<{ lang: 
   ];
   const labels = {
     choosePrompt: msg("writing.choosePrompt"), situation: msg("writing.situation"), tasks: msg("writing.tasks"), answer: msg("writing.answer"),
-    placeholder: msg("writing.placeholder"), wordCount: (count: number) => msg("writing.wordCount", { count }), noGrade: msg("writing.noGrade"), localOnly: msg("writing.localOnly"),
+    placeholder: msg("writing.placeholder"), wordCount: msg("writing.wordCount", { count: "{count}" }), noGrade: msg("writing.noGrade"), localOnly: msg("writing.localOnly"),
     selfReview: msg("writing.selfReview"), markReviewed: msg("writing.markReviewed"), reviewed: msg("writing.reviewed"), reset: msg("writing.reset"),
     saved: msg("writing.saved"), saveError: msg("writing.saveError"), draftStarted: msg("writing.draftStarted"), draftEmpty: msg("writing.draftEmpty"),
   };
