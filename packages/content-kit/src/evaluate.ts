@@ -83,6 +83,7 @@ export type Response =
   | { type: "separable_verb"; text: string }
   | { type: "read_question"; optionId: string }
   | { type: "dialogue_gap"; text: string }
+  | { type: "modal_choice"; optionId: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -315,6 +316,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "preposition_choice" }>).optionId);
     case "read_question":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "read_question" }>).optionId);
+    case "modal_choice":
+      return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "modal_choice" }>).optionId);
     case "dialogue_gap": {
       const answer = (response as Extract<Response, { type: "dialogue_gap" }>).text;
       const gaps = ex.lines.filter((line) => "accept" in line);
