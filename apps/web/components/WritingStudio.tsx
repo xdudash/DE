@@ -10,9 +10,15 @@ export interface WritingPrompt {
   tasks: string[];
 }
 
+interface WritingLabels {
+  noGrade: string; localOnly: string; choosePrompt: string; draftStarted: string; draftEmpty: string;
+  situation: string; tasks: string; answer: string; wordCount: (count: number) => string; placeholder: string;
+  selfReview: string; markReviewed: string; reviewed: string; reset: string; saved: string; saveError: string;
+}
+
 interface Props {
   lang: string;
-  labels: Record<string, string>;
+  labels: WritingLabels;
   prompts: WritingPrompt[];
   criteria: string[];
 }
@@ -61,31 +67,32 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
   }, [hydrated, lang, work]);
 
   if (!prompt) return null;
-  const draft = work.drafts[prompt.id] ?? "";
-  const checked = work.checks[prompt.id] ?? criteria.map(() => false);
+  const promptId = prompt.id;
+  const draft = work.drafts[promptId] ?? "";
+  const checked = work.checks[promptId] ?? criteria.map(() => false);
   const wordCount = draft.trim() ? draft.trim().split(/\s+/u).length : 0;
   const allChecked = criteria.length > 0 && criteria.every((_, i) => checked[i]);
 
   function updateDraft(value: string) {
     setWork((current) => ({
       ...current,
-      drafts: { ...current.drafts, [prompt.id]: value },
-      checks: { ...current.checks, [prompt.id]: criteria.map(() => false) },
-      reviewed: { ...current.reviewed, [prompt.id]: false },
+      drafts: { ...current.drafts, [promptId]: value },
+      checks: { ...current.checks, [promptId]: criteria.map(() => false) },
+      reviewed: { ...current.reviewed, [promptId]: false },
     }));
   }
 
   function toggleCriterion(index: number) {
     const next = [...checked];
     next[index] = !next[index];
-    setWork((current) => ({ ...current, checks: { ...current.checks, [prompt.id]: next }, reviewed: { ...current.reviewed, [prompt.id]: false } }));
+    setWork((current) => ({ ...current, checks: { ...current.checks, [promptId]: next }, reviewed: { ...current.reviewed, [promptId]: false } }));
   }
 
   function clearDraft() {
     setWork((current) => ({
-      drafts: { ...current.drafts, [prompt.id]: "" },
-      checks: { ...current.checks, [prompt.id]: criteria.map(() => false) },
-      reviewed: { ...current.reviewed, [prompt.id]: false },
+      drafts: { ...current.drafts, [promptId]: "" },
+      checks: { ...current.checks, [promptId]: criteria.map(() => false) },
+      reviewed: { ...current.reviewed, [promptId]: false },
     }));
   }
 
@@ -117,7 +124,7 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
           <section className="card writing-editor" aria-labelledby="writing-answer-label">
             <div className="writing-editor-heading">
               <label id="writing-answer-label" htmlFor="writing-draft">{labels.answer}</label>
-              <span className="pill">{labels.wordCount.replace("{count}", String(wordCount))}</span>
+              <span className="pill">{labels.wordCount(wordCount)}</span>
             </div>
             <textarea id="writing-draft" lang="de" value={draft} disabled={!hydrated} onChange={(event) => updateDraft(event.target.value)} placeholder={labels.placeholder} rows={8} />
             <div className="row writing-save-row">
@@ -136,10 +143,10 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
                 </label>
               ))}
             </fieldset>
-            {work.reviewed[prompt.id] ? (
+            {work.reviewed[promptId] ? (
               <p className="writing-reviewed" role="status">✓ {labels.reviewed}</p>
             ) : (
-              <button type="button" className="btn-primary writing-review-action" disabled={!draft.trim() || !allChecked} onClick={() => setWork((current) => ({ ...current, reviewed: { ...current.reviewed, [prompt.id]: true } }))}>
+              <button type="button" className="btn-primary writing-review-action" disabled={!draft.trim() || !allChecked} onClick={() => setWork((current) => ({ ...current, reviewed: { ...current.reviewed, [promptId]: true } }))}>
                 {labels.markReviewed}
               </button>
             )}
