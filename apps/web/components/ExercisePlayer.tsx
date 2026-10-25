@@ -302,7 +302,6 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
       {exercise.type === "multi_choice" && (
         <>
           {exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
-          <p className="muted small">{labels.chooseAll}</p>
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
             {exercise.options.map((o, i) => {
