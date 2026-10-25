@@ -82,6 +82,7 @@ export type Response =
   | { type: "preposition_choice"; optionId: string }
   | { type: "separable_verb"; text: string }
   | { type: "read_question"; optionId: string }
+  | { type: "dialogue_gap"; text: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -314,6 +315,13 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "preposition_choice" }>).optionId);
     case "read_question":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "read_question" }>).optionId);
+    case "dialogue_gap": {
+      const answer = (response as Extract<Response, { type: "dialogue_gap" }>).text;
+      const gaps = ex.lines.filter((line) => "accept" in line);
+      if (gaps.length !== 1) throw new EvaluationError(`dialogue_gap ${ex.id}: expected exactly one missing line`);
+      const correct = gaps[0]!.accept.some((accepted) => answersEqual(accepted, answer));
+      return result(ex, correct, normalizeAnswer(answer), correct ? undefined : matchRule(ex.feedback.rules, answer));
+    }
     case "true_false":
       return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
     case "match_pairs":
