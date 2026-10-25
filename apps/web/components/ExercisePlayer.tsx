@@ -218,7 +218,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
                 <label key={o.id} className={`option${choice === o.id ? " selected" : ""}${mark}`}>
                   <input type="radio" name={exercise.id} value={o.id} checked={choice === o.id} onChange={() => setChoice(o.id)} />
                   <span className="option-key" aria-hidden="true">{i + 1}</span>
-                  <span className="option-text" lang={o.de ? "de" : undefined}>{o.de ?? tr(text, o.text)}</span>
+                  <span className="option-text" lang={"de" in o && o.de ? "de" : undefined}>{("de" in o && o.de) ? o.de : ("text" in o ? tr(text, o.text) : "")}</span>
                 </label>
               );
             })}
