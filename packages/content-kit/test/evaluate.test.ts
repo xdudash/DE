@@ -48,6 +48,14 @@ describe("connector_choice", () => {
   });
 });
 
+describe("modal_choice", () => {
+  const exercise = { id: "x_modal", type: "modal_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich ___ heute länger arbeiten,", after_de: "das Projekt muss fertig werden.", options: [{ id: "a", de: "muss", correct: true }, { id: "b", de: "darf", correct: false }, { id: "c", de: "mag", correct: false }] };
+  it("evaluates the modal form in context", () => {
+    assert.equal(evaluate(exercise, { type: "modal_choice", optionId: "a" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "modal_choice", optionId: "b" }).correct, false);
+  });
+});
+
 describe("dialogue_gap", () => {
   const exercise = { id: "x_dialogue", type: "dialogue_gap" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, lines: [{ speaker: "a" as const, text_de: "Guten Morgen!" }, { speaker: "b" as const, accept: ["Guten Morgen!"] }, { speaker: "a" as const, text_de: "Wie geht es dir?" }] };
   it("accepts an authored reply and rejects a reply that does not fit", () => {
