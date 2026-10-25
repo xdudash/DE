@@ -15,9 +15,10 @@ The differentiator is a visible link between **what the learner got wrong**, **t
 | Home | Continue the learning line and see today's focus | Continue lesson · review due items · start a practical mission |
 | Practice | Repair weak spots and use German in context | Due reviews · frequent errors · DACH missions · retry a lesson |
 | Knowledge map | Find and understand any topic | Search · topic state · prerequisite/catch-up path · open lesson |
+| Library | Read German and collect words in context | Original stories · tap-to-lookup · saved-word review |
 | You | Own the plan, account, progress and data | Goals and time · language · reminders · sync/import · export/delete |
 
-The current four-section navigation remains the stable frame. New learning modes are surfaced inside Practice and on Home, so they are discoverable without burying the course under more tabs.
+The five-section navigation keeps the main learning line, Practice, Knowledge map, Library, and You within reach. Route Studio is opened from the line itself, so route choice stays attached to the course.
 
 ## End-to-end learner paths
 
@@ -26,7 +27,7 @@ The current four-section navigation remains the stable frame. New learning modes
 1. Choose an explanation language that has content coverage.
 2. Choose a goal, DACH context, and realistic daily time.
 3. Start at the beginning or choose a known starting point; a future placement estimate must include confidence and must never be presented as certification.
-4. See a recommended line with the next real lesson, its reason, and a visible way to explore other topics.
+4. See a recommended line with the next real lesson and its reason. Open Route Studio to choose another authored line or shape the topic order.
 5. Start a lesson without creating an account. Answers remain on this device until the learner signs in and chooses to import eligible history.
 
 ### 2. Daily learning loop
@@ -35,7 +36,8 @@ The current four-section navigation remains the stable frame. New learning modes
 2. A short daily goal shows completed answers and the learner's chosen target.
 3. The next-step card explains its reason: due review, repeated error, prerequisite, or next route step.
 4. The learner can accept the suggestion or go directly to Practice, the Knowledge map, or another lesson.
-5. On answer, the app evaluates immediately, explains why, stores the same event ID on device and server, and refreshes the route/progress views.
+5. **Edit route** opens Route Studio. The active line and Home recommendation use the selected order; skipped topics remain in the Knowledge map.
+6. On answer, the app evaluates immediately, explains why, stores the same event ID on device and server, and refreshes the route/progress views.
 
 ### 3. Lesson and recovery path
 
@@ -93,9 +95,10 @@ The SVGs are screen-level layout references for implementation and review:
 - [Practice and DACH missions](./mockups/practice.svg)
 - [A full conversational mission](./mockups/mission.svg)
 - [Progress and account sync](./mockups/progress.svg)
+- [Review Room and daily due queue](./mockups/review.svg)
 
 They use the accepted Linie visual system: transit-blue actions, green evidence, quiet surfaces, and no decorative colour that could be confused with a language marker.
 
 ## Implementation boundary for this release slice
 
-This update completes the account progress read path, safe re-evaluated import, shared progress display, explainable next step, and a mission mode over existing scenario exercises. Future areas above remain represented in the journey map and roadmap but stay gated until their real content, reviewer, legal, or provider prerequisites exist.
+The merged learner-loop update completes the account progress read path, safe re-evaluated import, shared progress display, explainable next step, and a mission mode over existing scenario exercises. The follow-up Review Room adds a daily due board and session on top of existing authored exercises and scheduler evidence. Other future areas remain gated until their real content, reviewer, legal, or provider prerequisites exist.

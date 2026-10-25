@@ -1,0 +1,121 @@
+# DeutschGo app blueprint
+
+Status: product and client implementation plan. Backend sync, account persistence, billing, and production analytics are later integrations; each screen should work with honest demo or device-local data before those services are connected.
+
+Interactive review prototype: [open all screens and exercise types](./mockups/app-review-prototype.html). Use the left rail to switch screens, toggle desktop/phone at the top, and select each exercise type to see its interaction state.
+
+## Product shape
+
+DeutschGo is a guided German-learning workspace. The learner can follow a route, study a lesson, practise weak areas, review due material, read graded stories, and collect vocabulary. Every recommendation explains why it appears, and the learner can choose another path at any time.
+
+The main learning loop is:
+
+```mermaid
+flowchart TD
+  Home[Home and next step] --> Route[Route Studio]
+  Home --> Lesson[Lesson player]
+  Route --> Lesson
+  Map[Knowledge Map] --> Lesson
+  Lesson --> Evidence[Learning evidence]
+  Practice[Practice board] --> Review[Review Room]
+  Review --> Evidence
+  Library[Reading Library] --> Story[Story and word lookup]
+  Story --> Vocab[Vocabulary board]
+  Evidence --> Home
+  Evidence --> Map
+  Evidence --> Practice
+```
+
+## App shell and visual rules
+
+- **Phone:** five-item bottom navigation: Home, Map, Practice, Library, You. Lesson and story readers take the full content width; primary actions stay reachable near the bottom.
+- **Desktop:** persistent left navigation with the same destinations; content uses a centered reading column and wider boards use a two-column layout.
+- **RTL:** Arabic mirrors navigation, progress direction, and directional controls. German examples remain left-to-right within Arabic screens.
+- **Visual hierarchy:** one primary action per screen; progress and status use text plus icon/color; due, local-only, draft, and synced states are explicit.
+- **Shared components:** route/topic cards, progress chips, exercise feedback, empty states, confirmation panels, and localization-aware buttons.
+- **States every data screen handles:** loading, ready, empty, error/retry, offline/local, and signed-out where relevant.
+
+## Screens and connected behavior
+
+| Screen | Appearance and main actions | Reads from / links to | Delivery |
+|---|---|---|---|
+| Welcome and setup | Language is chosen at the language gate; the three-step wizard selects goal, time, and route, with an optional five-question starting estimate | Device preferences → Home / Route Studio; estimate suggests a matching route | Client pilot implemented; region preference and validated adaptive placement remain planned |
+| Home | “Continue learning” hero, next-step reason, route line with lesson/topic stations, daily goal, streak/XP/hearts, practical mission | Progress + active route → lesson, review, mission, map, Route Studio | Implemented; recommendation and local route are connected |
+| Route Studio | Route cards with level span and progress; ordered topic list with move up/down, skip/restore, reset | Route content + progress → Home and lesson; skipped topics remain on Map | Implemented in PR #78; device-local preference |
+| Knowledge Map | Search field, level/strand filters, concept cards with status and prerequisite links | Content graph + progress → lesson, catch-up suggestions | Map exists; richer filters and catch-up path planned |
+| Lesson player | Objective and time estimate, structured teaching blocks, examples, exercises, feedback, completion/next-step panel | Compiled lesson content + shared evaluator → evidence, Home, Map, Practice | Core lesson and evaluator implemented; more exercise types planned |
+| Practice board | Weak topics, due count, session estimate, mission list, resume actions | Evidence and due classification → Review Room, lesson, mission | Implemented; expand when skill types arrive |
+| Review Room | Due queue oldest first, 3/5/10 session size, topic opt-out, one exercise at a time, recall feedback | Due evidence + lesson exercise bank → evaluator and evidence | Implemented in PR #78; CI E2E currently has one failing profile-data deletion assertion |
+| Practical mission | Scenario briefing, German prompt, reply choices, explanation, finish summary | Authored scenario + lesson evaluator → evidence and lesson | Implemented for authored missions |
+| Reading Library | Level-labelled original stories, reading-time and saved/due counts | Reading catalogue + local vocabulary → story, vocabulary | Implemented in PR #78 |
+| Story reader | German text in a calm reading column; selectable words open a contextual meaning panel with the sentence and save action | Story content → local vocabulary board; related concept can open Map | Implemented in PR #78; dictionary breadth planned |
+| Vocabulary board | Front/back flashcard, “Again” and “I remembered”, due/scheduled lists, remove action | Device-local word occurrences → scheduler and story context | Implemented in PR #78; no account sync yet |
+| You / profile | Goal, language, account state, progress source, reminder controls, data export/clear/sign-out | Device preferences and account APIs → settings and privacy actions | Account shell exists; complete export and settings are planned |
+| Sign-in and session | Provider handoff, callback/loading/error, signed-in state, refresh and sign-out | Auth provider → profile, progress APIs | API/UI foundations exist; provider configuration is pending |
+
+## Shared logic and data flow
+
+### Learning evidence
+
+Lessons, review sessions, and missions use the same evaluator and record an attempt with a unique event id. The client updates its visible progress immediately and queues the event when offline. Home, Practice, and Map derive their status from the same merged progress view. Repeated events are ignored by id; a wrong answer shows a reason and a future retry opportunity.
+
+### Recommendation order
+
+The Home recommendation selects the most useful available action in this order: due review, repeated error, missing prerequisite, then the next active-route lesson. The card states the reason and offers a way to choose another topic. Route changes reorder or hide only route stations; they never erase learning evidence.
+
+### Route state
+
+The active route id, custom step order, and skipped ids are stored locally for now. The route planner filters hidden steps and the Home route line and next-step card consume the same result. Reset restores the authored order. Clearing device data removes route preferences.
+
+### Reading and vocabulary state
+
+Each saved card identifies a story, paragraph, and exact token occurrence. Different uses of the same word stay separate. The learner recalls before revealing the meaning. “Again” schedules ten minutes; remembered cards advance through 1, 3, 7, 16, and 35 days. Local storage errors must be visible and recoverable.
+
+### Backend boundary
+
+Screens call typed client interfaces for progress, attempts, routes, and vocabulary. Device adapters work first; server adapters can later replace them without changing screen flows. Do not label data synced until the server confirms it. Account route sync and saved-vocabulary persistence need explicit schemas before activation.
+
+## Feature roadmap
+
+### 1. Stabilize current client loop
+
+- Fix the failing E2E assertion for the profile clear-data confirmation. The UI copy now includes route and vocabulary data; update the test to assert the localized confirmation shown by the current screen, then run the full CI suite.
+- Check route, lesson, review, mission, story, vocabulary, profile and map transitions on phone and desktop, including empty and offline states.
+- Add a route-specific browser journey and accessibility checks for keyboard operation, contrast, focus, and Arabic direction.
+
+### 1a. First-run study plan (implemented slice)
+
+- Add `/{lang}/start`: choose learning goal and daily time, select a course route, review the plan, and save both preferences locally.
+- Link the Home daily-goal plan action to this wizard. Saving sends the learner back to Home, where the active route drives the learning line.
+- Add a five-question optional estimate stored on this device and use its A0/A1 band to suggest a route without locking the learner in. Calibration, skill-specific placement, and DACH region selection remain future work.
+
+### 2. Finish the learning experience
+
+- Make first-run setup produce an editable recommended route and a short diagnostic estimate with a confidence range.
+- Add map search/filtering, visible prerequisites, and one-click catch-up sequences without blocking free exploration.
+- Complete progress views by concept and skill; show evidence behind states and let learners tune goals and study time.
+- Add audio/listening, guided writing, and speaking only with clearly stated evaluation limits.
+
+### 3. Expand the content product
+
+- Add reviewed graded texts, dialogues, audio, and dictionary senses linked to concepts and exercises.
+- Track source, rights, language coverage, review status, and regional variants for every learning item.
+- Keep machine translations marked as drafts until reviewed; test RTL and German text in each supported locale.
+
+### 4. Connect backend services
+
+- Define versioned contracts for attempts/progress, route preferences, saved vocabulary and word senses.
+- Add idempotent offline sync and conflict behavior; make account import/export and deletion clear and auditable.
+- Configure authentication providers, reminders, backups, monitoring, and privacy-preserving analytics.
+- Add entitlements and billing after core retention and value are validated.
+
+## Verification gates
+
+- Every main screen has phone and desktop layouts, keyboard access, visible focus, and loading/empty/error states.
+- A user journey can be followed end-to-end: setup → route → lesson → feedback → progress → review; and Library → story → saved word → review.
+- UI progress always comes from the shared evidence model; local-only data is labelled and clearable.
+- CI passes foundation, content validation, tests/typecheck/build, database checks, Playwright, and accessibility checks before the PR is considered ready.
+
+## Current known blocker
+
+The latest hosted run passed repository foundation, content/tests/build/typecheck, and database/RLS/attempt recording. Playwright had 67 passing journeys and one failure: the profile clear-data test still expects the old English string “Delete it all? This cannot be undone.” while the current screen uses the new localized confirmation. The correction is explicitly held until product direction resumes; the run is [40168061091](https://github.com/xdudash/DE/actions/runs/40168061091).

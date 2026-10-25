@@ -1,11 +1,11 @@
 # Core User Flows
 
 ## A — First visit
-1. Choose explanation language, goal, DACH context, and daily study-time preference.
-2. Take a diagnostic or enter a known starting level.
-3. Explain that a diagnostic is an estimate, not an official CEFR certificate.
-4. Show a recommended route and the reasons for its first steps.
-5. Let the learner accept, edit, or bypass the route and browse topics directly.
+1. Choose an explanation language.
+2. Choose a learning goal and daily study-time target in the study-plan wizard.
+3. Choose an available route, review the plan, and save it on this device.
+4. Continue to Home; the active route shapes its learning line and next-step recommendation.
+5. Offer an optional five-question placement check. Label it a rough estimate, not an official CEFR result; the learner can ignore it and select any route.
 
 ## B — Learn a topic
 1. Open a topic from search, map, route, or recommendation.
@@ -36,6 +36,14 @@
 4. Let weak or frequently missed concepts influence recommendations.
 5. Explain recommendations and allow the learner to override them.
 
+### E1 — Review Room
+1. Open the Review Room from a due recommendation on Home or the due-review panel in Practice.
+2. See due topics oldest-first, the total queue, estimated time, and the source of current progress.
+3. Choose 3, 5, or 10 topics; optionally remove individual topics from today's session.
+4. Answer one existing authored exercise per selected topic. The same evaluator, feedback, hearts, and offline outbox used in practice apply.
+5. A correct answer given while due advances the interval; a wrong answer resets it. An immediate retry cannot manufacture delayed-recall evidence.
+6. When nothing is due, show the next scheduled review date and a route back to practice. If a due topic has no usable exercise, explain that limit and leave it out of the startable queue.
+
 ## H — Practical mission
 1. Open Practice or the Home recommendation and choose a real-life DACH mission.
 2. Read the setting and the goal of the conversation.
@@ -55,6 +63,21 @@
 1. Rank a due review, repeated error, prerequisite catch-up, then the next available route step.
 2. Show one direct action with its reason in plain language.
 3. Let the learner continue along the line, choose another map topic, or dismiss the suggestion without losing the route.
+
+## K — Read, look up, and review a word (P4 pilot)
+1. Open **Library** from the desktop navigation or phone tab bar and choose an original, level-labelled short story.
+2. Read the German story. Marked words are keyboard buttons; opening a word shows its lemma, explanation-language meaning, and the complete sentence.
+3. Save a word with its story id, exact token occurrence, sense gloss, and sentence. A repeated tap on the same occurrence never creates a duplicate; a different occurrence remains a separate context record.
+4. Open **My vocabulary** from the library. Due words appear as cards, one at a time. The learner recalls before revealing the answer, then chooses **I remembered** or **Again**.
+5. A remembered word advances through 1, 3, 7, 16, and 35 day intervals. **Again** returns it in ten minutes. The board also lists scheduled and due words and allows removal.
+6. Vocabulary, context, and dates are local to this browser. They are excluded from account progress and cross-device claims until a lexicon/saved-vocabulary server contract is implemented.
+
+## L — Choose and shape a learning route (device pilot)
+1. Open **Edit route** from the Home learning line to see the available course lines, their level range, available lessons, and completion progress.
+2. Choose the active route. Its line immediately drives the Home stations and the explainable next-step recommendation.
+3. Reorder topics with the up/down controls, or skip topics for now. A skipped topic disappears from the Home line and route recommendation, but stays reachable from the Knowledge Map; completed evidence is never removed.
+4. Restore skipped topics or reset a route to its authored order. The active route and its custom order are stored on this device and cleared by the existing delete-device-data action.
+5. Changing a route never rewrites learning history. Account sync of route preferences can be added with the profile model later.
 
 ## F — Listen, speak, and write
 - Listening tasks include real audio, controlled replay, and suitable comprehension checks.

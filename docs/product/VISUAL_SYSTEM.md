@@ -43,12 +43,15 @@ Buttons, answer options, word tokens and language cards have a 3–4px ledge in 
 
 ### Global experience update (2026-10-25)
 - Home gives one reasoned next action and keeps the transit line visible as the learner's route. Due reviews and practical missions are accessible without replacing the route.
+- Route Studio lets the learner choose a course line, reorder or defer topics, and return skipped topics later; edits affect Home and recommendations without deleting evidence.
 - Practice has two clear jobs: spaced review of weak concepts and short missions based on authored DACH scenarios. Mission answers use the same evaluator, explanation, and progress event as lesson answers.
 - The progress view distinguishes local, waiting, synced, offline, and signed-out states. Account import is an explicit action with counts for responses that can and cannot be rechecked.
 - Layout references: [Home](./mockups/home.svg), [Practice](./mockups/practice.svg), [Progress](./mockups/progress.svg); full journey: [Global Experience Blueprint](./GLOBAL_EXPERIENCE.md).
+- Review Room uses a compact due queue, selectable daily load, estimated time, and one clear start action; see [Review Room mockup](./mockups/review.svg).
+- Route Studio offers a branded route overview, selectable line cards, local completion status, and a reorderable step list; see [Route Studio mockup](./mockups/routes.svg).
 
 ## Shell
-Phone first. Below 48rem: a slim top bar (brand, streak, XP, hearts) and a bottom tab bar with four sections. From 48rem: a fixed navigation column on the start side (brand, figures, sections, language switch at its foot) and the content in a column; the home screen adds a side column. Safe-area insets on all sides. Logical properties everywhere, so the Arabic preview mirrors without special cases.
+Phone first. Below 48rem: a slim top bar (brand, streak, XP, hearts) and a bottom tab bar with five sections. From 48rem: a fixed navigation column on the start side (brand, figures, sections, language switch at its foot) and the content in a column; the home screen adds a side column. Safe-area insets on all sides. Logical properties everywhere, so the Arabic preview mirrors without special cases.
 
 ## Sound
 Short synthesised tones for right, wrong and arrival (`lib/sound.ts`): no audio files, nothing sent anywhere, switchable in the profile, and never the only signal — every result is also text.

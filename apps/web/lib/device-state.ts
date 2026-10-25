@@ -38,6 +38,7 @@ export const PROGRESS_EVENT = "deutschgo:progress";
 /** Fired after the server confirms an answer, so the shared account view refreshes. */
 export const ACCOUNT_PROGRESS_EVENT = "deutschgo:account-progress";
 const SETUP_KEY = "deutschgo.setup.v1";
+const PLACEMENT_KEY = "deutschgo.placement.v1";
 const EVENTS_KEY = "deutschgo.events.v1";
 /** Bounds storage use on a device; the engine only needs recent evidence. */
 export const MAX_STORED_ATTEMPTS = 2000;
@@ -66,6 +67,27 @@ export function readSetup(): Setup | null {
 
 export function writeSetup(setup: Setup): boolean {
   return write(SETUP_KEY, setup);
+}
+
+export interface PlacementEstimate {
+  correct: number;
+  total: number;
+  band: "A0" | "A0-A1" | "A1";
+  completedAt: number;
+}
+
+export function readPlacement(): PlacementEstimate | null {
+  const value = read<unknown>(PLACEMENT_KEY);
+  if (!value || typeof value !== "object") return null;
+  const record = value as Record<string, unknown>;
+  if (!Number.isInteger(record.correct) || !Number.isInteger(record.total) || !Number.isFinite(record.completedAt)) return null;
+  if (Number(record.total) < 1 || Number(record.correct) < 0 || Number(record.correct) > Number(record.total)) return null;
+  if (record.band !== "A0" && record.band !== "A0-A1" && record.band !== "A1") return null;
+  return { correct: Number(record.correct), total: Number(record.total), band: record.band, completedAt: Number(record.completedAt) };
+}
+
+export function writePlacement(estimate: PlacementEstimate): boolean {
+  return write(PLACEMENT_KEY, estimate);
 }
 
 function isAttempt(value: unknown): value is DeviceAttempt {
@@ -225,15 +247,15 @@ export function deviceKeyValue(): KeyValue {
 }
 
 /**
- * Removes everything DeutschGo keeps in this browser: the plan, the remembered
- * language, every recorded answer and answers still waiting to be sent. An account's
- * copy is not touched: deleting it is the account's own action. Returns false if
+ * Removes everything DeutschGo keeps in this browser: the plan, remembered language,
+ * answers, queued sends, saved vocabulary and route preferences. An account's copy is not touched:
+ * deleting it is the account's own action. Returns false if
  * storage refused, so the caller can say the data is still there instead of claiming
  * it is gone.
  */
 export function clearDeviceData(): boolean {
   try {
-    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY]) window.localStorage.removeItem(key);
+    for (const key of [SETUP_KEY, PLACEMENT_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {

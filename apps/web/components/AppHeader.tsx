@@ -20,6 +20,7 @@ export function sectionsFor(lang: string) {
     { key: "home", href: `/${lang}`, label: msg("nav.home") },
     { key: "practice", href: `/${lang}/practice`, label: msg("nav.practice") },
     { key: "map", href: `/${lang}/map`, label: msg("nav.knowledgeMap") },
+    { key: "book", href: `/${lang}/library`, label: msg("nav.library") },
     { key: "profile", href: `/${lang}/me`, label: msg("nav.profile") },
   ];
   return items;
@@ -53,7 +54,7 @@ export function AppHeader({ lang }: { lang: string }) {
           <ul className="mainnav">
             {sectionsFor(lang).map((item) => (
               <li key={item.href}>
-                <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+                <Link href={item.href} aria-current={(item.key === "home" ? pathname === item.href : pathname.startsWith(item.href)) ? "page" : undefined}>
                   <Icon name={item.key} size={22} />
                   <span>{item.label}</span>
                 </Link>

@@ -354,7 +354,7 @@ test.describe("your own area", () => {
     await expect(page.getByText("Your plan on this device: Work, 10 min a day.")).toBeVisible();
 
     await page.getByRole("button", { name: "Delete my data" }).click();
-    await expect(page.getByText("Delete it all? This cannot be undone.")).toBeVisible();
+    await expect(page.getByText("Delete DeutschGo data on this device? This cannot be undone. Account data will remain.")).toBeVisible();
     await page.getByRole("button", { name: "Delete my data" }).click();
     await expect(page.getByText(/^Deleted\./)).toBeVisible();
     await expect(page.getByText("No plan saved on this device yet.")).toBeVisible();

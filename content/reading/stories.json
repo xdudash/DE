@@ -1,0 +1,18 @@
+[
+  {
+    "id": "morgens-am-bahnhof",
+    "level": "A1",
+    "minutes": 3,
+    "title": { "en": "A morning at the station", "uk": "Ранок на вокзалі", "ru": "Утро на вокзале", "ar": "صباح في المحطة" },
+    "summary": { "en": "Mila asks for help when her train changes platforms.", "uk": "Міла просить допомоги, коли її поїзд змінює платформу.", "ru": "Мила просит помощи, когда её поезд меняет платформу.", "ar": "ميلا تطلب المساعدة عندما يتغير رصيف قطارها." },
+    "concepts": ["concept.prag.greetings_dach", "concept.syntax.w_questions"],
+    "paragraphs": [
+      [{"de":"Mila"},{"de":"kommt","lemma":"kommen","gloss":{"en":"to come","uk":"приходити","ru":"приходить","ar":"يأتي"}},{"de":"am"},{"de":"Morgen"},{"de":"zum"},{"de":"Bahnhof","lemma":"der Bahnhof","gloss":{"en":"train station","uk":"вокзал","ru":"вокзал","ar":"محطة القطار"}},{"de":"."}],
+      [{"de":"Auf"},{"de":"der"},{"de":"Anzeige","lemma":"die Anzeige","gloss":{"en":"display","uk":"табло","ru":"табло","ar":"الشاشة"}},{"de":"steht"},{"de":":"},{"de":"Der"},{"de":"Zug"},{"de":"fährt"},{"de":"heute"},{"de":"von"},{"de":"Gleis"},{"de":"drei"},{"de":"."}],
+      [{"de":"Mila"},{"de":"fragt"},{"de":"einen"},{"de":"Mitarbeiter","lemma":"der Mitarbeiter","gloss":{"en":"staff member","uk":"працівник","ru":"сотрудник","ar":"موظف"}},{"de":":"},{"de":"„"},{"de":"Entschuldigung","lemma":"die Entschuldigung","gloss":{"en":"excuse me / apology","uk":"перепрошую","ru":"извините","ar":"عذرًا"}},{"de":","},{"de":"wo"},{"de":"ist"},{"de":"Gleis"},{"de":"drei"},{"de":"?"},{"de":"“"}],
+      [{"de":"Der"},{"de":"Mitarbeiter"},{"de":"lächelt"},{"de":"."},{"de":"„"},{"de":"Gehen"},{"de":"Sie"},{"de":"geradeaus"},{"de":"und"},{"de":"dann"},{"de":"nach"},{"de":"links"},{"de":"."},{"de":"“"}],
+      [{"de":"„"},{"de":"Vielen"},{"de":"Dank"},{"de":"!"},{"de":"“"},{"de":"Mila"},{"de":"findet"},{"de":"den"},{"de":"richtigen"},{"de":"Zug"},{"de":"und"},{"de":"hat"},{"de":"noch"},{"de":"Zeit"},{"de":"für"},{"de":"einen"},{"de":"Kaffee"},{"de":"."}]
+    ],
+    "source": "DeutschGo original learning text; no external source"
+  }
+]

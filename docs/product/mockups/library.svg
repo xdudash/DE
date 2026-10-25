@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title desc">
+  <title id="title">DeutschGo reading library and contextual lookup mockup</title>
+  <desc id="desc">Desktop library screen with story cards and a reading screen with selected word, meaning, sentence context, and save action.</desc>
+  <rect width="1440" height="1000" fill="#eef2f7"/>
+  <rect width="252" height="1000" fill="#fff" stroke="#dbe3ee"/>
+  <circle cx="48" cy="48" r="18" fill="#1b4fa0"/><path d="m44 38 10 10-10 10" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="78" y="55" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#0f1f33">DeutschGo</text>
+  <g font-family="Arial,sans-serif" font-size="18" fill="#4a5b72">
+    <text x="40" y="145">⌂　Home</text><text x="40" y="205">◉　Practice</text><text x="40" y="265">⌘　Knowledge map</text>
+    <rect x="24" y="288" width="204" height="52" rx="12" fill="#e3ecfa"/><text x="40" y="321" font-weight="700" fill="#1b4fa0">▣　Library</text><text x="40" y="385">☺　You</text>
+  </g>
+  <text x="300" y="70" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#1b4fa0">READ IN GERMAN</text>
+  <text x="300" y="120" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#0f1f33">Reading library</text>
+  <text x="300" y="160" font-family="Arial,sans-serif" font-size="19" fill="#4a5b72">Short original stories. Tap a marked word and keep it with the sentence.</text>
+  <rect x="1150" y="70" width="240" height="54" rx="12" fill="#fff" stroke="#b9c6d8"/><text x="1180" y="104" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1b4fa0">My vocabulary　·　3 due</text>
+  <g>
+    <rect x="300" y="215" width="340" height="335" rx="18" fill="#fff" stroke="#dbe3ee"/><rect x="300" y="215" width="340" height="150" rx="18" fill="#194d75"/>
+    <rect x="322" y="235" width="48" height="29" rx="14" fill="#ffffff30" stroke="#fff"/><text x="334" y="255" font-family="Arial" font-size="14" fill="#fff">07:42</text><text x="570" y="330" font-family="Georgia" font-size="76" fill="#fff">↗</text>
+    <rect x="322" y="383" width="50" height="28" rx="14" fill="#f4f7fb"/><text x="334" y="402" font-family="Arial" font-size="14" fill="#4a5b72">A1</text><text x="383" y="402" font-family="Arial" font-size="14" fill="#4a5b72">3 min</text>
+    <text x="322" y="445" font-family="Arial" font-size="23" font-weight="700" fill="#0f1f33">A morning at the station</text>
+    <text x="322" y="477" font-family="Arial" font-size="15" fill="#4a5b72">Mila asks for help when her train</text><text x="322" y="500" font-family="Arial" font-size="15" fill="#4a5b72">changes platforms.</text>
+    <rect x="322" y="514" width="296" height="4" rx="2" fill="#123a78"/><rect x="322" y="510" width="296" height="4" rx="2" fill="#1b4fa0"/><text x="418" y="540" font-family="Arial" font-size="14" font-weight="700" fill="#fff">Read story</text>
+  </g>
+  <text x="300" y="625" font-family="Arial" font-size="14" fill="#4a5b72">Original DeutschGo text · Saved words stay on this device</text>
+  <text x="760" y="205" font-family="Arial" font-size="15" font-weight="700" letter-spacing="2" fill="#1b4fa0">STORY + LOOKUP</text>
+  <text x="760" y="250" font-family="Arial" font-size="31" font-weight="700" fill="#0f1f33">A morning at the station</text>
+  <rect x="760" y="280" width="450" height="470" rx="18" fill="#fff" stroke="#dbe3ee"/>
+  <text x="800" y="340" font-family="Georgia" font-size="24" fill="#0f1f33">Mila kommt am Morgen zum</text><text x="800" y="380" font-family="Georgia" font-size="24" fill="#0f1f33">Bahnhof. Auf der Anzeige steht:</text>
+  <text x="800" y="420" font-family="Georgia" font-size="24" fill="#0f1f33">Der Zug fährt heute von Gleis</text><text x="800" y="460" font-family="Georgia" font-size="24" fill="#0f1f33">drei. Mila fragt einen</text>
+  <rect x="968" y="472" width="142" height="36" rx="6" fill="#e3ecfa"/><text x="980" y="498" font-family="Georgia" font-size="24" fill="#1b4fa0">Mitarbeiter</text>
+  <text x="800" y="540" font-family="Georgia" font-size="24" fill="#0f1f33">: „Entschuldigung, wo ist</text><text x="800" y="580" font-family="Georgia" font-size="24" fill="#0f1f33">Gleis drei?“</text>
+  <text x="800" y="680" font-family="Arial" font-size="14" fill="#4a5b72">Source: original learning content</text>
+  <rect x="1230" y="280" width="180" height="255" rx="18" fill="#fff" stroke="#dbe3ee"/><text x="1250" y="315" font-family="Arial" font-size="13" font-weight="700" letter-spacing="1" fill="#1b4fa0">WORD IN CONTEXT</text>
+  <text x="1250" y="360" font-family="Georgia" font-size="24" fill="#0f1f33">Mitarbeiter</text><text x="1250" y="390" font-family="Arial" font-size="14" fill="#4a5b72">der Mitarbeiter</text><text x="1250" y="425" font-family="Arial" font-size="16" fill="#0f1f33">staff member</text>
+  <text x="1250" y="465" font-family="Georgia" font-size="13" fill="#4a5b72">Mila fragt einen</text><text x="1250" y="485" font-family="Georgia" font-size="13" fill="#4a5b72">Mitarbeiter.</text>
+  <rect x="1250" y="500" width="140" height="4" rx="2" fill="#123a78"/><rect x="1250" y="496" width="140" height="4" rx="2" fill="#1b4fa0"/><text x="1261" y="524" font-family="Arial" font-size="12" font-weight="700" fill="#fff">Save word + context</text>
+  <rect x="1230" y="555" width="180" height="95" rx="18" fill="#fff" stroke="#dbe3ee"/><text x="1255" y="610" font-family="Arial" font-size="30" font-weight="700" fill="#1b4fa0">8</text><text x="1300" y="595" font-family="Arial" font-size="13" fill="#4a5b72">saved words</text><text x="1300" y="615" font-family="Arial" font-size="13" fill="#1b4fa0">Open board →</text>
+</svg>

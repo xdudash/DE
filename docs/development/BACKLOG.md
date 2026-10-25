@@ -12,17 +12,17 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | ID | Task | Stage | Depends on | Ready? |
 |---|---|---|---|---|
 | DG-011 | Lockfile, pinned Node, `npm ci` | A | — | **in review** (branch `chore/dg-011-reproducible-builds`) |
-| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **in review** (branch `feat/dg-021-review-evidence`) |
-| DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **in review** (branch `feat/dg-026-session-verification`) |
+| DG-021 | Recall events: when an answer counts as review | A | ADR-0016 | **done** (merged to `main`; ADR-0016 derivation-time classification) |
+| DG-026 | Session token verification hardening (exp/aud, signing method) | A | — | **implemented** (JWKS verifier on `main`; provider round trip needs setup) |
 | DG-027 | Rate limiting on write endpoints | A | Q7 decided (ADR-0017: Postgres table) | implemented (PR, owner applies migration 0003) |
 | DG-030 | Privacy gate pack: privacy notice, Impressum, processor list, retention | A | Q1, Q9 | **needs owner** |
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
-| DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
+| DG-022 | One event identity + retry of failed sends | B | DG-021 | **done** (merged to `main`; browser write-ahead outbox) |
 | DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
-| DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | implemented on `feat/dg-024-global-experience`; PR/CI review pending |
+| DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | done (#77, merged to `main`; CI green) |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
-| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | implemented on device (`feat/dg-029-goal-model`); profile sync with DG-024 |
+| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | goal/time and guided route selection implemented on device in PR #78; region preference and profile sync remain |
 | DG-031 | Error monitoring + uptime (EU, PII scrubbing) | B | Q6 | needs decision |
 | DG-032 | Backups and a recorded restore test | B | Q8 | needs owner |
 | DG-033 | Cookieless product analytics baseline | B | Q6, DG-030 | needs decision |
@@ -39,15 +39,15 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-045 | Exercise types v2: matching, categorisation, error correction | C | contract §8 | ready (design) |
 | DG-046 | Lesson `depth` tag (core, standard, deep) in the contract, course tiers (fast, medium, full) in content-kit, and a per-tier, per-level count in the content report; tests for checkpoint per block | Schema fixtures; tests that each tier covers every level; report shows counts | DG-041, ADR-0018 |
 | DG-046 | Prerequisite guidance and catch-up path | D | DG-024 | P3 |
-| DG-047 | Route choice and personalisation | D | DG-029 | P3 |
-| DG-048 | Review session (daily load, "again") | D | DG-021, DG-024 | P3 |
+| DG-047 | Route choice and personalisation | D | DG-029 | **device pilot implemented** (PR #78 branch; route selection, reorder/skip, Home recommendation integration; account sync later) |
+| DG-048 | Review session (daily load, "again") | D | DG-021, DG-024 | implementation on `feat/dg-048-global-review` |
 | DG-049 | Visible recommendation reasons with override | D | DG-024 | P3 |
 | DG-039 | Arabic font for the preview locale | D | — | ready (small) |
 | DG-005 | Vet first external sources (frequency data) | E | — | ready (research) |
 | DG-050 | Lexicon schema ADR + schema (lemma/sense/forms) | E | DG-005 | P4 |
-| DG-051 | Reading pilot (original texts) | E | DG-050, DG-043 | P4 |
-| DG-052 | Tap-to-look-up, saved vocabulary, vocabulary review | E | DG-050, DG-048 | P4 |
-| DG-053 | Placement v1 with uncertainty | E | DG-043 | P4 |
+| DG-051 | Reading pilot (original texts) | E | DG-050, DG-043 | **pilot implemented** (PR #78 branch; one original A1 story, 4 UI locales) |
+| DG-052 | Tap-to-look-up, saved vocabulary, vocabulary review | E | DG-050, DG-048 | **device pilot implemented** (PR #78 branch; context and interval logic; account sync/schema follow-up) |
+| DG-053 | Placement v1 with uncertainty | E | DG-043 | five-question device pilot in PR #78; calibration, wider skill coverage, and reviewed content remain |
 | DG-054 | Decide ADR-0007 media and audio | F | owner budget | P5 |
 | DG-055 | Audio pipeline (storage, manifests, player) | F | DG-054 | P5 |
 | DG-056 | Listening tasks and dictation | F | DG-055 | P5 |
@@ -123,10 +123,16 @@ Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_P
 - **Acceptance:** E2E offline → online sync; counts shown as "not yet saved" until confirmed. **Depends:** DG-022.
 
 ### DG-024 Server read path and cross-device continuation
-- **Goal:** the P2 exit criterion "across devices". **State:** implemented on `feat/dg-024-global-experience`; not yet merged or deployed.
+- **Goal:** the P2 exit criterion "across devices". **State:** merged to `main` as #77.
 - **Changes:** `GET /api/progress` (no-store, as learner under RLS) returning account events; client merges by event id; explicit import of device history after sign-in (DATA_AND_PRIVACY); fix stale comments in `lib/device-state.ts`.
 - **Result:** RLS-scoped, no-store progress read; import re-evaluates responses on the server, dates evidence at import time, writes idempotently, and rejects mixed-validity batches before any write. Home, Practice, lessons, map, and You use the shared account/device stream. Home has a reasoned next step and DACH missions reuse existing reply-choice content. Older local answers without their response are counted and left on the device.
 - **Checks:** `npm run check` passed locally; hosted CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe after correcting stale UI expectations and journey-test assumptions. **Approval:** none beyond Q1.
+
+### DG-048 Review Room and daily spaced review
+- **Goal:** turn due concepts into a complete session instead of sending learners back to a full lesson.
+- **State:** implementation on `feat/dg-048-global-review`; mockup and path added at `docs/product/mockups/review.svg` and [USER_FLOWS E1](../product/USER_FLOWS.md).
+- **Logic:** use merged account/device evidence and the accepted DG-021 scheduler; sort oldest due first, default to five topics, allow 3/5/10 and individual opt-out, prefer least-seen exercises, record each answer through the shared evaluator/outbox, and preserve ADR-0016 interval rules.
+- **Acceptance:** due and empty boards, session sizing, source-unit validation across mixed lessons, review/practice hearts, shared progress refresh, localization and phone/RTL layout. **Approval:** none.
 
 ### DG-025 Session refresh
 Refresh token in its own HttpOnly cookie, rotation on use, sign-out revokes. **Acceptance:** a 2-hour session keeps saving; refresh failure shows "signed out", never silent loss. **Depends:** DG-026.
