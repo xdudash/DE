@@ -1,7 +1,7 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.lex.a0_0114_guten_morgen_abend
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -9,7 +9,7 @@ cefr: A0
 concepts: [concept.prag.greetings_dach]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -22,9 +22,13 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_1, de: "Guten Morgen", gloss: "@ex.1", highlight: [] }
-      - { id: ex_2, de: "Guten Abend", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "Gute Nacht", gloss: "@ex.3", highlight: [] }
+      - { id: ex_1, de: "Guten Morgen, Herr Klein!", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Morgen, Tom!", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Guten Tag!", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "Guten Abend, Frau Weber!", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "Gute Nacht, Lisa!", gloss: "@ex.5", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -39,168 +43,184 @@ blocks:
         difficulty: 1
         prompt: "@x1.prompt"
         options:
-          - { id: a, de: "Guten Morgen", correct: true }
-          - { id: b, de: "Guten Abend", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Gute Nacht", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Guten Morgen!", correct: true }
+          - { id: b, de: "Guten Abend!", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: single_choice
+        type: spelling_input
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x2.prompt"
-        options:
-          - { id: a, de: "Guten Morgen", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "Guten Tag", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Guten Abend", correct: true }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        accept: ["Guten Abend"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Gute Abend"], feedback: "@x2.r1" }
+          - { match: ["Guten abend"], feedback: "@x2.r2" }
         explanation: "@x2.expl"
 
       - id: x3
-        type: single_choice
+        type: true_false
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x3.prompt"
-        options:
-          - { id: a, de: "Guten Morgen", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "Guten Tag", correct: true }
-          - { id: c, de: "Guten Abend", correct: false, feedback: "@fb.not_this" }
+        statement_de: "Gute Nacht sagt man am Morgen."
+        correct: false
+        wrong_feedback: "@x3.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x3.expl"
 
       - id: x4
-        type: single_choice
+        type: match_pairs
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x4.prompt"
-        options:
-          - { id: a, de: "Guten Abend", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "Gute Nacht", correct: true }
-          - { id: c, de: "Guten Morgen", correct: false, feedback: "@fb.not_this" }
+        pairs:
+          - { id: a, left_de: "Guten Morgen", right_de: "7:30" }
+          - { id: b, left_de: "Guten Tag", right_de: "14:00" }
+          - { id: c, left_de: "Guten Abend", right_de: "19:00" }
+          - { id: d, left_de: "Gute Nacht", right_de: "23:30" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x4.expl"
 
       - id: x5
-        type: true_false
+        type: multi_choice
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x5.prompt"
-        statement_de: "Guten Morgen sagt man am Abend."
-        correct: false
-        wrong_feedback: "@x5.wrong"
+        options:
+          - { id: a, de: "Guten Abend", correct: true }
+          - { id: b, de: "Gute Nacht", correct: true }
+          - { id: c, de: "Guten Morgen", correct: false, feedback: "@x5.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
 
       - id: x6
-        type: true_false
+        type: gap_fill_input
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x6.prompt"
-        statement_de: "Guten Abend sagt man um 19 Uhr."
-        correct: true
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        stem_de: "Guten ___, Frau Weber!"
+        accept: ["Abend"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Morgen"], feedback: "@x6.r1" }
+          - { match: ["Tag"], feedback: "@x6.r2" }
         explanation: "@x6.expl"
 
       - id: x7
-        type: true_false
+        type: reply_choice
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x7.prompt"
-        statement_de: "Gute Nacht ist eine Begrüßung am Morgen."
-        correct: false
-        wrong_feedback: "@x7.wrong"
+        line_de: "Guten Morgen, Lisa!"
+        options:
+          - { id: a, de: "Guten Morgen!", correct: true }
+          - { id: b, de: "Guten Abend!", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
       - id: x8
-        type: true_false
+        type: word_order
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x8.prompt"
-        statement_de: "Guten Morgen ist bis etwa 10 oder 11 Uhr üblich."
-        correct: true
+        tokens: ["Herr Klein", "Abend,", "Guten"]
+        final_punctuation: "!"
+        accept: ["Guten Abend, Herr Klein!"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
       - id: x9
-        type: multi_choice
+        type: true_false
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x9.prompt"
-        options:
-          - { id: a, de: "Guten Abend", correct: true }
-          - { id: b, de: "Gute Nacht", correct: true }
-          - { id: c, de: "Guten Morgen", correct: false, feedback: "@fb.not_this" }
+        statement_de: "„Morgen!“ ist eine kurze Form von „Guten Morgen!“."
+        correct: true
+        wrong_feedback: "@x9.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
       - id: x10
-        type: multi_choice
+        type: cloze
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x10.prompt"
-        options:
-          - { id: a, de: "Guten Abend", correct: true }
-          - { id: b, de: "Gute Nacht", correct: true }
-          - { id: c, de: "Guten Morgen", correct: false, feedback: "@fb.not_this" }
+        text_de: "Guten {{0}}, Herr Klein! – {{1}} Morgen, Frau Weber!"
+        gaps:
+          - { accept: ["Morgen"] }
+          - { accept: ["Guten"] }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x10.expl"
 
       - id: x11
-        type: reply_choice
+        type: single_choice
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x11.prompt"
-        line_de: "Guten Abend, Frau Klein!"
         options:
-          - { id: a, de: "Guten Abend!", correct: true }
-          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Abend", correct: true }
+          - { id: b, de: "Morgen", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "Nacht", correct: false, feedback: "@x11.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x11.expl"
 
       - id: x12
-        type: reply_choice
+        type: transform
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x12.prompt"
-        line_de: "Gute Nacht!"
-        options:
-          - { id: a, de: "Gute Nacht!", correct: true }
-          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Hallo!", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        source_de: "Guten Morgen, Frau Weber!"
+        accept: ["Guten Abend, Frau Weber!", "Guten Abend Frau Weber!"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Gute Nacht, Frau Weber!"], feedback: "@x12.r1" }
         explanation: "@x12.expl"
 
       - id: x13
-        type: spelling_input
+        type: reply_choice
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x13.prompt"
-        accept: ["Guten Morgen"]
+        line_de: "Gute Nacht, Tom!"
+        options:
+          - { id: a, de: "Gute Nacht!", correct: true }
+          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@x13.o2.fb" }
+          - { id: c, de: "Hallo!", correct: false, feedback: "@x13.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
 
       - id: x14
-        type: spelling_input
+        type: word_order
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x14.prompt"
-        accept: ["Guten Abend"]
+        tokens: ["Lisa", "Nacht,", "Gute"]
+        final_punctuation: "!"
+        accept: ["Gute Nacht, Lisa!"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x14.expl"
 
@@ -211,13 +231,28 @@ blocks:
         difficulty: 1
         prompt: "@x15.prompt"
         options:
-          - { id: a, de: "Guten", correct: true }
-          - { id: b, de: "Morgen", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Abend", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Guten Tag", correct: true }
+          - { id: b, de: "Gute Nacht", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Tschüss", correct: false, feedback: "@x15.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
 
+      - id: x16
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x16.prompt"
+        accept: ["Guten Morgen", "Morgen"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Guten morgen"], feedback: "@x16.r1" }
+          - { match: ["Gute Morgen"], feedback: "@x16.r2" }
+        explanation: "@x16.expl"
+
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  pedagogical: { status: pending, notes: "Grüß Gott and Grüezi are mentioned in the tip and one exercise only, not taught." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

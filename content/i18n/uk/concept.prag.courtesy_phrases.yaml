@@ -1,0 +1,15 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.courtesy_phrases
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Ввічливі фрази: дякую, будь ласка, вибачте, перепрошую"
+  summary: "Danke — подяка, Bitte — прохання або відповідь на подяку, Gern geschehen і Kein Problem — відповіді на подяку, Entschuldigung — вибачення або спосіб привернути увагу, Wie bitte? — прохання повторити."
+  pattern.scope: "Сталі фрази, щоб подякувати, попросити, відповісти на подяку, вибачитися та попросити повторити або говорити повільніше."
+  pattern.limits: "Вивчаються як сталі фрази. Ввічливі прохання з модальними дієсловами, як Könnten Sie …, — на рівні A1."
+  ex.danke_bitte: "Дякую! – Будь ласка!"
+  ex.gern: "Щиро дякую! – Нема за що!"
+  ex.entschuldigung: "Вибачте! / Перепрошую!"
+  ex.wie_bitte: "Перепрошую? / Що ви сказали? (ви не почули)"

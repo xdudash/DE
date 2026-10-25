@@ -1,0 +1,15 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.courtesy_phrases
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Courtesy phrases: thanks, please, sorry, pardon"
+  summary: "Danke thanks someone, Bitte asks for something or answers thanks, Gern geschehen and Kein Problem answer thanks, Entschuldigung says sorry or gets attention, and Wie bitte? asks someone to repeat."
+  pattern.scope: "Fixed phrases for thanking, asking, answering thanks, apologising and asking someone to repeat or speak slowly."
+  pattern.limits: "Taught as fixed phrases. Polite requests with modal verbs, such as Könnten Sie …, come at A1."
+  ex.danke_bitte: "Thanks! – You're welcome!"
+  ex.gern: "Many thanks! – My pleasure!"
+  ex.entschuldigung: "Sorry! / Excuse me!"
+  ex.wie_bitte: "Sorry? / Pardon? (you did not hear)"

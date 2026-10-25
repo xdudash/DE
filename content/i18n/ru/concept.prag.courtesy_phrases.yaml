@@ -1,0 +1,15 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.courtesy_phrases
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Вежливые фразы: спасибо, пожалуйста, извините, простите"
+  summary: "Danke — благодарность, Bitte — просьба или ответ на благодарность, Gern geschehen и Kein Problem — ответы на благодарность, Entschuldigung — извинение или способ привлечь внимание, Wie bitte? — просьба повторить."
+  pattern.scope: "Устойчивые фразы, чтобы поблагодарить, попросить, ответить на благодарность, извиниться и попросить повторить или говорить медленнее."
+  pattern.limits: "Изучаются как устойчивые фразы. Вежливые просьбы с модальными глаголами, как Könnten Sie …, — на уровне A1."
+  ex.danke_bitte: "Спасибо! – Пожалуйста!"
+  ex.gern: "Большое спасибо! – Не за что!"
+  ex.entschuldigung: "Извините! / Простите!"
+  ex.wie_bitte: "Простите? / Что вы сказали? (вы не расслышали)"

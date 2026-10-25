@@ -1,0 +1,28 @@
+# Canonical concept (A0, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+# Fixed courtesy phrases taught as chunks at A0. Polite requests with modal verbs (Könnten Sie …) stay in concept.prag.politeness_requests (A1).
+schema: deutschgo.concept/1
+id: concept.prag.courtesy_phrases
+version: 1.0.0
+status: needs_review
+kind: pragmatics
+domain: pragmatics
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "Danke · Bitte · Gern geschehen · Entschuldigung · Wie bitte?"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_danke_bitte, de: "Danke! – Bitte!", gloss: "@ex.danke_bitte", highlight: [], source: src.deutschgo_original }
+  - { id: ex_gern, de: "Vielen Dank! – Gern geschehen!", gloss: "@ex.gern", highlight: [], source: src.deutschgo_original }
+  - { id: ex_entschuldigung, de: "Entschuldigung!", gloss: "@ex.entschuldigung", highlight: [], source: src.deutschgo_original }
+  - { id: ex_wie_bitte, de: "Wie bitte?", gloss: "@ex.wie_bitte", highlight: [], source: src.deutschgo_original }
+relations:
+  - { type: related_to, target: concept.prag.politeness_requests }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check the register of Kein Problem and Gern as replies to thanks." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
