@@ -144,3 +144,7 @@ The writing board offers realistic A1–A2 message prompts, a focused draft edit
 
 ## Speaking workshop
 The device-local speaking workshop offers three practical A1 prompts, optional browser speech playback, and an explicit microphone action followed by playback or deletion. Audio is held in page memory only, never uploaded, and is discarded when the learner leaves. It does not claim pronunciation scoring or automated assessment. It is linked from Practice and translated in en/ru/uk/ar.
+
+
+## Dedicated progress board
+The `/{lang}/progress` screen reuses the account/device evidence provider to show actual answer totals, accuracy, and concept-state counts. It is reachable from the learner profile and links to Home, Map, and Practice. It does not invent XP, streaks, or certification from attempt data.
