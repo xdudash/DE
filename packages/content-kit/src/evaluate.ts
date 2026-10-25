@@ -14,6 +14,7 @@
 import type {
   ClozeExercise,
   CategorizeExercise,
+  DictationExercise,
   MatchPairsExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
@@ -31,7 +32,7 @@ import type {
  * Bumped whenever normalization or any type's evaluation semantics change.
  * Stored with every graded event so past results stay interpretable.
  */
-export const EVALUATOR_VERSION = "1.2.0";
+export const EVALUATOR_VERSION = "1.3.0";
 
 export function normalizeAnswer(input: string): string {
   let s = input.normalize("NFC");
@@ -62,6 +63,7 @@ export type Response =
   | { type: "match_pairs"; matches: Record<string, string> }
   | { type: "categorize"; assignments: Record<string, string> }
   | { type: "listening_choice"; optionId: string }
+  | { type: "dictation"; text: string }
   | { type: "reply_choice"; optionId: string }
   | { type: "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input"; text: string }
   | { type: "word_order"; order: number[] }
@@ -274,6 +276,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "reply_choice" }>).optionId);
     case "listening_choice":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "listening_choice" }>).optionId);
+    case "dictation":
+      return evalTextInput(ex as unknown as TextInputExercise, (response as Extract<Response, { type: "dictation" }>).text);
     case "article_input":
     case "form_input":
     case "gap_fill_input":

@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: en
-based_on_version: 1.2.0
+based_on_version: 1.3.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -151,3 +151,5 @@ strings:
   x.listening_v2.c: "I work from home every day."
   x.listening_v2.c.feedback: "The sentence says *heute* (today), not every day."
   x.listening_v2.explanation: "*Heute* is the first element; *arbeite*, the conjugated verb, is in position 2."
+  x.dictation_monday.prompt: "Listen and write the full German sentence."
+  x.dictation_monday.explanation: "*Am Montag* is the first element, *fahre* is the conjugated verb in position 2, and *ich* follows it."

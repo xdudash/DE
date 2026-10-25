@@ -242,6 +242,12 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (correct && !evaluate(ex, { type: "listening_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct listening option does not evaluate as correct`);
             break;
           }
+          case "dictation": {
+            if (!ex.audio_text_de.trim()) c.error("exercise.empty_audio", u.id, `${where}: audio_text_de is empty`);
+            if (!ex.accept.length || ex.accept.some((answer) => !answer.trim())) c.error("exercise.empty_accept", u.id, `${where}: at least one non-empty accepted answer is required`);
+            if (ex.accept[0] && !evaluate(ex, { type: "dictation", text: ex.accept[0] }).correct) c.error("exercise.self_check", u.id, `${where}: authored dictation answer does not evaluate as correct`);
+            break;
+          }
           case "article_input":
           case "form_input":
           case "gap_fill_input":
