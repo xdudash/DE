@@ -77,6 +77,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "transform":
     case "keyword_build":
     case "negation":
+    case "dialogue_gap":
+      if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
+      return { type: "dialogue_gap", text: r.text };
     case "separable_verb":
       if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
       return { type: r.type, text: r.text };
