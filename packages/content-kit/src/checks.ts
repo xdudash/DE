@@ -377,6 +377,20 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             for (const r of ex.feedback.rules ?? []) for (const m of r.match) if (ex.accept.some((a) => answersEqual(a, m))) c.error("exercise.rule_shadows_answer", u.id, `${where}: error rule matches accepted "${m}"`);
             break;
           }
+          case "case_choice": {
+            const correct = ex.options.filter((option) => option.correct);
+            if (ex.options.length < 2) c.error("exercise.choice_count", u.id, `${where}: at least two case forms are required`);
+            if (correct.length !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one case form must be correct`);
+            const ids = new Set<string>();
+            for (const option of ex.options) {
+              if (ids.has(option.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${option.id}`);
+              ids.add(option.id);
+              if (!option.de.trim()) c.error("exercise.option_empty", u.id, `${where}: case option ${option.id} is empty`);
+              if (!option.correct && !option.feedback) c.warn("exercise.distractor_feedback", u.id, `${where}: case distractor ${option.id} has no targeted feedback`);
+            }
+            if (correct[0] && !evaluate(ex, { type: "case_choice", optionId: correct[0].id }).correct) c.error("exercise.self_check", u.id, `${where}: correct case form does not evaluate as correct`);
+            break;
+          }
           case "connector_choice": {
             const correct = ex.options.filter((option) => option.correct);
             if (ex.options.length < 2) c.error("exercise.choice_count", u.id, `${where}: at least two connectors are required`);
