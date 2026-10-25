@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 6140)
-Total output lines: 203
-
 # Task Register (backlog)
 
 Last rebuilt: 2026-10-25. Phase order and gates: [roadmap](./ROADMAP.md). The GitHub issue tracker is the live list; every task here becomes an issue when it starts, using the fields below. Owner decisions are referenced as **Q1…Q10** from audit section 7.
@@ -80,7 +77,42 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 - **Result (2026-10-22):** [ADR-0016](../architecture/decisions/ADR-0016-review-evidence.md) chose derivation-time classification instead of a server-side `recall` kind: the engine treats any graded result given while due as a review, so it is order-independent, identical on device and server, and needs no API or schema change; existing answers count retroactively. `ENGINE_VERSION` 1.1.0. Explicit `recall` events remain for the review session (DG-048).
 
 ### DG-026 Session token verification hardening
-- **Goal:** sign-in works with the hosted project and rejects weak tokens. **State:** `lib/auth/jwt.ts` accepts HS256 only, `exp` option…1140 tokens truncated…d; device events carry no error-rule `signals` (ADR-0016 consequence).
+- **Goal:** sign-in works with the hosted project and rejects weak tokens. **State:** `lib/auth/jwt.ts` accepts HS256 only, `exp` optional, no `aud`/`role` check; the hosted project's signing method is unverified.
+- **Changes:** require `exp`; require `aud = authenticated` and `role = authenticated`; if the project uses asymmetric signing keys, verify via JWKS (maintained library or `node:crypto` ES256) and amend ADR-0013.
+- **Acceptance:** tests for missing `exp`, wrong `aud`, `alg` confusion, ES256 when enabled; a real token from a preview verifies. **Checks:** `test/jwt.test.ts`, `test/auth.test.ts`, manual preview sign-in. **Approval:** none: the signing method was read from the project's public JWKS.
+- **Result (2026-10-22):** the hosted project signs with **ES256** (public JWKS), so the HS256-only verifier would have rejected every real sign-in. Now: JWKS verification (ES256/RS256, cached, refresh-limited, outage-tolerant), HS256 only with the optional legacy secret, `exp`/`aud`/`role` required; `SUPABASE_JWT_SECRET` optional; ADR-0013 amended. Still open: a real provider round trip on a configured preview (owner setup).
+
+### DG-051 Continuous course plan (ADR-0018 amendment)
+- **Goal:** 5000 lessons in one chain from A0 to C2, with topic order, dependencies and word targets. **State:** plan generated under `curriculum/` (topics are a draft for review); `scripts/curriculum_plan.py --check` guards it.
+- **Acceptance:** chain verified by the generator; topics depend only on earlier topics; tier and choice rules tested in `apps/web/test/topic-choices.test.ts`.
+
+### DG-053 Audio for lessons
+- **Goal:** listening and pronunciation audio for every example and exercise. **State:** not started. **Decided:** ADR-0019 (free Piper voice, generated offline). **Needs:** the generation script, a schema field for audio, storage for generated files.
+
+### DG-054 Exercise types catalogue (many formats, like tests)
+- **Goal:** more exercise types beyond single choice, word order and cloze, such as matching, gap fill with a bank, categorisation, error correction, listening choice, dictation. **State:** four types exist. **Depends:** DG-045 and CONTENT_CONTRACT §8 for each new type (schema, evaluator tests, player).
+
+### DG-052 Learner topic choices in the app
+- **Goal:** want/skip per topic on the profile, with conflict messages. **State:** logic only (`lib/topic-choices.ts`). **Needs:** reviewed topic names; no UI until then.
+
+### DG-027 Rate limiting on write endpoints
+- **Goal:** abuse and cost protection required by DATA_AND_PRIVACY. **State:** none.
+- **Changes:** per-user and per-IP limits for `/api/attempts`, `/auth/test`, `/auth/start`, `/api/push/subscribe`; store per Q7 (recommended: Postgres table with service role, no new provider); 429 with `Retry-After`; client treats 429 as retryable.
+- **Acceptance:** limits are documented, unit-tested, integration-tested against PostgreSQL; normal lesson pace is never limited. **Approval:** Q7.
+- **State:** implemented on `feat/dg-027-rate-limits`. Migration `0003_rate_limits.sql` and `supabase/tests/15_rate_limits.sql` (local PostgreSQL 16: all pass). Limits: attempts 120/min per learner, push 20/min per learner, sign-in start 30/min per address, test sign-in 5/hour per address. Subjects are hashed. 429 carries `Retry-After`; the outbox already retries 429. **Owner action:** apply `0003_rate_limits.sql` to the hosted Supabase project before setting `DATABASE_URL` on a deployment; until then the limiter logs and allows requests.
+
+### DG-030 Privacy gate pack
+- **Goal:** lawful collection of learner data. **State:** no privacy notice, Impressum, processor list or retention statement in the app.
+- **Changes:** pages rendered from content/legal text (not hard-coded components), linked from the footer and sign-in; processor list (Vercel, Supabase, later monitoring/analytics); retention per DATA_AND_PRIVACY; localized en/uk/ru with honest draft labels.
+- **Acceptance:** QUALITY_GATES privacy gate items checked with evidence; sign-in is shown only where Q1 allows. **Approval:** owner/legal text, Q1, Q9.
+
+### DG-007 Human review of the gold unit (critical path, owner)
+Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_PACKET.md); rights confirmation. **Acceptance:** recorded linguistic, pedagogical and uk/ru reviews; status raised only by the validator-enforced rule. **Approval:** Q5, Q10.
+
+## Stage B — close the learner loop (P2 exit)
+
+### DG-022 One event identity + retry
+- **Goal:** one answer is one event everywhere. **State:** `ExercisePlayer.tsx` records a device event and sends a server event with a different `randomUUID`; failures are dropped; device events carry no error-rule `signals` (ADR-0016 consequence).
 - **Changes:** reuse the device event id as `eventId`; mark device events `synced`/`pending`; retry pending events with backoff on load/online (server is idempotent on id).
 - **Acceptance:** unit tests for retry and idempotency; a network failure followed by reload results in exactly one server row. **Depends:** DG-021. **Risks:** existing device events have no server twin; handled by DG-024 import.
 
