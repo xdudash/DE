@@ -505,7 +505,8 @@
             "connector_choice",
             "case_choice",
             "preposition_choice",
-            "separable_verb"
+            "separable_verb",
+            "read_question"
           ]
         }
       },
@@ -1415,6 +1416,58 @@
           "required": [
             "before_de",
             "after_de",
+            "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "read_question"
+            },
+            "text_de": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2400
+            },
+            "question_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "de",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "text_de",
+            "question_de",
             "options"
           ],
           "type": "object"
