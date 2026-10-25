@@ -123,7 +123,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "token_bank_build" && order.length > 0) ||
     (exercise.type === "verb_position" && verbPosition !== null) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    ((exercise.type === "transform" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
+    ((exercise.type === "transform" || exercise.type === "dialogue_gap" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
@@ -150,6 +150,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "case_choice": response = { type: "case_choice", optionId: choice }; break;
           case "preposition_choice": response = { type: "preposition_choice", optionId: choice }; break;
           case "read_question": response = { type: "read_question", optionId: choice }; break;
+          case "dialogue_gap": response = { type: "dialogue_gap", text: free }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
           case "minimal_pairs": response = { type: "minimal_pairs", optionId: choice }; break;
@@ -449,6 +450,19 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             ))}
           </div>
         </>
+      )}
+
+      {exercise.type === "dialogue_gap" && (
+        <ol className="dialogue-gap">
+          {exercise.lines.map((line, index) => (
+            <li key={index} className={`dialogue-line speaker-${line.speaker}`}>
+              <span className="dialogue-speaker" aria-label={line.speaker === "a" ? "A" : "B"}>{line.speaker.toUpperCase()}</span>
+              {"accept" in line ? (
+                <input className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`} lang="de" aria-label={labels.yourAnswer} value={free} disabled={locked} autoCapitalize="off" autoCorrect="off" spellCheck={false} onKeyDown={enterChecks} onChange={(event) => setFree(event.target.value)} />
+              ) : <span lang="de" className="de">{line.text_de}</span>}
+            </li>
+          ))}
+        </ol>
       )}
 
       {exercise.type === "verb_position" && (
