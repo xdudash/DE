@@ -79,6 +79,13 @@
 4. Restore skipped topics or reset a route to its authored order. The active route and its custom order are stored on this device and cleared by the existing delete-device-data action.
 5. Changing a route never rewrites learning history. Account sync of route preferences can be added with the profile model later.
 
+## M — Resume an interrupted lesson (device pilot)
+1. Open a lesson or practical mission; its remaining step ids, completed answers, timer start, and practice mode are checkpointed in this browser.
+2. Leave at any point. A correct answer advances the checkpoint immediately; a wrong answer keeps its scheduled retry in the saved queue.
+3. On Home, choose **Continue lesson** to return to the exact remaining sequence, including a retry and the session result history.
+4. Completing the lesson removes the checkpoint. Starting a fresh lesson replaces the single device-local checkpoint; clearing device data removes it.
+5. If lesson content changes and saved step ids no longer match, discard the stale checkpoint and start with the current lesson. Checkpoints do not sync across devices.
+
 ## F — Listen, speak, and write
 - Listening tasks include real audio, controlled replay, and suitable comprehension checks.
 - Speaking tasks say whether they practise pronunciation, prepared speech, or conversation; assessment claims match actual capability.

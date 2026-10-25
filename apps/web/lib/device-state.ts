@@ -14,6 +14,7 @@
  */
 import type { LearningEvent } from "@deutschgo/learning-engine";
 import type { Response } from "@deutschgo/content-kit/evaluate";
+import type { SessionAnswer } from "./lesson-session.ts";
 import { OUTBOX_KEY, type KeyValue } from "./attempts/outbox.ts";
 
 import { normalizeSetup, type Setup } from "./plan.ts";
@@ -39,6 +40,7 @@ export const PROGRESS_EVENT = "deutschgo:progress";
 export const ACCOUNT_PROGRESS_EVENT = "deutschgo:account-progress";
 const SETUP_KEY = "deutschgo.setup.v1";
 const PLACEMENT_KEY = "deutschgo.placement.v1";
+const LESSON_CHECKPOINT_KEY = "deutschgo.lesson-checkpoint.v1";
 const EVENTS_KEY = "deutschgo.events.v1";
 /** Bounds storage use on a device; the engine only needs recent evidence. */
 export const MAX_STORED_ATTEMPTS = 2000;
@@ -88,6 +90,47 @@ export function readPlacement(): PlacementEstimate | null {
 
 export function writePlacement(estimate: PlacementEstimate): boolean {
   return write(PLACEMENT_KEY, estimate);
+}
+
+/** The uncompleted part of a lesson, stored on this device for a later visit. */
+export interface LessonCheckpoint {
+  unitId: string;
+  contentVersion: string;
+  href: string;
+  title: string;
+  remainingStepIds: string[];
+  answers: SessionAnswer[];
+  completedSteps: number;
+  totalSteps: number;
+  elapsedMs: number;
+  practice: boolean;
+  updatedAt: number;
+}
+
+export const LESSON_CHECKPOINT_EVENT = "deutschgo:lesson-checkpoint";
+
+export function readLessonCheckpoint(unitId?: string, contentVersion?: string): LessonCheckpoint | null {
+  const value = read<unknown>(LESSON_CHECKPOINT_KEY);
+  if (!value || typeof value !== "object") return null;
+  const v = value as Record<string, unknown>;
+  if (typeof v.unitId !== "string" || typeof v.contentVersion !== "string" || typeof v.href !== "string" || typeof v.title !== "string" ||
+      !Array.isArray(v.remainingStepIds) || !v.remainingStepIds.every((id) => typeof id === "string") || v.remainingStepIds.length === 0 ||
+      !Array.isArray(v.answers) || !v.answers.every((a) => a && typeof a === "object" && typeof a.exerciseId === "string" && typeof a.correct === "boolean" && typeof a.retry === "boolean") ||
+      !Number.isInteger(v.completedSteps) || !Number.isInteger(v.totalSteps) || Number(v.completedSteps) < 0 || Number(v.totalSteps) < Number(v.completedSteps) ||
+      !Number.isFinite(v.elapsedMs) || Number(v.elapsedMs) < 0 || !Number.isFinite(v.updatedAt) || typeof v.practice !== "boolean") return null;
+  if ((unitId && v.unitId !== unitId) || (contentVersion && v.contentVersion !== contentVersion)) return null;
+  return v as unknown as LessonCheckpoint;
+}
+
+export function writeLessonCheckpoint(checkpoint: LessonCheckpoint | null): boolean {
+  try {
+    if (checkpoint) window.localStorage.setItem(LESSON_CHECKPOINT_KEY, JSON.stringify(checkpoint));
+    else window.localStorage.removeItem(LESSON_CHECKPOINT_KEY);
+    window.dispatchEvent(new Event(LESSON_CHECKPOINT_EVENT));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function isAttempt(value: unknown): value is DeviceAttempt {
@@ -255,7 +298,7 @@ export function deviceKeyValue(): KeyValue {
  */
 export function clearDeviceData(): boolean {
   try {
-    for (const key of [SETUP_KEY, PLACEMENT_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]) window.localStorage.removeItem(key);
+    for (const key of [SETUP_KEY, PLACEMENT_KEY, LESSON_CHECKPOINT_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {
