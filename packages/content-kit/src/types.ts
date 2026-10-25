@@ -154,6 +154,14 @@ export interface ClozeExercise extends ExerciseBase {
   gaps: { accept: string[]; rules?: FeedbackRule[]; hint?: L10nRef }[];
 }
 
+export interface KeywordBuildExercise extends ExerciseBase {
+  type: "keyword_build";
+  /** German prompt words the learner must use to build a complete sentence. */
+  keywords: string[];
+  /** Accepted complete German sentences using every keyword. */
+  accept: string[];
+}
+
 export interface TransformExercise extends ExerciseBase {
   type: "transform";
   source_de: string;
@@ -225,7 +233,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }
