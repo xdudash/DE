@@ -26,6 +26,7 @@ describe("normalizeAnswer", () => {
 describe("token_bank_build", () => {
   const exercise = {
     ...base, id: "x_bank", type: "token_bank_build" as const,
+    feedback: { correct: "@ok" as const, incorrect: "@no" as const },
     tokens: ["heute", "ich", "lerne", "Deutsch", "morgen"],
     solutions: [[1, 2, 3, 0]],
     final_punctuation: "." as const,
