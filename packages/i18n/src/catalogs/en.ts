@@ -45,7 +45,7 @@ export const en = {
   "exercise.playAudio": "Play German audio",
   "exercise.playAgain": "Play again",
   "exercise.speechNote": "Audio uses your browser’s German voice.",
-  "exercise.speechUnavailable": "Speech is unavailable here; use the target text as a spelling fallback.",
+  "exercise.speechUnavailable": "Audio is unavailable; use the text shown as a fallback.",
   "exercise.saveFailed": "Your answer was checked and kept in this browser, but your account did not accept it.",
   "exercise.saveQueued": "Your answer was checked. It is not in your account yet: this browser will send it again automatically.",
   "exercise.stale": "This lesson has been updated. Reload the page to continue with the current version.",
