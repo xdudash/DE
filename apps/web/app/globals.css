@@ -1312,3 +1312,58 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
   .saved-word-list li { grid-template-columns: minmax(0, 1fr) auto; }
   .saved-word-list li .text-button { grid-column: 2; }
 }
+
+/* First-run setup: a short, editable path from learner goal to the active route. */
+.onboarding-page { max-width: 58rem; margin-inline: auto; }
+.onboarding-heading { max-width: 42rem; margin: 0 auto 1.4rem; text-align: center; }
+.onboarding-heading h1 { margin: 0 0 0.5rem; }
+.onboarding-heading .lead { margin: 0; }
+.onboarding-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; max-width: 46rem; margin: 0 auto 1rem; padding: 0; list-style: none; }
+.onboarding-progress li { display: flex; align-items: center; gap: 0.55rem; min-height: 44px; padding: 0.55rem 0.7rem; border-block-end: 2px solid var(--line); color: var(--ink-2); font-size: var(--step--1); }
+.onboarding-progress li > span { display: grid; place-items: center; flex: none; width: 27px; height: 27px; border: 1px solid var(--line-2); border-radius: 50%; font-weight: 700; }
+.onboarding-progress li.is-current { border-color: var(--blue); color: var(--blue); }
+.onboarding-progress li.is-current > span, .onboarding-progress li.is-done > span { border-color: var(--blue); background: var(--blue); color: #fff; }
+.onboarding-panel { max-width: 46rem; min-height: 25rem; margin-inline: auto; padding: clamp(1.2rem, 4vw, 2rem); }
+.onboarding-panel > h2 { margin: 0 0 0.4rem; font-size: var(--step-2); }
+.onboarding-panel > p { margin-block: 0 1.1rem; }
+.onboarding-goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; margin-block: 1.2rem 1.6rem; }
+.onboarding-choice { display: grid; grid-template-columns: 42px minmax(0, 1fr) 20px; align-items: center; gap: 0.7rem; min-height: 72px; padding: 0.65rem 0.8rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink); text-align: start; box-shadow: 0 3px 0 var(--line); }
+.onboarding-choice:hover, .onboarding-route:hover { border-color: var(--blue-soft-edge); }
+.onboarding-choice.selected, .onboarding-route.selected { border-color: var(--blue); background: var(--blue-soft); }
+.onboarding-choice-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--surface); color: var(--blue); font-size: 1.2rem; }
+.onboarding-choice > span:nth-child(2) { display: grid; gap: 0.2rem; }
+.onboarding-choice strong, .onboarding-route strong { font-size: var(--step--1); }
+.onboarding-choice small, .onboarding-route small { color: var(--ink-2); font-size: 0.75rem; line-height: 1.4; }
+.onboarding-check { color: var(--blue); font-weight: 800; }
+.onboarding-minutes { border: 0; margin: 0; padding: 0; }
+.onboarding-minutes legend { font-size: var(--step--1); font-weight: 700; }
+.onboarding-minutes > p { margin-block: 0.25rem 0.65rem; }
+.onboarding-minutes > div { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.onboarding-time { min-width: 74px; min-height: 44px; padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink-2); box-shadow: 0 3px 0 var(--line); }
+.onboarding-time.selected { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); font-weight: 700; }
+.onboarding-routes { display: grid; gap: 0.7rem; margin-block: 1.1rem; }
+.onboarding-route { display: grid; grid-template-columns: 27px minmax(0, 1fr); align-items: start; gap: 0.8rem; width: 100%; min-height: 83px; padding: 0.85rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink); text-align: start; box-shadow: 0 3px 0 var(--line); }
+.onboarding-route-mark { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid var(--line-2); border-radius: 50%; color: var(--blue); font-weight: 800; }
+.onboarding-route.selected .onboarding-route-mark { border-color: var(--blue); background: var(--blue); color: white; }
+.onboarding-route-body { display: grid; gap: 0.27rem; }
+.onboarding-route-meta { color: var(--ink-2); font-size: 0.75rem; font-weight: 700; }
+.onboarding-local-note { padding: 0.7rem 0.8rem; border-radius: var(--radius); background: var(--surface); font-size: 0.75rem; }
+.onboarding-ready-icon { display: grid; place-items: center; width: 54px; height: 54px; margin: 0 auto 1rem; border: 2px solid var(--blue); border-radius: 50%; color: var(--blue); font-size: 1.4rem; }
+.onboarding-panel:has(.onboarding-ready-icon) { text-align: center; }
+.onboarding-summary { max-width: 33rem; margin: 1.3rem auto; border-block: 1px solid var(--line); text-align: start; }
+.onboarding-summary > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 0; border-block-end: 1px solid var(--line); }
+.onboarding-summary > div:last-child { border: 0; }
+.onboarding-summary dt { color: var(--ink-2); font-size: var(--step--1); }
+.onboarding-summary dd { margin: 0; font-weight: 700; text-align: end; }
+.onboarding-actions { display: flex; justify-content: space-between; gap: 0.7rem; margin-block-start: 1.4rem; }
+.onboarding-final-actions { display: flex; gap: 0.65rem; }
+.onboarding-skip { display: inline-block; margin-block-start: 0.9rem; color: var(--ink-2); font-size: 0.8rem; }
+.onboarding-saved { padding: 0.7rem; border-radius: var(--radius); background: var(--ok-soft); color: var(--ok); font-weight: 700; }
+@media (max-width: 47.99rem) {
+  .onboarding-heading { text-align: start; }
+  .onboarding-progress { gap: 0.3rem; }
+  .onboarding-progress li { align-items: flex-start; flex-direction: column; gap: 0.25rem; padding-inline: 0.3rem; font-size: 0.68rem; }
+  .onboarding-goals { grid-template-columns: 1fr; }
+  .onboarding-final-actions { flex: 1; flex-direction: column-reverse; }
+  .onboarding-actions > .btn, .onboarding-final-actions > .btn { width: 100%; }
+}

@@ -39,7 +39,7 @@ flowchart TD
 
 | Screen | Appearance and main actions | Reads from / links to | Delivery |
 |---|---|---|---|
-| Welcome and setup | Language, learning goal, available time, optional placement or “start from zero”; finish on a recommended route card | Preferences → Home / Route Studio | Partial; goal and language exist, placement/region are planned |
+| Welcome and setup | Language is chosen at the language gate; the three-step study-plan wizard selects goal, time, and course route | Device preferences → Home / Route Studio | Implemented for goal, time, and route; diagnostic placement and region are planned |
 | Home | “Continue learning” hero, next-step reason, route line with lesson/topic stations, daily goal, streak/XP/hearts, practical mission | Progress + active route → lesson, review, mission, map, Route Studio | Implemented; recommendation and local route are connected |
 | Route Studio | Route cards with level span and progress; ordered topic list with move up/down, skip/restore, reset | Route content + progress → Home and lesson; skipped topics remain on Map | Implemented in PR #78; device-local preference |
 | Knowledge Map | Search field, level/strand filters, concept cards with status and prerequisite links | Content graph + progress → lesson, catch-up suggestions | Map exists; richer filters and catch-up path planned |
@@ -82,6 +82,12 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 - Fix the failing E2E assertion for the profile clear-data confirmation. The UI copy now includes route and vocabulary data; update the test to assert the localized confirmation shown by the current screen, then run the full CI suite.
 - Check route, lesson, review, mission, story, vocabulary, profile and map transitions on phone and desktop, including empty and offline states.
 - Add a route-specific browser journey and accessibility checks for keyboard operation, contrast, focus, and Arabic direction.
+
+### 1a. First-run study plan (implemented slice)
+
+- Add `/{lang}/start`: choose learning goal and daily time, select a course route, review the plan, and save both preferences locally.
+- Link the Home daily-goal plan action to this wizard. Saving sends the learner back to Home, where the active route drives the learning line.
+- Keep placement questions and DACH region selection for the next slice; the current app does not yet use those values in recommendations.
 
 ### 2. Finish the learning experience
 

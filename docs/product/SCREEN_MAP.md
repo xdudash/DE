@@ -5,6 +5,7 @@ Current routes are prefixed with one of `en`, `uk`, `ru`, or `ar`. Static screen
 | Screen | Route | Entry points | Main actions and logic |
 |---|---|---|---|
 | Home / learner line | `/{lang}` | Home tab, logo | Open next-step recommendation, route lesson, DACH mission, daily goal, install prompt. Recommendation uses merged evidence and explains its reason. |
+| Study-plan setup | `/{lang}/start` | Daily-goal plan link | Three steps: choose goal and daily time, choose a route, confirm and save. Route selection updates the same device-local preference consumed by Home and Route Studio. |
 | Route Studio | `/{lang}/routes` | Edit route on Home line | Choose an authored route; see progress/lesson counts; reorder and skip/restore topics; reset authored order. Device-local preference drives Home line and next-step recommendation while shared evidence stays intact. |
 | Lesson | `/{lang}/learn/{unitId}` | Route, map, next step, mission | Read content blocks; answer through shared evaluator; record one event id; queue server sync; update progress. |
 | Knowledge map | `/{lang}/map` | Map tab, topic links | Search concepts, inspect state/prerequisites, open a lesson or planned topic. |

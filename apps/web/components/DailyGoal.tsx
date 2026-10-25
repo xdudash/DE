@@ -54,7 +54,7 @@ export function DailyGoal({ lang }: { lang: string }) {
       <div className="goal-text">
         <h2 id="goal-title">{msg("dash.goal")}</h2>
         <p>{sentence}</p>
-        <Link href={`/${lang}/me#plan-heading`} className="goal-link">{msg("dash.plan")}</Link>
+        <Link href={`/${lang}/start`} className="goal-link">{msg("dash.plan")}</Link>
         <p className="small muted footnote">{msg(status === "loading" ? "progress.loadingSource" : status === "account" ? "progress.accountSource" : "progress.deviceSource")}</p>
       </div>
     </section>

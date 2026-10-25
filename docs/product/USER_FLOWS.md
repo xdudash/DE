@@ -1,11 +1,11 @@
 # Core User Flows
 
 ## A — First visit
-1. Choose explanation language, goal, DACH context, and daily study-time preference.
-2. Take a diagnostic or enter a known starting level.
-3. Explain that a diagnostic is an estimate, not an official CEFR certificate.
-4. Show a recommended route and the reasons for its first steps.
-5. Let the learner accept, edit, or bypass the route and browse topics directly.
+1. Choose an explanation language.
+2. Choose a learning goal and daily study-time target in the study-plan wizard.
+3. Choose an available route, review the plan, and save it on this device.
+4. Continue to Home; the active route shapes its learning line and next-step recommendation.
+5. Diagnostic placement and DACH region preference remain planned. When added, placement must be described as an estimate, never an official CEFR certificate.
 
 ## B — Learn a topic
 1. Open a topic from search, map, route, or recommendation.
