@@ -9,9 +9,11 @@ Last updated: 2026-10-25 (DG-024 merged as #77; DG-048 and P4 reading/vocabulary
 - PR #77 is merged to `main` as `25548d5`; CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe.
 - DG-024 adds authenticated `GET /api/progress`, server-re-evaluated idempotent device-history import, and shared progress across Home, Practice, lessons, the map, and You.
 - Home explains the next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream. Account progress has eligible/legacy import counts and a JSON download; full GDPR export/audit is still DG-028.
-- PR #78 is open and mergeable. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, plus Route Studio for choosing/reordering/skipping the active learning line.
+- PR #78 is open and mergeable. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
+- The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
+- The interactive all-app mockup is `docs/product/mockups/app-review-prototype.html`; its screen map and boundaries are described in [the product blueprint](../product/APP_FUNCTIONAL_BLUEPRINT.md).
 - Screen paths and behavior are in [SCREEN_MAP.md](../product/SCREEN_MAP.md); flow definitions are in [USER_FLOWS.md](../product/USER_FLOWS.md); mockups cover Home, Practice, Mission, Progress, Review, Library, and Vocabulary.
 
 ## Implemented (on `main`)
@@ -44,7 +46,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; listening, writing and speaking activities; audio; placement; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; listening, writing and speaking activities; audio; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.

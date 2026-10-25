@@ -22,7 +22,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | done (#77, merged to `main`; CI green) |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
-| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | implemented on device (`feat/dg-029-goal-model`); profile sync with DG-024 |
+| DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | goal/time and guided route selection implemented on device in PR #78; region preference and profile sync remain |
 | DG-031 | Error monitoring + uptime (EU, PII scrubbing) | B | Q6 | needs decision |
 | DG-032 | Backups and a recorded restore test | B | Q8 | needs owner |
 | DG-033 | Cookieless product analytics baseline | B | Q6, DG-030 | needs decision |
@@ -47,7 +47,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-050 | Lexicon schema ADR + schema (lemma/sense/forms) | E | DG-005 | P4 |
 | DG-051 | Reading pilot (original texts) | E | DG-050, DG-043 | **pilot implemented** (PR #78 branch; one original A1 story, 4 UI locales) |
 | DG-052 | Tap-to-look-up, saved vocabulary, vocabulary review | E | DG-050, DG-048 | **device pilot implemented** (PR #78 branch; context and interval logic; account sync/schema follow-up) |
-| DG-053 | Placement v1 with uncertainty | E | DG-043 | P4 |
+| DG-053 | Placement v1 with uncertainty | E | DG-043 | five-question device pilot in PR #78; calibration, wider skill coverage, and reviewed content remain |
 | DG-054 | Decide ADR-0007 media and audio | F | owner budget | P5 |
 | DG-055 | Audio pipeline (storage, manifests, player) | F | DG-054 | P5 |
 | DG-056 | Listening tasks and dictation | F | DG-055 | P5 |

@@ -5,7 +5,7 @@
 2. Choose a learning goal and daily study-time target in the study-plan wizard.
 3. Choose an available route, review the plan, and save it on this device.
 4. Continue to Home; the active route shapes its learning line and next-step recommendation.
-5. Diagnostic placement and DACH region preference remain planned. When added, placement must be described as an estimate, never an official CEFR certificate.
+5. Offer an optional five-question placement check. Label it a rough estimate, not an official CEFR result; the learner can ignore it and select any route.
 
 ## B — Learn a topic
 1. Open a topic from search, map, route, or recommendation.
