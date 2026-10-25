@@ -23,6 +23,17 @@ describe("normalizeAnswer", () => {
   });
 });
 
+describe("verb_position", () => {
+  const exercise = { ...base, id: "x_verb", type: "verb_position" as const, tokens: ["Heute", "lerne", "ich", "Deutsch"], finite_verb_index: 1, feedback: { correct: "@ok" as const, incorrect: "@no" as const } };
+  it("accepts the marked finite verb and rejects other sentence chunks", () => {
+    assert.equal(evaluate(exercise, { type: "verb_position", tokenIndex: 1 }).correct, true);
+    assert.equal(evaluate(exercise, { type: "verb_position", tokenIndex: 2 }).correct, false);
+  });
+  it("rejects a position outside the sentence", () => {
+    assert.throws(() => evaluate(exercise, { type: "verb_position", tokenIndex: 4 }), EvaluationError);
+  });
+});
+
 describe("token_bank_build", () => {
   const exercise = {
     ...base, id: "x_bank", type: "token_bank_build" as const,
