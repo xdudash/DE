@@ -2,7 +2,14 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-const UNIT = "/en/learn/unit.syntax.v2_declarative.a1";
+// The first lesson on the line (the A0 alphabet, ADR-0018 route order). Answers come from the bundle,
+// so the tests do not depend on the wording of one lesson.
+const UNIT = "/en/learn/unit.pron.alphabet_a0";
+const BUNDLE_UNIT = (JSON.parse(readFileSync(join(process.cwd(), "generated", "content.json"), "utf8")).units as Record<string, any>[])
+  .find((u) => u.id === UNIT.split("/").pop())!;
+const FIRST_EXERCISE = (BUNDLE_UNIT.blocks.find((b: { type: string }) => b.type === "exercises").items as Record<string, any>[])[0]!;
+const RIGHT = FIRST_EXERCISE.options.find((o: { correct: boolean }) => o.correct).de as string;
+const WRONG = FIRST_EXERCISE.options.find((o: { correct: boolean }) => !o.correct).de as string;
 
 /** The first exercise on screen: the single-choice item "Which sentence is correct?". */
 function firstExercise(page: Page) {
@@ -49,18 +56,17 @@ test.describe("home: the line", () => {
     await expect(planned.first().getByText("In preparation")).toBeVisible();
   });
 
-  test("the station opens with the sentence the lesson teaches", async ({ page }) => {
+  test("the line starts with the first lesson (the A0 alphabet)", async ({ page }) => {
+    // The sentence illustration (figure.slotline) appears only for a lesson whose concept has a
+    // verb-position example. The first station is now the alphabet (ADR-0018 route order), so it is
+    // not shown here; the verb-position illustration returns with the A1 sentence lessons.
     await page.goto("/en");
-    const hero = page.locator("figure.slotline");
-    await expect(hero).toBeVisible();
-    // Position 2 is the finite verb, and it is the only yellow thing in the app.
-    await expect(hero.locator("li.verb .pos")).toHaveText("2");
-    await expect(hero.locator("li.verb .word")).toHaveAttribute("lang", "de");
+    await expect(page.getByText("The alphabet: spelling words aloud").first()).toBeVisible();
   });
 
-  test("unreviewed content is labelled in the learner's language, not by its status code", async ({ page }) => {
+  test("pre-launch: no review label is shown to learners (ADR-0022), and no status code leaks", async ({ page }) => {
     await page.goto("/en");
-    await expect(page.getByText("Not reviewed").first()).toBeVisible();
+    await expect(page.getByText("Not reviewed")).toHaveCount(0);
     await expect(page.getByText("needs_review")).toHaveCount(0);
   });
 
@@ -139,25 +145,25 @@ test.describe("lesson: a guided run", () => {
     await page.goto(UNIT);
     await continueUntil(page, firstExercise(page));
     await expect(action(page, "Check")).toBeDisabled();
-    await firstExercise(page).getByRole("radio", { name: "Heute habe ich frei." }).check();
+    await firstExercise(page).getByRole("radio", { name: RIGHT, exact: true }).check();
     await expect(action(page, "Check")).toBeEnabled();
   });
 
   test("a wrong answer is explained, the right option is shown, and the exercise comes back later", async ({ page }) => {
     await page.goto(UNIT);
     await continueUntil(page, firstExercise(page));
-    await firstExercise(page).getByRole("radio", { name: "Heute ich habe frei." }).check();
+    await firstExercise(page).getByRole("radio", { name: WRONG, exact: true }).check();
     await action(page, "Check").click();
 
     const footer = page.locator("footer.flow-footer");
     await expect(footer).toHaveClass(/is-bad/);
     await expect(footer.getByText("Not quite", { exact: true })).toBeVisible();
     await expect(footer.getByText("This one comes back at the end of the lesson.")).toBeVisible();
-    await expect(page.locator(".option.is-right")).toContainText("Heute habe ich frei.");
+    await expect(page.locator(".option.is-right")).toContainText(RIGHT);
     // While learning, a wrong answer costs no heart and the lesson goes on.
     await expect(page.getByRole("img", { name: /Hearts/ })).toHaveCount(0);
     await action(page, "Continue").click();
-    await expect(page.locator("section.exercise")).not.toContainText("Heute ich habe frei.");
+    await expect(page.locator("section.exercise")).not.toContainText(WRONG);
   });
 
   test("a lesson already finished on this device is practice: a wrong answer costs a heart", async ({ page }) => {
@@ -181,7 +187,7 @@ test.describe("lesson: a guided run", () => {
     await expect(page.getByRole("img", { name: "Hearts: 5 of 5" })).toBeVisible();
     await continueUntil(page, firstExercise(page));
     await expect(page.getByText("Practice: a wrong answer costs a heart.")).toBeVisible();
-    await firstExercise(page).getByRole("radio", { name: "Heute ich habe frei." }).check();
+    await firstExercise(page).getByRole("radio", { name: WRONG, exact: true }).check();
     await action(page, "Check").click();
     await expect(page.getByRole("img", { name: "Hearts: 4 of 5" })).toBeVisible();
   });
@@ -189,7 +195,7 @@ test.describe("lesson: a guided run", () => {
   test("a right answer turns the bar green and moves on", async ({ page }) => {
     await page.goto(UNIT);
     await continueUntil(page, firstExercise(page));
-    await firstExercise(page).getByRole("radio", { name: "Heute habe ich frei." }).check();
+    await firstExercise(page).getByRole("radio", { name: RIGHT, exact: true }).check();
     await action(page, "Check").click();
     await expect(page.locator("footer.flow-footer")).toHaveClass(/is-ok/);
     await expect(page.getByText("Right!")).toBeVisible();
@@ -199,7 +205,7 @@ test.describe("lesson: a guided run", () => {
   test("radio options and checking work with the keyboard alone", async ({ page }) => {
     await page.goto(UNIT);
     await continueUntil(page, firstExercise(page));
-    const option = firstExercise(page).getByRole("radio", { name: "Heute habe ich frei." });
+    const option = firstExercise(page).getByRole("radio", { name: RIGHT, exact: true });
     await option.focus();
     await page.keyboard.press("Space");
     await expect(option).toBeChecked();
@@ -251,8 +257,10 @@ test.describe("lesson: a guided run", () => {
     await expect(arrive.getByText("Days in a row: 1")).toBeVisible();
     await expect(arrive.getByText(/Your result is kept in this browser only/)).toBeVisible();
 
-    // Back on the line, the station is ticked.
-    await arrive.getByRole("link", { name: "Back to the line" }).click();
+    // The next step is offered: the next lesson when the route has one, otherwise the line.
+    await expect(arrive.locator(".arrive-actions a.btn-primary")).toBeVisible();
+    // Back on the line, the station is ticked (the lesson is finished on this device).
+    await page.goto("/en");
     await expect(page.locator(".station.is-done").first()).toContainText("Done");
   });
 
@@ -291,7 +299,7 @@ test.describe("your own area", () => {
 
     await page.goto(UNIT);
     await continueUntil(page, firstExercise(page));
-    await firstExercise(page).getByRole("radio", { name: "Heute habe ich frei." }).check();
+    await firstExercise(page).getByRole("radio", { name: RIGHT, exact: true }).check();
     await action(page, "Check").click();
     await expect(page.locator("footer.flow-footer")).toHaveClass(/is-ok/);
 
