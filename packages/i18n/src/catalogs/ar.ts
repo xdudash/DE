@@ -493,4 +493,9 @@ export const ar: Catalog = {
   "progress.activityTotal": "إجابات هذا الأسبوع: {count}",
   "progress.activityDay": "عدد الإجابات: {count}",
   "progress.activityEmpty": "ستظهر هنا إجابات الأيام السبعة الماضية.",
+  "map.levelFilter": "المستوى",
+  "map.stateFilter": "حالة الموضوع",
+  "map.allLevels": "كل المستويات",
+  "map.allTopics": "كل الموضوعات",
+  "map.plannedFilter": "موضوعات مخططة",
 };

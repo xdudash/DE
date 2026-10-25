@@ -10,17 +10,24 @@ export default async function KnowledgeMap({ params }: { params: Promise<{ lang:
   const b = bundle();
   const title = (id: string, entity: unknown, key: string) => t(dictionaryFor(id, entity, contentLang), key);
   const byId = new Map(b.concepts.map((c) => [c.id, c]));
+  const unitForConcept = new Map<string, string>();
+  for (const unit of b.units) for (const conceptId of unit.concepts) if (!unitForConcept.has(conceptId)) unitForConcept.set(conceptId, unit.id);
 
   const items: MapItem[] = b.concepts.map((c) => ({
     id: c.id,
     title: title(c.id, c, c.title),
     level: c.cefr.introduced,
     planned: c.status === "planned",
+    href: unitForConcept.has(c.id) ? `/${lang}/learn/${unitForConcept.get(c.id)}` : `/${lang}/map#${c.id}`,
     prerequisites: (c.relations ?? [])
       .filter((r) => r.type === "depends_on")
       .map((r) => byId.get(r.target))
       .filter((x): x is NonNullable<typeof x> => !!x)
-      .map((x) => title(x.id, x, x.title)),
+      .map((x) => ({
+        id: x.id,
+        title: title(x.id, x, x.title),
+        href: unitForConcept.has(x.id) ? `/${lang}/learn/${unitForConcept.get(x.id)}` : `/${lang}/map#${x.id}`,
+      })),
   }));
 
   return (
