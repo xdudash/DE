@@ -324,12 +324,21 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
               }
               const answer = evaluate(ex, { type: "token_bank_build", order: solution });
               if (!answer.correct) c.error("exercise.self_check", u.id, `${where}: authored solution does not evaluate as correct`);
-              const normalized = normalizeAnswer(answer.normalizedResponse ?? "");
+              const normalized = normalizeAnswer(answer.normalizedResponse);
               if (seenSolutions.has(normalized)) c.error("exercise.duplicate_solution", u.id, `${where}: solutions must produce distinct sentences`);
               seenSolutions.add(normalized);
             }
             const identity = ex.tokens.map((_, index) => index);
             if (evaluate(ex, { type: "token_bank_build", order: identity }).correct) c.warn("exercise.reveals_answer", u.id, `${where}: the full word bank is already a correct sentence`);
+            break;
+          }
+          case "verb_position": {
+            if (ex.tokens.length < 2 || ex.tokens.length > 15) c.error("exercise.verb_position_tokens", u.id, `${where}: use 2 to 15 sentence chunks`);
+            if (!Number.isInteger(ex.finite_verb_index) || ex.finite_verb_index < 0 || ex.finite_verb_index >= ex.tokens.length) {
+              c.error("exercise.verb_position_index", u.id, `${where}: finite_verb_index must identify a sentence chunk`);
+            } else if (!evaluate(ex, { type: "verb_position", tokenIndex: ex.finite_verb_index }).correct) {
+              c.error("exercise.self_check", u.id, `${where}: marked finite verb does not evaluate as correct`);
+            }
             break;
           }
           case "word_order": {
