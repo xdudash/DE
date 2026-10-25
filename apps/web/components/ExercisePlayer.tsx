@@ -114,7 +114,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   };
 
   const ready =
-    ((exercise.type === "single_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
+    ((exercise.type === "single_choice" || exercise.type === "connector_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
@@ -146,6 +146,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         let response: Response;
         switch (exercise.type) {
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
+          case "connector_choice": response = { type: "connector_choice", optionId: choice }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
           case "minimal_pairs": response = { type: "minimal_pairs", optionId: choice }; break;
@@ -204,9 +205,10 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     <section className="exercise" aria-labelledby={`${exercise.id}-prompt`}>
       <p id={`${exercise.id}-prompt`} className="prompt">{inline(tr(text, exercise.prompt))}</p>
 
-      {(exercise.type === "single_choice" || exercise.type === "reply_choice") && (
+      {(exercise.type === "single_choice" || exercise.type === "connector_choice" || exercise.type === "reply_choice") && (
         <>
           {exercise.type === "single_choice" && exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
+          {exercise.type === "connector_choice" && <p lang="de" className="de stem">{exercise.before_de} <span className="connector-gap" aria-label={labels.yourAnswer}>_____</span> {exercise.after_de}</p>}
           {exercise.type === "reply_choice" && <p lang="de" className="de stem reply">{exercise.line_de}</p>}
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
@@ -216,7 +218,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
                 <label key={o.id} className={`option${choice === o.id ? " selected" : ""}${mark}`}>
                   <input type="radio" name={exercise.id} value={o.id} checked={choice === o.id} onChange={() => setChoice(o.id)} />
                   <span className="option-key" aria-hidden="true">{i + 1}</span>
-                  <span className="option-text" lang={o.de ? "de" : undefined}>{o.de ?? tr(text, o.text)}</span>
+                  <span className="option-text" lang={"de" in o && o.de ? "de" : undefined}>{("de" in o && o.de) ? o.de : ("text" in o ? tr(text, o.text) : "")}</span>
                 </label>
               );
             })}

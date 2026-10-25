@@ -501,7 +501,8 @@
             "keyword_build",
             "token_bank_build",
             "verb_position",
-            "negation"
+            "negation",
+            "connector_choice"
           ]
         }
       },
@@ -1262,6 +1263,56 @@
           "required": [
             "tokens",
             "finite_verb_index"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "connector_choice"
+            },
+            "before_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "after_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "de",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "before_de",
+            "after_de",
+            "options"
           ],
           "type": "object"
         }

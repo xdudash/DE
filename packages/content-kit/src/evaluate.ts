@@ -22,7 +22,6 @@ import type {
   TokenBankBuildExercise,
   VerbPositionExercise,
   MultiChoiceExercise,
-  NegationExercise,
   ReplyChoiceExercise,
   TextInputExercise,
   TrueFalseExercise,
@@ -78,6 +77,7 @@ export type Response =
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string }
   | { type: "negation"; text: string }
+  | { type: "connector_choice"; optionId: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -302,6 +302,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
   switch (ex.type) {
     case "single_choice":
       return evalSingleChoice(ex, (response as Extract<Response, { type: "single_choice" }>).optionId);
+    case "connector_choice":
+      return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "connector_choice" }>).optionId);
     case "true_false":
       return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
     case "match_pairs":
