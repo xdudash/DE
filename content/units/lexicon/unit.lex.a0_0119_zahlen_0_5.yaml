@@ -1,7 +1,7 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.lex.a0_0119_zahlen_0_5
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -9,7 +9,7 @@ cefr: A0
 concepts: [concept.lex.numbers_cardinal]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -22,9 +22,13 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_1, de: "null", gloss: "@ex.1", highlight: [] }
-      - { id: ex_2, de: "drei", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "fünf", gloss: "@ex.3", highlight: [] }
+      - { id: ex_1, de: "null, eins, zwei", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Zimmer drei", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Bus Nummer vier", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "fünf Euro", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "eins oder zwei?", gloss: "@ex.5", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -40,184 +44,211 @@ blocks:
         prompt: "@x1.prompt"
         options:
           - { id: a, de: "null", correct: true }
-          - { id: b, de: "acht", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "zwei", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "eins", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "zwei", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x2.prompt"
-        options:
-          - { id: a, de: "fünf", correct: true }
-          - { id: b, de: "drei", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "vier", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x2.expl"
-
-      - id: x3
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        options:
-          - { id: a, de: "drei", correct: true }
-          - { id: b, de: "zwei", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "vier", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x4
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        options:
-          - { id: a, de: "zwei", correct: true }
-          - { id: b, de: "eins", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "drei", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
-      - id: x5
-        type: match_pairs
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x5.prompt"
-        pairs:
-          - { id: a, left_de: "null", right_de: "0" }
-          - { id: b, left_de: "eins", right_de: "1" }
-          - { id: c, left_de: "zwei", right_de: "2" }
-          - { id: d, left_de: "fünf", right_de: "5" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x5.expl"
-
-      - id: x6
         type: number_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x6.prompt"
+        prompt: "@x2.prompt"
+        stem_de: "drei"
         accept: ["3"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x6.expl"
+        explanation: "@x2.expl"
 
-      - id: x7
+      - id: x3
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        pairs:
+          - { id: a, left_de: "null", right_de: "0" }
+          - { id: b, left_de: "eins", right_de: "1" }
+          - { id: c, left_de: "zwei", right_de: "2" }
+          - { id: d, left_de: "drei", right_de: "3" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        statement_de: "„Fünf“ ist die Zahl 5."
+        correct: true
+        wrong_feedback: "@x4.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
         type: spelling_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x7.prompt"
+        prompt: "@x5.prompt"
         accept: ["vier"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["fier"], feedback: "@x5.r1" }
+          - { match: ["vir"], feedback: "@x5.r2" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        options:
+          - { id: a, de: "eins", correct: true }
+          - { id: b, de: "fünf", correct: true }
+          - { id: c, de: "null", correct: true }
+          - { id: d, de: "Zimmer", correct: false, feedback: "@x6.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: word_order
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        tokens: ["zwei", "Bus", "Nummer"]
+        final_punctuation: "."
+        accept: ["Bus Nummer zwei."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
       - id: x8
-        type: true_false
+        type: reply_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x8.prompt"
-        statement_de: "„Null“ ist die Zahl 0."
-        correct: true
+        line_de: "Eins, zwei, …"
+        options:
+          - { id: a, de: "drei!", correct: true }
+          - { id: b, de: "fünf!", correct: false, feedback: "@x8.o2.fb" }
+          - { id: c, de: "null!", correct: false, feedback: "@x8.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
       - id: x9
-        type: true_false
+        type: cloze
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x9.prompt"
-        statement_de: "„Eins“ ist die Zahl 2."
-        correct: false
-        wrong_feedback: "@x9.wrong"
+        text_de: "null, eins, {{0}}, drei, {{1}}, fünf"
+        gaps:
+          - { accept: ["zwei"] }
+          - { accept: ["vier"] }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
       - id: x10
-        type: multi_choice
+        type: single_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x10.prompt"
         options:
-          - { id: a, de: "eins", correct: true }
-          - { id: b, de: "fünf", correct: true }
-          - { id: c, de: "acht", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Bus Nummer fünf", correct: true }
+          - { id: b, de: "Bus Nummer vier", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, de: "Bus Nummer zwei", correct: false, feedback: "@x10.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x10.expl"
 
       - id: x11
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "eins", correct: true }
-          - { id: b, de: "drei", correct: true }
-          - { id: c, de: "fünf", correct: true }
-          - { id: d, de: "zwei", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
-      - id: x12
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x12.prompt"
-        options:
-          - { id: a, de: "vier", correct: true }
-          - { id: b, de: "zwei", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "fünf", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x12.expl"
-
-      - id: x13
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "drei", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "eins", correct: true }
-          - { id: c, de: "vier", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
-
-      - id: x14
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x14.prompt"
-        options:
-          - { id: a, de: "zwei", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "eins", correct: true }
-          - { id: c, de: "null", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
-
-      - id: x15
         type: number_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x15.prompt"
-        accept: ["0"]
+        prompt: "@x11.prompt"
+        stem_de: "fünf"
+        accept: ["5"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        statement_de: "„Eins“ ist die Zahl 2."
+        correct: false
+        wrong_feedback: "@x12.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        stem_de: "Zimmer ___ (3)"
+        accept: ["drei"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["drai"], feedback: "@x13.r1" }
+          - { match: ["Drei"], feedback: "@x13.r2" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        pairs:
+          - { id: a, left_de: "Zimmer vier", right_de: "4" }
+          - { id: b, left_de: "Zimmer fünf", right_de: "5" }
+          - { id: c, left_de: "Zimmer eins", right_de: "1" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        accept: ["fünf"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["funf"], feedback: "@x15.r1" }
+          - { match: ["fünv"], feedback: "@x15.r2" }
         explanation: "@x15.expl"
+
+      - id: x16
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x16.prompt"
+        options:
+          - { id: a, de: "null", correct: true }
+          - { id: b, de: "eins", correct: true }
+          - { id: c, de: "zwei", correct: true }
+          - { id: d, de: "vier", correct: false, feedback: "@x16.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x16.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  pedagogical: { status: pending, notes: "Zwo (phone variant of zwei) is mentioned in the tip but not tested. Zimmer, Bus Nummer and Euro are glossed chunks." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

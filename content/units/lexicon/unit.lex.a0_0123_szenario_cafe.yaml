@@ -1,15 +1,15 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.lex.a0_0123_szenario_cafe
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
 cefr: A0
-concepts: [concept.lex.numbers_cardinal]
+concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -22,9 +22,14 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_1, de: "Zwei Kaffee, bitte.", gloss: "@ex.1", highlight: [] }
-      - { id: ex_2, de: "Das macht zehn Euro.", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "Hier, bitte!", gloss: "@ex.3", highlight: [] }
+      - { id: ex_1, de: "Was möchten Sie?", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Ein Tee, bitte.", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Zwei Kaffee, bitte.", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "Drei Wasser, bitte.", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "Das macht sechs Euro.", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "Hier, bitte!", gloss: "@ex.6", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -33,187 +38,201 @@ blocks:
     title: "@practice"
     items:
       - id: x1
-        type: single_choice
+        type: reply_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x1.prompt"
+        line_de: "Guten Tag! Was möchten Sie?"
         options:
           - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
-          - { id: b, de: "Zwölf Kaffee, bitte.", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Null Kaffee, bitte.", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Das macht zwei Euro.", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: reply_choice
+        type: number_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x2.prompt"
-        line_de: "Guten Tag! Was möchten Sie?"
-        options:
-          - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
-          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+        stem_de: "Das macht neun Euro."
+        accept: ["9"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x2.expl"
 
       - id: x3
-        type: number_input
+        type: match_pairs
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x3.prompt"
-        accept: ["10"]
+        pairs:
+          - { id: a, left_de: "Ein Tee, bitte.", right_de: "1" }
+          - { id: b, left_de: "Zwei Kaffee, bitte.", right_de: "2" }
+          - { id: c, left_de: "Drei Wasser, bitte.", right_de: "3" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x3.expl"
 
       - id: x4
-        type: spelling_input
+        type: true_false
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x4.prompt"
-        accept: ["drei"]
+        statement_de: "„Das macht fünf Euro“ ist der Preis."
+        correct: true
+        wrong_feedback: "@x4.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x4.expl"
 
       - id: x5
-        type: true_false
+        type: gap_fill_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x5.prompt"
-        statement_de: "„Das macht fünf Euro“ bedeutet: That costs five euros."
-        correct: true
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        stem_de: "Zwei Kaffee, ___!"
+        accept: ["bitte"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["danke"], feedback: "@x5.r1" }
+          - { match: ["bite"], feedback: "@x5.r2" }
         explanation: "@x5.expl"
 
       - id: x6
-        type: true_false
+        type: single_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x6.prompt"
-        statement_de: "„Ich möchte drei Tees“ bedeutet: I have three teas."
-        correct: false
-        wrong_feedback: "@x6.wrong"
+        options:
+          - { id: a, de: "Hier, bitte!", correct: true }
+          - { id: b, de: "Was möchten Sie?", correct: false, feedback: "@x6.o2.fb" }
+          - { id: c, de: "Zwei Kaffee!", correct: false, feedback: "@x6.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x6.expl"
 
       - id: x7
-        type: multi_choice
+        type: word_order
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x7.prompt"
-        options:
-          - { id: a, de: "zwei", correct: true }
-          - { id: b, de: "acht", correct: true }
-          - { id: c, de: "Kaffee", correct: false, feedback: "@fb.not_this" }
-          - { id: d, de: "Bitte", correct: false, feedback: "@fb.not_this" }
+        tokens: ["bitte", "Kaffee,", "Zwei"]
+        final_punctuation: "."
+        accept: ["Zwei Kaffee, bitte."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
       - id: x8
-        type: single_choice
+        type: multi_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x8.prompt"
         options:
-          - { id: a, de: "Das macht fünf Euro.", correct: true }
-          - { id: b, de: "Das macht fünf Tage.", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Das macht fünf Uhr.", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Ein Tee, bitte.", correct: true }
+          - { id: b, de: "Drei Wasser, bitte.", correct: true }
+          - { id: c, de: "Tee!", correct: false, feedback: "@x8.o3.fb" }
+          - { id: d, de: "Das macht drei Euro.", correct: false, feedback: "@x8.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
       - id: x9
-        type: single_choice
+        type: cloze
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x9.prompt"
-        options:
-          - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
-          - { id: b, de: "Zwei Kaffee!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Kaffee!", correct: false, feedback: "@fb.not_this" }
+        text_de: "Was möchten Sie? – Zwei Kaffee, {{0}}. – Das {{1}} vier Euro."
+        gaps:
+          - { accept: ["bitte"] }
+          - { accept: ["macht"] }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
       - id: x10
         type: reply_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x10.prompt"
-        line_de: "Das macht acht Euro."
+        line_de: "Danke schön!"
         options:
-          - { id: a, de: "Hier, bitte!", correct: true }
-          - { id: b, de: "Guten Tag!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Bitte schön!", correct: true }
+          - { id: b, de: "Zwei Kaffee, bitte.", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, de: "Was möchten Sie?", correct: false, feedback: "@x10.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x10.expl"
 
       - id: x11
-        type: single_choice
+        type: spelling_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "Bitte schön!", correct: true }
-          - { id: b, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Zwölf!", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        accept: ["acht"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["ach"], feedback: "@x11.r1" }
+          - { match: ["aht"], feedback: "@x11.r2" }
         explanation: "@x11.expl"
 
       - id: x12
-        type: spelling_input
+        type: true_false
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x12.prompt"
-        accept: ["neun"]
+        statement_de: "Man sagt: „Das macht sechs Euros.“"
+        correct: false
+        wrong_feedback: "@x12.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x12.expl"
 
       - id: x13
-        type: number_input
+        type: word_order
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x13.prompt"
-        accept: ["4"]
+        tokens: ["Sie", "möchten", "Was"]
+        final_punctuation: "?"
+        accept: ["Was möchten Sie?"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
 
       - id: x14
-        type: true_false
+        type: single_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x14.prompt"
-        statement_de: "„Zwei Kaffee, bitte“ heißt: Two coffees, please."
-        correct: true
+        options:
+          - { id: a, de: "Ein Tee, bitte.", correct: true }
+          - { id: b, de: "Eins Tee, bitte.", correct: false, feedback: "@x14.o2.fb" }
+          - { id: c, de: "Elf Tee, bitte.", correct: false, feedback: "@x14.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x14.expl"
 
       - id: x15
-        type: multi_choice
+        type: number_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "Danke!", correct: true }
-          - { id: b, de: "Danke schön!", correct: true }
-          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+        stem_de: "Drei Kaffee, bitte."
+        accept: ["3"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  pedagogical: { status: pending, notes: "Was möchten Sie?, Das macht … Euro, Hier, bitte! and Bitte schön are chunks. 'Ein Tee' introduces ein vs eins without the article system; reviewer to confirm that 'zwei Kaffee' (order form) is acceptable at A0." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

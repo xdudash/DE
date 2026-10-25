@@ -1,7 +1,7 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.lex.a0_0121_zahlen_13_20
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -9,7 +9,7 @@ cefr: A0
 concepts: [concept.lex.numbers_cardinal]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -22,9 +22,14 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_1, de: "dreizehn", gloss: "@ex.1", highlight: [] }
-      - { id: ex_2, de: "siebzehn", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "zwanzig", gloss: "@ex.3", highlight: [] }
+      - { id: ex_1, de: "Bus Nummer dreizehn", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "vierzehn Tage", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "sechzehn Euro", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "siebzehn Uhr", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "achtzehn Jahre", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "zwanzig Minuten", gloss: "@ex.6", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -39,196 +44,212 @@ blocks:
         difficulty: 1
         prompt: "@x1.prompt"
         options:
-          - { id: a, de: "dreizehn", correct: true }
-          - { id: b, de: "dreißig", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "zwanzig", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "14", correct: true }
+          - { id: b, de: "40", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "4", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: single_choice
+        type: number_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x2.prompt"
-        options:
-          - { id: a, de: "fünfzehn", correct: true }
-          - { id: b, de: "fünf", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "fünfzig", correct: false, feedback: "@fb.not_this" }
+        stem_de: "achtzehn"
+        accept: ["18"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x2.expl"
 
       - id: x3
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        options:
-          - { id: a, de: "zwanzig", correct: true }
-          - { id: b, de: "zwölf", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "zehn", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x4
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        options:
-          - { id: a, de: "siebzehn", correct: true }
-          - { id: b, de: "sieben", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "siebzig", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
-      - id: x5
         type: match_pairs
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x5.prompt"
+        prompt: "@x3.prompt"
         pairs:
           - { id: a, left_de: "dreizehn", right_de: "13" }
-          - { id: b, left_de: "sechzehn", right_de: "16" }
-          - { id: c, left_de: "achtzehn", right_de: "18" }
+          - { id: b, left_de: "fünfzehn", right_de: "15" }
+          - { id: c, left_de: "neunzehn", right_de: "19" }
           - { id: d, left_de: "zwanzig", right_de: "20" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        statement_de: "„Sechzehn“ ist die Zahl 16."
+        correct: true
+        wrong_feedback: "@x4.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        accept: ["sechzehn"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["sechszehn"], feedback: "@x5.r1" }
+          - { match: ["sechzen"], feedback: "@x5.r2" }
         explanation: "@x5.expl"
 
       - id: x6
-        type: number_input
+        type: multi_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x6.prompt"
-        accept: ["17"]
+        options:
+          - { id: a, de: "dreizehn", correct: true }
+          - { id: b, de: "siebzehn", correct: true }
+          - { id: c, de: "neunzehn", correct: true }
+          - { id: d, de: "zwanzig", correct: false, feedback: "@x6.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x6.expl"
 
       - id: x7
-        type: spelling_input
+        type: word_order
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x7.prompt"
-        accept: ["vierzehn"]
+        tokens: ["fünfzehn", "Bus", "Nummer"]
+        final_punctuation: "."
+        accept: ["Bus Nummer fünfzehn."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
       - id: x8
-        type: spelling_input
+        type: reply_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x8.prompt"
-        accept: ["neunzehn"]
+        line_de: "Achtzehn, neunzehn, …"
+        options:
+          - { id: a, de: "zwanzig!", correct: true }
+          - { id: b, de: "zehn!", correct: false, feedback: "@x8.o2.fb" }
+          - { id: c, de: "neunzig!", correct: false, feedback: "@x8.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
       - id: x9
-        type: true_false
+        type: cloze
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x9.prompt"
-        statement_de: "„Sechzehn“ ist die Zahl 16."
-        correct: true
+        text_de: "dreizehn, {{0}}, fünfzehn, {{1}}, siebzehn"
+        gaps:
+          - { accept: ["vierzehn"] }
+          - { accept: ["sechzehn"] }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
       - id: x10
-        type: true_false
+        type: single_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x10.prompt"
-        statement_de: "„Siebzehn“ ist die Zahl 18."
-        correct: false
-        wrong_feedback: "@x10.wrong"
+        options:
+          - { id: a, de: "um siebzehn Uhr", correct: true }
+          - { id: b, de: "um sieben Uhr", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, de: "um siebzig Uhr", correct: false, feedback: "@x10.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x10.expl"
 
       - id: x11
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "dreizehn", correct: true }
-          - { id: b, de: "vierzehn", correct: true }
-          - { id: c, de: "fünfzehn", correct: true }
-          - { id: d, de: "zwanzig", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
-      - id: x12
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x12.prompt"
-        options:
-          - { id: a, de: "dreizehn", correct: true }
-          - { id: b, de: "vierzehn", correct: true }
-          - { id: c, de: "fünfzehn", correct: true }
-          - { id: d, de: "siebzehn", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x12.expl"
-
-      - id: x13
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "zwanzig", correct: true }
-          - { id: b, de: "achtzehn", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "neunzig", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
-
-      - id: x14
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x14.prompt"
-        options:
-          - { id: a, de: "zwölf", correct: true }
-          - { id: b, de: "vierzehn", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "zehn", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
-
-      - id: x15
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "siebzehn", correct: true }
-          - { id: b, de: "sieben", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "siebzig", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
-
-      - id: x16
         type: number_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
+        prompt: "@x11.prompt"
+        stem_de: "dreizehn"
+        accept: ["13"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        statement_de: "Man schreibt 17 so: „siebenzehn“."
+        correct: false
+        wrong_feedback: "@x12.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        stem_de: "Der Bus kommt in ___ Minuten. (20)"
+        accept: ["zwanzig"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["zwanzich"], feedback: "@x13.r1" }
+          - { match: ["zwanzehn"], feedback: "@x13.r2" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        pairs:
+          - { id: a, left_de: "dreizehn Euro", right_de: "13 €" }
+          - { id: b, left_de: "sechzehn Euro", right_de: "16 €" }
+          - { id: c, left_de: "neunzehn Euro", right_de: "19 €" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        accept: ["siebzehn"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["siebenzehn"], feedback: "@x15.r1" }
+          - { match: ["siebzig"], feedback: "@x15.r2" }
+        explanation: "@x15.expl"
+
+      - id: x16
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
         prompt: "@x16.prompt"
-        accept: ["14"]
+        options:
+          - { id: a, de: "vierzehn", correct: true }
+          - { id: b, de: "fünfzehn", correct: true }
+          - { id: c, de: "zwölf", correct: false, feedback: "@x16.o3.fb" }
+          - { id: d, de: "achtzehn", correct: false, feedback: "@x16.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x16.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  pedagogical: { status: pending, notes: "Uhr, Minuten, Jahre and 'Der Bus kommt in …' are glossed chunks. The -ig ending is pronounced -ich in many regions; reviewer to confirm the wording of the rule." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

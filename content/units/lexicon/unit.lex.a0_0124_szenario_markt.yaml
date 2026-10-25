@@ -1,15 +1,15 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.lex.a0_0124_szenario_markt
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
 cefr: A0
-concepts: [concept.lex.numbers_cardinal]
+concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 9
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -23,8 +23,13 @@ blocks:
     title: "@examples"
     items:
       - { id: ex_1, de: "Was kostet das?", gloss: "@ex.1", highlight: [] }
-      - { id: ex_2, de: "Drei Äpfel, bitte.", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "Danke schön!", gloss: "@ex.3", highlight: [] }
+      - { id: ex_2, de: "Das kostet zwei Euro.", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Drei Äpfel, bitte.", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "Ist das alles?", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "Ja, danke.", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "Danke schön! Tschüss!", gloss: "@ex.6", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -35,187 +40,200 @@ blocks:
       - id: x1
         type: single_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x1.prompt"
         options:
-          - { id: a, de: "Guten Morgen!", correct: true }
-          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Was kostet das?", correct: true }
+          - { id: b, de: "Wie heißt du?", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Ist das alles?", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
       - id: x2
-        type: reply_choice
+        type: number_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x2.prompt"
-        line_de: "Guten Morgen! Was darf es sein?"
-        options:
-          - { id: a, de: "Drei Äpfel, bitte.", correct: true }
-          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+        stem_de: "Das kostet sieben Euro."
+        accept: ["7"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x2.expl"
 
       - id: x3
-        type: single_choice
+        type: match_pairs
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x3.prompt"
-        options:
-          - { id: a, de: "Was kostet das?", correct: true }
-          - { id: b, de: "Wie heißt du?", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Wie spät ist es?", correct: false, feedback: "@fb.not_this" }
+        pairs:
+          - { id: a, left_de: "Was kostet das?", right_de: "Zwei Euro." }
+          - { id: b, left_de: "Ist das alles?", right_de: "Ja, danke." }
+          - { id: c, left_de: "Was möchten Sie?", right_de: "Drei Äpfel, bitte." }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x3.expl"
 
       - id: x4
-        type: match_pairs
+        type: true_false
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x4.prompt"
-        pairs:
-          - { id: a, left_de: "drei", right_de: "3" }
-          - { id: b, left_de: "fünf", right_de: "5" }
-          - { id: c, left_de: "sechs", right_de: "6" }
+        statement_de: "„Was kostet das?“ fragt nach dem Preis."
+        correct: true
+        wrong_feedback: "@x4.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x4.expl"
 
       - id: x5
-        type: number_input
+        type: spelling_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x5.prompt"
-        accept: ["7"]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        accept: ["zehn"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["zen"], feedback: "@x5.r1" }
+          - { match: ["cehn"], feedback: "@x5.r2" }
         explanation: "@x5.expl"
 
       - id: x6
-        type: spelling_input
+        type: reply_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x6.prompt"
-        accept: ["zwei"]
+        line_de: "Guten Morgen! Was möchten Sie?"
+        options:
+          - { id: a, de: "Drei Äpfel, bitte.", correct: true }
+          - { id: b, de: "Tschüss!", correct: false, feedback: "@x6.o2.fb" }
+          - { id: c, de: "Ich heiße Anna.", correct: false, feedback: "@x6.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x6.expl"
 
       - id: x7
-        type: true_false
+        type: word_order
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x7.prompt"
-        statement_de: "„Was kostet das?“ fragt nach dem Preis."
-        correct: true
+        tokens: ["das", "kostet", "Was"]
+        final_punctuation: "?"
+        accept: ["Was kostet das?"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
       - id: x8
-        type: true_false
+        type: multi_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x8.prompt"
-        statement_de: "„Danke schön“ ist eine Frage."
-        correct: false
-        wrong_feedback: "@x8.wrong"
+        options:
+          - { id: a, de: "Guten Morgen!", correct: true }
+          - { id: b, de: "Danke schön!", correct: true }
+          - { id: c, de: "Drei Äpfel, bitte.", correct: true }
+          - { id: d, de: "Äpfel!", correct: false, feedback: "@x8.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
       - id: x9
-        type: multi_choice
+        type: cloze
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x9.prompt"
-        options:
-          - { id: a, de: "Hallo", correct: true }
-          - { id: b, de: "Danke", correct: true }
-          - { id: c, de: "Gute Nacht", correct: false, feedback: "@fb.not_this" }
+        text_de: "Was {{0}} das? – Das kostet drei Euro. – Hier, {{1}}!"
+        gaps:
+          - { accept: ["kostet"] }
+          - { accept: ["bitte"] }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
       - id: x10
-        type: single_choice
+        type: reply_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x10.prompt"
+        line_de: "Ist das alles?"
         options:
-          - { id: a, de: "Hier, bitte!", correct: true }
-          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+          - { id: a, de: "Ja, danke.", correct: true }
+          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@x10.o2.fb" }
+          - { id: c, de: "Hallo zusammen!", correct: false, feedback: "@x10.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x10.expl"
 
       - id: x11
-        type: reply_choice
+        type: gap_fill_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x11.prompt"
-        line_de: "Danke schön! Auf Wiedersehen!"
-        options:
-          - { id: a, de: "Auf Wiedersehen!", correct: true }
-          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Wie bitte?", correct: false, feedback: "@fb.not_this" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        stem_de: "Drei ___, bitte."
+        accept: ["Äpfel"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Apfel"], feedback: "@x11.r1" }
+          - { match: ["Aepfel"], feedback: "@x11.r2" }
         explanation: "@x11.expl"
 
       - id: x12
-        type: spelling_input
+        type: true_false
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x12.prompt"
-        accept: ["Danke schön", "Danke"]
+        statement_de: "„Danke schön“ ist eine Frage."
+        correct: false
+        wrong_feedback: "@x12.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x12.expl"
 
       - id: x13
-        type: single_choice
+        type: match_pairs
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "zehn", correct: true }
-          - { id: b, de: "zwei", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "zwölf", correct: false, feedback: "@fb.not_this" }
+        pairs:
+          - { id: a, left_de: "zwei Euro", right_de: "2 €" }
+          - { id: b, left_de: "fünf Euro", right_de: "5 €" }
+          - { id: c, left_de: "zwölf Euro", right_de: "12 €" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
 
       - id: x14
-        type: true_false
+        type: single_choice
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x14.prompt"
-        statement_de: "„Guten Morgen“ sagt man um 9 Uhr."
-        correct: true
+        options:
+          - { id: a, de: "Danke schön! Tschüss!", correct: true }
+          - { id: b, de: "Was kostet das?", correct: false, feedback: "@x14.o2.fb" }
+          - { id: c, de: "Guten Morgen!", correct: false, feedback: "@x14.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x14.expl"
 
       - id: x15
-        type: single_choice
+        type: number_input
         objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
+        concepts: [concept.lex.numbers_cardinal, concept.prag.greetings_dach, concept.prag.goodbyes]
         difficulty: 1
         prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "Drei Äpfel, bitte.", correct: true }
-          - { id: b, de: "Drei Apfel, bitte.", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "Zwölf Äpfel, bitte.", correct: false, feedback: "@fb.not_this" }
+        stem_de: "Vier Äpfel, bitte."
+        accept: ["4"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  pedagogical: { status: pending, notes: "Was kostet das?, Das kostet …, Ist das alles? and Ja, danke are chunks. Äpfel (plural with umlaut) appears as a chunk; noun plurals are taught later (concept.morph.noun_plural)." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
