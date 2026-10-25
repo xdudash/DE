@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.prag.greetings_dach
 lang: ru
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: Приветствия в Германии, Австрии и Швейцарии
-  summary: Guten Tag, Hallo, Grüß Gott (юг и Австрия), Grüezi (Швейцария), Servus, Moin — какое приветствие подходит для какого региона и ситуации.
+  title: "Приветствия в немецкоязычных странах"
+  summary: "Hallo — обычное приветствие. Guten Tag — вежливое приветствие днём. Оба используют в Германии, Австрии и Швейцарии."
+  pattern.scope: "Приветствия при встрече с людьми днём: с друзьями и с незнакомцами."
+  pattern.limits: "Региональные приветствия, как Grüß Gott и Grüezi, на уровне A0 не рассматриваются."
+  ex.hallo: "Hallo (привет): для друзей и хорошо знакомых людей."
+  ex.guten_tag: "Guten Tag (добрый день): вежливо, днём, с кем угодно."
+  ex.hi: "Hi: разговорное слово из английского, в основном молодые люди."

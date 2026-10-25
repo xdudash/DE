@@ -1,13 +1,26 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Canonical concept (A0, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+# Regional note: the greetings used in Germany, Austria and Switzerland are shared; Grüß Gott and Grüezi are not taught yet.
 schema: deutschgo.concept/1
 id: concept.prag.greetings_dach
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: regional
 domain: pragmatics
 title: "@title"
 summary: "@summary"
-cefr: { introduced: A1, expected_mastery: A1 }
-relations:
-  - { type: depends_on, target: concept.prag.du_vs_sie }
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "Hallo / Guten Tag / Hi (Begrüßung)"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_hallo, de: "Hallo", gloss: "@ex.hallo", highlight: [], source: src.deutschgo_original }
+  - { id: ex_guten_tag, de: "Guten Tag", gloss: "@ex.guten_tag", highlight: [], source: src.deutschgo_original }
+  - { id: ex_hi, de: "Hi", gloss: "@ex.hi", highlight: [], source: src.deutschgo_original }
+relations: []
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check regional greetings before any Austria/Switzerland-specific lesson." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

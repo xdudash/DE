@@ -1,0 +1,14 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.goodbyes
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Saying goodbye"
+  summary: "Tschüss is informal, Auf Wiedersehen is formal. Bis bald means see you soon."
+  pattern.scope: "Goodbyes with friends, with people you do not know well, and with teachers, bosses and officials."
+  pattern.limits: "Only the three common goodbyes are covered at A0; Ciao is only mentioned as informal."
+  ex.tschuess: "Tschüss (bye): informal, with friends and people of your age."
+  ex.auf_wiedersehen: "Auf Wiedersehen (goodbye): formal, with teachers, bosses and strangers."
+  ex.bis_bald: "Bis bald (see you soon): informal, when you expect to meet again soon."
