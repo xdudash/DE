@@ -23,6 +23,14 @@ describe("normalizeAnswer", () => {
   });
 });
 
+describe("case_choice", () => {
+  const exercise = { id: "x_case", type: "case_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich helfe", after_de: "Mann.", options: [{ id: "a", de: "der", correct: false }, { id: "b", de: "den", correct: false }, { id: "c", de: "dem", correct: true }] };
+  it("evaluates the authored dative form and rejects a distractor", () => {
+    assert.equal(evaluate(exercise, { type: "case_choice", optionId: "c" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "case_choice", optionId: "b" }).correct, false);
+  });
+});
+
 describe("connector_choice", () => {
   const exercise = { id: "x_connector", type: "connector_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich möchte kommen,", after_de: "ich bin krank.", options: [{ id: "a", de: "und", correct: false }, { id: "b", de: "aber", correct: true }, { id: "c", de: "denn", correct: false }] };
   it("evaluates connector selection and rejects unknown option ids", () => {

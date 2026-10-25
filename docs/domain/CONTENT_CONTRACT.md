@@ -64,6 +64,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `transform` | `source_de`, `accept` sentences | accepted answers evaluate correct; source not already an answer |
 | `negation` | `source_de`, `accept` negated sentences | accepted answers evaluate correct, use `nicht` or a form of `kein`, and differ from the positive source |
 | `connector_choice` | `before_de`, `after_de`, connector options | exactly one authored connector evaluates as correct, with unique ids and feedback for distractors |
+| `case_choice` | `before_de`, `after_de`, case form options | exactly one authored form evaluates as correct, with unique ids and feedback for distractors |
 | `keyword_build` | `keywords`, `accept` sentences | each accepted sentence evaluates correct and uses every prompt keyword |
 | `token_bank_build` | `tokens`, `solutions` (token index sequences), `final_punctuation` | each solution uses unique valid token positions, evaluates correct, and does not duplicate another sentence |
 | `verb_position` | `tokens`, `finite_verb_index` | the marked verb index identifies a sentence chunk and evaluates as correct |
