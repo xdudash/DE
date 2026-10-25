@@ -126,7 +126,7 @@ Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_P
 - **Goal:** the P2 exit criterion "across devices". **State:** implemented on `feat/dg-024-global-experience`; not yet merged or deployed.
 - **Changes:** `GET /api/progress` (no-store, as learner under RLS) returning account events; client merges by event id; explicit import of device history after sign-in (DATA_AND_PRIVACY); fix stale comments in `lib/device-state.ts`.
 - **Result:** RLS-scoped, no-store progress read; import re-evaluates responses on the server, dates evidence at import time, writes idempotently, and rejects mixed-validity batches before any write. Home, Practice, lessons, map, and You use the shared account/device stream. Home has a reasoned next step and DACH missions reuse existing reply-choice content. Older local answers without their response are counted and left on the device.
-- **Checks:** `npm run check` passed locally; PostgreSQL migration/RLS and attempt/import integration checks passed in CI. First Playwright run had 61 passes and six stale UI expectations; fixes are on this branch and the rerun is pending. **Approval:** none beyond Q1.
+- **Checks:** `npm run check` passed locally; hosted CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe after correcting stale UI expectations and journey-test assumptions. **Approval:** none beyond Q1.
 
 ### DG-025 Session refresh
 Refresh token in its own HttpOnly cookie, rotation on use, sign-out revokes. **Acceptance:** a 2-hour session keeps saving; refresh failure shows "signed out", never silent loss. **Depends:** DG-026.
