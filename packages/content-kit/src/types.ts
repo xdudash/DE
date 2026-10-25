@@ -192,6 +192,13 @@ export interface NegationExercise extends ExerciseBase {
   accept: string[];
 }
 
+export interface ConnectorChoiceExercise extends ExerciseBase {
+  type: "connector_choice";
+  before_de: string;
+  after_de: string;
+  options: { id: string; de: string; correct: boolean; feedback?: L10nRef }[];
+}
+
 /** Free-text answers checked against an accepted list (ADR-0023 batch 1). */
 export type TextInputType = "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input";
 
@@ -257,7 +264,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise | NegationExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise | NegationExercise | ConnectorChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }
