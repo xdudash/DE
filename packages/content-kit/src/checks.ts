@@ -378,7 +378,7 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             break;
           }
           case "negation": {
-            const negationWord = /\\b(?:nicht|kein\\w*)\\b/iu;
+            const negationWord = /\b(?:nicht|kein\w*)\b/iu;
             for (const answer of ex.accept) {
               if (!evaluate(ex, { type: "negation", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted negation "${answer}" does not evaluate as correct`);
               if (!negationWord.test(answer)) c.error("exercise.negation_missing", u.id, `${where}: accepted answer "${answer}" must use nicht or a form of kein`);
