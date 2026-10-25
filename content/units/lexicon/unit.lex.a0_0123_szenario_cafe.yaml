@@ -1,0 +1,219 @@
+# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+schema: deutschgo.unit/1
+id: unit.lex.a0_0123_szenario_cafe
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.lex.numbers_cardinal]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 10
+objectives:
+  - { id: obj_main, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_1, de: "Zwei Kaffee, bitte.", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Das macht zehn Euro.", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Hier, bitte!", gloss: "@ex.3", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
+          - { id: b, de: "Zwölf Kaffee, bitte.", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Null Kaffee, bitte.", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        line_de: "Guten Tag! Was möchten Sie?"
+        options:
+          - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
+          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: number_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        accept: ["10"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        accept: ["drei"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        statement_de: "„Das macht fünf Euro“ bedeutet: That costs five euros."
+        correct: true
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        statement_de: "„Ich möchte drei Tees“ bedeutet: I have three teas."
+        correct: false
+        wrong_feedback: "@x6.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        options:
+          - { id: a, de: "zwei", correct: true }
+          - { id: b, de: "acht", correct: true }
+          - { id: c, de: "Kaffee", correct: false, feedback: "@fb.not_this" }
+          - { id: d, de: "Bitte", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        options:
+          - { id: a, de: "Das macht fünf Euro.", correct: true }
+          - { id: b, de: "Das macht fünf Tage.", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Das macht fünf Uhr.", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        options:
+          - { id: a, de: "Zwei Kaffee, bitte.", correct: true }
+          - { id: b, de: "Zwei Kaffee!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Kaffee!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        line_de: "Das macht acht Euro."
+        options:
+          - { id: a, de: "Hier, bitte!", correct: true }
+          - { id: b, de: "Guten Tag!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "Bitte schön!", correct: true }
+          - { id: b, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Zwölf!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        accept: ["neun"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: number_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        accept: ["4"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        statement_de: "„Zwei Kaffee, bitte“ heißt: Two coffees, please."
+        correct: true
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "Danke!", correct: true }
+          - { id: b, de: "Danke schön!", correct: true }
+          - { id: c, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+review:
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

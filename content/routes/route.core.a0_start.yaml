@@ -1,4 +1,5 @@
-# First route: the A0 start. One unit so far (alphabet). Draft until the unit is human-reviewed (DG-007).
+# First route: the A0 start. Pronunciation, greetings, numbers and first scenarios. Draft until the units are human-reviewed (DG-007).
+# Order is not yet the plan order of A0_SUBTOPICS_PROPOSAL: greetings and numbers come after the pronunciation steps for now.
 schema: deutschgo.route/1
 id: route.core.a0_start
 version: 0.1.0
@@ -18,3 +19,12 @@ steps:
   - { concept: concept.pron.sch_st_sp }
   - { concept: concept.pron.r_and_final_er }
   - { unit: unit.pron.a0_0106_eszett }
+  - { unit: unit.lex.a0_0113_begruessung_hallo_guten_tag }
+  - { unit: unit.lex.a0_0114_guten_morgen_abend }
+  - { unit: unit.lex.a0_0115_tschuess_auf_wiedersehen }
+  - { unit: unit.lex.a0_0119_zahlen_0_5 }
+  - { unit: unit.lex.a0_0120_zahlen_6_12 }
+  - { unit: unit.lex.a0_0121_zahlen_13_20 }
+  - { unit: unit.lex.a0_0122_szenario_kurs }
+  - { unit: unit.lex.a0_0123_szenario_cafe }
+  - { unit: unit.lex.a0_0124_szenario_markt }
