@@ -23,6 +23,14 @@ describe("normalizeAnswer", () => {
   });
 });
 
+describe("preposition_choice", () => {
+  const exercise = { id: "x_prep", type: "preposition_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich warte", after_de: "den Bus.", options: [{ id: "a", de: "auf", correct: true }, { id: "b", de: "an", correct: false }, { id: "c", de: "mit", correct: false }] };
+  it("evaluates the authored preposition and rejects distractors", () => {
+    assert.equal(evaluate(exercise, { type: "preposition_choice", optionId: "a" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "preposition_choice", optionId: "b" }).correct, false);
+  });
+});
+
 describe("case_choice", () => {
   const exercise = { id: "x_case", type: "case_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich helfe", after_de: "Mann.", options: [{ id: "a", de: "der", correct: false }, { id: "b", de: "den", correct: false }, { id: "c", de: "dem", correct: true }] };
   it("evaluates the authored dative form and rejects a distractor", () => {
