@@ -9,7 +9,7 @@ cefr: A0
 concepts: [concept.pron.long_short_vowels]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 9
+estimated_minutes: 10
 objectives:
   - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
@@ -30,6 +30,8 @@ blocks:
       - { id: ex_6, de: "das Tier", gloss: "@ex.6", highlight: [] }
       - { id: ex_7, de: "das Kind", gloss: "@ex.7", highlight: [] }
       - { id: ex_8, de: "der Name", gloss: "@ex.8", highlight: [] }
+      - { id: ex_9, de: "Ich trinke Tee.", gloss: "@ex.9", highlight: [] }
+      - { id: ex_10, de: "Mein Name ist Tom.", gloss: "@ex.10", highlight: [] }
 
   - { type: explanation, id: b_tip, body: "@tip" }
 
@@ -39,20 +41,6 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x2
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x2.prompt"
-        accept: ["Mann"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Man"], feedback: "@x2.r1" }
-        explanation: "@x2.expl"
-
       - id: x1
         type: single_choice
         objective: obj_main
@@ -66,18 +54,46 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
-      - id: x4
+      - id: x2
         type: match_pairs
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x4.prompt"
+        prompt: "@x2.prompt"
         pairs:
           - { id: a, left_de: "Mann", right_de: "kurzes a" }
-          - { id: b, left_de: "Tag", right_de: "langes a" }
-          - { id: c, left_de: "Bett", right_de: "kurzes e" }
-          - { id: d, left_de: "Tee", right_de: "langes e" }
+          - { id: b, left_de: "Name", right_de: "langes a" }
+          - { id: c, left_de: "Kind", right_de: "kurzes i" }
+          - { id: d, left_de: "Tier", right_de: "langes i" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        statement_de: "In „Bett“ ist das e kurz."
+        correct: true
+        wrong_feedback: "@x3.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        stem_de: "Das Be___ ist neu."
+        accept: ["tt"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["t"], feedback: "@x4.r1" }
+          - { match: ["et"], feedback: "@x4.r2" }
         explanation: "@x4.expl"
 
       - id: x5
@@ -95,31 +111,20 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
 
-      - id: x3
-        type: true_false
+      - id: x6
+        type: spelling_input
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x3.prompt"
-        statement_de: "In „Bett“ ist das e kurz."
-        correct: true
-        wrong_feedback: "@x3.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x8
-        type: cloze
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x8.prompt"
-        text_de: "Ma{{0}} · Bi{{1}}e · We{{2}}er"
-        gaps:
-          - { accept: ["nn"] }
-          - { accept: ["tt"] }
-          - { accept: ["tt"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
+        prompt: "@x6.prompt"
+        accept: ["Tee"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Te"], feedback: "@x6.r1" }
+          - { match: ["Tea"], feedback: "@x6.r2" }
+        explanation: "@x6.expl"
 
       - id: x7
         type: reply_choice
@@ -127,128 +132,121 @@ blocks:
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
         prompt: "@x7.prompt"
-        line_de: "Ist das a in „Name“ lang oder kurz?"
+        line_de: "Wie heißt das auf Deutsch: „animal“?"
         options:
-          - { id: a, de: "Lang.", correct: true }
-          - { id: b, de: "Kurz.", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "Es gibt kein a.", correct: false, feedback: "@x7.o3.fb" }
+          - { id: a, de: "Tier.", correct: true }
+          - { id: b, de: "Tir.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Tür.", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
-      - id: x10
-        type: spelling_input
+      - id: x8
+        type: word_order
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x10.prompt"
-        accept: ["Tee"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Te"], feedback: "@x10.r1" }
-          - { match: ["Tea"], feedback: "@x10.r2" }
-        explanation: "@x10.expl"
+        prompt: "@x8.prompt"
+        tokens: ["Tee", "trinke", "Ich"]
+        final_punctuation: "."
+        accept: ["Ich trinke Tee."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
 
       - id: x9
-        type: true_false
+        type: single_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
         prompt: "@x9.prompt"
-        statement_de: "In „Tier“ ist das i kurz."
-        correct: false
-        wrong_feedback: "@x9.wrong"
+        stem_de: "Bett · Beet"
+        options:
+          - { id: a, de: "Beet", correct: true }
+          - { id: b, de: "Bett", correct: false, feedback: "@x9.o2.fb" }
+          - { id: c, text: "@x9.o3", correct: false, feedback: "@x9.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x9.expl"
 
-      - id: x6
-        type: gap_fill_input
+      - id: x10
+        type: transform
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x6.prompt"
-        stem_de: "Be___"
-        accept: ["tt"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["t"], feedback: "@x6.r1" }
-        explanation: "@x6.expl"
+        prompt: "@x10.prompt"
+        source_de: "Mein Nahme ist Tom."
+        accept: ["Mein Name ist Tom."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        statement_de: "In „mit“ ist das i lang."
+        correct: false
+        wrong_feedback: "@x11.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: cloze
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        text_de: "Ka{{0}}e · Mi{{1}}e · We{{2}}er"
+        gaps:
+          - { accept: ["tz"] }
+          - { accept: ["tt"] }
+          - { accept: ["tt"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
 
       - id: x13
-        type: multi_choice
+        type: single_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
         prompt: "@x13.prompt"
         options:
-          - { id: a, de: "Name", correct: true }
-          - { id: b, de: "Tee", correct: true }
-          - { id: c, de: "Tier", correct: true }
-          - { id: d, de: "Mann", correct: false, feedback: "@x13.o4.fb" }
-          - { id: e, de: "Bitte", correct: false, feedback: "@x13.o5.fb" }
+          - { id: a, de: "Kind", correct: true }
+          - { id: b, de: "Kint", correct: false, feedback: "@x13.o2.fb" }
+          - { id: c, de: "Kiend", correct: false, feedback: "@x13.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
 
-      - id: x11
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "Kind", correct: true }
-          - { id: b, de: "Kino", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "Tier", correct: false, feedback: "@x11.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
       - id: x14
-        type: spelling_input
+        type: reply_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
         prompt: "@x14.prompt"
-        accept: ["Name"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Nahme"], feedback: "@x14.r1" }
-          - { match: ["Namme"], feedback: "@x14.r2" }
+        line_de: "Ich glaube, in „Mann“ ist das a lang."
+        options:
+          - { id: a, de: "Nein, das a ist kurz: nn.", correct: true }
+          - { id: b, de: "Ja, das a ist lang.", correct: false, feedback: "@x14.o2.fb" }
+          - { id: c, de: "Ja, wie in „Name“.", correct: false, feedback: "@x14.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x14.expl"
 
       - id: x15
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "Zahl", correct: true }
-          - { id: b, de: "Stadt", correct: false, feedback: "@x15.o2.fb" }
-          - { id: c, de: "Katze", correct: false, feedback: "@x15.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
-
-      - id: x12
         type: gap_fill_input
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x12.prompt"
-        stem_de: "Ich trinke ___."
-        accept: ["Tee"]
+        prompt: "@x15.prompt"
+        stem_de: "die Za___"
+        accept: ["hl"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["Te"], feedback: "@x12.r1" }
-        explanation: "@x12.expl"
+          - { match: ["l"], feedback: "@x15.r1" }
+          - { match: ["ll"], feedback: "@x15.r2" }
+        explanation: "@x15.expl"
 
 review:
-  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Check that every example follows the spelling rule and that the 'usually' caveat is enough for A0." }
-  pedagogical: { status: pending }
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Check that every example follows the spelling rule and that the 'usually' caveat (mit, das) is enough for A0." }
+  pedagogical: { status: pending, notes: "Chunks glossed in the examples or prompts, not taught as grammar yet: Ich trinke, Mein Name ist, Das … ist neu, Wie heißt das auf Deutsch?, ich glaube, Nein/Ja. Final devoicing (Tag, Kind) is only mentioned." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

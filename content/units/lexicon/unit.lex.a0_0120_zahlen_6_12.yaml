@@ -22,12 +22,12 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_1, de: "sechs Uhr", gloss: "@ex.1", highlight: [] }
+      - { id: ex_1, de: "Es ist sechs Uhr.", gloss: "@ex.1", highlight: [] }
       - { id: ex_2, de: "sieben Tage", gloss: "@ex.2", highlight: [] }
-      - { id: ex_3, de: "acht Euro", gloss: "@ex.3", highlight: [] }
-      - { id: ex_4, de: "Zimmer zehn", gloss: "@ex.4", highlight: [] }
-      - { id: ex_5, de: "elf Spieler", gloss: "@ex.5", highlight: [] }
-      - { id: ex_6, de: "zwölf Monate", gloss: "@ex.6", highlight: [] }
+      - { id: ex_3, de: "Bus Nummer acht", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "elf Spieler", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "Ein Jahr hat zwölf Monate.", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "neun – nein", gloss: "@ex.6", highlight: [] }
 
   - { type: explanation, id: b_tip, body: "@tip" }
 
@@ -37,32 +37,6 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x4
-        type: true_false
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        statement_de: "„Elf“ ist die Zahl 11."
-        correct: true
-        wrong_feedback: "@x4.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
-      - id: x3
-        type: match_pairs
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        pairs:
-          - { id: a, left_de: "sechs", right_de: "6" }
-          - { id: b, left_de: "acht", right_de: "8" }
-          - { id: c, left_de: "zehn", right_de: "10" }
-          - { id: d, left_de: "elf", right_de: "11" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
       - id: x1
         type: single_choice
         objective: obj_main
@@ -70,185 +44,199 @@ blocks:
         difficulty: 1
         prompt: "@x1.prompt"
         options:
-          - { id: a, de: "7", correct: true }
-          - { id: b, de: "6", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "9", correct: false, feedback: "@x1.o3.fb" }
+          - { id: a, de: "neun Uhr", correct: true }
+          - { id: b, de: "nein Uhr", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "acht Uhr", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
-      - id: x5
+      - id: x2
+        type: cloze
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        text_de: "sechs, {{0}}, acht, {{1}}, zehn"
+        gaps:
+          - { accept: ["sieben", "Sieben"] }
+          - { accept: ["neun", "Neun"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        options:
+          - { id: a, de: "elf", correct: true }
+          - { id: b, de: "zwölf", correct: true }
+          - { id: c, de: "neun", correct: false, feedback: "@x3.o3.fb" }
+          - { id: d, de: "acht", correct: false, feedback: "@x3.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
         type: spelling_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x5.prompt"
+        prompt: "@x4.prompt"
         accept: ["sieben"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["siben"], feedback: "@x5.r1" }
-          - { match: ["ziben", "zieben"], feedback: "@x5.r2" }
+          - { match: ["siben"], feedback: "@x4.r1" }
+          - { match: ["seiben"], feedback: "@x4.r2" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        statement_de: "„Neun“ und „nein“ sind dasselbe Wort."
+        correct: false
+        wrong_feedback: "@x5.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
 
-      - id: x2
-        type: number_input
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x2.prompt"
-        stem_de: "zwölf"
-        accept: ["12"]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x2.expl"
-
-      - id: x8
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x8.prompt"
-        line_de: "Neun, zehn, …"
-        options:
-          - { id: a, de: "elf!", correct: true }
-          - { id: b, de: "zwölf!", correct: false, feedback: "@x8.o2.fb" }
-          - { id: c, de: "sieben!", correct: false, feedback: "@x8.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
-
-      - id: x9
-        type: cloze
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x9.prompt"
-        text_de: "sechs, {{0}}, acht, {{1}}, zehn"
-        gaps:
-          - { accept: ["sieben"] }
-          - { accept: ["neun"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
-
-      - id: x7
-        type: word_order
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x7.prompt"
-        tokens: ["zehn", "Nummer", "Zimmer"]
-        final_punctuation: "."
-        accept: ["Zimmer Nummer zehn."]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
-
       - id: x6
-        type: multi_choice
+        type: match_pairs
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
         prompt: "@x6.prompt"
-        options:
-          - { id: a, de: "elf", correct: true }
-          - { id: b, de: "zwölf", correct: true }
-          - { id: c, de: "neun", correct: false, feedback: "@x6.o3.fb" }
-          - { id: d, de: "acht", correct: false, feedback: "@x6.o4.fb" }
+        pairs:
+          - { id: a, left_de: "sechs", right_de: "6" }
+          - { id: b, left_de: "sieben", right_de: "7" }
+          - { id: c, left_de: "acht", right_de: "8" }
+          - { id: d, left_de: "neun", right_de: "9" }
+          - { id: e, left_de: "elf", right_de: "11" }
+          - { id: f, left_de: "zwölf", right_de: "12" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x6.expl"
 
-      - id: x10
-        type: single_choice
+      - id: x7
+        type: reply_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x10.prompt"
+        prompt: "@x7.prompt"
+        line_de: "Wie viel Uhr ist es?"
         options:
-          - { id: a, de: "elf", correct: true }
-          - { id: b, de: "zwölf", correct: false, feedback: "@x10.o2.fb" }
-          - { id: c, de: "zehn", correct: false, feedback: "@x10.o3.fb" }
+          - { id: a, de: "Es ist zehn Uhr.", correct: true }
+          - { id: b, de: "Es ist elf Uhr.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Es ist zehn Euro.", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x10.expl"
+        explanation: "@x7.expl"
 
-      - id: x13
+      - id: x8
         type: gap_fill_input
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x13.prompt"
-        stem_de: "Ein Jahr hat ___ Monate. (12)"
+        prompt: "@x8.prompt"
+        stem_de: "Es ist ___ Uhr."
         accept: ["zwölf"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["zwelf"], feedback: "@x13.r1" }
-          - { match: ["zwölv"], feedback: "@x13.r2" }
-        explanation: "@x13.expl"
+          - { match: ["zwelf"], feedback: "@x8.r1" }
+          - { match: ["zwölv"], feedback: "@x8.r2" }
+          - { match: ["zwoelf"], feedback: "@x8.r3" }
+        explanation: "@x8.expl"
 
-      - id: x12
-        type: true_false
+      - id: x9
+        type: single_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x12.prompt"
-        statement_de: "„Zwölf“ ist die Zahl 20."
-        correct: false
-        wrong_feedback: "@x12.wrong"
+        prompt: "@x9.prompt"
+        options:
+          - { id: a, de: "elf Spieler", correct: true }
+          - { id: b, de: "zwölf Spieler", correct: false, feedback: "@x9.o2.fb" }
+          - { id: c, de: "einzehn Spieler", correct: false, feedback: "@x9.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x12.expl"
+        explanation: "@x9.expl"
 
-      - id: x14
-        type: match_pairs
+      - id: x10
+        type: word_order
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x14.prompt"
-        pairs:
-          - { id: a, left_de: "sechs Uhr", right_de: "6:00" }
-          - { id: b, left_de: "neun Uhr", right_de: "9:00" }
-          - { id: c, left_de: "zwölf Uhr", right_de: "12:00" }
+        prompt: "@x10.prompt"
+        tokens: ["zwölf Monate", "hat", "Ein Jahr"]
+        final_punctuation: "."
+        accept: ["Ein Jahr hat zwölf Monate."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
-
-      - id: x15
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        accept: ["neun"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["noin", "neune"], feedback: "@x15.r1" }
-        explanation: "@x15.expl"
+        explanation: "@x10.expl"
 
       - id: x11
-        type: number_input
-        objective: obj_main
-        concepts: [concept.lex.numbers_cardinal]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        stem_de: "acht"
-        accept: ["8"]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
-      - id: x16
         type: multi_choice
         objective: obj_main
         concepts: [concept.lex.numbers_cardinal]
         difficulty: 1
-        prompt: "@x16.prompt"
+        prompt: "@x11.prompt"
         options:
           - { id: a, de: "sechs", correct: true }
           - { id: b, de: "acht", correct: true }
-          - { id: c, de: "zehn", correct: true }
-          - { id: d, de: "sieben", correct: false, feedback: "@x16.o4.fb" }
+          - { id: c, de: "zwölf", correct: true }
+          - { id: d, de: "sieben", correct: false, feedback: "@x11.o4.fb" }
+          - { id: e, de: "elf", correct: false, feedback: "@x11.o5.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x16.expl"
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: time_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        stem_de: "sieben Uhr"
+        accept: ["7:00", "07:00", "7.00", "07.00"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        statement_de: "sechs + sechs = zwölf"
+        correct: true
+        wrong_feedback: "@x13.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: number_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        stem_de: "Bus Nummer acht"
+        accept: ["8"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: transform
+        objective: obj_main
+        concepts: [concept.lex.numbers_cardinal]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        source_de: "6:00"
+        accept: ["sechs Uhr", "Es ist sechs Uhr"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending, notes: "Uhr, Tage, Monate and Spieler are glossed chunks; the clock is taught in A0.02." }
+  pedagogical: { status: pending, notes: "Chunks glossed in the examples: Es ist … Uhr, Wie viel Uhr ist es?, Tage, Bus Nummer, Spieler, Ein Jahr hat … Monate. Full hours only; the clock is taught in A0.02. 'einzehn' is an invented form used as the typical error of building 11 from eins + zehn (S10); reviewer to confirm it is a real learner error." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
