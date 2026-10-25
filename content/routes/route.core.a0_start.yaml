@@ -14,4 +14,7 @@ steps:
   - { unit: unit.pron.a0_0107_vowels_aei }
   - { unit: unit.pron.a0_0108_vowels_ou }
   - { unit: unit.pron.a0_0109_double_vowels_ie }
+  - { concept: concept.pron.ch_sounds }
+  - { concept: concept.pron.sch_st_sp }
+  - { concept: concept.pron.r_and_final_er }
   - { unit: unit.pron.a0_0106_eszett }
