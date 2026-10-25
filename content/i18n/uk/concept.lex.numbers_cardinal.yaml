@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.lex.numbers_cardinal
 lang: uk
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: Кількісні числівники
-  summary: Лічба від нуля до мільйонів, зокрема німецький порядок десятків і одиниць (einundzwanzig), а також читання цін і телефонних номерів.
+  title: "Числа від 0 до 20"
+  summary: "Числа від нуля до двадцяти. Кожне — одне слово, а числа від 13 до 19 закінчуються на -zehn."
+  pattern.scope: "Числівники від 0 до 20, записані словами і цифрами."
+  pattern.limits: "Числа від 21 і далі вивчаємо пізніше, у A0.02."
+  ex.sieben: "sieben (сім)."
+  ex.zwoelf: "zwölf (дванадцять): ö пишеться з двома крапками."
+  ex.dreizehn: "dreizehn (тринадцять): числа від 13 до 19 закінчуються на -zehn."

@@ -1,11 +1,26 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Canonical concept (A0 numbers 0–20, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+# Numbers 21 and above are not covered here; they are planned as part of A0.02.
 schema: deutschgo.concept/1
 id: concept.lex.numbers_cardinal
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: lexeme_sense
 domain: numbers
 title: "@title"
 summary: "@summary"
-cefr: { introduced: A1, expected_mastery: A1 }
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "null, eins, zwei … zwanzig (Grundzahlen 0–20)"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_sieben, de: "sieben", gloss: "@ex.sieben", highlight: [], source: src.deutschgo_original }
+  - { id: ex_zwoelf, de: "zwölf", gloss: "@ex.zwoelf", highlight: [], source: src.deutschgo_original }
+  - { id: ex_dreizehn, de: "dreizehn", gloss: "@ex.dreizehn", highlight: [], source: src.deutschgo_original }
+relations: []
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check the spelling of 16 and 17 (sechzehn, siebzehn) in review." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
