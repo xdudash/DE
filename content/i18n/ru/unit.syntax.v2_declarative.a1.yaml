@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: ru
-based_on_version: 1.1.0
+based_on_version: 1.2.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -143,3 +143,11 @@ strings:
   x.categorize_v2.category.middle: "Середина · подлежащее или детали"
   x.categorize_v2.item.verb: "Спрягаемый глагол остаётся на позиции 2, сразу после первого элемента."
   x.categorize_v2.explanation: "Heute — первый элемент, arbeite — спрягаемый глагол на позиции 2, а ich von zu Hause стоят в середине."
+
+  x.listening_v2.prompt: "Прослушайте предложение и выберите его значение."
+  x.listening_v2.a: "Сегодня я работаю из дома."
+  x.listening_v2.b: "Завтра я работаю дома."
+  x.listening_v2.b.feedback: "*Heute* означает «сегодня», а не «завтра»."
+  x.listening_v2.c: "Я работаю из дома каждый день."
+  x.listening_v2.c.feedback: "В предложении сказано *heute* («сегодня»), а не «каждый день»."
+  x.listening_v2.explanation: "*Heute* — первый элемент, а *arbeite*, спрягаемый глагол, стоит на позиции 2."

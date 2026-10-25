@@ -182,4 +182,11 @@ describe("batch 1 types (ADR-0023)", () => {
     assert.equal(evaluate(ex, { type: "reply_choice", optionId: "a" }).correct, true);
     assert.equal(evaluate(ex, { type: "reply_choice", optionId: "b" }).correct, false);
   });
+  it("listening_choice: evaluates the selected interpretation", () => {
+    const ex = { ...meta, id: "listen", type: "listening_choice", audio_text_de: "Heute arbeite ich.", options: [
+      { id: "a", text: "@meaning.correct", correct: true }, { id: "b", text: "@meaning.wrong", correct: false }] } as import("../src/types.ts").ListeningChoiceExercise;
+    assert.equal(evaluate(ex, { type: "listening_choice", optionId: "a" }).correct, true);
+    assert.equal(evaluate(ex, { type: "listening_choice", optionId: "b" }).correct, false);
+    assert.throws(() => evaluate(ex, { type: "listening_choice", optionId: "missing" }), EvaluationError);
+  });
 });

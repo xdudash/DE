@@ -27,3 +27,5 @@ Current routes are prefixed with one of `en`, `uk`, `ru`, or `ar`. Static screen
 Each saved record is keyed by `storyId:paragraphIndex:tokenIndex`, so a lemma used in multiple sentences keeps each sense/context separate. A repeated save of that exact occurrence is idempotent. A first save is due after one minute for the pilot; a remembered response schedules 1, 3, 7, 16, or 35 days; Again resets to ten minutes. Removing a card deletes only that context record. Browser storage errors are reported in the UI.
 
 `content/reading/stories.json` is the original text set. `apps/web/lib/reading.ts` loads and checks its minimal structure at build/render time. `apps/web/lib/vocabulary.ts` owns local state operations; `ReadingLibrary.tsx` implements the three screens. Before account sync ships, saved vocabulary needs the lexicon/sense contract (DG-050) and a progress API migration. The pilot does not create misleading account progress events.
+
+Listening choice is now implemented in the exercise player, including German browser speech, replay, localized meaning choices, and a transcript fallback.

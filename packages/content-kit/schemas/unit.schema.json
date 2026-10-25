@@ -487,6 +487,7 @@
             "true_false",
             "match_pairs",
             "categorize",
+            "listening_choice",
             "reply_choice",
             "article_input",
             "form_input",
@@ -667,6 +668,54 @@
           "required": [
             "categories",
             "items"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "listening_choice"
+            },
+            "audio_text_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "text": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "audio_text_de",
+            "options"
           ],
           "type": "object"
         },

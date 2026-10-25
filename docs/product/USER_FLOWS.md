@@ -100,3 +100,5 @@
 
 ## Required cross-flow states
 Loading, empty, success, validation error, recoverable failure, offline/unsynced, local-only, signed-out, import-ready, and synced states where relevant. Provide accessible keyboard navigation and mobile layouts. Never claim persistence or sync unless implemented and tested.
+
+Listening exercise: listen to a German sentence, replay on demand, choose its meaning, then review the correct choice and explanation. When browser speech is unavailable, the German transcript is shown.

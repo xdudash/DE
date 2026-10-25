@@ -4,7 +4,7 @@
 # pedagogically reviewed by a qualified human. See docs/quality/CONTENT_REVIEW.md.
 schema: deutschgo.unit/1
 id: unit.syntax.v2_declarative.a1
-version: 1.1.0
+version: 1.2.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -252,6 +252,20 @@ blocks:
           - { id: place, de: "von zu Hause", categoryId: middle }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x.categorize_v2.explanation"
+
+      - id: x_listening_v2
+        type: listening_choice
+        objective: obj_identify
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 1
+        prompt: "@x.listening_v2.prompt"
+        audio_text_de: "Heute arbeite ich von zu Hause."
+        options:
+          - { id: a, text: "@x.listening_v2.a", correct: true }
+          - { id: b, text: "@x.listening_v2.b", correct: false, feedback: "@x.listening_v2.b.feedback" }
+          - { id: c, text: "@x.listening_v2.c", correct: false, feedback: "@x.listening_v2.c.feedback" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.listening_v2.explanation"
 
       - id: x_limits
         type: single_choice
