@@ -20,6 +20,7 @@ import type {
   MinimalPairsExercise,
   KeywordBuildExercise,
   TokenBankBuildExercise,
+  VerbPositionExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
   TextInputExercise,
@@ -76,7 +77,8 @@ export type Response =
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string }
   | { type: "keyword_build"; text: string }
-  | { type: "token_bank_build"; order: number[] };
+  | { type: "token_bank_build"; order: number[] }
+  | { type: "verb_position"; tokenIndex: number };
 
 export interface GapResult {
   index: number;
@@ -333,6 +335,13 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "keyword_build" }>).text);
     case "token_bank_build":
       return evalTokenBankBuild(ex, (response as Extract<Response, { type: "token_bank_build" }>).order);
+    case "verb_position": {
+      const tokenIndex = (response as Extract<Response, { type: "verb_position" }>).tokenIndex;
+      if (!Number.isInteger(tokenIndex) || tokenIndex < 0 || tokenIndex >= ex.tokens.length) {
+        throw new EvaluationError(`verb_position ${ex.id}: token index is outside the sentence`);
+      }
+      return result(ex, tokenIndex === ex.finite_verb_index, String(tokenIndex), tokenIndex === ex.finite_verb_index ? undefined : matchRule(ex.feedback.rules, ex.tokens[tokenIndex] ?? ""));
+    }
   }
 }
 
