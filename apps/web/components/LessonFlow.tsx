@@ -29,6 +29,7 @@ import { ExercisePlayer, tr, type ExerciseHandle, type PlayerText } from "./Exer
 import { Icon } from "./Icon";
 import { useMotivation } from "./Motivation";
 import { SaveStatus } from "./SaveStatus";
+import { readLessonCheckpoint, writeLessonCheckpoint, type LessonCheckpoint } from "../lib/device-state";
 
 export type FlowStep =
   | { kind: "learn"; id: string; content: ReactNode }
@@ -45,6 +46,24 @@ export interface LessonFlowProps {
   exit?: { href: string; label: string };
 }
 
+function restoreSteps(ids: string[], source: FlowStep[]): FlowStep[] | null {
+  const byId = new Map(source.map((step) => [step.id, step]));
+  const restored: FlowStep[] = [];
+  for (const id of ids) {
+    const exact = byId.get(id);
+    if (exact) { restored.push(exact); continue; }
+    if (id.endsWith("~retry")) {
+      const original = byId.get(id.slice(0, -6));
+      if (original?.kind === "exercise") {
+        restored.push({ ...original, id, exerciseId: original.exercise.id, retry: true });
+        continue;
+      }
+    }
+    return null;
+  }
+  return restored.length ? restored : null;
+}
+
 function buzz(pattern: number | number[]) {
   try {
     if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(pattern);
@@ -58,8 +77,12 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
   const { attempts } = useProgress();
   const motivation = useMotivation();
   const playerRef = useRef<ExerciseHandle>(null);
+  const resumed = useRef(false);
+  const [restored, setRestored] = useState(false);
   const [queue, setQueue] = useState<FlowStep[]>(steps);
   const [index, setIndex] = useState(0);
+  const [progressOffset, setProgressOffset] = useState(0);
+  const [sessionTotal, setSessionTotal] = useState(steps.length);
   const [checked, setChecked] = useState<EvaluationResult | null>(null);
   const [ready, setReady] = useState(false);
   const [answers, setAnswers] = useState<SessionAnswer[]>([]);
@@ -67,12 +90,57 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
   const [finishedAt, setFinishedAt] = useState<number | null>(null);
   // Practice when the lesson was already finished on this device before this run began.
   const [practice, setPractice] = useState(false);
+  const saveCheckpoint = useCallback((remaining: FlowStep[], sessionAnswers: SessionAnswer[], isPractice: boolean, sessionStartedAt: number, completedSteps: number, totalSteps: number) => {
+    if (remaining.length === 0) { writeLessonCheckpoint(null); return; }
+    const checkpoint: LessonCheckpoint = {
+      unitId: unit.id,
+      contentVersion: unit.version,
+      href: typeof window === "undefined" ? `/${lang}/learn/${unit.id}` : window.location.pathname,
+      title: unit.title,
+      remainingStepIds: remaining.map((item) => item.id),
+      answers: sessionAnswers,
+      completedSteps,
+      totalSteps,
+      elapsedMs: Math.max(0, Date.now() - sessionStartedAt),
+      practice: isPractice,
+      updatedAt: Date.now(),
+    };
+    writeLessonCheckpoint(checkpoint);
+  }, [unit.id, unit.version, unit.title, lang]);
+
   useEffect(() => {
+    const checkpoint = readLessonCheckpoint(unit.id, unit.version);
+    const remaining = checkpoint ? restoreSteps(checkpoint.remainingStepIds, steps) : null;
+    if (checkpoint && remaining) {
+      resumed.current = true;
+      setQueue(remaining);
+      setAnswers(checkpoint.answers);
+      setProgressOffset(checkpoint.completedSteps);
+      setSessionTotal(checkpoint.totalSteps);
+      setStartedAt(Date.now() - checkpoint.elapsedMs);
+      setPractice(checkpoint.practice);
+    } else {
+      if (checkpoint) writeLessonCheckpoint(null);
+      setProgressOffset(0);
+      setSessionTotal(steps.length);
+      saveCheckpoint(steps, [], false, Date.now(), 0, steps.length);
+    }
+    setRestored(true);
+  }, [unit.id, unit.version, steps, saveCheckpoint]);
+
+  useEffect(() => {
+    if (!restored || resumed.current) return;
     if (forcePractice) { setPractice(true); return; }
     const answered = new Set(attempts.filter((attempt) => attempt.unitId === unit.id).map((attempt) => attempt.exerciseId));
     const ids = steps.flatMap((s) => (s.kind === "exercise" ? [s.exercise.id] : []));
     setPractice(ids.length > 0 && ids.every((id) => answered.has(id)));
-  }, [unit.id, steps, attempts, forcePractice]);
+  }, [unit.id, steps, attempts, forcePractice, restored]);
+
+  useEffect(() => {
+    if (restored && !resumed.current && index === 0 && checked === null) {
+      saveCheckpoint(queue, answers, practice, startedAt, progressOffset, Math.max(sessionTotal, progressOffset + queue.length));
+    }
+  }, [restored, queue, answers, practice, startedAt, index, checked, saveCheckpoint, progressOffset, sessionTotal]);
 
   const done = index >= queue.length;
   const step = done ? undefined : queue[index];
@@ -95,34 +163,46 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
     const result = playerRef.current?.check();
     if (!result) return;
     setChecked(result);
-    setAnswers((a) => [...a, { exerciseId: step.exercise.id, correct: result.correct, retry: !!step.retry }]);
-    setQueue((q) => requeueIfWrong(q, index, result.correct));
+    const nextAnswers = [...answers, { exerciseId: step.exercise.id, correct: result.correct, retry: !!step.retry }];
+    const nextQueue = requeueIfWrong(queue, index, result.correct);
+    const nextTotal = Math.max(sessionTotal, progressOffset + nextQueue.length);
+    setAnswers(nextAnswers);
+    setQueue(nextQueue);
+    setSessionTotal(nextTotal);
+    saveCheckpoint(nextQueue.slice(index + 1), nextAnswers, practice, startedAt, progressOffset + index + 1, nextTotal);
     play(result.correct ? "right" : "wrong");
     buzz(result.correct ? 20 : [40, 60, 40]);
-  }, [step, checked, outOfHearts, index]);
+  }, [step, checked, outOfHearts, index, answers, queue, saveCheckpoint, practice, startedAt, progressOffset, sessionTotal]);
 
   const advance = useCallback(() => {
     setChecked(null);
     setReady(false);
-    setIndex((i) => i + 1);
+    const nextIndex = index + 1;
+    setIndex(nextIndex);
+    saveCheckpoint(queue.slice(nextIndex), answers, practice, startedAt, progressOffset + nextIndex, Math.max(sessionTotal, progressOffset + queue.length));
     window.scrollTo({ top: 0 });
-  }, []);
+  }, [index, queue, answers, practice, startedAt, saveCheckpoint, progressOffset, sessionTotal]);
 
   function restart() {
+    const restartedAt = Date.now();
     setQueue(steps);
     setIndex(0);
     setChecked(null);
     setReady(false);
     setAnswers([]);
-    setStartedAt(Date.now());
+    setStartedAt(restartedAt);
+    setProgressOffset(0);
+    setSessionTotal(steps.length);
     setFinishedAt(null);
     // Going through a finished lesson again is practice.
     setPractice(true);
+    saveCheckpoint(steps, [], true, restartedAt, 0, steps.length);
     window.scrollTo({ top: 0 });
   }
 
   useEffect(() => {
     if (done && finishedAt === null) {
+      writeLessonCheckpoint(null);
       setFinishedAt(Date.now());
       play("arrive");
     }
@@ -150,11 +230,11 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  const total = queue.length;
-  const position = Math.min(index, total);
+  const total = sessionTotal;
+  const position = Math.min(progressOffset + index, total);
 
   return (
-    <div className="flow">
+      <div className={`flow${restored ? "" : " flow--restoring"}`} aria-busy={!restored}>
       <header className="flow-top">
         <Link href={exit?.href ?? `/${lang}`} className="flow-close" aria-label={exit?.label ?? msg("flow.close")}>
           <Icon name="close" size={22} />

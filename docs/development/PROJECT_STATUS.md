@@ -1,15 +1,15 @@
 # Project Status
 
-Last updated: 2026-10-25 (DG-024 merged as #77; DG-048 and P4 reading/vocabulary pilot on open PR #78)
+Last updated: 2026-10-25 (PR #78 merged as 8e1b0e5; device-local lesson resume is in progress)
 
 ## Current phase
-**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`); PR #78 is open against `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
 
 ## Current branch result (DG-048 follow-up)
 - PR #77 is merged to `main` as `25548d5`; CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe.
 - DG-024 adds authenticated `GET /api/progress`, server-re-evaluated idempotent device-history import, and shared progress across Home, Practice, lessons, the map, and You.
 - Home explains the next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream. Account progress has eligible/legacy import counts and a JSON download; full GDPR export/audit is still DG-028.
-- PR #78 is open and mergeable. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard.
+- PR #78 is merged as `8e1b0e5`. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard. CI passed all four job groups, including Playwright and axe.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
 - The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
@@ -24,7 +24,7 @@ Last updated: 2026-10-25 (DG-024 merged as #77; DG-048 and P4 reading/vocabulary
 - Learner-data schema (`supabase/migrations` 0001, 0002): RLS on every table, GDPR export function, cascade deletion. Hosted project `deutschgo` (EU) exists; 0001 is recorded as applied, 0002 (push subscriptions) is not recorded.
 - Interface localization (`packages/i18n`, DG-014): en pivot, uk, ru, ar preview (RTL).
 - Web app: start screen and plan, lesson as a guided run, knowledge map with search, practice list, learner area, delete device data, installable PWA with offline reading, phone layout with 44px targets (DG-016…DG-019).
-- Learner loop: DG-021 review scheduling, DG-022 shared event identity and retry outbox, and DG-024 account read/import across Home, Practice, lessons, map, and profile. DG-048's Review Room is proposed in open PR #78.
+- Learner loop: DG-021 review scheduling, DG-022 shared event identity and retry outbox, and DG-024 account read/import across Home, Practice, lessons, map, and profile. DG-048's Review Room is implemented in merged PR #78.
 - Sign-in code (DG-015, ADR-0013): Google/Apple via Supabase Auth with PKCE, HttpOnly cookie, 16+ confirmation, account deletion, attempts saved to the account when signed in. **Not configured**: needs the owner steps in [ACCOUNTS_SETUP.md](./ACCOUNTS_SETUP.md).
 - Session refresh (DG-025, #52, ADR-0013): access and refresh tokens in separate HttpOnly cookies, rotation at app start, one retry of a rejected attempt after rotation. Needs the same owner setup as sign-in.
 - Motivation (DG-020, ADR-0014/0015): signed-in XP/streak use merged account/device evidence; hearts remain device-local; daily push reminder code. **Push not configured**: [REMINDERS_SETUP.md](./REMINDERS_SETUP.md).
@@ -64,4 +64,8 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Complete hosted CI review for open PR #78, then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Finish the device-local interrupted-lesson checkpoint on `feat/dg-065-resume-lesson`. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+
+## Next implementation block — resume an interrupted lesson
+- Device-local checkpoint stores the remaining step order, retry queue, session answers, and active elapsed time. Home offers a localized **Continue lesson** card; completion and device-data clearing remove the checkpoint.
+- Checkpoint does not sync across devices. The feature is being developed on `feat/dg-065-resume-lesson`.
