@@ -477,4 +477,8 @@ export const ru: Catalog = {
   "practice.speakingTitle": "Разговорная практика",
   "practice.speakingDescription": "Репетируйте ответ по-немецки и при желании записывайте его локально.",
   "practice.speakingCta": "Открыть разговорную практику",
+  "progress.activityTitle": "Активность за последние 7 дней",
+  "progress.activityTotal": "Ответов за неделю: {count}",
+  "progress.activityDay": "Ответов: {count}",
+  "progress.activityEmpty": "Здесь появятся ответы за последние 7 дней.",
 };

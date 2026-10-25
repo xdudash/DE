@@ -482,6 +482,10 @@ export const en = {
   "practice.speakingTitle": "Speaking workshop",
   "practice.speakingDescription": "Rehearse a real-life German response with optional local recording.",
   "practice.speakingCta": "Open speaking practice",
+  "progress.activityTitle": "Activity over the last 7 days",
+  "progress.activityTotal": "{count} answers this week",
+  "progress.activityDay": "{count} answers",
+  "progress.activityEmpty": "Your answers from the last 7 days will appear here.",
 } as const;
 
 export type MessageKey = keyof typeof en;

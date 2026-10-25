@@ -489,4 +489,8 @@ export const ar: Catalog = {
   "practice.speakingTitle": "تدريب المحادثة",
   "practice.speakingDescription": "تدرّب على إجابة ألمانية وسجّلها محليًا إذا رغبت.",
   "practice.speakingCta": "افتح تدريب المحادثة",
+  "progress.activityTitle": "النشاط خلال آخر 7 أيام",
+  "progress.activityTotal": "إجابات هذا الأسبوع: {count}",
+  "progress.activityDay": "عدد الإجابات: {count}",
+  "progress.activityEmpty": "ستظهر هنا إجابات الأيام السبعة الماضية.",
 };
