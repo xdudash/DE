@@ -2,7 +2,7 @@
  * Semantic (cross-file) checks that JSON Schema cannot express.
  * Input: an already schema-validated ContentRepo. Pure; no I/O.
  */
-import { answersEqual, evaluate, findOrderFor } from "./evaluate.ts";
+import { answersEqual, evaluate, findOrderFor, normalizeAnswer } from "./evaluate.ts";
 import { findPrerequisiteCycles, prerequisitesOf } from "./graph.ts";
 import { collectKeys } from "./l10n.ts";
 import type { Block, ContentRepo, Exercise, Issue, Review, Route, Unit } from "./types.ts";
@@ -295,6 +295,17 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             }
             const correctIds = ex.options.filter((o) => o.correct).map((o) => o.id);
             if (correctIds.length > 0 && !evaluate(ex, { type: "multi_choice", optionIds: correctIds }).correct) c.error("exercise.self_check", u.id, `${where}: the correct set does not evaluate as correct`);
+            break;
+          }
+          case "keyword_build": {
+            if (ex.keywords.length < 2) c.error("exercise.keyword_count", u.id, `${where}: at least two keywords are required`);
+            const keywords = new Set(ex.keywords.map(normalizeAnswer));
+            if (keywords.size !== ex.keywords.length) c.error("exercise.keyword_duplicate", u.id, `${where}: keywords must be unique`);
+            for (const answer of ex.accept) {
+              if (!evaluate(ex, { type: "keyword_build", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted answer does not evaluate as correct`);
+              const normalized = normalizeAnswer(answer);
+              for (const keyword of ex.keywords) if (!normalized.includes(normalizeAnswer(keyword))) c.error("exercise.keyword_missing", u.id, `${where}: accepted answer "${answer}" does not use keyword "${keyword}"`);
+            }
             break;
           }
           case "word_order": {
