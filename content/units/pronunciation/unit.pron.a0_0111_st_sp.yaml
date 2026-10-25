@@ -1,0 +1,253 @@
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+schema: deutschgo.unit/1
+id: unit.pron.a0_0111_st_sp
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.pron.sch_st_sp]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 9
+objectives:
+  - { id: obj_main, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_1, de: "die Straße", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "die Stadt", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "die Stunde", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "der Sport", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "sprechen", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "das Fenster", gloss: "@ex.6", highlight: [] }
+      - { id: ex_7, de: "ist", gloss: "@ex.7", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "Straße", correct: true }
+          - { id: b, de: "ist", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Post", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        accept: ["Straße", "Strasse"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Schtraße", "Schtrasse"], feedback: "@x2.r1" }
+          - { match: ["Strase"], feedback: "@x2.r2" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        statement_de: "In „Fenster“ spricht man scht."
+        correct: false
+        wrong_feedback: "@x3.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: "Sport", right_de: "schp" }
+          - { id: b, left_de: "Stadt", right_de: "scht" }
+          - { id: c, left_de: "Fenster", right_de: "s-t" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "sprechen", correct: true }
+          - { id: b, de: "Stunde", correct: true }
+          - { id: c, de: "spielen", correct: true }
+          - { id: d, de: "ist", correct: false, feedback: "@x5.o4.fb" }
+          - { id: e, de: "Wespe", correct: false, feedback: "@x5.o5.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        stem_de: "___ort"
+        accept: ["Sp"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Schp"], feedback: "@x6.r1" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        line_de: "Wie schreibt man „Stadt“?"
+        options:
+          - { id: a, de: "S – t – a – d – t.", correct: true }
+          - { id: b, de: "S – c – h – t – a – d – t.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "S – t – a – t.", correct: false, feedback: "@x7.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: cloze
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        text_de: "{{0}}raße · {{1}}ielen · Fen{{2}}er"
+        gaps:
+          - { accept: ["St"] }
+          - { accept: ["sp"] }
+          - { accept: ["st"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        options:
+          - { id: a, de: "Wespe", correct: true }
+          - { id: b, de: "Sport", correct: false, feedback: "@x9.o2.fb" }
+          - { id: c, de: "sprechen", correct: false, feedback: "@x9.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        accept: ["sprechen"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["schprechen"], feedback: "@x10.r1" }
+          - { match: ["sprechn"], feedback: "@x10.r2" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        statement_de: "„Stunde“ beginnt mit dem Laut scht."
+        correct: true
+        wrong_feedback: "@x11.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        stem_de: "___aß"
+        accept: ["Sp"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Schp"], feedback: "@x12.r1" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "Fenster", correct: true }
+          - { id: b, de: "ist", correct: true }
+          - { id: c, de: "Post", correct: true }
+          - { id: d, de: "Straße", correct: false, feedback: "@x13.o4.fb" }
+          - { id: e, de: "Sport", correct: false, feedback: "@x13.o5.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        accept: ["Stadt"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Stat"], feedback: "@x14.r1" }
+          - { match: ["Schtadt"], feedback: "@x14.r2" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.sch_st_sp]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "Spaß", correct: true }
+          - { id: b, de: "Stadt", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Schule", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+review:
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Check the regional note in the concept (northern s-t/s-p) and the Cyrillic approximations шт/шп in uk/ru." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

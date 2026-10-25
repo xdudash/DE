@@ -1,9 +1,15 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.ch_sounds
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: The two ch sounds
-  summary: ich-sound after e, i, ä, ö, ü, l, r, n (ich, nicht) and ach-sound after a, o, u, au (Buch, auch). Neither is the Slavic х in all positions.
+  title: "The two ch sounds"
+  summary: "ch after e, i, ä, ö, ü, ei, eu, l, r or n is the soft ich-sound (ich, Milch); after a, o, u or au it is the ach-sound from the back of the throat (acht, Buch). The vowel before ch decides."
+  pattern.scope: "ch after a vowel or l, r, n inside or at the end of a word; sch as one sound."
+  pattern.limits: "ch at the start of a word (Chef, China, Chor) and the ending -chs (sechs) are taught later. In Switzerland the ach-sound is common after all vowels."
+  ex.ich: "ich (I): ich-sound after i."
+  ex.milch: "Milch (milk): ich-sound after l."
+  ex.acht: "acht (eight): ach-sound after a."
+  ex.buch: "Buch (book): ach-sound after u."

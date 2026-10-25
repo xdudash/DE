@@ -1,11 +1,26 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Canonical concept (A0 track, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
 schema: deutschgo.concept/1
 id: concept.pron.sch_st_sp
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: pronunciation
 domain: pronunciation
 title: "@title"
 summary: "@summary"
-cefr: { introduced: A1, expected_mastery: A2 }
+cefr: { introduced: A0, expected_mastery: A2 }
+pattern:
+  schema_de: "sch = ein Laut · St-/Sp- am Wortanfang = scht-/schp- · st/sp im Wort = s-t/s-p"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_schule, de: "Schule", gloss: "@ex.schule", highlight: [], source: src.deutschgo_original }
+  - { id: ex_strasse, de: "Straße", gloss: "@ex.strasse", highlight: [], source: src.deutschgo_original }
+  - { id: ex_sport, de: "Sport", gloss: "@ex.sport", highlight: [], source: src.deutschgo_original }
+  - { id: ex_fenster, de: "Fenster", gloss: "@ex.fenster", highlight: [], source: src.deutschgo_original }
+relations: []
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check the regional note: in parts of northern Germany st and sp at the start are said s-t and s-p." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

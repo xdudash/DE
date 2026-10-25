@@ -1,9 +1,15 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.r_and_final_er
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: The German r and the ending -er
-  summary: r before a vowel is pronounced in the throat (Reise); after a vowel and in -er it becomes a vowel-like sound (Mutter, Uhr).
+  title: "The German r and the ending -er"
+  summary: "r before a vowel is a consonant, usually made in the throat (rot, drei). After a vowel at the end of a syllable, and in the ending -er, it becomes a vowel-like sound close to a short, soft a (Uhr, Vater, aber)."
+  pattern.scope: "r at the start of a word or before a vowel; r after a long vowel at the end of a syllable; the unstressed ending -er."
+  pattern.limits: "The difference between a throat r and a rolled r is not tested in writing. A rolled tongue-tip r is common in Bavaria, Austria and Switzerland and is also correct."
+  ex.rot: "rot (red): r at the start is a consonant."
+  ex.drei: "drei (three): r before a vowel is a consonant."
+  ex.vater: "Vater (father): -er at the end sounds like a soft a."
+  ex.uhr: "Uhr (clock): r after the vowel at the end is soft."

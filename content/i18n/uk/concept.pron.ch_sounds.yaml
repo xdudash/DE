@@ -1,9 +1,15 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.ch_sounds
 lang: uk
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: Два звуки ch
-  summary: М'який ich-Laut після e, i, ä, ö, ü, l, r, n (ich, nicht) і твердий ach-Laut після a, o, u, au (Buch, auch). Жоден із них не дорівнює українському «х» у всіх позиціях.
+  title: "Два звуки ch"
+  summary: "ch після e, i, ä, ö, ü, ei, eu, l, r або n — м'який ich-звук (ich, Milch); після a, o, u чи au — ach-звук із глибини горла (acht, Buch). Вирішує голосний перед ch."
+  pattern.scope: "ch після голосного або l, r, n усередині чи в кінці слова; sch як один звук."
+  pattern.limits: "ch на початку слова (Chef, China, Chor) і закінчення -chs (sechs) вивчаємо пізніше. У Швейцарії ach-звук поширений після всіх голосних."
+  ex.ich: "ich (я): ich-звук після i."
+  ex.milch: "Milch (молоко): ich-звук після l."
+  ex.acht: "acht (вісім): ach-звук після a."
+  ex.buch: "Buch (книжка): ach-звук після u."

@@ -1,9 +1,15 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.sch_st_sp
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: sch, and st / sp at the start of a word
-  summary: sch is one sound (Schule); at the beginning of a word or stem, st and sp are pronounced scht- and schp- (Straße, sprechen).
+  title: "sch, and st / sp at the start of a word"
+  summary: "sch is one sound (Schule). At the start of a word or word stem, st and sp are said scht- and schp- (Straße, Sport); inside or at the end of a word they are said as written (Fenster, ist)."
+  pattern.scope: "sch in any position; st and sp at the start of a word or stem versus inside or at the end."
+  pattern.limits: "Compounds (Bahnsteig, Aussprache), where st or sp starts the second part, are taught later. In parts of northern Germany st and sp at the start are said s-t and s-p."
+  ex.schule: "Schule (school): sch is one sound."
+  ex.strasse: "Straße (street): St- at the start is said scht."
+  ex.sport: "Sport (sport): Sp- at the start is said schp."
+  ex.fenster: "Fenster (window): st inside the word is said s-t."

@@ -1,9 +1,15 @@
 schema: deutschgo.l10n/1
 entity: concept.pron.sch_st_sp
 lang: ru
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: sch, а также st / sp в начале слова
-  summary: sch — один звук (Schule); в начале слова или корня st и sp произносятся как scht- и schp- (Straße, sprechen).
+  title: "sch, а также st / sp в начале слова"
+  summary: "sch — один звук (Schule). В начале слова или основы st и sp произносят как шт- и шп- (Straße, Sport); внутри или в конце слова — как написано (Fenster, ist)."
+  pattern.scope: "sch в любой позиции; st и sp в начале слова или основы в отличие от середины или конца."
+  pattern.limits: "Сложные слова (Bahnsteig, Aussprache), где st или sp начинает вторую часть, изучаем позже. В части Северной Германии st и sp в начале произносят как с-т и с-п."
+  ex.schule: "Schule (школа): sch — один звук."
+  ex.strasse: "Straße (улица): St- в начале звучит как шт."
+  ex.sport: "Sport (спорт): Sp- в начале звучит как шп."
+  ex.fenster: "Fenster (окно): st внутри слова звучит как с-т."
