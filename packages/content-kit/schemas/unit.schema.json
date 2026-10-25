@@ -503,7 +503,8 @@
             "verb_position",
             "negation",
             "connector_choice",
-            "case_choice"
+            "case_choice",
+            "preposition_choice"
           ]
         }
       },
@@ -1323,6 +1324,56 @@
           "properties": {
             "type": {
               "const": "case_choice"
+            },
+            "before_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "after_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "de",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "before_de",
+            "after_de",
+            "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "preposition_choice"
             },
             "before_de": {
               "$ref": "common.schema.json#/$defs/de"
