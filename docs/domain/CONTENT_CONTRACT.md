@@ -62,6 +62,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `word_order` | `tokens` (≤9 chunks, display order), `accept` sentences, `final_punctuation` | every accepted sentence is buildable from the tokens and evaluates correct; rules don't shadow answers; tokens not pre-solved |
 | `cloze` | `text_de` with `{{0}}…`, per-gap `accept` + rules | placeholders contiguous; gap rules don't shadow answers |
 | `transform` | `source_de`, `accept` sentences | accepted answers evaluate correct; source not already an answer |
+| `separable_verb` | `source_de`, `finite_form_de`, `prefix_de`, `accept` sentences | accepted answers evaluate correct and contain the finite form and separated prefix |
 | `negation` | `source_de`, `accept` negated sentences | accepted answers evaluate correct, use `nicht` or a form of `kein`, and differ from the positive source |
 | `connector_choice` | `before_de`, `after_de`, connector options | exactly one authored connector evaluates as correct, with unique ids and feedback for distractors |
 | `case_choice` | `before_de`, `after_de`, case form options | exactly one authored form evaluates as correct, with unique ids and feedback for distractors |

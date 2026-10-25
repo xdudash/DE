@@ -504,7 +504,8 @@
             "negation",
             "connector_choice",
             "case_choice",
-            "preposition_choice"
+            "preposition_choice",
+            "separable_verb"
           ]
         }
       },

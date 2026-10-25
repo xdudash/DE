@@ -123,7 +123,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "token_bank_build" && order.length > 0) ||
     (exercise.type === "verb_position" && verbPosition !== null) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    ((exercise.type === "transform" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
+    ((exercise.type === "transform" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
@@ -163,6 +163,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "verb_position": response = { type: "verb_position", tokenIndex: verbPosition ?? -1 }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
+          case "separable_verb": response = { type: "separable_verb", text: free }; break;
           case "negation": response = { type: "negation", text: free }; break;
           case "keyword_build": response = { type: "keyword_build", text: free }; break;
           default: response = { type: exercise.type, text: free }; break;
@@ -534,13 +535,14 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {(exercise.type === "transform" || exercise.type === "negation" || exercise.type === "error_correction" || exercise.type === "keyword_build" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
+      {(exercise.type === "transform" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "error_correction" || exercise.type === "keyword_build" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
         <>
-          {exercise.type === "transform" || exercise.type === "error_correction" || exercise.type === "negation" ? (
+          {exercise.type === "transform" || exercise.type === "error_correction" || exercise.type === "negation" || exercise.type === "separable_verb" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
           ) : exercise.type !== "keyword_build" && exercise.stem_de ? (
             <p lang="de" className="de stem">{exercise.stem_de}</p>
           ) : null}
+          {exercise.type === "separable_verb" && <p className="muted small de separable-parts" lang="de">{exercise.finite_form_de} + {exercise.prefix_de}</p>}
           {exercise.type === "keyword_build" && <ul className="keyword-build-bank" aria-label={labels.yourAnswer}>{exercise.keywords.map((keyword, index) => <li key={index} lang="de">{keyword}</li>)}</ul>}
           <input
             className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
