@@ -80,6 +80,7 @@ export type Response =
   | { type: "connector_choice"; optionId: string }
   | { type: "case_choice"; optionId: string }
   | { type: "preposition_choice"; optionId: string }
+  | { type: "separable_verb"; text: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -341,6 +342,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalCloze(ex, (response as Extract<Response, { type: "cloze" }>).gaps);
     case "transform":
       return evalTransform(ex, (response as Extract<Response, { type: "transform" }>).text);
+    case "separable_verb":
+      return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "separable_verb" }>).text);
     case "negation":
       return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "negation" }>).text);
     case "keyword_build":
