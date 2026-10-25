@@ -486,4 +486,9 @@ export const uk: Catalog = {
   "map.allLevels": "Усі рівні",
   "map.allTopics": "Усі теми",
   "map.plannedFilter": "Заплановані теми",
+  "map.categoryFilter": "Тип теми",
+  "map.allCategories": "Усі типи",
+  "map.grammarCategory": "Граматика",
+  "map.wordsCategory": "Слова",
+  "map.otherCategory": "Інше",
 };
