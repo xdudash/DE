@@ -500,7 +500,8 @@
             "time_input",
             "keyword_build",
             "token_bank_build",
-            "verb_position"
+            "verb_position",
+            "negation"
           ]
         }
       },
