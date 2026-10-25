@@ -23,6 +23,15 @@ describe("normalizeAnswer", () => {
   });
 });
 
+describe("connector_choice", () => {
+  const exercise = { id: "x_connector", type: "connector_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich möchte kommen,", after_de: "ich bin krank.", options: [{ id: "und", de: "und", correct: false }, { id: "aber", de: "aber", correct: true }, { id: "denn", de: "denn", correct: false }] };
+  it("evaluates connector selection and rejects unknown option ids", () => {
+    assert.equal(evaluate(exercise, { type: "connector_choice", optionId: "aber" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "connector_choice", optionId: "und" }).correct, false);
+    assert.throws(() => evaluate(exercise, { type: "connector_choice", optionId: "x" }), EvaluationError);
+  });
+});
+
 describe("negation", () => {
   const exercise = { id: "x_negation", type: "negation" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, source_de: "Ich habe Hunger.", accept: ["Ich habe keinen Hunger."] };
   it("accepts authored negation and rejects wrong or unchanged sentences", () => {
