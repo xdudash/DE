@@ -8,7 +8,7 @@
 import { useEffect } from "react";
 import { flushOutbox, readOutbox } from "../lib/attempts/outbox";
 import { submitAttempt } from "../lib/attempts/submit";
-import { deviceKeyValue } from "../lib/device-state";
+import { ACCOUNT_PROGRESS_EVENT, deviceKeyValue } from "../lib/device-state";
 
 const INTERVAL_MS = 60_000;
 
@@ -21,6 +21,7 @@ export function OutboxSync() {
       if (readOutbox(store).length === 0) return;
       busy = true;
       void flushOutbox(store, (item) => submitAttempt(item), Date.now())
+        .then((result) => { if ((result.settled.saved ?? 0) > 0) window.dispatchEvent(new Event(ACCOUNT_PROGRESS_EVENT)); })
         .catch(() => {})
         .finally(() => {
           busy = false;

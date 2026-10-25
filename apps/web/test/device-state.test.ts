@@ -168,10 +168,12 @@ describe("one identity per answer (DG-022)", () => {
 
   it("keeps the given event id and time, shared with the account's copy", () => {
     const id = "123e4567-e89b-42d3-a456-426614174000";
-    recordAttempt({ id, at: 1_700_000_000_000, unitId: "unit.x", exerciseId: "ex1", conceptIds: ["concept.a"], correct: true });
+    recordAttempt({ id, at: 1_700_000_000_000, unitId: "unit.x", exerciseId: "ex1", conceptIds: ["concept.a"], correct: true, response: { type: "single_choice", optionId: "a" }, contentVersion: "1.0.0" });
     const [event] = readAttempts();
     assert.equal(event!.id, id);
     assert.equal(event!.at, 1_700_000_000_000);
+    assert.deepEqual(event!.response, { type: "single_choice", optionId: "a" });
+    assert.equal(event!.contentVersion, "1.0.0");
   });
 
   it("stores error-rule signals for wrong answers only, like the server", () => {

@@ -61,6 +61,8 @@ export interface ConceptStateRow {
 export interface Store {
   /** Inserts the event, or reports that this id already exists (idempotent replay). */
   insertEvent(event: StoredEvent): Promise<{ inserted: boolean }>;
+  /** Inserts a batch atomically, skipping event ids already in the account. */
+  insertEvents(events: StoredEvent[]): Promise<number>;
   /** Every event of this learner that mentions any of `conceptIds`. */
   eventsForConcepts(conceptIds: string[]): Promise<LearningEvent[]>;
   /** Replaces the derived rows for exactly these concepts. */

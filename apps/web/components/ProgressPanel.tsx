@@ -1,14 +1,15 @@
 "use client";
 
 /**
- * What this browser knows about the learner's progress. Every number is derived
+ * What the shared account/device evidence says about the learner's progress. Every number is derived
  * from recorded answers; nothing is estimated, and before the first answer the
  * panel says there is nothing yet rather than showing zeros as if they were a score.
  */
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { deriveConceptStates, type ConceptState, type GraphConcept } from "@deutschgo/learning-engine";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { attemptStats, readAttempts, type AttemptStats } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
+import type { AttemptStats } from "../lib/device-state";
 
 const STATE_KEY: Record<ConceptState, MessageKey> = {
   unseen: "state.unseen",
@@ -30,17 +31,16 @@ interface Props {
 
 export function ProgressPanel({ lang, graph, totalTopics }: Props) {
   const msg = translator(lang);
-  const [stats, setStats] = useState<AttemptStats | null>(null);
-  const [counts, setCounts] = useState<Partial<Record<ConceptState, number>>>({});
-
-  // Computed after mount: the server cannot read this browser's answers.
-  useEffect(() => {
-    setStats(attemptStats());
-    const states = deriveConceptStates(graph, readAttempts(), Date.now());
+  const { attempts, status } = useProgress();
+  const { stats, counts } = useMemo(() => {
+    const exercises = new Set<string>(); const lessons = new Set<string>(); let correct = 0; let lastAt: number | null = null;
+    for (const answer of attempts) { exercises.add(`${answer.unitId}/${answer.exerciseId}`); lessons.add(answer.unitId); if (answer.correct) correct += 1; if (lastAt === null || answer.at > lastAt) lastAt = answer.at; }
+    const stats: AttemptStats = { answers: attempts.length, correct, accuracy: attempts.length ? correct / attempts.length : null, exercises: exercises.size, lessons: lessons.size, lastAt };
+    const states = deriveConceptStates(graph, attempts, Date.now());
     const tally: Partial<Record<ConceptState, number>> = {};
     for (const s of states.values()) tally[s.state] = (tally[s.state] ?? 0) + 1;
-    setCounts(tally);
-  }, [graph]);
+    return { stats, counts: tally };
+  }, [graph, attempts]);
 
   const started = STARTED.reduce((sum, state) => sum + (counts[state] ?? 0), 0);
   const percentStarted = totalTopics > 0 ? Math.round((started / totalTopics) * 100) : 0;
@@ -48,10 +48,11 @@ export function ProgressPanel({ lang, graph, totalTopics }: Props) {
   return (
     <section className="card" aria-labelledby="progress-heading">
       <h2 id="progress-heading" className="card-title">{msg("progress.title")}</h2>
+      <p className="muted small">{msg(status === "loading" ? "progress.loadingSource" : status === "account" ? "progress.accountSource" : "progress.deviceSource")}</p>
       <div aria-live="polite">
-        {stats === null && <p className="muted">…</p>}
-        {stats !== null && stats.answers === 0 && <p className="muted">{msg("progress.none")}</p>}
-        {stats !== null && stats.answers > 0 && (
+        {status === "loading" && stats.answers === 0 && <p className="muted">…</p>}
+        {stats.answers === 0 && status !== "loading" && <p className="muted">{msg("progress.none")}</p>}
+        {stats.answers > 0 && (
           <>
             <ul className="stats">
               <li>

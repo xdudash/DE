@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">DeutschGo home screen mockup</title><desc id="desc">A learner home screen with next step, progress line, daily goal and a practical mission.</desc>
+  <rect width="1280" height="760" fill="#eef2f7"/>
+  <rect x="32" y="28" width="180" height="704" rx="22" fill="#fff" stroke="#dbe3ee"/>
+  <circle cx="70" cy="70" r="18" fill="#1b4fa0"/><path d="M66 60l10 10-10 10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="77" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#0f1f33">DeutschGo</text>
+  <rect x="52" y="125" width="140" height="48" rx="12" fill="#eaf0fb"/><text x="78" y="156" font-family="Arial,sans-serif" font-size="17" fill="#123a78">⌂  Home</text>
+  <text x="68" y="213" font-family="Arial,sans-serif" font-size="17" fill="#4a5b72">Practice</text><text x="68" y="263" font-family="Arial,sans-serif" font-size="17" fill="#4a5b72">Knowledge map</text><text x="68" y="313" font-family="Arial,sans-serif" font-size="17" fill="#4a5b72">You</text>
+  <text x="256" y="76" font-family="Arial,sans-serif" font-weight="700" font-size="32" fill="#0f1f33">Guten Morgen, Alex</text>
+  <text x="256" y="108" font-family="Arial,sans-serif" font-size="17" fill="#4a5b72">Your German, one useful step at a time.</text>
+  <rect x="256" y="138" width="650" height="212" rx="20" fill="#fff" stroke="#dbe3ee"/>
+  <text x="284" y="180" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#4a5b72">YOUR NEXT STEP</text>
+  <text x="284" y="219" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#0f1f33">Order at a café</text>
+  <text x="284" y="251" font-family="Arial,sans-serif" font-size="16" fill="#4a5b72">Practice due: Zahlen im Café · 5 minutes</text>
+  <rect x="284" y="280" width="166" height="48" rx="12" fill="#1b4fa0"/><text x="310" y="311" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="#fff">Start mission →</text>
+  <text x="474" y="309" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">Why: a review is due today</text>
+  <rect x="928" y="138" width="310" height="212" rx="20" fill="#fff" stroke="#dbe3ee"/>
+  <text x="956" y="180" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#4a5b72">TODAY'S GOAL</text>
+  <circle cx="1040" cy="261" r="52" fill="none" stroke="#dbe3ee" stroke-width="12"/><circle cx="1040" cy="261" r="52" fill="none" stroke="#12804a" stroke-width="12" stroke-dasharray="185 327" transform="rotate(-90 1040 261)"/>
+  <text x="1023" y="269" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#0f1f33">6</text><text x="1112" y="248" font-family="Arial,sans-serif" font-size="16" fill="#0f1f33">of 10 answers</text><text x="1112" y="274" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">Your 10 minute plan</text>
+  <rect x="256" y="374" width="982" height="322" rx="20" fill="#fff" stroke="#dbe3ee"/>
+  <text x="284" y="418" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#4a5b72">YOUR LEARNING LINE · A0</text><text x="284" y="452" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#0f1f33">German for everyday life</text>
+  <rect x="284" y="475" width="926" height="8" rx="4" fill="#dbe3ee"/><rect x="284" y="475" width="318" height="8" rx="4" fill="#12804a"/>
+  <line x1="327" y1="560" x2="1120" y2="560" stroke="#b9c6d8" stroke-width="6"/>
+  <circle cx="338" cy="560" r="19" fill="#12804a"/><path d="M330 560l6 7 12-15" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="595" cy="560" r="24" fill="#fff" stroke="#1b4fa0" stroke-width="7"/><circle cx="595" cy="560" r="7" fill="#1b4fa0"/>
+  <circle cx="850" cy="560" r="16" fill="#fff" stroke="#b9c6d8" stroke-width="5"/><circle cx="1100" cy="560" r="16" fill="#fff" stroke="#b9c6d8" stroke-width="5"/>
+  <text x="298" y="604" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">Alphabet</text><text x="536" y="604" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#123a78">Numbers</text><text x="800" y="604" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">Greetings</text><text x="1054" y="604" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">At the café</text>
+  <text x="284" y="662" font-family="Arial,sans-serif" font-size="14" fill="#4a5b72">Your answers sync to your account when you are signed in.</text>
+</svg>

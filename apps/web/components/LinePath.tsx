@@ -5,12 +5,12 @@
  * "you are here"; finished lessons are ticked; topics without a lesson yet are shown as
  * in preparation and are never offered as if they could be studied.
  *
- * The line comes from the content route; the states come from this browser's answers.
+ * The line comes from the content route; the states come from shared account/device answers.
  */
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import { translator } from "@deutschgo/i18n";
-import { PROGRESS_EVENT, readLessonResults } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
 import { lineProgress, stationStates, type AnsweredByUnit, type StationKind } from "../lib/path";
 import { Icon } from "./Icon";
 
@@ -36,7 +36,7 @@ interface Props {
 
 export function LinePath({ lang, line, stations, preview }: Props) {
   const msg = translator(lang);
-  const [answered, setAnswered] = useState<AnsweredByUnit>({});
+  const { attempts } = useProgress();
   const list = useRef<HTMLOListElement>(null);
 
   // Open the line where the learner is: bring "you are here" into view once, if it is not.
@@ -47,20 +47,10 @@ export function LinePath({ lang, line, stations, preview }: Props) {
     if (box.top < 0 || box.bottom > window.innerHeight) here.scrollIntoView({ block: "center" });
   }, []);
 
-  useEffect(() => {
-    const read = () => {
-      const next: Record<string, Set<string>> = {};
-      for (const s of stations) if (s.unitId) next[s.unitId] = new Set(Object.keys(readLessonResults(s.unitId)));
-      setAnswered(next);
-    };
-    read();
-    window.addEventListener(PROGRESS_EVENT, read);
-    window.addEventListener("storage", read);
-    return () => {
-      window.removeEventListener(PROGRESS_EVENT, read);
-      window.removeEventListener("storage", read);
-    };
-  }, [stations]);
+  const answered: AnsweredByUnit = {};
+  for (const station of stations) if (station.unitId) {
+    answered[station.unitId] = new Set(attempts.filter((attempt) => attempt.unitId === station.unitId).map((attempt) => attempt.exerciseId));
+  }
 
   const states = stationStates(stations, answered);
   const { done, total } = lineProgress(states);
@@ -96,6 +86,7 @@ export function LinePath({ lang, line, stations, preview }: Props) {
                   <span className="station-name">{s.title}</span>
                 )}
                 <span className="station-meta">
+                  {reachable && s.draft && <span className="chip">{msg("status.draftTag")}</span>}
                   {state === "done" && <span className="chip ok">{msg("path.done")}</span>}
                   {state === "current" && <span className="chip here">{msg("path.here")}</span>}
                   {state === "planned" && <span className="chip">{msg("path.planned")}</span>}

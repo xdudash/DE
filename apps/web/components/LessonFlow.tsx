@@ -24,7 +24,7 @@ import { HEARTS, minutesUntil } from "@deutschgo/gamification";
 import { clock, requeueIfWrong, sessionResult, type SessionAnswer } from "../lib/lesson-session";
 import { inline } from "../lib/markdown";
 import { play } from "../lib/sound";
-import { readLessonResults } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
 import { ExercisePlayer, tr, type ExerciseHandle, type PlayerText } from "./ExercisePlayer";
 import { Icon } from "./Icon";
 import { useMotivation } from "./Motivation";
@@ -53,6 +53,7 @@ function buzz(pattern: number | number[]) {
 
 export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: LessonFlowProps) {
   const msg = translator(lang);
+  const { attempts } = useProgress();
   const motivation = useMotivation();
   const playerRef = useRef<ExerciseHandle>(null);
   const [queue, setQueue] = useState<FlowStep[]>(steps);
@@ -65,10 +66,10 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
   // Practice when the lesson was already finished on this device before this run began.
   const [practice, setPractice] = useState(false);
   useEffect(() => {
-    const answered = readLessonResults(unit.id);
+    const answered = new Set(attempts.filter((attempt) => attempt.unitId === unit.id).map((attempt) => attempt.exerciseId));
     const ids = steps.flatMap((s) => (s.kind === "exercise" ? [s.exercise.id] : []));
-    setPractice(ids.length > 0 && ids.every((id) => id in answered));
-  }, [unit.id, steps]);
+    setPractice(ids.length > 0 && ids.every((id) => answered.has(id)));
+  }, [unit.id, steps, attempts]);
 
   const done = index >= queue.length;
   const step = done ? undefined : queue[index];

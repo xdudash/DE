@@ -1,8 +1,8 @@
 /**
  * What this browser remembers: the plan, the language, and every answer as evidence.
  * Signed-in learners' answers are also sent to their account (lib/attempts/outbox.ts),
- * with the same event id as the record kept here; the screens still read this record
- * until the server read path exists (DG-024).
+ * with the same event id as the record kept here. The shared progress provider merges
+ * device and account evidence by that id (lib/progress/client.tsx).
  *
  * Attempts are stored as append-only learning events (the same shape the learning
  * engine reads), so states and recommendations are computed from evidence, not
@@ -13,6 +13,7 @@
  * the page keeps working and can state the failure honestly.
  */
 import type { LearningEvent } from "@deutschgo/learning-engine";
+import type { Response } from "@deutschgo/content-kit/evaluate";
 import { OUTBOX_KEY, type KeyValue } from "./attempts/outbox.ts";
 
 import { normalizeSetup, type Setup } from "./plan.ts";
@@ -27,10 +28,15 @@ export interface DeviceAttempt extends LearningEvent {
   exerciseId: string;
   /** Given in a practice run (a lesson already finished on this device): costs a heart if wrong. */
   practice?: boolean;
+  /** The raw response and content version permit an explicit, server-verified account import. */
+  response?: Response;
+  contentVersion?: string;
 }
 
 /** Fired on this window whenever the answers stored on this device change. */
 export const PROGRESS_EVENT = "deutschgo:progress";
+/** Fired after the server confirms an answer, so the shared account view refreshes. */
+export const ACCOUNT_PROGRESS_EVENT = "deutschgo:account-progress";
 const SETUP_KEY = "deutschgo.setup.v1";
 const EVENTS_KEY = "deutschgo.events.v1";
 /** Bounds storage use on a device; the engine only needs recent evidence. */
@@ -98,6 +104,8 @@ export interface AttemptInput {
   signals?: string[];
   /** True in a practice run; only practice answers cost hearts (ADR-0014). */
   practice?: boolean;
+  response?: Response;
+  contentVersion?: string;
 }
 
 export function recordAttempt(input: AttemptInput): boolean {
@@ -114,6 +122,8 @@ export function recordAttempt(input: AttemptInput): boolean {
   };
   if (!input.correct && input.signals?.length) event.signals = [...input.signals];
   if (input.practice) event.practice = true;
+  if (input.response) event.response = input.response;
+  if (input.contentVersion) event.contentVersion = input.contentVersion;
   const saved = write(EVENTS_KEY, [...readAttempts(), event].slice(-MAX_STORED_ATTEMPTS));
   if (saved) notifyProgress();
   return saved;

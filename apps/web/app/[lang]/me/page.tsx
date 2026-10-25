@@ -13,6 +13,7 @@ import { ui } from "../../../lib/i18n";
 const ACCOUNT_KEYS: MessageKey[] = [
   "account.title", "account.lead", "account.age", "account.google", "account.apple",
   "account.signedIn", "account.signedInAs", "account.signOut", "account.savedNote",
+  "account.importTitle", "account.importBody", "account.importAction", "account.importing", "account.importDone", "account.importFailed", "account.importLegacy", "account.exportAction", "account.exportFailed",
   "account.notSavedNote", "account.unavailable", "account.deleteTitle", "account.deleteConfirm",
   "account.delete", "account.testLogin", "account.testLoginNote",
   "account.notice.signedIn", "account.notice.signedOut", "account.notice.deleted",
@@ -43,7 +44,7 @@ export default async function You({ params }: { params: Promise<{ lang: string }
   const text: Record<string, string> = {};
   for (const key of ACCOUNT_KEYS) {
     // The email is substituted on the client, so the placeholder is kept literally here.
-    text[key] = key === "account.signedInAs" ? msg(key, { email: "{email}" }) : msg(key);
+    text[key] = key === "account.signedInAs" ? msg(key, { email: "{email}" }) : ["account.importBody", "account.importAction", "account.importDone", "account.importLegacy"].includes(key) ? msg(key, { count: "{count}" }) : msg(key);
   }
   const reminderLabels: ReminderLabels = {
     lead: msg("reminders.lead"),

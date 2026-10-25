@@ -1,9 +1,8 @@
 "use client";
 
 /**
- * XP, level, streak and hearts for this device (ADR-0014). Every number is derived from
- * the answers stored in this browser, so the profile says so, and it never claims those
- * numbers are saved to an account.
+ * XP, level, streak and hearts (ADR-0014). XP and streak use shared account/device
+ * evidence; hearts remain device-local because the account event does not retain practice mode.
  *
  * The derived values are recomputed when an answer is recorded, when another tab changes
  * the stored answers, and every 30 seconds so that a returning heart shows up on its own.
@@ -11,7 +10,7 @@
 import { useEffect, useState } from "react";
 import { translator } from "@deutschgo/i18n";
 import { HEARTS, minutesUntil, summarizeScoped, type Summary } from "@deutschgo/gamification";
-import { PROGRESS_EVENT, readAttempts } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
 import { Icon } from "./Icon";
 
 const TICK_MS = 30_000;
@@ -26,21 +25,18 @@ function timeZone(): string {
 
 /** Derived motivation numbers for this device. Null until the browser has rendered the page. */
 export function useMotivation(): Summary | null {
+  const { attempts } = useProgress();
   const [summary, setSummary] = useState<Summary | null>(null);
 
   useEffect(() => {
     // Hearts count practice answers only; first passes through a lesson never cost one.
-    const refresh = () => setSummary(summarizeScoped(readAttempts(), Date.now(), timeZone()));
+    const refresh = () => setSummary(summarizeScoped(attempts, Date.now(), timeZone()));
     refresh();
-    window.addEventListener(PROGRESS_EVENT, refresh);
-    window.addEventListener("storage", refresh);
     const timer = window.setInterval(refresh, TICK_MS);
     return () => {
-      window.removeEventListener(PROGRESS_EVENT, refresh);
-      window.removeEventListener("storage", refresh);
       window.clearInterval(timer);
     };
-  }, []);
+  }, [attempts]);
 
   return summary;
 }
@@ -48,6 +44,7 @@ export function useMotivation(): Summary | null {
 /** The top of the learner's own page: who, which level, and the three motivation figures. */
 export function ProfileHero({ lang }: { lang: string }) {
   const msg = translator(lang);
+  const { status } = useProgress();
   const s = useMotivation();
   const span = s ? s.intoLevel + s.toNext : 1;
   const percent = s ? Math.round((s.intoLevel / span) * 100) : 0;
@@ -97,7 +94,7 @@ export function ProfileHero({ lang }: { lang: string }) {
           )}
         </>
       )}
-      <p className="small muted">{msg("motivation.note")}</p>
+      <p className="small muted">{msg(status === "account" ? "motivation.accountNote" : "motivation.note")}</p>
     </section>
   );
 }

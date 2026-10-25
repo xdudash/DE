@@ -2,16 +2,17 @@
 
 /**
  * Topics the engine says are worth practising now: reviews that have come due, and
- * topics answered wrongly often enough to count as weak. Both come from this
- * browser's answers, so an empty list means the learner has not answered yet — and
+ * topics answered wrongly often enough to count as weak. Both come from the shared
+ * account/device evidence, so an empty list means the learner has not answered yet — and
  * says so, instead of inventing something to do.
  */
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { deriveConceptStates, type ConceptState, type GraphConcept } from "@deutschgo/learning-engine";
 import { translator } from "@deutschgo/i18n";
-import { readAttempts } from "../lib/device-state";
+import { useProgress } from "../lib/progress/client";
 import { Icon } from "./Icon";
+import type { MissionSummary } from "../lib/missions";
 
 export interface TargetLink {
   title: string;
@@ -22,14 +23,14 @@ interface Props {
   lang: string;
   graph: GraphConcept[];
   targets: Record<string, TargetLink>;
+  missions?: MissionSummary[];
 }
 
-export function PracticeList({ lang, graph, targets }: Props) {
+export function PracticeList({ lang, graph, targets, missions = [] }: Props) {
   const msg = translator(lang);
-  const [groups, setGroups] = useState<Record<"review_due" | "needs_practice", string[]> | null>(null);
-
-  useEffect(() => {
-    const states = deriveConceptStates(graph, readAttempts(), Date.now());
+  const { attempts } = useProgress();
+  const groups = useMemo(() => {
+    const states = deriveConceptStates(graph, attempts, Date.now());
     const pick = (state: ConceptState) =>
       [...states.values()]
         .filter((s) => s.state === state)
@@ -40,14 +41,22 @@ export function PracticeList({ lang, graph, targets }: Props) {
             : (b.evidence.lastActivityAt ?? 0) - (a.evidence.lastActivityAt ?? 0),
         )
         .map((s) => s.conceptId);
-    setGroups({ review_due: pick("review_due"), needs_practice: pick("needs_practice") });
-  }, [graph]);
+    return { review_due: pick("review_due"), needs_practice: pick("needs_practice") };
+  }, [graph, attempts]);
 
   const empty = groups !== null && groups.review_due.length === 0 && groups.needs_practice.length === 0;
 
   return (
     <div aria-live="polite">
-      {groups === null && <p className="muted">…</p>}
+      {missions.length > 0 && <section className="practice-group missions">
+        <h2>{msg("mission.title")}</h2>
+        <p className="muted">{msg("mission.lead")}</p>
+        <ul className="topics">{missions.map((mission) => <li key={mission.unitId}>
+          <Link href={`/${lang}/mission/${mission.unitId}`}><strong>{mission.title}</strong></Link>
+          {!mission.reviewed && <span className="tag">{msg("status.draftTag")}</span>}
+          <p className="muted small">{mission.summary} · {msg("mission.turns", { count: mission.exerciseCount })}</p>
+        </li>)}</ul>
+      </section>}
       {empty && (
         <div className="card empty-state">
           <span className="empty-icon" aria-hidden="true">
@@ -58,7 +67,7 @@ export function PracticeList({ lang, graph, targets }: Props) {
           <Link className="btn btn-primary" href={`/${lang}`}>{msg("done.home")}</Link>
         </div>
       )}
-      {groups !== null &&
+      {
         (["review_due", "needs_practice"] as const).map((group) =>
           groups[group].length === 0 ? null : (
             <section key={group} className="practice-group">

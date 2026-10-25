@@ -1,6 +1,6 @@
 # Task Register (backlog)
 
-Last rebuilt: 2026-10-22 by the project audit ([PROJECT_AUDIT_2026-10-22](./PROJECT_AUDIT_2026-10-22.md)). Phase order and gates: [roadmap](./ROADMAP.md). The GitHub issue tracker is the live list; every task here becomes an issue when it starts, using the fields below. Owner decisions are referenced as **Q1…Q10** from audit section 7.
+Last rebuilt: 2026-10-25. Phase order and gates: [roadmap](./ROADMAP.md). The GitHub issue tracker is the live list; every task here becomes an issue when it starts, using the fields below. Owner decisions are referenced as **Q1…Q10** from audit section 7.
 
 Ordering rule: tasks are ordered by dependency and risk, not by visibility. Stage A removes blockers and architectural risks, Stage B closes the learner loop, Stage C fills it with reviewed content, later stages extend the product. WIP limits: [project management](./PROJECT_MANAGEMENT.md).
 
@@ -19,7 +19,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-007 | Human review of the gold unit + rights | C (critical path) | Q5, Q10 | **needs owner** |
 | DG-022 | One event identity + retry of failed sends | B | DG-021 | **in review** (branch `feat/dg-022-event-identity-retry`) |
 | DG-023 | Offline queue and batched sync (IndexedDB); must define how queued answers are dated, replacing the 15-minute backdating bound of ADR-0016 | B | DG-022 | after DG-022 |
-| DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | after DG-022 |
+| DG-024 | Server read path, device-history import, cross-device continuation | B | DG-022 | implemented on `feat/dg-024-global-experience`; PR/CI review pending |
 | DG-025 | Session refresh | B | — | **done** (#52, merged before DG-026; DG-026 must keep it working) |
 | DG-028 | GDPR export end to end + audit log | B | DG-024 | after DG-024 |
 | DG-029 | Profile and onboarding model alignment (goals, region, time budget) | B | Q4 decided (ADR-0017: spec goal set) | implemented on device (`feat/dg-029-goal-model`); profile sync with DG-024 |
@@ -27,7 +27,7 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-032 | Backups and a recorded restore test | B | Q8 | needs owner |
 | DG-033 | Cookieless product analytics baseline | B | Q6, DG-030 | needs decision |
 | DG-034 | Hearts scope (lesson vs practice) | B | Q3 decided (ADR-0017) | **in review** (branch `feat/dg-034-hearts-scope`) |
-| DG-035 | Motivation numbers from server evidence when signed in | B | DG-024 | after DG-024 |
+| DG-035 | Motivation numbers from server evidence when signed in | B | DG-024 | XP/streak share; practice hearts remain device-local pending schema/ADR work |
 | DG-036 | Reminder timing, subscription uniqueness, hosted migration check | B | owner push setup | after setup |
 | DG-037 | E2E of the signed-in journey in CI | B | DG-024 | after DG-024 |
 | DG-038 | Changelog and incident template | B | — | ready (small) |
@@ -123,15 +123,16 @@ Unchanged: reviewers per [GOLD_UNIT_REVIEW_PACKET](../quality/GOLD_UNIT_REVIEW_P
 - **Acceptance:** E2E offline → online sync; counts shown as "not yet saved" until confirmed. **Depends:** DG-022.
 
 ### DG-024 Server read path and cross-device continuation
-- **Goal:** the P2 exit criterion "across devices". **State:** no endpoint returns events/states; every screen reads `localStorage`.
-- **Changes:** `GET /api/progress` (no-store, as learner under RLS) returning events since a cursor and derived states; client merges by event id; one-time import of device history after first sign-in with consent (DATA_AND_PRIVACY); fix the stale comments in `lib/device-state.ts`.
-- **Acceptance:** two browser contexts with one account show the same states; import is idempotent; signed-out behaviour unchanged. **Checks:** integration test against PostgreSQL, E2E (DG-037). **Approval:** none beyond Q1.
+- **Goal:** the P2 exit criterion "across devices". **State:** implemented on `feat/dg-024-global-experience`; not yet merged or deployed.
+- **Changes:** `GET /api/progress` (no-store, as learner under RLS) returning account events; client merges by event id; explicit import of device history after sign-in (DATA_AND_PRIVACY); fix stale comments in `lib/device-state.ts`.
+- **Result:** RLS-scoped, no-store progress read; import re-evaluates responses on the server, dates evidence at import time, writes idempotently, and rejects mixed-validity batches before any write. Home, Practice, lessons, map, and You use the shared account/device stream. Home has a reasoned next step and DACH missions reuse existing reply-choice content. Older local answers without their response are counted and left on the device.
+- **Checks:** `npm run check` passed locally. PostgreSQL integration coverage is added; two-context account sync and browser E2E still require the configured CI database and browser. **Approval:** none beyond Q1.
 
 ### DG-025 Session refresh
 Refresh token in its own HttpOnly cookie, rotation on use, sign-out revokes. **Acceptance:** a 2-hour session keeps saving; refresh failure shows "signed out", never silent loss. **Depends:** DG-026.
 
 ### DG-028 GDPR export end to end
-Endpoint + "Download my data" in the learner area; migration `0003` adds `push_subscriptions` to `export_my_data()`; write `audit_log` rows for export and deletion. **Acceptance:** SQL test for export completeness, E2E download. **Depends:** DG-024.
+Account progress JSON download is available on `feat/dg-024-global-experience`. Full GDPR export completeness, audit-log rows for export/deletion, SQL coverage, and E2E download remain open. **Depends:** DG-024.
 
 ### DG-029 Profile and onboarding model alignment
 - **Goal:** one vocabulary for goals, region and time budget. **State:** device `life/work/study` + minutes/day; DB `dg_goal` + `weekly_minutes` + `region`; content goals use the DB set.
@@ -147,7 +148,7 @@ Endpoint + "Download my data" in the learner area; migration `0003` adds `push_s
 Implement Q3 (recommended: hearts apply to practice/review only; lesson exercises never pause). Update ADR-0014 guardrail. **Acceptance:** gamification tests; E2E: a learner with 0 hearts can finish a new lesson.
 
 ### DG-035 Motivation from server evidence
-When signed in, XP/streak/hearts are computed from the merged event log (ADR-0014 §8). **Depends:** DG-024.
+When signed in, XP/streak use the merged account/device event log; hearts still count practice answers on this device because the server event schema does not retain the practice-mode marker. A later schema/ADR update is needed before hearts can sync across devices. **Depends:** DG-024.
 
 ### DG-036 Reminders hardening
 Send at the learner's chosen local hour (store time zone with the subscription); allow the same endpoint for a new account (re-own on subscribe); confirm migration 0002 is applied on the hosted project (owner, read-only check). **Depends:** owner VAPID/cron setup.
