@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: uk
-based_on_version: 1.1.0
+based_on_version: 1.2.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -143,3 +143,11 @@ strings:
   x.categorize_v2.category.middle: "Середина · підмет або деталі"
   x.categorize_v2.item.verb: "Дієслово зі змінюваною формою залишається на позиції 2, одразу після першого елемента."
   x.categorize_v2.explanation: "Heute — перший елемент, arbeite — дієслово зі змінюваною формою на позиції 2, а ich von zu Hause стоять у середині."
+
+  x.listening_v2.prompt: "Прослухайте речення та виберіть його значення."
+  x.listening_v2.a: "Сьогодні я працюю з дому."
+  x.listening_v2.b: "Завтра я працюю вдома."
+  x.listening_v2.b.feedback: "*Heute* означає «сьогодні», а не «завтра»."
+  x.listening_v2.c: "Я працюю з дому щодня."
+  x.listening_v2.c.feedback: "У реченні сказано *heute* («сьогодні»), а не «щодня»."
+  x.listening_v2.explanation: "*Heute* — перший елемент, а *arbeite*, дієслово зі змінюваною формою, стоїть на позиції 2."

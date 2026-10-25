@@ -158,6 +158,10 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
     chooseCategory: msg("exercise.chooseCategory"),
     categoryScore: (correct: number, total: number) => msg("exercise.score", { correct, total }),
     chooseAll: msg("exercise.chooseAll"),
+    playAudio: msg("exercise.playAudio"),
+    playAgain: msg("exercise.playAgain"),
+    speechNote: msg("exercise.speechNote"),
+    speechUnavailable: msg("exercise.speechUnavailable"),
   };
 
   const check = useCallback(() => {

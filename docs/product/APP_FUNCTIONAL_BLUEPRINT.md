@@ -119,3 +119,8 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 ## Current known blocker
 
 The latest hosted run passed repository foundation, content/tests/build/typecheck, and database/RLS/attempt recording. Playwright had 67 passing journeys and one failure: the profile clear-data test still expects the old English string “Delete it all? This cannot be undone.” while the current screen uses the new localized confirmation. The correction is explicitly held until product direction resumes; the run is [40168061091](https://github.com/xdudash/DE/actions/runs/40168061091).
+
+
+### Аудирование с выбором смысла
+
+Плеер озвучивает авторскую немецкую фразу через встроенный синтез речи браузера (`de-DE`), поддерживает повтор и скрывает текст во время обычного режима. Если браузер не поддерживает синтез, показывает транскрипт и оставляет упражнение доступным. Ответ выбирается из локализованных вариантов; после проверки отображаются верный вариант и объяснение. Озвучка запускается только по нажатию пользователя и отменяется при переходе к следующему экрану.

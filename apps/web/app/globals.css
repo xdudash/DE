@@ -1407,3 +1407,7 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
   .onboarding-diagnostic-link { align-items: flex-start; flex-direction: column; }
   .placement-actions > .btn, .placement-actions > a { width: 100%; text-align: center; }
 }
+
+.listening-audio { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 1rem 0; }
+.listening-audio .btn { min-height: 2.8rem; }
+.listening-transcript { border-inline-start: 3px solid var(--blue); padding-inline-start: 0.8rem; }

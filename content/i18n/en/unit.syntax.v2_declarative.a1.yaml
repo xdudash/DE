@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: en
-based_on_version: 1.1.0
+based_on_version: 1.2.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -143,3 +143,11 @@ strings:
   x.categorize_v2.category.middle: "Middle · subject or details"
   x.categorize_v2.item.verb: "The conjugated verb stays in position 2, directly after the first element."
   x.categorize_v2.explanation: "Heute is the first sentence element, arbeite is the conjugated verb in position 2, and ich von zu Hause follows in the middle."
+
+  x.listening_v2.prompt: "Listen to the sentence and choose its meaning."
+  x.listening_v2.a: "I am working from home today."
+  x.listening_v2.b: "I am working at home tomorrow."
+  x.listening_v2.b.feedback: "*Heute* means today, not tomorrow."
+  x.listening_v2.c: "I work from home every day."
+  x.listening_v2.c.feedback: "The sentence says *heute* (today), not every day."
+  x.listening_v2.explanation: "*Heute* is the first element; *arbeite*, the conjugated verb, is in position 2."

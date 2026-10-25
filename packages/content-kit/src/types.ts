@@ -189,6 +189,13 @@ export interface CategorizeExercise extends ExerciseBase {
   items: { id: string; de: string; categoryId: string; feedback?: L10nRef }[];
 }
 
+export interface ListeningChoiceExercise extends ExerciseBase {
+  type: "listening_choice";
+  /** Spoken by the device's German speech voice; the sentence is not printed in normal playback mode. */
+  audio_text_de: string;
+  options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
+}
+
 export interface ReplyChoiceExercise extends ExerciseBase {
   type: "reply_choice";
   line_de: string;
@@ -196,7 +203,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ReplyChoiceExercise;
+  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

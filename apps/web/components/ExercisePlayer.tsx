@@ -32,6 +32,10 @@ export interface PlayerLabels {
   chooseCategory: string;
   categoryScore: (correct: number, total: number) => string;
   chooseAll: string;
+  playAudio: string;
+  playAgain: string;
+  speechNote: string;
+  speechUnavailable: string;
 }
 
 export interface ExerciseHandle {
@@ -79,9 +83,30 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [speechAvailable, setSpeechAvailable] = useState(false);
+
+  useEffect(() => {
+    setHasPlayed(false);
+    setSpeechAvailable(typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+    };
+  }, [exercise.id]);
+
+  const playGerman = () => {
+    if (exercise.type !== "listening_choice" || !speechAvailable) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(exercise.audio_text_de);
+    utterance.lang = "de-DE";
+    const voice = window.speechSynthesis.getVoices().find((candidate) => candidate.lang.toLowerCase().startsWith("de"));
+    if (voice) utterance.voice = voice;
+    window.speechSynthesis.speak(utterance);
+    setHasPlayed(true);
+  };
 
   const ready =
-    ((exercise.type === "single_choice" || exercise.type === "reply_choice") && choice !== "") ||
+    ((exercise.type === "single_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice") && choice !== "" && (exercise.type !== "listening_choice" || !speechAvailable || hasPlayed)) ||
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
@@ -112,6 +137,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         switch (exercise.type) {
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
+          case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
@@ -165,6 +191,31 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         <>
           {exercise.type === "single_choice" && exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
           {exercise.type === "reply_choice" && <p lang="de" className="de stem reply">{exercise.line_de}</p>}
+          <fieldset className="options" disabled={locked}>
+            <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
+            {exercise.options.map((o, i) => {
+              const mark = locked ? (o.correct ? " is-right" : choice === o.id ? " is-wrong" : "") : "";
+              return (
+                <label key={o.id} className={`option${choice === o.id ? " selected" : ""}${mark}`}>
+                  <input type="radio" name={exercise.id} value={o.id} checked={choice === o.id} onChange={() => setChoice(o.id)} />
+                  <span className="option-key" aria-hidden="true">{i + 1}</span>
+                  <span className="option-text" lang={o.de ? "de" : undefined}>{o.de ?? tr(text, o.text)}</span>
+                </label>
+              );
+            })}
+          </fieldset>
+        </>
+      )}
+
+      {exercise.type === "listening_choice" && (
+        <>
+          <div className="listening-audio">
+            <button type="button" className="btn secondary" onClick={playGerman} disabled={locked || !speechAvailable}>
+              {hasPlayed ? labels.playAgain : labels.playAudio}
+            </button>
+            <span className="muted small">{speechAvailable ? labels.speechNote : labels.speechUnavailable}</span>
+          </div>
+          {!speechAvailable && <p lang="de" className="de stem listening-transcript">{exercise.audio_text_de}</p>}
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
             {exercise.options.map((o, i) => {

@@ -229,6 +229,19 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (correct && !evaluate(ex, { type: "reply_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct reply does not evaluate as correct`);
             break;
           }
+          case "listening_choice": {
+            const n = ex.options.filter((o) => o.correct).length;
+            if (n !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct listening option required, found ${n}`);
+            const ids = new Set<string>();
+            for (const option of ex.options) {
+              if (ids.has(option.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${option.id}`);
+              ids.add(option.id);
+              if (!option.de && !option.text) c.error("exercise.option_empty", u.id, `${where}: option ${option.id} needs "de" or "text"`);
+            }
+            const correct = ex.options.find((option) => option.correct);
+            if (correct && !evaluate(ex, { type: "listening_choice", optionId: correct.id }).correct) c.error("exercise.self_check", u.id, `${where}: correct listening option does not evaluate as correct`);
+            break;
+          }
           case "article_input":
           case "form_input":
           case "gap_fill_input":
