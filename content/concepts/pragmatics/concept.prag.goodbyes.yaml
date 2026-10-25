@@ -1,0 +1,26 @@
+# Canonical concept (A0, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+schema: deutschgo.concept/1
+id: concept.prag.goodbyes
+version: 1.0.0
+status: needs_review
+kind: pragmatics
+domain: pragmatics
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "Tschüss (informell) / Auf Wiedersehen (förmlich) / Bis bald"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_tschuess, de: "Tschüss", gloss: "@ex.tschuess", highlight: [], source: src.deutschgo_original }
+  - { id: ex_auf_wiedersehen, de: "Auf Wiedersehen", gloss: "@ex.auf_wiedersehen", highlight: [], source: src.deutschgo_original }
+  - { id: ex_bis_bald, de: "Bis bald", gloss: "@ex.bis_bald", highlight: [], source: src.deutschgo_original }
+relations:
+  - { type: depends_on, target: concept.prag.greetings_dach }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

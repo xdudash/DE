@@ -1,0 +1,225 @@
+# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+schema: deutschgo.unit/1
+id: unit.lex.a0_0113_begruessung_hallo_guten_tag
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.prag.greetings_dach]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 10
+objectives:
+  - { id: obj_main, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_1, de: "Hallo", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Guten Tag", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Hi", gloss: "@ex.3", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "Hallo", correct: true }
+          - { id: b, de: "Auf Wiedersehen", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Gute Nacht", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        options:
+          - { id: a, de: "Tschüss", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Gute Nacht", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Guten Tag", correct: true }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        options:
+          - { id: a, de: "Tschüss", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Hallo", correct: true }
+          - { id: c, de: "Auf Wiedersehen", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: true_false
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        statement_de: "Guten Tag ist eine Verabschiedung."
+        correct: false
+        wrong_feedback: "@x4.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: true_false
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        statement_de: "Hallo sagt man zu Freunden."
+        correct: true
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: true_false
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        statement_de: "Hi ist sehr förmlich."
+        correct: false
+        wrong_feedback: "@x6.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        options:
+          - { id: a, de: "Guten Tag", correct: true }
+          - { id: b, de: "Hallo", correct: true }
+          - { id: c, de: "Gute Nacht", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        options:
+          - { id: a, de: "Hallo", correct: true }
+          - { id: b, de: "Hi", correct: true }
+          - { id: c, de: "Guten Tag", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        line_de: "Hallo, Anna!"
+        options:
+          - { id: a, de: "Hallo!", correct: true }
+          - { id: b, de: "Tschüss!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Bitte!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        line_de: "Guten Tag, Herr Müller!"
+        options:
+          - { id: a, de: "Guten Tag!", correct: true }
+          - { id: b, de: "Gute Nacht!", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Danke!", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        accept: ["Guten Tag"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        accept: ["Hallo"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "Auf Wiedersehen", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Guten Abend", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Hallo", correct: true }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        options:
+          - { id: a, de: "Guten Tag, Herr Müller", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Tschüss", correct: false, feedback: "@fb.not_this" }
+          - { id: c, de: "Hallo zusammen", correct: true }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "Guten", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Tag", correct: true }
+          - { id: c, de: "Hi", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+review:
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

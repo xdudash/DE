@@ -1,0 +1,14 @@
+schema: deutschgo.l10n/1
+entity: concept.prag.goodbyes
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Прощання"
+  summary: "Tschüss — неформально, Auf Wiedersehen — формально. Bis bald означає «до скорого»."
+  pattern.scope: "Прощання з друзями, з малознайомими людьми, з викладачами, керівниками та службовцями."
+  pattern.limits: "На рівні A0 розглядаємо лише три поширені прощання; Ciao лише згадано як неформальне."
+  ex.tschuess: "Tschüss (бувай): неформально, з друзями і ровесниками."
+  ex.auf_wiedersehen: "Auf Wiedersehen (до побачення): формально, з викладачами, керівниками й незнайомцями."
+  ex.bis_bald: "Bis bald (до скорого): неформально, коли очікуєте скорої зустрічі."

@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.prag.greetings_dach
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: Greetings across Germany, Austria and Switzerland
-  summary: Guten Tag, Hallo, Grüß Gott (south and Austria), Grüezi (Switzerland), Servus, Moin — which greeting fits which region and situation.
+  title: "Greetings in German-speaking countries"
+  summary: "Hallo is the everyday greeting. Guten Tag is the polite greeting during the day. Both are used in Germany, Austria and Switzerland."
+  pattern.scope: "Greetings for meeting people during the day, with friends and with strangers."
+  pattern.limits: "Regional greetings such as Grüß Gott and Grüezi are not covered at A0."
+  ex.hallo: "Hallo (hello): for friends and people you know well."
+  ex.guten_tag: "Guten Tag (good day): polite, during the day, with anyone."
+  ex.hi: "Hi: a casual word from English, mostly used by young people."
