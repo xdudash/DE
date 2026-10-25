@@ -82,6 +82,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   const [matches, setMatches] = useState<Record<string, string>>({});
   const [assignments, setAssignments] = useState<Record<string, string>>({});
   const [order, setOrder] = useState<number[]>([]);
+  const [verbPosition, setVerbPosition] = useState<number | null>(null);
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -120,6 +121,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "token_bank_build" && order.length > 0) ||
+    (exercise.type === "verb_position" && verbPosition !== null) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
     ((exercise.type === "transform" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
@@ -155,6 +157,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "categorize": response = { type: "categorize", assignments }; break;
           case "word_order": response = { type: "word_order", order }; break;
           case "token_bank_build": response = { type: "token_bank_build", order }; break;
+          case "verb_position": response = { type: "verb_position", tokenIndex: verbPosition ?? -1 }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
           case "keyword_build": response = { type: "keyword_build", text: free }; break;
@@ -438,6 +441,24 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             ))}
           </div>
         </>
+      )}
+
+      {exercise.type === "verb_position" && (
+        <div className="tokens verb-position" role="group" aria-label={labels.yourAnswer}>
+          {exercise.tokens.map((token, index) => (
+            <button
+              key={index}
+              type="button"
+              lang="de"
+              className={`token${verbPosition === index ? " placed" : ""}`}
+              aria-pressed={verbPosition === index}
+              disabled={locked}
+              onClick={() => setVerbPosition(index)}
+            >
+              {token}
+            </button>
+          ))}
+        </div>
       )}
 
       {exercise.type === "token_bank_build" && (
