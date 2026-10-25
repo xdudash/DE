@@ -324,7 +324,7 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
               }
               const answer = evaluate(ex, { type: "token_bank_build", order: solution });
               if (!answer.correct) c.error("exercise.self_check", u.id, `${where}: authored solution does not evaluate as correct`);
-              const normalized = normalizeAnswer(answer.normalizedAnswer ?? "");
+              const normalized = normalizeAnswer(answer.normalizedResponse ?? "");
               if (seenSolutions.has(normalized)) c.error("exercise.duplicate_solution", u.id, `${where}: solutions must produce distinct sentences`);
               seenSolutions.add(normalized);
             }
