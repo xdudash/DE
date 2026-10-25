@@ -1,0 +1,245 @@
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+schema: deutschgo.unit/1
+id: unit.pron.a0_0103_buchstaben_alltag
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.pron.alphabet]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 9
+objectives:
+  - { id: obj_main, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_1, de: "anna.berg@web.de", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Punkt", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Bindestrich", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "Unterstrich", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "„ät“ für das Zeichen @", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "mueller@gmx.de", gloss: "@ex.6", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "ät", correct: true }
+          - { id: b, de: "Punkt", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Bindestrich", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        accept: ["Punkt"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Punk"], feedback: "@x2.r1" }
+          - { match: ["Punct"], feedback: "@x2.r2" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        statement_de: "„Bindestrich“ ist das Zeichen -."
+        correct: true
+        wrong_feedback: "@x3.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: ".", right_de: "Punkt" }
+          - { id: b, left_de: "-", right_de: "Bindestrich" }
+          - { id: c, left_de: "_", right_de: "Unterstrich" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "Punkt", correct: true }
+          - { id: b, de: "ät", correct: true }
+          - { id: c, de: "Bindestrich", correct: false, feedback: "@x5.o3.fb" }
+          - { id: d, de: "Unterstrich", correct: false, feedback: "@x5.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        stem_de: "anna ___ web Punkt de"
+        accept: ["ät", "at"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Punkt"], feedback: "@x6.r1" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        line_de: "Wie ist Ihre E-Mail-Adresse?"
+        options:
+          - { id: a, de: "anna Punkt berg ät web Punkt de.", correct: true }
+          - { id: b, de: "B – E – R – G.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Ich heiße Anna.", correct: false, feedback: "@x7.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: word_order
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        tokens: ["Punkt", "de", "web"]
+        final_punctuation: "."
+        accept: ["web Punkt de."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        statement_de: "In E-Mail-Adressen schreibt man ü oft als ue."
+        correct: true
+        wrong_feedback: "@x9.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        accept: ["mueller"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["muller"], feedback: "@x10.r1" }
+          - { match: ["müller"], feedback: "@x10.r2" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "Straße", correct: true }
+          - { id: b, de: "Strasse", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "Strase", correct: false, feedback: "@x11.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: cloze
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        text_de: "lisa {{0}} koch ät gmx {{1}} de"
+        gaps:
+          - { accept: ["Punkt"] }
+          - { accept: ["Punkt"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "Punkt", correct: true }
+          - { id: b, de: "Unterstrich", correct: true }
+          - { id: c, de: "Bindestrich", correct: true }
+          - { id: d, de: "Komma", correct: false, feedback: "@x13.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: transform
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        source_de: "tom@web.de"
+        accept: ["tom ät web Punkt de", "tom at web Punkt de"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["tom ät web punkt de"], feedback: "@x14.r1" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.pron.alphabet]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        line_de: "Wie schreibt man Ihre Straße?"
+        options:
+          - { id: a, de: "H – A – U – P – T – S – T – R – A – ß – E.", correct: true }
+          - { id: b, de: "Hauptstraße 5.", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Danke schön.", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+review:
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Check that „ät“ is the usual spoken form for @ and whether 'at' should also be accepted in writing." }
+  pedagogical: { status: pending, notes: "Wie ist Ihre E-Mail-Adresse and Wie schreibt man Ihre Straße are chunks; possessive Ihre comes later." }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

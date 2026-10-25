@@ -1,7 +1,7 @@
-# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007).
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
 schema: deutschgo.unit/1
 id: unit.pron.a0_0104_umlaute_laut
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -9,9 +9,9 @@ cefr: A0
 concepts: [concept.pron.umlauts]
 prerequisites: []
 goals: [general, everyday]
-estimated_minutes: 10
+estimated_minutes: 8
 objectives:
-  - { id: obj_umlaut, text: "@obj", skill: knowledge }
+  - { id: obj_main, text: "@obj", skill: knowledge }
 sources:
   - { source: src.deutschgo_original }
 
@@ -22,9 +22,12 @@ blocks:
     id: b_examples
     title: "@examples"
     items:
-      - { id: ex_kaese, de: "Käse", gloss: "@ex.kaese", highlight: [] }
-      - { id: ex_schoen, de: "schön", gloss: "@ex.schoen", highlight: [] }
-      - { id: ex_ueber, de: "über", gloss: "@ex.ueber", highlight: [] }
+      - { id: ex_1, de: "Käse", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "Bär", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "schön", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "Öl", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "über", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "Tür", gloss: "@ex.6", highlight: [] }
 
   - { type: explanation, id: b_summary, body: "@summary_block" }
 
@@ -32,32 +35,212 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x_umlaut_sound
+      - id: x1
         type: single_choice
-        objective: obj_umlaut
+        objective: obj_main
         concepts: [concept.pron.umlauts]
         difficulty: 1
-        prompt: "@x_umlaut_sound.prompt"
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "ö", correct: true }
+          - { id: b, de: "ä", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "ü", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        accept: ["Käse"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Kase"], feedback: "@x2.r1" }
+          - { match: ["Kaese"], feedback: "@x2.r2" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        statement_de: "Ü klingt wie „i“ mit runden Lippen."
+        correct: true
+        wrong_feedback: "@x3.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: "Käse", right_de: "ä" }
+          - { id: b, left_de: "schön", right_de: "ö" }
+          - { id: c, left_de: "über", right_de: "ü" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "über", correct: true }
+          - { id: b, de: "Tür", correct: true }
+          - { id: c, de: "Tor", correct: false, feedback: "@x5.o3.fb" }
+          - { id: d, de: "Hut", correct: false, feedback: "@x5.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        stem_de: "sch_n"
+        accept: ["ö"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["o"], feedback: "@x6.r1" }
+          - { match: ["ü"], feedback: "@x6.r2" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        line_de: "Wie schreibt man „schön“?"
+        options:
+          - { id: a, de: "S – C – H – Ö – N.", correct: true }
+          - { id: b, de: "S – C – H – O – N.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "S – C – H – Ä – N.", correct: false, feedback: "@x7.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: cloze
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        text_de: "K{{0}}se ist sch{{1}}n."
+        gaps:
+          - { accept: ["ä"] }
+          - { accept: ["ö"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: true_false
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        statement_de: "Ö und O sind derselbe Buchstabe."
+        correct: false
+        wrong_feedback: "@x9.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        accept: ["Tür"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Tur"], feedback: "@x10.r1" }
+          - { match: ["Tor"], feedback: "@x10.r2" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x11.prompt"
         options:
           - { id: a, de: "ä", correct: true }
-          - { id: b, de: "ö", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "ü", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "a", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "e", correct: false, feedback: "@x11.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x.sound.expl"
-      - id: x_umlaut_ueber
-        type: single_choice
-        objective: obj_umlaut
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: transform
+        objective: obj_main
         concepts: [concept.pron.umlauts]
-        difficulty: 2
-        prompt: "@x_umlaut_ueber.prompt"
-        options:
-          - { id: a, de: "u", correct: false, feedback: "@fb.not_this" }
-          - { id: b, de: "ö", correct: false, feedback: "@fb.not_this" }
-          - { id: c, de: "ü", correct: true }
+        difficulty: 1
+        prompt: "@x12.prompt"
+        source_de: "uber"
+        accept: ["über"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x.ueber.expl"
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "schön", correct: true }
+          - { id: b, de: "Öl", correct: true }
+          - { id: c, de: "Bär", correct: false, feedback: "@x13.o3.fb" }
+          - { id: d, de: "Ofen", correct: false, feedback: "@x13.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        stem_de: "B_r"
+        accept: ["ä"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["a"], feedback: "@x14.r1" }
+          - { match: ["e"], feedback: "@x14.r2" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        line_de: "Schreibt man „über“ mit U?"
+        options:
+          - { id: a, de: "Nein, mit Ü.", correct: true }
+          - { id: b, de: "Ja, mit U.", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Nein, mit Ö.", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
 
 review:
-  linguistic: { status: pending, notes: "Draft for calibration. Needs a qualified German teacher or native speaker (DG-007)." }
-  pedagogical: { status: pending }
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). No audio yet (ADR-0019): sounds are described in writing and need a spoken check. Check the descriptions of ä (close to e in English 'bed') and of ö/ü as rounded e/i." }
+  pedagogical: { status: pending, notes: "Nein, mit Ü and Ja, mit U are short answer chunks; no grammar is taught." }
   rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }
