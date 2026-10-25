@@ -140,3 +140,7 @@ The latest hosted run passed repository foundation, content/tests/build/typechec
 ## Writing Studio
 
 The writing board offers realistic A1–A2 message prompts, a focused draft editor, a live word count, and a reusable self-review checklist. Drafts are stored per language on the learner’s device only. The board does not claim automated language grading and does not add writing drafts to learning-progress events. It is linked from Practice and supports four interface languages.
+
+
+## Speaking workshop
+The device-local speaking workshop offers three practical A1 prompts, optional browser speech playback, and an explicit microphone action followed by playback or deletion. Audio is held in page memory only, never uploaded, and is discarded when the learner leaves. It does not claim pronunciation scoring or automated assessment. It is linked from Practice and translated in en/ru/uk/ar.
