@@ -109,7 +109,7 @@ Evidence per requirement: [project audit §3](../development/PROJECT_AUDIT_2026-
 | F9 | Google/Apple sign-in, account deletion, attempts saved to the account | P2 | Implemented, not configured |
 | F9 | Session refresh, browser outbox, account progress read/import, export | P2–P3 | Refresh/outbox/read/import implemented; full GDPR export/audit is DG-028; email sign-in not implemented |
 | F7 | Evidence events, states, recommendations | P2 | Engine, due-review classification, account/device merge, and explainable Home next step implemented (#77); later analytics remain planned |
-| F2 | Knowledge map UI with title search | P2 | Implemented; route choice and catch-up planned |
+| F2 | Knowledge map and learner-owned route choice | P2–P3 | Map and local route choice/reorder/skip implemented; prerequisite catch-up and account route sync remain planned |
 | F5 | Review scheduler v1 and Review Room | P3 | Scheduler and due classification implemented; daily session in open PR #78 |
 | F6 | Reading library, contextual lookup, vocabulary review | P4 | Pilot implemented on device; lexicon and account sync remain planned |
 | F6 | Learner dictionary and audio | P4–P5 | Planned |

@@ -226,14 +226,14 @@ export function deviceKeyValue(): KeyValue {
 
 /**
  * Removes everything DeutschGo keeps in this browser: the plan, remembered language,
- * answers, queued sends and saved vocabulary. An account's copy is not touched:
+ * answers, queued sends, saved vocabulary and route preferences. An account's copy is not touched:
  * deleting it is the account's own action. Returns false if
  * storage refused, so the caller can say the data is still there instead of claiming
  * it is gone.
  */
 export function clearDeviceData(): boolean {
   try {
-    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1"]) window.localStorage.removeItem(key);
+    for (const key of [SETUP_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {

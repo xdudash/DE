@@ -72,6 +72,13 @@
 5. A remembered word advances through 1, 3, 7, 16, and 35 day intervals. **Again** returns it in ten minutes. The board also lists scheduled and due words and allows removal.
 6. Vocabulary, context, and dates are local to this browser. They are excluded from account progress and cross-device claims until a lexicon/saved-vocabulary server contract is implemented.
 
+## L — Choose and shape a learning route (device pilot)
+1. Open **Edit route** from the Home learning line to see the available course lines, their level range, available lessons, and completion progress.
+2. Choose the active route. Its line immediately drives the Home stations and the explainable next-step recommendation.
+3. Reorder topics with the up/down controls, or skip topics for now. A skipped topic disappears from the Home line and route recommendation, but stays reachable from the Knowledge Map; completed evidence is never removed.
+4. Restore skipped topics or reset a route to its authored order. The active route and its custom order are stored on this device and cleared by the existing delete-device-data action.
+5. Changing a route never rewrites learning history. Account sync of route preferences can be added with the profile model later.
+
 ## F — Listen, speak, and write
 - Listening tasks include real audio, controlled replay, and suitable comprehension checks.
 - Speaking tasks say whether they practise pronunciation, prepared speech, or conversation; assessment claims match actual capability.

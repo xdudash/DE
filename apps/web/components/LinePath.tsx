@@ -7,36 +7,21 @@
  *
  * The line comes from the content route; the states come from shared account/device answers.
  */
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { translator } from "@deutschgo/i18n";
 import { useProgress } from "../lib/progress/client";
-import { lineProgress, stationStates, type AnsweredByUnit, type StationKind } from "../lib/path";
+import { lineProgress, stationStates, type AnsweredByUnit } from "../lib/path";
 import { Icon } from "./Icon";
+import { useRoutePlan, type RoutePlanOption } from "../lib/route-plan-client";
 
-export interface Station {
-  id: string;
-  title: string;
-  kind: StationKind;
-  unitId?: string;
-  href?: string;
-  /** Level and length, already formatted on the server. */
-  meta?: string;
-  exerciseIds: string[];
-}
+interface Props { lang: string; routes: RoutePlanOption[]; defaultRouteId: string }
 
-interface Props {
-  lang: string;
-  line: { title: string; badge: string };
-  stations: Station[];
-  /** Illustration for the lesson it belongs to, rendered by the server. */
-  preview?: { unitId: string; node: ReactNode };
-}
-
-export function LinePath({ lang, line, stations, preview }: Props) {
+export function LinePath({ lang, routes, defaultRouteId }: Props) {
   const msg = translator(lang);
   const { attempts } = useProgress();
   const list = useRef<HTMLOListElement>(null);
+  const { activeRoute, activeRouteId, activeSteps } = useRoutePlan(routes, defaultRouteId);
 
   // Open the line where the learner is: bring "you are here" into view once, if it is not.
   useEffect(() => {
@@ -44,7 +29,12 @@ export function LinePath({ lang, line, stations, preview }: Props) {
     if (!here) return;
     const box = here.getBoundingClientRect();
     if (box.top < 0 || box.bottom > window.innerHeight) here.scrollIntoView({ block: "center" });
-  }, []);
+  }, [activeRouteId]);
+
+  if (!activeRoute) return null;
+  const stations = activeSteps;
+  const line = { title: activeRoute.title, badge: activeRoute.badge };
+  const preview = activeRoute.preview;
 
   const answered: AnsweredByUnit = {};
   for (const station of stations) if (station.unitId) {
@@ -63,6 +53,7 @@ export function LinePath({ lang, line, stations, preview }: Props) {
           <h1 id="line-title">{line.title}</h1>
           <p>{msg("path.progress", { done, total })}</p>
         </div>
+        <Link className="line-edit" href={`/${lang}/routes`}>{msg("routeStudio.editRoute")}</Link>
       </header>
       <div className="line-meter" aria-hidden="true">
         <span style={{ inlineSize: `${percent}%` }} />
