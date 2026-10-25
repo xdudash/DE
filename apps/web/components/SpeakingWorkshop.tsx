@@ -28,6 +28,7 @@ export function SpeakingWorkshop({ prompts, labels }: { prompts: Prompt[]; label
     chunks.current = [];
   }
   function sayPrompt() {
+    if (!prompt) return;
     if (!("speechSynthesis" in window)) { setError(true); return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(prompt.sentence);
