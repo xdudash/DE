@@ -36,16 +36,25 @@ interface Props {
 export function ConceptMap({ lang, items, graph }: Props) {
   const msg = translator(lang);
   const [query, setQuery] = useState("");
+  const [levelFilter, setLevelFilter] = useState("all");
+  const [stateFilter, setStateFilter] = useState("all");
   const { attempts, status } = useProgress();
   const states = useMemo(() => {
     const derived = deriveConceptStates(graph, attempts, Date.now());
     return Object.fromEntries([...derived].map(([id, s]) => [id, s.state]));
   }, [graph, attempts]);
 
+  const levels = useMemo(() => [...new Set(items.map((item) => item.level))].sort(), [items]);
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return q ? items.filter((i) => i.title.toLowerCase().includes(q)) : items;
-  }, [items, query]);
+    const q = query.trim().toLocaleLowerCase(lang);
+    return items.filter((item) => {
+      if (levelFilter !== "all" && item.level !== levelFilter) return false;
+      if (q && !item.title.toLocaleLowerCase(lang).includes(q)) return false;
+      if (stateFilter === "planned") return item.planned;
+      if (item.planned) return stateFilter === "all";
+      return stateFilter === "all" || states[item.id] === stateFilter;
+    });
+  }, [items, query, levelFilter, stateFilter, states, lang]);
 
   return (
     <div className="map">
@@ -53,6 +62,10 @@ export function ConceptMap({ lang, items, graph }: Props) {
         <span>{msg("map.search")}</span>
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} />
       </label>
+      <div className="map-filter-row">
+        <label className="map-filter"><span>{msg("map.levelFilter")}</span><select value={levelFilter} onChange={(event) => setLevelFilter(event.target.value)}><option value="all">{msg("map.allLevels")}</option>{levels.map((level) => <option key={level} value={level}>{level}</option>)}</select></label>
+        <label className="map-filter"><span>{msg("map.stateFilter")}</span><select value={stateFilter} onChange={(event) => setStateFilter(event.target.value)}><option value="all">{msg("map.allTopics")}</option><option value="planned">{msg("map.plannedFilter")}</option>{(["unseen", "available", "in_progress", "needs_practice", "review_due", "provisionally_mastered"] as ConceptState[]).map((state) => <option key={state} value={state}>{msg(STATE_KEY[state])}</option>)}</select></label>
+      </div>
       <p className="muted small">{msg(status === "account" ? "map.account" : "map.onDevice")}</p>
       {visible.length === 0 && <p>{msg("map.noMatch")}</p>}
       <ul className="topics">
