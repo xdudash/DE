@@ -14,7 +14,6 @@
 import type {
   ClozeExercise,
   CategorizeExercise,
-  ConnectorChoiceExercise,
   DictationExercise,
   ErrorCorrectionExercise,
   MatchPairsExercise,
@@ -23,7 +22,6 @@ import type {
   TokenBankBuildExercise,
   VerbPositionExercise,
   MultiChoiceExercise,
-  NegationExercise,
   ReplyChoiceExercise,
   TextInputExercise,
   TrueFalseExercise,
