@@ -5,6 +5,7 @@
  * plus a search box. States come from the learning engine; planned topics are shown
  * as planned, never as practised.
  */
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { deriveConceptStates, type ConceptState, type GraphConcept } from "@deutschgo/learning-engine";
 import { translator, type MessageKey } from "@deutschgo/i18n";
@@ -15,7 +16,8 @@ export interface MapItem {
   title: string;
   level: string;
   planned: boolean;
-  prerequisites: string[];
+  href: string;
+  prerequisites: { id: string; title: string; href: string }[];
 }
 
 const STATE_KEY: Record<ConceptState, MessageKey> = {
@@ -73,7 +75,7 @@ export function ConceptMap({ lang, items, graph }: Props) {
           const state = states[item.id];
           return (
             <li key={item.id} id={item.id} className={item.planned ? "step planned" : "step"}>
-              <strong>{item.title}</strong>{" "}
+              <strong><Link href={item.href}>{item.title}</Link></strong>{" "}
               <span className="tag">{item.level}</span>{" "}
               {item.planned ? (
                 <span className="tag">{msg("catalog.plannedConcept")}</span>
@@ -81,7 +83,7 @@ export function ConceptMap({ lang, items, graph }: Props) {
                 state && <span className="tag">{msg(STATE_KEY[state])}</span>
               )}
               {item.prerequisites.length > 0 && (
-                <div className="step-meta">{msg("catalog.prerequisites")}: {item.prerequisites.join(", ")}</div>
+                <div className="step-meta">{msg("catalog.prerequisites")}: {item.prerequisites.map((prerequisite, index) => <span key={prerequisite.id}>{index > 0 ? ", " : ""}<Link href={prerequisite.href}>{prerequisite.title}</Link></span>)}</div>
               )}
             </li>
           );
