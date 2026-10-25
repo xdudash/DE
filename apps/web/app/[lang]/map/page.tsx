@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { graphFromBundle } from "@deutschgo/learning-engine";
 import { ConceptMap, type MapItem } from "../../../components/ConceptMap";
 import { bundle, dictionaryFor, t } from "../../../lib/content";
@@ -18,6 +19,7 @@ export default async function KnowledgeMap({ params }: { params: Promise<{ lang:
     title: title(c.id, c, c.title),
     level: c.cefr.introduced,
     planned: c.status === "planned",
+    category: c.kind === "grammar" || c.kind === "morphology" ? "grammar" : c.kind === "lexeme_sense" || c.kind === "collocation" ? "words" : "other",
     href: unitForConcept.has(c.id) ? `/${lang}/learn/${unitForConcept.get(c.id)}` : `/${lang}/map#${c.id}`,
     prerequisites: (c.relations ?? [])
       .filter((r) => r.type === "depends_on")
@@ -37,6 +39,7 @@ export default async function KnowledgeMap({ params }: { params: Promise<{ lang:
       {localeInfo(lang).preview && (
         <p className="banner">{msg("status.fallback", { language: "English" })}</p>
       )}
+      <div className="map-actions"><Link className="btn btn-secondary" href={"/" + lang + "/routes"}>{msg("nav.route")}</Link></div>
       <ConceptMap lang={lang} items={items} graph={graphFromBundle(b)} />
     </main>
   );
