@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78–#85 merged; minimal pairs and local Writing Studio are implemented)
+Last updated: 2026-10-25 (PRs #78–#87 merged; speaking workshop implemented)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -69,6 +69,10 @@ The permanent link is the production deployment of `main` on Vercel (ADR-0005). 
 
 ## Next recommended task
 Add a speaking workshop with clear microphone consent and honest pronunciation feedback. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+
+## Latest implementation — speaking workshop
+- PR #87 adds three practical speaking prompts at `/{lang}/speaking`, browser voice playback, explicit microphone consent, in-page recording playback and deletion, and unsupported-browser handling.
+- Audio is never uploaded or persisted; the UI states that pronunciation is not scored. The Practice board links to the workshop. Interface strings are translated in en/ru/uk/ar.
 
 ## Next implementation block — speaking practice
 - Add an accessible speaking workshop with explicit microphone consent and no unsupported pronunciation-scoring claims.

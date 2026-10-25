@@ -115,3 +115,11 @@ Minimal-pairs exercise: listen to the target word, play the candidate spellings 
 3. Write a German draft; a live word count helps keep the response concise.
 4. Review task coverage, clarity, verb position, spelling, and punctuation.
 5. Mark the draft self-reviewed. Drafts stay on this device and are not automatically graded or included in learning-progress events.
+
+
+## N — Speak, record, and review (device session)
+1. Open Speaking workshop from Practice and choose a café, appointment, or introduction scenario.
+2. Read the purpose and German response, or hear it with the browser's German voice.
+3. Recording begins only after the learner presses the microphone action and grants browser permission. Stop recording to create an in-page playback.
+4. Play back or delete the recording. It is held only in page memory, never uploaded, and disappears when the page is left or refreshed.
+5. State clearly that no pronunciation score or automated assessment is provided; show a fallback when microphone recording is unsupported.

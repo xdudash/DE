@@ -35,6 +35,7 @@ export default async function Practice({ params }: { params: Promise<{ lang: str
         <span>{msg("practice.writingDescription")}</span>
         <strong>{msg("practice.writingCta")} →</strong>
       </Link>
+      <Link href={`/${lang}/speaking`} className="card practice-writing-link"><span className="pill blue">{msg("practice.speakingTitle")}</span><span>{msg("practice.speakingDescription")}</span><strong>{msg("practice.speakingCta")} →</strong></Link>
       <PracticeList lang={lang} graph={graphFromBundle(b)} targets={targets} missions={scenarioMissions(b, (id, ref) => title(id, b.units.find((u) => u.id === id), ref))} />
     </main>
   );
