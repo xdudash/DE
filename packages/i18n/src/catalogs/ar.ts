@@ -498,4 +498,9 @@ export const ar: Catalog = {
   "map.allLevels": "كل المستويات",
   "map.allTopics": "كل الموضوعات",
   "map.plannedFilter": "موضوعات مخططة",
+  "map.categoryFilter": "نوع الموضوع",
+  "map.allCategories": "كل الأنواع",
+  "map.grammarCategory": "قواعد",
+  "map.wordsCategory": "مفردات",
+  "map.otherCategory": "أخرى",
 };

@@ -491,6 +491,11 @@ export const en = {
   "map.allLevels": "All levels",
   "map.allTopics": "All topics",
   "map.plannedFilter": "Planned topics",
+  "map.categoryFilter": "Topic type",
+  "map.allCategories": "All types",
+  "map.grammarCategory": "Grammar",
+  "map.wordsCategory": "Words",
+  "map.otherCategory": "Other",
 } as const;
 
 export type MessageKey = keyof typeof en;

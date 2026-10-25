@@ -486,4 +486,9 @@ export const ru: Catalog = {
   "map.allLevels": "Все уровни",
   "map.allTopics": "Все темы",
   "map.plannedFilter": "Запланированные темы",
+  "map.categoryFilter": "Тип темы",
+  "map.allCategories": "Все типы",
+  "map.grammarCategory": "Грамматика",
+  "map.wordsCategory": "Слова",
+  "map.otherCategory": "Другое",
 };
