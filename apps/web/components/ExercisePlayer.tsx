@@ -119,6 +119,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
+    (exercise.type === "token_bank_build" && order.length > 0) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
     ((exercise.type === "transform" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
@@ -153,6 +154,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "match_pairs": response = { type: "match_pairs", matches }; break;
           case "categorize": response = { type: "categorize", assignments }; break;
           case "word_order": response = { type: "word_order", order }; break;
+          case "token_bank_build": response = { type: "token_bank_build", order }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
           case "keyword_build": response = { type: "keyword_build", text: free }; break;
@@ -300,7 +302,6 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
       {exercise.type === "multi_choice" && (
         <>
           {exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
-          <p className="muted small">{labels.chooseAll}</p>
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
             {exercise.options.map((o, i) => {
@@ -433,6 +434,45 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
                 onClick={() => setOrder([...order, i])}
               >
                 {tok}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {exercise.type === "token_bank_build" && (
+        <>
+          <p className="muted small">{labels.chooseAll}</p>
+          <div
+            className={`built${locked ? (checked?.correct ? " is-right" : " is-wrong") : ""}`}
+            role="group"
+            aria-label={labels.yourAnswer}
+          >
+            {order.map((tokenIndex, position) => (
+              <button
+                key={`${tokenIndex}-${position}`}
+                type="button"
+                lang="de"
+                className="token placed"
+                disabled={locked}
+                onClick={() => setOrder(order.filter((_, current) => current !== position))}
+              >
+                {exercise.tokens[tokenIndex]}
+              </button>
+            ))}
+            {order.length > 0 && <span className="punct" lang="de">{exercise.final_punctuation}</span>}
+          </div>
+          <div className="tokens">
+            {exercise.tokens.map((token, index) => (
+              <button
+                key={index}
+                type="button"
+                lang="de"
+                className={`token${order.includes(index) ? " used" : ""}`}
+                disabled={locked || order.includes(index)}
+                onClick={() => setOrder([...order, index])}
+              >
+                {token}
               </button>
             ))}
           </div>

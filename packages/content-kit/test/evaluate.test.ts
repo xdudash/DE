@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
-import { EvaluationError, assembleWordOrder, evaluate, findOrderFor, normalizeAnswer, signalledConcepts } from "../src/evaluate.ts";
+import { EvaluationError, assembleTokenBankBuild, assembleWordOrder, evaluate, findOrderFor, normalizeAnswer, signalledConcepts } from "../src/evaluate.ts";
 import type { CategorizeExercise, ClozeExercise, SingleChoiceExercise, TransformExercise } from "../src/types.ts";
 import { wordOrder } from "./fixtures.ts";
 
@@ -20,6 +20,26 @@ describe("normalizeAnswer", () => {
   it("applies NFC so decomposed umlauts match", () => {
     assert.equal(normalizeAnswer("Ü̈ber".slice(1)), normalizeAnswer("̈ber".normalize("NFC")));
     assert.equal(normalizeAnswer("fährt"), normalizeAnswer("fährt"));
+  });
+});
+
+describe("token_bank_build", () => {
+  const exercise = {
+    ...base, id: "x_bank", type: "token_bank_build" as const,
+    feedback: { correct: "@ok" as const, incorrect: "@no" as const },
+    tokens: ["heute", "ich", "lerne", "Deutsch", "morgen"],
+    solutions: [[1, 2, 3, 0]],
+    final_punctuation: "." as const,
+  };
+  it("assembles a partial bank selection and ignores unused distractors", () => {
+    assert.equal(assembleTokenBankBuild(exercise, [1, 2, 3, 0]), "Ich lerne Deutsch heute.");
+    assert.equal(evaluate(exercise, { type: "token_bank_build", order: [1, 2, 3, 0] }).correct, true);
+  });
+  it("rejects an incorrect order and invalid or repeated indices", () => {
+    assert.equal(evaluate(exercise, { type: "token_bank_build", order: [1, 3, 2, 0] }).correct, false);
+    assert.throws(() => assembleTokenBankBuild(exercise, [1, 1]), EvaluationError);
+    assert.throws(() => assembleTokenBankBuild(exercise, [6]), EvaluationError);
+    assert.throws(() => assembleTokenBankBuild(exercise, []), EvaluationError);
   });
 });
 

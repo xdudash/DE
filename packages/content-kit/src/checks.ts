@@ -308,6 +308,30 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             }
             break;
           }
+          case "token_bank_build": {
+            if (ex.tokens.length < 2 || ex.tokens.length > 12) c.error("exercise.token_count", u.id, `${where}: use 2 to 12 word-bank tokens`);
+            if (ex.solutions.length === 0) c.error("exercise.solution_count", u.id, `${where}: at least one solution is required`);
+            const seenSolutions = new Set<string>();
+            for (const solution of ex.solutions) {
+              if (solution.length === 0 || solution.length > ex.tokens.length) {
+                c.error("exercise.solution_length", u.id, `${where}: each solution must use one or more available tokens`);
+                continue;
+              }
+              if (solution.some((index) => !Number.isInteger(index) || index < 0 || index >= ex.tokens.length)
+                || new Set(solution).size !== solution.length) {
+                c.error("exercise.solution_indices", u.id, `${where}: solution indices must be unique valid token positions`);
+                continue;
+              }
+              const answer = evaluate(ex, { type: "token_bank_build", order: solution });
+              if (!answer.correct) c.error("exercise.self_check", u.id, `${where}: authored solution does not evaluate as correct`);
+              const normalized = normalizeAnswer(answer.normalizedResponse ?? "");
+              if (seenSolutions.has(normalized)) c.error("exercise.duplicate_solution", u.id, `${where}: solutions must produce distinct sentences`);
+              seenSolutions.add(normalized);
+            }
+            const identity = ex.tokens.map((_, index) => index);
+            if (evaluate(ex, { type: "token_bank_build", order: identity }).correct) c.warn("exercise.reveals_answer", u.id, `${where}: the full word bank is already a correct sentence`);
+            break;
+          }
           case "word_order": {
             if (ex.tokens.length > 9) c.error("exercise.too_many_tokens", u.id, `${where}: at most 9 tokens supported`);
             for (const a of ex.accept) {

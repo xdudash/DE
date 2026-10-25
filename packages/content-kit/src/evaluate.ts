@@ -19,6 +19,7 @@ import type {
   MatchPairsExercise,
   MinimalPairsExercise,
   KeywordBuildExercise,
+  TokenBankBuildExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
   TextInputExercise,
@@ -74,7 +75,8 @@ export type Response =
   | { type: "word_order"; order: number[] }
   | { type: "cloze"; gaps: string[] }
   | { type: "transform"; text: string }
-  | { type: "keyword_build"; text: string };
+  | { type: "keyword_build"; text: string }
+  | { type: "token_bank_build"; order: number[] };
 
 export interface GapResult {
   index: number;
@@ -231,6 +233,30 @@ function evalWordOrder(ex: WordOrderExercise, order: number[]): EvaluationResult
   return result(ex, correct, normalizeAnswer(sentence), correct ? undefined : matchRule(ex.feedback.rules, sentence));
 }
 
+export function assembleTokenBankBuild(ex: TokenBankBuildExercise, order: number[]): string {
+  if (order.length === 0) throw new EvaluationError(`token_bank_build ${ex.id}: choose at least one token`);
+  const seen = new Set<number>();
+  const parts = order.map((i) => {
+    const token = ex.tokens[i];
+    if (token === undefined || seen.has(i)) {
+      throw new EvaluationError(`token_bank_build ${ex.id}: invalid or repeated token index ${i}`);
+    }
+    seen.add(i);
+    return token;
+  });
+  const sentence = parts.join(" ");
+  return sentence.charAt(0).toLocaleUpperCase("de-DE") + sentence.slice(1) + ex.final_punctuation;
+}
+
+function evalTokenBankBuild(ex: TokenBankBuildExercise, order: number[]): EvaluationResult {
+  const sentence = assembleTokenBankBuild(ex, order);
+  const correct = ex.solutions.some((solution) => {
+    try { return answersEqual(assembleTokenBankBuild(ex, solution), sentence); }
+    catch { return false; }
+  });
+  return result(ex, correct, normalizeAnswer(sentence), correct ? undefined : matchRule(ex.feedback.rules, sentence));
+}
+
 function evalCloze(ex: ClozeExercise, answers: string[]): EvaluationResult {
   if (answers.length !== ex.gaps.length) {
     throw new EvaluationError(`cloze ${ex.id}: expected ${ex.gaps.length} answers, got ${answers.length}`);
@@ -305,6 +331,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalTransform(ex, (response as Extract<Response, { type: "transform" }>).text);
     case "keyword_build":
       return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "keyword_build" }>).text);
+    case "token_bank_build":
+      return evalTokenBankBuild(ex, (response as Extract<Response, { type: "token_bank_build" }>).order);
   }
 }
 

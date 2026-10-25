@@ -162,6 +162,15 @@ export interface KeywordBuildExercise extends ExerciseBase {
   accept: string[];
 }
 
+export interface TokenBankBuildExercise extends ExerciseBase {
+  type: "token_bank_build";
+  /** German word chunks; each token can be used at most once. */
+  tokens: string[];
+  /** Correct token-index sequences. A sequence may leave distractor tokens unused. */
+  solutions: number[][];
+  final_punctuation: "." | "?" | "!";
+}
+
 export interface TransformExercise extends ExerciseBase {
   type: "transform";
   source_de: string;
@@ -233,7 +242,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

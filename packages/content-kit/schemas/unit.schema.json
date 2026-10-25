@@ -498,7 +498,8 @@
             "spelling_input",
             "number_input",
             "time_input",
-            "keyword_build"
+            "keyword_build",
+            "token_bank_build"
           ]
         }
       },
@@ -1191,6 +1192,48 @@
           "required": [
             "keywords",
             "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "token_bank_build"
+            },
+            "tokens": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 12,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            },
+            "solutions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "final_punctuation": {
+              "enum": [
+                ".",
+                "?",
+                "!"
+              ]
+            }
+          },
+          "required": [
+            "tokens",
+            "solutions",
+            "final_punctuation"
           ],
           "type": "object"
         }
