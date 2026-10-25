@@ -123,3 +123,9 @@ Minimal-pairs exercise: listen to the target word, play the candidate spellings 
 3. Recording begins only after the learner presses the microphone action and grants browser permission. Stop recording to create an in-page playback.
 4. Play back or delete the recording. It is held only in page memory, never uploaded, and disappears when the page is left or refreshed.
 5. State clearly that no pronunciation score or automated assessment is provided; show a fallback when microphone recording is unsupported.
+
+
+## O — Inspect learning progress
+1. Open the progress board from the profile.
+2. Read answer totals, accuracy, and concept states derived from saved evidence; show an empty state before the first answer.
+3. Keep the account-versus-device source visible and return to Home, Map, or Practice.

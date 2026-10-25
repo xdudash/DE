@@ -15,6 +15,7 @@ Current routes are prefixed with one of `en`, `uk`, `ru`, or `ar`. Static screen
 | Reading library | `/{lang}/library` | Library tab | Browse original, level-labelled reading cards; open a story; see saved and due vocabulary counts. |
 | Reading story | `/{lang}/library/{storyId}` | Library card | Read tokenized German text; select a marked word; inspect gloss and full sentence; save that token occurrence and context; navigate to vocabulary board. |
 | Vocabulary board | `/{lang}/vocabulary` | Library CTA, story lookup panel | Review due words one at a time; reveal meaning; choose Again (10 minutes) or remembered (1/3/7/16/35 days); inspect list and remove an item. All vocabulary state is local to this browser. |
+| Progress board | `/{lang}/progress` | Full progress link in profile | View evidence-based answer totals, accuracy and concept states; link back to Home, Map, or Practice. |
 | Learner profile | `/{lang}/me` | You tab | View plan, account state, progress, reminders; import device history when eligible; export account progress; clear all device state including saved vocabulary, or delete account. |
 | Sign-in start/callback | `/auth/start`, `/auth/callback` | Profile account panel | Start provider auth, handle callback, persist session cookie; profile age gate controls account use. |
 | Session actions | `/auth/refresh`, `/auth/sign-out`, `/auth/delete` | Session refresher and profile | Refresh session, sign out, or delete account after explicit in-product confirmation. |
