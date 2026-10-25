@@ -1416,3 +1416,45 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .minimal-pair-row { display: flex; align-items: stretch; gap: 0.5rem; }
 .minimal-pair-option { flex: 1; }
 .minimal-pair-play { flex: none; min-height: 48px; padding-inline: 0.8rem; }
+
+
+.writing-notes { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-block: 0.75rem 1rem; }
+.writing-notes p { margin: 0; }
+.writing-layout { display: grid; grid-template-columns: minmax(13rem, 0.75fr) minmax(0, 1.7fr); gap: 1rem; align-items: start; }
+.writing-prompts { display: grid; gap: 0.55rem; }
+.writing-prompts h2 { margin: 0 0 0.35rem; font-size: var(--step-0); }
+.writing-prompt { display: grid; gap: 0.4rem; width: 100%; padding: 0.8rem; text-align: start; }
+.writing-prompt.active { border-color: var(--blue); background: var(--blue-soft); }
+.writing-prompt .pill { justify-self: start; }
+.writing-workspace { min-width: 0; display: grid; gap: 0.85rem; }
+.writing-brief h2 { margin: 0.6rem 0 0.25rem; font-size: var(--step-1); }
+.writing-brief h3 { margin: 0.9rem 0 0.35rem; font-size: var(--step-0); }
+.writing-brief p { margin: 0.35rem 0; }
+.writing-brief ul { margin: 0.4rem 0 0; padding-inline-start: 1.3rem; }
+.writing-editor-heading { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.55rem; font-weight: 750; }
+.writing-editor textarea { display: block; width: 100%; min-height: 13rem; resize: vertical; padding: 0.85rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: inherit; line-height: 1.6; }
+.writing-editor textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.writing-save-row { align-items: center; margin-top: 0.75rem; }
+.writing-save-row .btn { flex: none; }
+.writing-review fieldset { display: grid; gap: 0.5rem; border: 0; padding: 0; margin: 0.5rem 0 0.9rem; }
+.writing-check { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.65rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface); }
+.writing-check input { flex: none; width: 1.15rem; height: 1.15rem; accent-color: var(--blue); }
+.writing-review-action { min-height: 48px; }
+.writing-reviewed { margin: 0; color: var(--ok); font-weight: 750; }
+.practice-writing-link { display: grid; justify-items: start; gap: 0.55rem; margin: 1rem 0; text-decoration: none; }
+.practice-writing-link:hover { border-color: var(--blue); }
+@media (max-width: 720px) {
+  .writing-layout { grid-template-columns: 1fr; }
+  .writing-prompts { grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+  .writing-prompts h2 { grid-column: 1 / -1; }
+  .writing-save-row { align-items: stretch; }
+}
+
+
+.writing-demo { display: grid; grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.6fr); gap: 14px; }
+.writing-demo-prompt { display: grid; gap: 8px; width: 100%; text-align: start; padding: 12px; margin-bottom: 8px; }
+.writing-demo-prompt.active { border-color: var(--blue); background: var(--blue-soft); }
+.writing-demo-prompt .pill { justify-self: start; }
+.writing-demo-main { display: grid; gap: 12px; min-width: 0; }
+.writing-demo-check { display: block; padding: 8px; background: var(--surface); margin: 6px 0; border-radius: 8px; }
+@media (max-width: 720px) { .writing-demo { grid-template-columns: 1fr; } }

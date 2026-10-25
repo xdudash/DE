@@ -25,6 +25,8 @@ function installStorage(options: { failWrites?: boolean; corrupt?: Record<string
       removeItem: (k: string) => {
         data.delete(k);
       },
+      key: (index: number) => [...data.keys()][index] ?? null,
+      get length() { return data.size; },
     },
     dispatchEvent: () => true,
   };
@@ -191,8 +193,9 @@ describe("one identity per answer (DG-022)", () => {
   });
 
   it("deleting this device's data also empties the outbox of unsent answers", () => {
-    const data = installStorage({ corrupt: { "deutschgo.outbox.v1": "[]" } });
+    const data = installStorage({ corrupt: { "deutschgo.outbox.v1": "[]", "deutschgo-writing-v1:ru": JSON.stringify({ drafts: {} }) } });
     assert.equal(clearDeviceData(), true);
     assert.equal(data.has("deutschgo.outbox.v1"), false);
+    assert.equal(data.has("deutschgo-writing-v1:ru"), false);
   });
 });

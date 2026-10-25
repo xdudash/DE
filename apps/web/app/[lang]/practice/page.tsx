@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { graphFromBundle } from "@deutschgo/learning-engine";
 import { PracticeList, type TargetLink } from "../../../components/PracticeList";
 import { bundle, dictionaryFor, t } from "../../../lib/content";
@@ -29,6 +30,11 @@ export default async function Practice({ params }: { params: Promise<{ lang: str
     <main className="page">
       <h1>{msg("practice.title")}</h1>
       <p className="lead">{msg("practice.lead")}</p>
+      <Link href={`/${lang}/writing`} className="card practice-writing-link">
+        <span className="pill blue">{msg("practice.writingTitle")}</span>
+        <span>{msg("practice.writingDescription")}</span>
+        <strong>{msg("practice.writingCta")} →</strong>
+      </Link>
       <PracticeList lang={lang} graph={graphFromBundle(b)} targets={targets} missions={scenarioMissions(b, (id, ref) => title(id, b.units.find((u) => u.id === id), ref))} />
     </main>
   );

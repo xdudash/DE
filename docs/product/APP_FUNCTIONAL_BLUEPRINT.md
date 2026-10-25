@@ -135,3 +135,8 @@ The latest hosted run passed repository foundation, content/tests/build/typechec
 ### Тренировка минимальных пар
 
 Плеер озвучивает целевое слово и отдельно каждый вариант. Ученик выбирает написание, соответствующее звучанию; целевую фразу можно повторить. При недоступной озвучке отображается текстовая опора и явное сообщение о переходе в режим сравнения написаний.
+
+
+## Writing Studio
+
+The writing board offers realistic A1–A2 message prompts, a focused draft editor, a live word count, and a reusable self-review checklist. Drafts are stored per language on the learner’s device only. The board does not claim automated language grading and does not add writing drafts to learning-progress events. It is linked from Practice and supports four interface languages.

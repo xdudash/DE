@@ -107,3 +107,11 @@ Error-correction exercise: inspect an incorrect sentence, rewrite it, submit the
 
 
 Minimal-pairs exercise: listen to the target word, play the candidate spellings one at a time, choose the matching word, and review the result. If speech synthesis is unavailable, show the target text and explain that the task is a spelling contrast.
+
+
+## N — Guided writing practice
+1. Open Writing Studio from Practice and choose an everyday or work situation.
+2. Read the situation and the three points the message should cover.
+3. Write a German draft; a live word count helps keep the response concise.
+4. Review task coverage, clarity, verb position, spelling, and punctuation.
+5. Mark the draft self-reviewed. Drafts stay on this device and are not automatically graded or included in learning-progress events.
