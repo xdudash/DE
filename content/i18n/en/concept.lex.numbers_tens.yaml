@@ -1,0 +1,13 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_tens
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Tens: 20 to 100"
+  summary: "The tens are single words. Most end in -zig; dreißig ends in -ßig; hundert is 100."
+  pattern.scope: "Tens from 20 to 90, hundert (100), and the numbers in between (units + und + tens, as one word), written as words and as digits."
+  pattern.limits: "Numbers above 100 are taught in A0.02.3."
+  ex.dreissig: "dreißig (thirty), 30: note ß."
+  ex.neunzig: "neunzig (ninety), 90."

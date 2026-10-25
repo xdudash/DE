@@ -1,0 +1,14 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.weekdays
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Days of the week"
+  summary: "The German week starts on Montag and ends on Sonntag. Samstag and Sonntag are the weekend."
+  pattern.scope: "The seven weekdays, written with a capital letter."
+  pattern.limits: "Sonnabend, a regional word for Saturday in northern Germany, is not taught as a main word."
+  ex.montag: "Montag (Monday): the first day of the week here."
+  ex.mittwoch: "Mittwoch (Wednesday): the middle of the week."
+  ex.sonntag: "Sonntag (Sunday): the last day of the week here."

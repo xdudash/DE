@@ -1,0 +1,25 @@
+# Canonical concept (A0, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+schema: deutschgo.concept/1
+id: concept.lex.numbers_tens
+version: 1.0.0
+status: needs_review
+kind: lexeme_sense
+domain: numbers
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "zwanzig … neunzig, hundert; Einer + und + Zehner: einundzwanzig, fünfundsiebzig"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_dreissig, de: "dreißig", gloss: "@ex.dreissig", highlight: [], source: src.deutschgo_original }
+  - { id: ex_neunzig, de: "neunzig", gloss: "@ex.neunzig", highlight: [], source: src.deutschgo_original }
+relations:
+  - { type: depends_on, target: concept.lex.numbers_cardinal }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check the spelling of dreißig (ß) and the pattern -zig / -ßig." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

@@ -1,0 +1,248 @@
+# A0 lesson, authored for DeutschGo with scripts/lesson_builder.py. Status needs_review: not reviewed by a human yet (DG-007, ADR-0021).
+schema: deutschgo.unit/1
+id: unit.lex.a0_0202_zahlen_60_100
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.lex.numbers_tens]
+prerequisites: [concept.lex.numbers_cardinal]
+goals: [general, everyday]
+estimated_minutes: 8
+objectives:
+  - { id: obj_main, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_1, de: "sechzig Minuten", gloss: "@ex.1", highlight: [] }
+      - { id: ex_2, de: "siebzig Euro", gloss: "@ex.2", highlight: [] }
+      - { id: ex_3, de: "Er ist achtzig.", gloss: "@ex.3", highlight: [] }
+      - { id: ex_4, de: "neunzig Cent", gloss: "@ex.4", highlight: [] }
+      - { id: ex_5, de: "Das kostet hundert Euro.", gloss: "@ex.5", highlight: [] }
+      - { id: ex_6, de: "fünfundsiebzig", gloss: "@ex.6", highlight: [] }
+
+  - { type: explanation, id: b_tip, body: "@tip" }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "sechzig", correct: true }
+          - { id: b, de: "sechszig", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "sechzehn", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x2
+        type: number_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        accept: ["70"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["17"], feedback: "@x2.r1" }
+        explanation: "@x2.expl"
+
+      - id: x3
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        statement_de: "Hundert ist die Zahl 100."
+        correct: true
+        wrong_feedback: "@x3.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
+
+      - id: x4
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: "sechzig", right_de: "60" }
+          - { id: b, left_de: "siebzig", right_de: "70" }
+          - { id: c, left_de: "achtzig", right_de: "80" }
+          - { id: d, left_de: "neunzig", right_de: "90" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "sechzig", correct: true }
+          - { id: b, de: "siebzig", correct: true }
+          - { id: c, de: "siebenzig", correct: false, feedback: "@x5.o3.fb" }
+          - { id: d, de: "sechszig", correct: false, feedback: "@x5.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x6
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x6.prompt"
+        accept: ["neunzig"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["neunzehn"], feedback: "@x6.r1" }
+          - { match: ["neuzig"], feedback: "@x6.r2" }
+        explanation: "@x6.expl"
+
+      - id: x7
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        line_de: "Was kostet das?"
+        options:
+          - { id: a, de: "Achtzig Euro.", correct: true }
+          - { id: b, de: "Achtzig Uhr.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Guten Abend.", correct: false, feedback: "@x7.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x7.expl"
+
+      - id: x8
+        type: word_order
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        tokens: ["achtzig", "Er", "ist"]
+        final_punctuation: "."
+        accept: ["Er ist achtzig."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x9
+        type: true_false
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        statement_de: "Fünfundsiebzig ist 57."
+        correct: false
+        wrong_feedback: "@x9.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x10
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        stem_de: "___hundert (100)"
+        accept: ["ein"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["eins"], feedback: "@x10.r1" }
+          - { match: ["zehn"], feedback: "@x10.r2" }
+        explanation: "@x10.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "neunundneunzig", correct: true }
+          - { id: b, de: "neunzigneun", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "neunundachtzig", correct: false, feedback: "@x11.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
+      - id: x12
+        type: number_input
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        accept: ["63"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["36"], feedback: "@x12.r1" }
+        explanation: "@x12.expl"
+
+      - id: x13
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "neunzig", correct: true }
+          - { id: b, de: "hundert", correct: true }
+          - { id: c, de: "einundachtzig", correct: true }
+          - { id: d, de: "siebzig", correct: false, feedback: "@x13.o4.fb" }
+          - { id: e, de: "achtzehn", correct: false, feedback: "@x13.o5.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x14
+        type: cloze
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        text_de: "Fünfzig plus {{0}} ist hundert. Zehn plus {{1}} ist siebzig."
+        gaps:
+          - { accept: ["fünfzig"] }
+          - { accept: ["sechzig"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x15
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.lex.numbers_tens]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        line_de: "Wie alt ist Herr Klein?"
+        options:
+          - { id: a, de: "Er ist achtzig.", correct: true }
+          - { id: b, de: "Er ist achtzig Euro.", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Er ist achtzehnzig.", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+review:
+  linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending, notes: "Er ist … and Wie alt ist …? are glossed chunks; the verb sein is taught in A0.03." }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

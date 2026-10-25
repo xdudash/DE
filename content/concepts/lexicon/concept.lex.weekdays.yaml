@@ -1,0 +1,25 @@
+# Canonical concept (A0, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
+schema: deutschgo.concept/1
+id: concept.lex.weekdays
+version: 1.0.0
+status: needs_review
+kind: lexeme_sense
+domain: time
+title: "@title"
+summary: "@summary"
+cefr: { introduced: A0, expected_mastery: A0 }
+pattern:
+  schema_de: "Montag · Dienstag · Mittwoch · Donnerstag · Freitag · Samstag · Sonntag"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_montag, de: "Montag", gloss: "@ex.montag", highlight: [], source: src.deutschgo_original }
+  - { id: ex_mittwoch, de: "Mittwoch", gloss: "@ex.mittwoch", highlight: [], source: src.deutschgo_original }
+  - { id: ex_sonntag, de: "Sonntag", gloss: "@ex.sonntag", highlight: [], source: src.deutschgo_original }
+relations: []
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft. Needs a qualified German teacher or native speaker (DG-007). Check Samstag/Sonnabend regional note." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

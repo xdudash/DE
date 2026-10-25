@@ -1,0 +1,13 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.numbers_tens
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Десятки: від 20 до 100"
+  summary: "Десятки — окремі слова. Більшість закінчується на -zig; dreißig — на -ßig; hundert — це 100."
+  pattern.scope: "Десятки від 20 до 90, hundert (100) і числа між ними (одиниці + und + десятки, одним словом), записані словами і цифрами."
+  pattern.limits: "Числа понад 100 вивчаємо в A0.02.3."
+  ex.dreissig: "dreißig (тридцять), 30: зверніть увагу на ß."
+  ex.neunzig: "neunzig (дев'яносто), 90."

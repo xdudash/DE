@@ -1,0 +1,14 @@
+schema: deutschgo.l10n/1
+entity: concept.lex.weekdays
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-25)
+strings:
+  title: "Дні тижня"
+  summary: "Німецький тиждень починається з Montag і закінчується Sonntag. Samstag і Sonntag — вихідні."
+  pattern.scope: "Сім днів тижня, з великої літери."
+  pattern.limits: "Sonnabend — регіональна назва суботи на півночі Німеччини; як основне слово не вивчаємо."
+  ex.montag: "Montag (понеділок): перший день тижня тут."
+  ex.mittwoch: "Mittwoch (середа): середина тижня."
+  ex.sonntag: "Sonntag (неділя): останній день тижня тут."
