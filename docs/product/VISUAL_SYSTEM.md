@@ -46,6 +46,7 @@ Buttons, answer options, word tokens and language cards have a 3–4px ledge in 
 - Practice has two clear jobs: spaced review of weak concepts and short missions based on authored DACH scenarios. Mission answers use the same evaluator, explanation, and progress event as lesson answers.
 - The progress view distinguishes local, waiting, synced, offline, and signed-out states. Account import is an explicit action with counts for responses that can and cannot be rechecked.
 - Layout references: [Home](./mockups/home.svg), [Practice](./mockups/practice.svg), [Progress](./mockups/progress.svg); full journey: [Global Experience Blueprint](./GLOBAL_EXPERIENCE.md).
+- Review Room uses a compact due queue, selectable daily load, estimated time, and one clear start action; see [Review Room mockup](./mockups/review.svg).
 
 ## Shell
 Phone first. Below 48rem: a slim top bar (brand, streak, XP, hearts) and a bottom tab bar with four sections. From 48rem: a fixed navigation column on the start side (brand, figures, sections, language switch at its foot) and the content in a column; the home screen adds a side column. Safe-area insets on all sides. Logical properties everywhere, so the Arabic preview mirrors without special cases.

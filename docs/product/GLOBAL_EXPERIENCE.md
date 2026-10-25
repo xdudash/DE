@@ -93,9 +93,10 @@ The SVGs are screen-level layout references for implementation and review:
 - [Practice and DACH missions](./mockups/practice.svg)
 - [A full conversational mission](./mockups/mission.svg)
 - [Progress and account sync](./mockups/progress.svg)
+- [Review Room and daily due queue](./mockups/review.svg)
 
 They use the accepted Linie visual system: transit-blue actions, green evidence, quiet surfaces, and no decorative colour that could be confused with a language marker.
 
 ## Implementation boundary for this release slice
 
-This update completes the account progress read path, safe re-evaluated import, shared progress display, explainable next step, and a mission mode over existing scenario exercises. Future areas above remain represented in the journey map and roadmap but stay gated until their real content, reviewer, legal, or provider prerequisites exist.
+The merged learner-loop update completes the account progress read path, safe re-evaluated import, shared progress display, explainable next step, and a mission mode over existing scenario exercises. The follow-up Review Room adds a daily due board and session on top of existing authored exercises and scheduler evidence. Other future areas remain gated until their real content, reviewer, legal, or provider prerequisites exist.

@@ -32,7 +32,7 @@ import { SaveStatus } from "./SaveStatus";
 
 export type FlowStep =
   | { kind: "learn"; id: string; content: ReactNode }
-  | { kind: "exercise"; id: string; exercise: Exercise; caption: string; exerciseId?: string; retry?: boolean };
+  | { kind: "exercise"; id: string; exercise: Exercise; caption: string; exerciseId?: string; retry?: boolean; sourceUnit?: { id: string; version: string; concepts: string[] }; sourceText?: PlayerText };
 
 export interface LessonFlowProps {
   lang: string;
@@ -41,6 +41,8 @@ export interface LessonFlowProps {
   text: PlayerText;
   next?: { href: string; title: string };
   saveNotice: { notSaved: string; saved: string };
+  forcePractice?: boolean;
+  exit?: { href: string; label: string };
 }
 
 function buzz(pattern: number | number[]) {
@@ -51,7 +53,7 @@ function buzz(pattern: number | number[]) {
   }
 }
 
-export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: LessonFlowProps) {
+export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePractice = false, exit }: LessonFlowProps) {
   const msg = translator(lang);
   const { attempts } = useProgress();
   const motivation = useMotivation();
@@ -66,10 +68,11 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
   // Practice when the lesson was already finished on this device before this run began.
   const [practice, setPractice] = useState(false);
   useEffect(() => {
+    if (forcePractice) { setPractice(true); return; }
     const answered = new Set(attempts.filter((attempt) => attempt.unitId === unit.id).map((attempt) => attempt.exerciseId));
     const ids = steps.flatMap((s) => (s.kind === "exercise" ? [s.exercise.id] : []));
     setPractice(ids.length > 0 && ids.every((id) => answered.has(id)));
-  }, [unit.id, steps, attempts]);
+  }, [unit.id, steps, attempts, forcePractice]);
 
   const done = index >= queue.length;
   const step = done ? undefined : queue[index];
@@ -153,7 +156,7 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
   return (
     <div className="flow">
       <header className="flow-top">
-        <Link href={`/${lang}`} className="flow-close" aria-label={msg("flow.close")}>
+        <Link href={exit?.href ?? `/${lang}`} className="flow-close" aria-label={exit?.label ?? msg("flow.close")}>
           <Icon name="close" size={22} />
         </Link>
         <div
@@ -190,9 +193,9 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
                 key={step.id}
                 ref={playerRef}
                 exercise={step.exercise}
-                text={text}
+                text={step.sourceText ?? text}
                 labels={labels}
-                unit={{ id: unit.id, version: unit.version, concepts: unit.concepts }}
+                unit={step.sourceUnit ?? { id: unit.id, version: unit.version, concepts: unit.concepts }}
                 checked={checked}
                 onReadyChange={setReady}
                 onSubmit={check}

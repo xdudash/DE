@@ -48,6 +48,10 @@ export function PracticeList({ lang, graph, targets, missions = [] }: Props) {
 
   return (
     <div aria-live="polite">
+      {groups.review_due.length > 0 && <section className="card review-entry">
+        <div><h2>{msg("review.dueNow")}: {groups.review_due.length}</h2><p className="muted">{msg("review.practiceLead")}</p></div>
+        <Link className="btn btn-primary" href={`/${lang}/review`}>{msg("review.start")}</Link>
+      </section>}
       {missions.length > 0 && <section className="practice-group missions">
         <h2>{msg("mission.title")}</h2>
         <p className="muted">{msg("mission.lead")}</p>

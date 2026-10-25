@@ -36,6 +36,14 @@
 4. Let weak or frequently missed concepts influence recommendations.
 5. Explain recommendations and allow the learner to override them.
 
+### E1 — Review Room
+1. Open the Review Room from a due recommendation on Home or the due-review panel in Practice.
+2. See due topics oldest-first, the total queue, estimated time, and the source of current progress.
+3. Choose 3, 5, or 10 topics; optionally remove individual topics from today's session.
+4. Answer one existing authored exercise per selected topic. The same evaluator, feedback, hearts, and offline outbox used in practice apply.
+5. A correct answer given while due advances the interval; a wrong answer resets it. An immediate retry cannot manufacture delayed-recall evidence.
+6. When nothing is due, show the next scheduled review date and a route back to practice. If a due topic has no usable exercise, explain that limit and leave it out of the startable queue.
+
 ## H — Practical mission
 1. Open Practice or the Home recommendation and choose a real-life DACH mission.
 2. Read the setting and the goal of the conversation.
