@@ -103,7 +103,7 @@ test.describe("phone navigation", () => {
 
   test("the top bar shows streak, XP and hearts", async ({ page }) => {
     await page.goto("/en");
-    await expect(page.getByRole("list", { name: "Your progress on this device" })).toBeVisible();
+    await expect(page.getByRole("list", { name: "Your learning progress" })).toBeVisible();
   });
 
   test("the bottom bar does not cover the end of the page", async ({ page }) => {

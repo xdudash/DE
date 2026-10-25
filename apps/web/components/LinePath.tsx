@@ -22,7 +22,6 @@ export interface Station {
   href?: string;
   /** Level and length, already formatted on the server. */
   meta?: string;
-  draft?: boolean;
   exerciseIds: string[];
 }
 
@@ -86,7 +85,6 @@ export function LinePath({ lang, line, stations, preview }: Props) {
                   <span className="station-name">{s.title}</span>
                 )}
                 <span className="station-meta">
-                  {reachable && s.draft && <span className="chip">{msg("status.draftTag")}</span>}
                   {state === "done" && <span className="chip ok">{msg("path.done")}</span>}
                   {state === "current" && <span className="chip here">{msg("path.here")}</span>}
                   {state === "planned" && <span className="chip">{msg("path.planned")}</span>}

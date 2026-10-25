@@ -10,7 +10,7 @@ Last updated: 2026-10-25 (global learner-loop implementation on `feat/dg-024-glo
 - The home screen now explains its next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream.
 - The account screen offers eligible/legacy import counts and a JSON download of account progress. This is not the full GDPR export/audit-log work tracked by DG-028.
 - Screen maps, learner paths, and Home, Practice, Mission, and Progress mockups are in [GLOBAL_EXPERIENCE.md](../product/GLOBAL_EXPERIENCE.md).
-- Local `npm run check` passed. PostgreSQL integration and Playwright browser runs were unavailable in this environment.
+- Local `npm run check` passed. CI PostgreSQL migration/RLS and attempt/import integration checks passed. The first hosted Playwright run found six stale UI expectations (61 passed); the copy, accessibility selectors, legacy review tags, and one mobile footnote hook are corrected on the PR branch. A rerun is pending.
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
@@ -60,4 +60,4 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Review and merge the global learner-loop branch after the database integration and browser journeys run in CI. Then continue with DG-028's complete export/audit path, DG-029 profile sync after Q4, and the remaining privacy/operations gates.
+Review and merge the global learner-loop branch after the corrected browser journeys pass in CI. PostgreSQL integration has passed. Then continue with DG-028's complete export/audit path, DG-029 profile sync after Q4, and the remaining privacy/operations gates.

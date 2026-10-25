@@ -104,7 +104,7 @@
 - [x] Replace per-screen reads with the shared attempt stream so all views update from the same events.
 - [x] Add an explicit import control on You, including eligible and ineligible counts, loading, error handling, and successful refresh.
 - [x] Add localized sync, import, and limitation copy in all interface catalogs.
-- [x] Run focused tests, typecheck, and the production build. Playwright journeys require the CI/browser environment.
+- [x] Run focused tests, typecheck, and the production build. Hosted CI ran Playwright; its first run found six stale UI expectations (61 passed), which are corrected on the branch and awaiting rerun.
 
 ### Task 4: Explainable next step and practical DACH missions
 
@@ -132,6 +132,6 @@
 ## Final verification
 
 - [x] `npm run check`
-- [ ] `npm run test:db` when PostgreSQL is available
-- [ ] `npm run e2e -w @deutschgo/web` with Playwright browsers available
-- [x] `git diff --check`; PostgreSQL integration and Playwright checks remain environment-backed and were not run here.
+- [x] CI PostgreSQL migration/RLS and attempt/import integration checks.
+- [ ] Hosted Playwright + axe rerun after fixing stale UI expectations (initial run: 61 passed, 6 failed).
+- [x] `git diff --check`; local browser startup is blocked by the sandbox network interface error, so browser journeys run in CI.

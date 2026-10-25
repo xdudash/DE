@@ -53,7 +53,6 @@ export function PracticeList({ lang, graph, targets, missions = [] }: Props) {
         <p className="muted">{msg("mission.lead")}</p>
         <ul className="topics">{missions.map((mission) => <li key={mission.unitId}>
           <Link href={`/${lang}/mission/${mission.unitId}`}><strong>{mission.title}</strong></Link>
-          {!mission.reviewed && <span className="tag">{msg("status.draftTag")}</span>}
           <p className="muted small">{mission.summary} · {msg("mission.turns", { count: mission.exerciseCount })}</p>
         </li>)}</ul>
       </section>}

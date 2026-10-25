@@ -26,7 +26,7 @@ export default async function Mission({ params }: { params: Promise<{ lang: stri
   const exercises = unitExercises(unit).filter((exercise) => exercise.type === "reply_choice");
   if (!exercises.length) notFound();
   const steps: FlowStep[] = [
-    { kind: "learn", id: "mission-intro", content: <><h1>{msg("mission.start")}: {t(dictionary, unit.title)}</h1><p className="lead">{t(dictionary, unit.summary)}</p>{unit.status !== "approved" && unit.status !== "published" && <p className="banner">{msg("status.notReviewed")}</p>}{hasFallback && <p className="banner">{msg("status.fallback", { language: pivotName })}</p>}<p className="muted">{msg("mission.feedback")}</p></> },
+    { kind: "learn", id: "mission-intro", content: <><h1>{msg("mission.start")}: {t(dictionary, unit.title)}</h1><p className="lead">{t(dictionary, unit.summary)}</p>{hasFallback && <p className="banner">{msg("status.fallback", { language: pivotName })}</p>}<p className="muted">{msg("mission.feedback")}</p></> },
     ...exercises.map((exercise) => ({ kind: "exercise" as const, id: exercise.id, exercise, caption: msg("mission.title") })),
   ];
   return <LessonFlow lang={lang} unit={{ id: unit.id, version: unit.version, concepts: unit.concepts, title: t(dictionary, unit.title), reviewed: unit.status === "approved" || unit.status === "published" }} steps={steps} text={text} saveNotice={{ notSaved: msg("status.noPersistence"), saved: msg("account.savedNote") }} />;

@@ -10,9 +10,6 @@ import Link from "next/link";
 import { scenarioMissions } from "../../lib/missions";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
 
-/** Content that has not passed human review is labelled wherever it is offered. */
-const REVIEWED = new Set(["approved", "published"]);
-
 /**
  * Home: the learner's line. The route that holds a written lesson is drawn as a transit
  * line with stations; the daily goal sits beside it. Everything else (all topics,
@@ -46,7 +43,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           unitId: unit.id,
           href: `/${lang}/learn/${unit.id}`,
           meta: msg("catalog.unitMeta", { level: unit.cefr, minutes: unit.estimated_minutes }),
-          draft: !REVIEWED.has(unit.status),
           exerciseIds: unit.blocks.flatMap((block) => (block.type === "exercises" ? block.items.map((e) => e.id) : [])),
         },
       ];
@@ -108,7 +104,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <h2 className="card-title">{msg("mission.title")}</h2>
             <p className="lead">{featuredMission.title}</p>
             <p className="muted small">{featuredMission.summary}</p>
-            {!featuredMission.reviewed && <p className="tag">{msg("status.draftTag")}</p>}
             <Link className="btn btn-primary" href={`/${lang}/mission/${featuredMission.unitId}`}>{msg("mission.homeCta")}</Link>
           </section>}
           <DailyGoal lang={lang} />
