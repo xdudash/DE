@@ -48,6 +48,15 @@ describe("connector_choice", () => {
   });
 });
 
+describe("dialogue_gap", () => {
+  const exercise = { id: "x_dialogue", type: "dialogue_gap" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, lines: [{ speaker: "a" as const, text_de: "Guten Morgen!" }, { speaker: "b" as const, accept: ["Guten Morgen!"] }, { speaker: "a" as const, text_de: "Wie geht es dir?" }] };
+  it("accepts an authored reply and rejects a reply that does not fit", () => {
+    assert.equal(evaluate(exercise, { type: "dialogue_gap", text: "Guten Morgen!" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "dialogue_gap", text: "Auf Wiedersehen!" }).correct, false);
+    assert.equal(evaluate(exercise, { type: "dialogue_gap", text: "" }).correct, false);
+  });
+});
+
 describe("read_question", () => {
   const exercise = { id: "x_read", type: "read_question" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, text_de: "Mia fährt am Samstag mit dem Zug nach Wien. Sie besucht dort ihre Schwester.", question_de: "Wen besucht Mia in Wien?", options: [{ id: "a", de: "Ihre Schwester.", correct: true }, { id: "b", de: "Ihre Mutter.", correct: false }, { id: "c", de: "Einen Freund.", correct: false }] };
   it("evaluates a reading answer and rejects a distractor", () => {
