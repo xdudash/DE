@@ -64,6 +64,7 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
       return { type: r.type, text: r.text };
     case "transform":
     case "keyword_build":
+    case "negation":
       if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
       return { type: r.type, text: r.text };
     default:
