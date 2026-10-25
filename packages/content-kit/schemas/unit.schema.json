@@ -488,6 +488,7 @@
             "match_pairs",
             "categorize",
             "listening_choice",
+            "minimal_pairs",
             "dictation",
             "error_correction",
             "reply_choice",
@@ -725,31 +726,51 @@
           "$ref": "#/$defs/exerciseBase",
           "unevaluatedProperties": false,
           "properties": {
-            "type": { "const": "dictation" },
-            "audio_text_de": { "$ref": "common.schema.json#/$defs/de" },
-            "stem_de": { "$ref": "common.schema.json#/$defs/de" },
+            "type": {
+              "const": "dictation"
+            },
+            "audio_text_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
             "accept": {
               "type": "array",
               "minItems": 1,
-              "items": { "$ref": "common.schema.json#/$defs/de" }
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
             }
           },
-          "required": ["audio_text_de", "accept"],
+          "required": [
+            "audio_text_de",
+            "accept"
+          ],
           "type": "object"
         },
         {
           "$ref": "#/$defs/exerciseBase",
           "unevaluatedProperties": false,
           "properties": {
-            "type": { "const": "error_correction" },
-            "source_de": { "$ref": "common.schema.json#/$defs/de" },
+            "type": {
+              "const": "error_correction"
+            },
+            "source_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
             "accept": {
               "type": "array",
               "minItems": 1,
-              "items": { "$ref": "common.schema.json#/$defs/de" }
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
             }
           },
-          "required": ["source_de", "accept"],
+          "required": [
+            "source_de",
+            "accept"
+          ],
           "type": "object"
         },
         {
@@ -1094,6 +1115,52 @@
           "required": [
             "source_de",
             "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "minimal_pairs"
+            },
+            "audio_text_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "de",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "audio_text_de",
+            "options"
           ],
           "type": "object"
         }

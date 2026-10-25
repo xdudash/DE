@@ -52,7 +52,7 @@ export const ar: Catalog = {
   "exercise.playAudio": "تشغيل الصوت الألماني",
   "exercise.playAgain": "التشغيل مرة أخرى",
   "exercise.speechNote": "يستخدم الصوت الألماني المتاح في متصفحك.",
-  "exercise.speechUnavailable": "الصوت غير متاح هنا؛ اقرأ الجملة بدلًا من ذلك.",
+  "exercise.speechUnavailable": "الصوت غير متاح؛ استخدم النص الظاهر كبديل.",
   "exercise.saveFailed": "تم التحقق من إجابتك وحُفظت في هذا المتصفح، لكن حسابك لم يقبلها.",
   "exercise.saveQueued": "تم التحقق من إجابتك. ليست في حسابك بعد: سيرسلها هذا المتصفح مرة أخرى تلقائيًا.",
   "exercise.stale": "تم تحديث هذا الدرس. أعد تحميل الصفحة للمتابعة بالإصدار الحالي.",
