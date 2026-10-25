@@ -147,7 +147,7 @@ export function ReviewBoard({ lang, graph, concepts, units }: {
           <span className="review-check" aria-hidden="true">✓</span>
           <h2>{msg(hasLearningHistory ? "review.allCaughtUp" : "review.firstSession")}</h2>
           <p className="muted">{msg(hasLearningHistory ? "review.emptyBody" : "review.firstSessionBody")}</p>
-          {nextReviewAt && <p className="review-next">{msg("review.nextDate", { date: new Date(nextReviewAt).toLocaleDateString(lang) })}</p>}
+          {nextReviewAt && <p className="review-next">{msg("review.nextDate")} <time dateTime={new Date(nextReviewAt).toISOString()}>{new Date(nextReviewAt).toLocaleDateString(lang)}</time></p>}
           <Link className="btn btn-primary" href={hasLearningHistory ? `/${lang}/practice` : `/${lang}`}>{msg(hasLearningHistory ? "review.backToPractice" : "home.startCta")}</Link>
         </section>
       ) : (
@@ -189,7 +189,7 @@ export function ReviewBoard({ lang, graph, concepts, units }: {
                     />
                     <span className="review-topic-main">
                       <strong>{topic.title}</strong>
-                      <span className="muted small">{topic.question ? msg("review.topicMeta", { date, count: topic.attempts }) : msg("review.noQuestion")}</span>
+                      <span className="muted small">{topic.question ? <>{msg("review.topicMeta", { count: topic.attempts })} · <time dateTime={new Date(topic.dueAt).toISOString()}>{date}</time></> : msg("review.noQuestion")}</span>
                     </span>
                     <span className="review-topic-arrow" aria-hidden="true">→</span>
                   </label>
