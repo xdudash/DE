@@ -371,6 +371,15 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (!evaluate(ex, { type: "cloze", gaps: firstAccepted }).correct) c.error("exercise.self_check", u.id, `${where}: accepted answers do not evaluate as correct`);
             break;
           }
+          case "separable_verb": {
+            for (const answer of ex.accept) {
+              if (!evaluate(ex, { type: "separable_verb", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted sentence "${answer}" does not evaluate as correct`);
+              const words = new Set(normalizeAnswer(answer).split(" "));
+              if (!words.has(normalizeAnswer(ex.finite_form_de)) || !words.has(normalizeAnswer(ex.prefix_de))) c.error("exercise.separable_parts_missing", u.id, `${where}: accepted sentence "${answer}" must include the finite form and separated prefix`);
+            }
+            if (ex.accept.some((answer) => answersEqual(answer, ex.source_de))) c.warn("exercise.reveals_answer", u.id, `${where}: source sentence is already an accepted answer`);
+            break;
+          }
           case "transform": {
             for (const a of ex.accept) if (!evaluate(ex, { type: "transform", text: a }).correct) c.error("exercise.self_check", u.id, `${where}: accepted "${a}" does not evaluate as correct`);
             if (ex.accept.some((a) => answersEqual(a, ex.source_de))) c.warn("exercise.reveals_answer", u.id, `${where}: source sentence is already an accepted answer`);
