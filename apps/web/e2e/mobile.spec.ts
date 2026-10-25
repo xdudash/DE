@@ -108,7 +108,7 @@ test.describe("phone navigation", () => {
 
   test("the bottom bar does not cover the end of the page", async ({ page }) => {
     await page.goto("/en");
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }));
     const bar = await page.locator("nav.tabbar").boundingBox();
     const last = await page.locator("main .footnote").boundingBox();
     expect(bar, "the tab bar should be on screen").not.toBeNull();

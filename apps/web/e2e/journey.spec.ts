@@ -279,7 +279,7 @@ test.describe("DACH missions", () => {
     await expect(page.getByText("Hallo, ich heiße Peter.")).toBeVisible();
     await page.getByRole("radio", { name: "Hallo, Peter! Ich heiße Anna." }).check();
     await action(page, "Check").click();
-    await expect(page.getByText("Correct.")).toBeVisible();
+    await expect(page.getByRole("status").getByText("Right!")).toBeVisible();
   });
 });
 
