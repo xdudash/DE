@@ -1,0 +1,63 @@
+# A0 lesson, authored for DeutschGo. Status needs_review: not reviewed by a human yet (DG-007).
+schema: deutschgo.unit/1
+id: unit.pron.a0_0105_umlaute_woerter
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A0
+concepts: [concept.pron.umlauts]
+prerequisites: []
+goals: [general, everyday]
+estimated_minutes: 10
+objectives:
+  - { id: obj_umlaut_words, text: "@obj", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@intro" }
+
+  - type: examples
+    id: b_examples
+    title: "@examples"
+    items:
+      - { id: ex_maedchen, de: "Mädchen", gloss: "@ex.maedchen", highlight: [] }
+      - { id: ex_broetchen, de: "Brötchen", gloss: "@ex.broetchen", highlight: [] }
+      - { id: ex_tuer, de: "Tür", gloss: "@ex.tuer", highlight: [] }
+
+  - { type: explanation, id: b_summary, body: "@summary_block" }
+
+  - type: exercises
+    id: b_practice
+    title: "@practice"
+    items:
+      - id: x_ue_word
+        type: single_choice
+        objective: obj_umlaut_words
+        concepts: [concept.pron.umlauts]
+        difficulty: 1
+        prompt: "@x_ue_word.prompt"
+        options:
+          - { id: a, de: "Tor", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Tür", correct: true }
+          - { id: c, de: "Tag", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.ue.expl"
+      - id: x_oe_word
+        type: single_choice
+        objective: obj_umlaut_words
+        concepts: [concept.pron.umlauts]
+        difficulty: 2
+        prompt: "@x_oe_word.prompt"
+        options:
+          - { id: a, de: "Mädchen", correct: false, feedback: "@fb.not_this" }
+          - { id: b, de: "Brötchen", correct: true }
+          - { id: c, de: "Brot", correct: false, feedback: "@fb.not_this" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.oe.expl"
+
+review:
+  linguistic: { status: pending, notes: "Draft for calibration. Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

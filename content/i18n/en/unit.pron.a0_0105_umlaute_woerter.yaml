@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0105_umlaute_woerter
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Umlauts in words"
+  summary: "Umlauts change the word, so write them correctly."
+  obj: "Find the umlaut in a word and spell it."
+  intro: "The umlaut is part of the word. Tür and Tor are different words, so a dot changes the meaning."
+  examples: "Words with umlauts."
+  summary_block: "**The umlaut belongs to the word.** Check the dots when you write."
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.maedchen: "Mädchen (girl): ä."
+  ex.broetchen: "Brötchen (roll): ö."
+  ex.tuer: "Tür (door): ü."
+  x.ue.expl: "Tür (door) has ü. Tor (gate) has no umlaut."
+  x_ue_word.prompt: "Which word has ü?"
+  x.oe.expl: "Brötchen has ö. Mädchen has ä, and Brot has no umlaut."
+  x_oe_word.prompt: "Which word has ö?"

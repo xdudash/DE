@@ -29,9 +29,9 @@ Do not load all docs or all content files by default.
 ## Non-negotiable principles
 1. Separate language knowledge, curriculum, content, learner state, localization, and UI code.
 2. Follow accepted ADRs; propose a new/superseding ADR instead of silently deviating.
-3. Never present mock, planned, unreviewed, or machine-translated material as finished; keep UI labels honest.
+3. Never present mock, planned, unreviewed, or machine-translated material as finished; keep UI labels honest. Pre-launch exception: ADR-0022 (learner-facing review labels are removed until launch; statuses in the data and the owner's views are kept).
 4. Never set content `approved`/`published` or l10n `reviewed` without a recorded human review.
-5. No bulk content before the gold unit is human-reviewed; afterwards batches ≤ review capacity.
+5. Drafting before the gold review is allowed in batches of 50–100 lessons, all `needs_review`, never approved or published by an agent; the owner samples each level (ADR-0021).
 6. Verify rights before using external material; only `approved` sources in `content/sources.yaml`.
 7. Never commit secrets or real learner data (the repository is public).
 8. Small, reversible, tested changes; preserve working behaviour.

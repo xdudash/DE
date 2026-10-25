@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.ortho.eszett_and_ss
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: ß and ss (and Swiss spelling)
-  summary: ß follows a long vowel or diphthong (Straße, heiß), ss a short one (Fluss). Swiss standard German writes ss everywhere.
+  title: "ß and ss"
+  summary: "ß and ss both sound like a sharp s. ß comes after a long vowel or a diphthong; ss after a short vowel."
+  pattern.scope: "ß follows long vowels and diphthongs; ss follows short vowels."
+  pattern.limits: "Switzerland writes ss instead of ß; this regional difference is taught later (ADR-0020)."
+  ex.strasse: "Straße (street): ß after the long a."
+  ex.fluss: "Fluss (river): ss after the short u."
+  ex.gross: "groß (big): ß after the long o."

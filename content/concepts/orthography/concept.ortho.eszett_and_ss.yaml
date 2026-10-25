@@ -1,14 +1,26 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Canonical concept (A0 track, ADR-0018). Authored for DeutschGo. Status needs_review: not reviewed by a human yet.
 schema: deutschgo.concept/1
 id: concept.ortho.eszett_and_ss
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: orthography
 domain: orthography
 title: "@title"
 summary: "@summary"
-cefr: { introduced: A1, expected_mastery: B1 }
+cefr: { introduced: A0, expected_mastery: B1 }
+pattern:
+  schema_de: "[langer Vokal] + ß; [kurzer Vokal] + ss"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_strasse, de: "Straße", gloss: "@ex.strasse", highlight: [], source: src.deutschgo_original }
+  - { id: ex_fluss, de: "Fluss", gloss: "@ex.fluss", highlight: [], source: src.deutschgo_original }
+  - { id: ex_gross, de: "groß", gloss: "@ex.gross", highlight: [], source: src.deutschgo_original }
 relations:
   - { type: depends_on, target: concept.pron.long_short_vowels }
-  - { type: related_to, target: concept.pron.long_short_vowels }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft for calibration. Needs a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Authored for DeutschGo; owner confirmation pending." }

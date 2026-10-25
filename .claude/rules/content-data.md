@@ -12,4 +12,4 @@ description: Rules for authored German-learning content and structured data
 - Preserve source, version, license/terms, attribution, and provenance for external material.
 - Treat AI-generated translations as drafts that require review.
 - Never mark linguistically or pedagogically unreviewed content as approved.
-- Avoid bulk generation before a gold-standard item has been reviewed.
+- Batch drafting (50–100 lessons per PR, all `needs_review`) follows ADR-0021; the owner samples each level.

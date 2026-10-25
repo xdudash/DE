@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0105_umlaute_woerter
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Умлаути в словах"
+  summary: "Умлаут змінює слово, тому пишіть його правильно."
+  obj: "Знаходити умлаут у слові і писати його."
+  intro: "Умлаут — частина слова. Tür і Tor — різні слова, крапки змінюють значення."
+  examples: "Слова з умлаутами."
+  summary_block: "**Умлаут належить слову.** Перевіряйте крапки, коли пишете."
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Це не те слово. Прочитайте пояснення."
+  fb.incorrect: "Не зовсім. Подивіться на слово ще раз."
+  ex.maedchen: "Mädchen (дівчина): ä."
+  ex.broetchen: "Brötchen (булочка): ö."
+  ex.tuer: "Tür (двері): ü."
+  x.ue.expl: "Tür (двері) має ü. Tor (ворота) без умлаута."
+  x_ue_word.prompt: "Яке слово має ü?"
+  x.oe.expl: "Brötchen має ö. Mädchen має ä, а Brot без умлаута."
+  x_oe_word.prompt: "Яке слово має ö?"

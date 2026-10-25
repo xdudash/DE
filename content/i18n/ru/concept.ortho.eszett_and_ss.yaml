@@ -1,9 +1,14 @@
 schema: deutschgo.l10n/1
 entity: concept.ortho.eszett_and_ss
 lang: ru
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: claude (AI draft, 2026-10-24)
 strings:
-  title: ß и ss (и швейцарское написание)
-  summary: ß ставится после долгого гласного или дифтонга (Straße, heiß), ss — после краткого (Fluss). В швейцарском варианте везде пишется ss.
+  title: "ß и ss"
+  summary: "ß и ss звучат как твёрдое s. ß пишется после долгой гласной или дифтонга; ss — после краткой гласной."
+  pattern.scope: "ß пишется после долгих гласных и дифтонгов; ss — после кратких гласных."
+  pattern.limits: "В Швейцарии пишут ss вместо ß; это региональное различие изучим позже (ADR-0020)."
+  ex.strasse: "Straße (улица): ß после долгого a."
+  ex.fluss: "Fluss (река): ss после краткого u."
+  ex.gross: "groß (большой): ß после долгого o."

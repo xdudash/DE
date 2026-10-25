@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0109_double_vowels_ie
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "Double vowels and ie"
+  summary: "Double vowels aa, ee, oo and ie are long. Learn them as a pattern."
+  obj: "Recognise aa, ee, oo and ie as long vowels."
+  intro: "aa, ee and oo are long vowels. ie is always a long i. Words with these spellings are long."
+  examples: "Words with aa, ee, oo and ie."
+  summary_block: "**aa, ee, oo and ie are long.** Learn the spelling with the word."
+  practice: "Practice"
+  fb.correct: "Correct."
+  fb.not_this: "Not this one. Read the explanation."
+  fb.incorrect: "Not quite. Look at the word again."
+  ex.saal: "Saal (hall): long a, spelt aa."
+  ex.see: "See (lake): long e, spelt ee."
+  ex.bier: "Bier (beer): long i, spelt ie."
+  x.ie.expl: "Bier has ie, a long i. mit and Bitte have short i."
+  x_ie.prompt: "Which word has the long i spelt ie?"
+  x.double.expl: "See has ee, a long e. Bett and Sonne have short vowels before double consonants."
+  x_double.prompt: "Which word has a long vowel spelt with a double letter (aa, ee, oo)?"

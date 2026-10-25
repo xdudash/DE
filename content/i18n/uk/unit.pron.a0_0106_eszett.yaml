@@ -1,0 +1,24 @@
+schema: deutschgo.l10n/1
+entity: unit.pron.a0_0106_eszett
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: claude (AI draft, 2026-10-24)
+strings:
+  title: "ß і ss"
+  summary: "Після довгого голосного пишемо ß; після короткого — ss."
+  obj: "Вибирати ß або ss після довгого чи короткого голосного."
+  intro: "ß і ss звучать однаково. Голосний перед ними підказує, що писати."
+  examples: "Слова з ß і ss."
+  summary_block: "**Довгий голосний: ß. Короткий голосний: ss.** Дивіться на голосний перед звуком s."
+  practice: "Практика"
+  fb.correct: "Правильно."
+  fb.not_this: "Це не те слово. Прочитайте пояснення."
+  fb.incorrect: "Не зовсім. Подивіться на слово ще раз."
+  ex.strasse: "Straße (вулиця): ß після довгого a."
+  ex.fluss: "Fluss (річка): ss після короткого u."
+  ex.gross: "groß (великий): ß після довгого o."
+  x.eszett.expl: "Straße: ß після довгого a. Strasse — швейцарський варіант, ß — німецький."
+  x_eszett_long.prompt: "Яке слово написано правильно після довгого голосного?"
+  x.ss.expl: "Fluss: ss після короткого u. Flus — не німецьке написання."
+  x_ss_short.prompt: "Яке слово пишеться з ss?"
