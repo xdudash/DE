@@ -14,7 +14,6 @@
 import type {
   ClozeExercise,
   CategorizeExercise,
-  CaseChoiceExercise,
   DictationExercise,
   ErrorCorrectionExercise,
   MatchPairsExercise,
