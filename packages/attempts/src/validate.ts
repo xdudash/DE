@@ -29,6 +29,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "preposition_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "preposition_choice", optionId: r.optionId };
+    case "read_question":
+      if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
+      return { type: "read_question", optionId: r.optionId };
     case "verb_position":
       if (!Number.isInteger(r.tokenIndex) || (r.tokenIndex as number) < 0) {
         throw new AttemptError("malformed_request", '"tokenIndex" must be a non-negative integer');

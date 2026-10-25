@@ -81,6 +81,7 @@ export type Response =
   | { type: "case_choice"; optionId: string }
   | { type: "preposition_choice"; optionId: string }
   | { type: "separable_verb"; text: string }
+  | { type: "read_question"; optionId: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -311,6 +312,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "case_choice" }>).optionId);
     case "preposition_choice":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "preposition_choice" }>).optionId);
+    case "read_question":
+      return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "read_question" }>).optionId);
     case "true_false":
       return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
     case "match_pairs":
