@@ -477,4 +477,8 @@ export const uk: Catalog = {
   "practice.speakingTitle": "Розмовна практика",
   "practice.speakingDescription": "Репетируйте відповідь німецькою та за бажанням записуйте її локально.",
   "practice.speakingCta": "Відкрити розмовну практику",
+  "progress.activityTitle": "Активність за останні 7 днів",
+  "progress.activityTotal": "Відповідей за тиждень: {count}",
+  "progress.activityDay": "Відповідей: {count}",
+  "progress.activityEmpty": "Тут з’являться відповіді за останні 7 днів.",
 };
