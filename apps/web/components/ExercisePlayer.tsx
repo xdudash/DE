@@ -29,6 +29,8 @@ export interface PlayerLabels {
   true: string;
   false: string;
   chooseMatch: string;
+  chooseCategory: string;
+  categoryScore: (correct: number, total: number) => string;
   chooseAll: string;
 }
 
@@ -72,6 +74,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   const [multi, setMulti] = useState<string[]>([]);
   const [truth, setTruth] = useState<boolean | null>(null);
   const [matches, setMatches] = useState<Record<string, string>>({});
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
   const [order, setOrder] = useState<number[]>([]);
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
@@ -82,6 +85,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
+    (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
     ((exercise.type === "transform" || isTextInput(exercise)) && free.trim() !== "");
@@ -111,6 +115,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
+          case "categorize": response = { type: "categorize", assignments }; break;
           case "word_order": response = { type: "word_order", order }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
@@ -142,7 +147,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         return outcome;
       },
     }),
-    [ready, locked, exercise, choice, multi, truth, matches, order, gaps, free, unit, practice],
+    [ready, locked, exercise, choice, multi, truth, matches, assignments, order, gaps, free, unit, practice],
   );
 
   const enterChecks = (e: KeyboardEvent) => {
@@ -248,6 +253,36 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             );
           })}
         </fieldset>
+      )}
+
+      {exercise.type === "categorize" && (
+        <fieldset className="match categorize" disabled={locked}>
+          <legend className="sr-only">{labels.yourAnswer}</legend>
+          {exercise.items.map((item) => {
+            const evaluated = checked?.items?.find((answer) => answer.id === item.id);
+            const feedback = evaluated?.feedback ? tr(text, evaluated.feedback) : "";
+            return (
+              <div key={item.id} className={`match-row categorize-row${locked ? (evaluated?.correct ? " is-right" : " is-wrong") : ""}`}>
+                <span className="match-left" lang="de">{item.de}</span>
+                <select
+                  className="match-right"
+                  aria-label={`${labels.yourAnswer}: ${item.de}`}
+                  value={assignments[item.id] ?? ""}
+                  onChange={(e) => setAssignments((current) => ({ ...current, [item.id]: e.target.value }))}
+                >
+                  <option value="">{labels.chooseCategory}</option>
+                  {exercise.categories.map((category) => <option key={category.id} value={category.id}>{tr(text, category.label)}</option>)}
+                </select>
+                {feedback && <small className="categorize-feedback">{feedback}</small>}
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
+      {exercise.type === "categorize" && checked?.items && (
+        <p className="categorize-score" role="status">
+          {labels.categoryScore(checked.items.filter((item) => item.correct).length, checked.items.length)}
+        </p>
       )}
 
       {exercise.type === "word_order" && (

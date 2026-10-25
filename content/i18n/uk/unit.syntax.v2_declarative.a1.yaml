@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: uk
-based_on_version: 1.0.0
+based_on_version: 1.1.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -135,3 +135,11 @@ strings:
   x.limits.c: "У W-питанні питальне слово займає позицію 1, а дієслово стоїть на позиції 2."
   x.limits.d: "*Ich* на позиції 1, *komme* на позиції 2."
   x.limits.explanation: "Загальне питання (так/ні) починається з дієслова (позиція 1): *Kommst du morgen?*"
+
+  # Interactive categorisation exercise: sort chunks by V2 sentence role.
+  x.categorize_v2.prompt: "Розподіліть частини речення «Heute arbeite ich von zu Hause.» за їхньою роллю в реченні."
+  x.categorize_v2.category.first: "Позиція 1 · перший елемент"
+  x.categorize_v2.category.verb: "Позиція 2 · дієслово зі змінюваною формою"
+  x.categorize_v2.category.middle: "Середина · підмет або деталі"
+  x.categorize_v2.item.verb: "Дієслово зі змінюваною формою залишається на позиції 2, одразу після першого елемента."
+  x.categorize_v2.explanation: "Heute — перший елемент, arbeite — дієслово зі змінюваною формою на позиції 2, а ich von zu Hause стоять у середині."

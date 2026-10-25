@@ -211,6 +211,17 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (!evaluate(ex, { type: "match_pairs", matches: all }).correct) c.error("exercise.self_check", u.id, `${where}: the correct pairing does not evaluate as correct`);
             break;
           }
+          case "categorize": {
+            const categoryIds = new Set(ex.categories.map((category) => category.id));
+            const itemIds = new Set(ex.items.map((item) => item.id));
+            if (categoryIds.size !== ex.categories.length) c.error("exercise.category_id", u.id, `${where}: duplicate category id`);
+            if (itemIds.size !== ex.items.length) c.error("exercise.item_id", u.id, `${where}: duplicate item id`);
+            for (const item of ex.items) if (!categoryIds.has(item.categoryId)) c.error("exercise.category_ref", u.id, `${where}: item ${item.id} uses unknown category ${item.categoryId}`);
+            for (const category of ex.categories) if (!ex.items.some((item) => item.categoryId === category.id)) c.error("exercise.category_empty", u.id, `${where}: category ${category.id} has no items`);
+            const assignments = Object.fromEntries(ex.items.map((item) => [item.id, item.categoryId]));
+            if (!evaluate(ex, { type: "categorize", assignments }).correct) c.error("exercise.self_check", u.id, `${where}: the authored categories do not evaluate as correct`);
+            break;
+          }
           case "reply_choice": {
             const n = ex.options.filter((o) => o.correct).length;
             if (n !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct reply required, found ${n}`);

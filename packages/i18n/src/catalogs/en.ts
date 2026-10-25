@@ -40,6 +40,7 @@ export const en = {
   "exercise.true": "True",
   "exercise.false": "False",
   "exercise.chooseMatch": "Choose a match",
+  "exercise.chooseCategory": "Choose a category",
   "exercise.chooseAll": "Choose all that apply",
   "exercise.saveFailed": "Your answer was checked and kept in this browser, but your account did not accept it.",
   "exercise.saveQueued": "Your answer was checked. It is not in your account yet: this browser will send it again automatically.",

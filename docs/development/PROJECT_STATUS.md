@@ -1,15 +1,16 @@
 # Project Status
 
-Last updated: 2026-10-25 (PR #78 merged as 8e1b0e5; device-local lesson resume is in progress)
+Last updated: 2026-10-25 (PR #78 merged as 8e1b0e5; PR #79 merged as 288a994; categorization exercise is in progress)
 
 ## Current phase
-**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+**P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
 
 ## Current branch result (DG-048 follow-up)
 - PR #77 is merged to `main` as `25548d5`; CI passed foundation, content/type/build, PostgreSQL migration/RLS and attempt/import integration, and Playwright + axe.
 - DG-024 adds authenticated `GET /api/progress`, server-re-evaluated idempotent device-history import, and shared progress across Home, Practice, lessons, the map, and You.
 - Home explains the next recommended step; DACH scenario missions reuse authored reply-choice exercises and feed the same progress stream. Account progress has eligible/legacy import counts and a JSON download; full GDPR export/audit is still DG-028.
 - PR #78 is merged as `8e1b0e5`. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard. CI passed all four job groups, including Playwright and axe.
+- PR #79 is merged as `288a994`. Lessons store a device-local checkpoint with the remaining steps, retries, session answers, and active time. Home offers a localized resume action; completion and Clear device data remove it. CI passed all four job groups.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
 - The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
@@ -64,8 +65,8 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Finish the device-local interrupted-lesson checkpoint on `feat/dg-065-resume-lesson`. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Finish the categorize exercise in `feat/dg-066-categorize-exercise`. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Next implementation block — resume an interrupted lesson
-- Device-local checkpoint stores the remaining step order, retry queue, session answers, and active elapsed time. Home offers a localized **Continue lesson** card; completion and device-data clearing remove the checkpoint.
-- Checkpoint does not sync across devices. The feature is being developed on `feat/dg-065-resume-lesson`.
+## Next implementation block — categorize exercise
+- Add `categorize` to the content schema, deterministic evaluator, authoring checks, and lesson player. The example sorts sentence chunks by V2 role and reports partial credit and row feedback.
+- Evaluator version is 1.1.0. The new format is being developed on `feat/dg-066-categorize-exercise`.

@@ -47,6 +47,7 @@ export const ar: Catalog = {
   "exercise.true": "صحيح",
   "exercise.false": "خطأ",
   "exercise.chooseMatch": "اختر ما يناسب",
+  "exercise.chooseCategory": "اختر فئة",
   "exercise.chooseAll": "اختر كل ما ينطبق",
   "exercise.saveFailed": "تم التحقق من إجابتك وحُفظت في هذا المتصفح، لكن حسابك لم يقبلها.",
   "exercise.saveQueued": "تم التحقق من إجابتك. ليست في حسابك بعد: سيرسلها هذا المتصفح مرة أخرى تلقائيًا.",

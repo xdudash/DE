@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: ru
-based_on_version: 1.0.0
+based_on_version: 1.1.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -135,3 +135,11 @@ strings:
   x.limits.c: "В W-вопросе вопросительное слово занимает позицию 1, а глагол стоит на позиции 2."
   x.limits.d: "*Ich* на позиции 1, *komme* на позиции 2."
   x.limits.explanation: "Общий вопрос (да/нет) начинается с глагола (позиция 1): *Kommst du morgen?*"
+
+  # Interactive categorisation exercise: sort chunks by V2 sentence role.
+  x.categorize_v2.prompt: "Распределите части предложения «Heute arbeite ich von zu Hause.» по их роли в предложении."
+  x.categorize_v2.category.first: "Позиция 1 · первый элемент"
+  x.categorize_v2.category.verb: "Позиция 2 · спрягаемый глагол"
+  x.categorize_v2.category.middle: "Середина · подлежащее или детали"
+  x.categorize_v2.item.verb: "Спрягаемый глагол остаётся на позиции 2, сразу после первого элемента."
+  x.categorize_v2.explanation: "Heute — первый элемент, arbeite — спрягаемый глагол на позиции 2, а ich von zu Hause стоят в середине."

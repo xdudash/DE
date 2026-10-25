@@ -4,7 +4,7 @@
 # pedagogically reviewed by a qualified human. See docs/quality/CONTENT_REVIEW.md.
 schema: deutschgo.unit/1
 id: unit.syntax.v2_declarative.a1
-version: 1.0.0
+version: 1.1.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -233,6 +233,25 @@ blocks:
           rules:
             - { match: ["Der Bus kommt nicht. Deshalb ich nehme ein Taxi.", "Der Bus kommt nicht, deshalb ich nehme ein Taxi."], feedback: "@fb.connective", signals: concept.syntax.connective_adverbs }
         explanation: "@x.transform_deshalb.explanation"
+
+
+      - id: x_categorize_v2
+        type: categorize
+        objective: obj_identify
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 1
+        prompt: "@x.categorize_v2.prompt"
+        categories:
+          - { id: first, label: "@x.categorize_v2.category.first" }
+          - { id: verb, label: "@x.categorize_v2.category.verb" }
+          - { id: middle, label: "@x.categorize_v2.category.middle" }
+        items:
+          - { id: today, de: "Heute", categoryId: first }
+          - { id: finite_verb, de: "arbeite", categoryId: verb, feedback: "@x.categorize_v2.item.verb" }
+          - { id: subject, de: "ich", categoryId: middle }
+          - { id: place, de: "von zu Hause", categoryId: middle }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize_v2.explanation"
 
       - id: x_limits
         type: single_choice

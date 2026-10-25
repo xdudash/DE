@@ -35,6 +35,7 @@ export const uk: Catalog = {
   "exercise.true": "Правда",
   "exercise.false": "Неправда",
   "exercise.chooseMatch": "Оберіть пару",
+  "exercise.chooseCategory": "Оберіть категорію",
   "exercise.chooseAll": "Оберіть усі правильні",
   "exercise.saveFailed": "Відповідь перевірено й збережено в цьому браузері, але ваш обліковий запис її не прийняв.",
   "exercise.saveQueued": "Відповідь перевірено. В обліковому записі її ще немає: цей браузер автоматично надішле її ще раз.",

@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: en
-based_on_version: 1.0.0
+based_on_version: 1.1.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -135,3 +135,11 @@ strings:
   x.limits.c: "In a W-question, the question word takes position 1 and the verb is in position 2."
   x.limits.d: "*Ich* is in position 1, *komme* in position 2."
   x.limits.explanation: "A yes/no question starts with the verb (position 1): *Kommst du morgen?*"
+
+  # Interactive categorisation exercise: sort chunks by V2 sentence role.
+  x.categorize_v2.prompt: "Sort each chunk from “Heute arbeite ich von zu Hause.” by its role in the sentence."
+  x.categorize_v2.category.first: "Position 1 · first element"
+  x.categorize_v2.category.verb: "Position 2 · conjugated verb"
+  x.categorize_v2.category.middle: "Middle · subject or details"
+  x.categorize_v2.item.verb: "The conjugated verb stays in position 2, directly after the first element."
+  x.categorize_v2.explanation: "Heute is the first sentence element, arbeite is the conjugated verb in position 2, and ich von zu Hause follows in the middle."

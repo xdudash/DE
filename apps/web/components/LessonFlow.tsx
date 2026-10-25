@@ -155,6 +155,8 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice, forcePra
     true: msg("exercise.true"),
     false: msg("exercise.false"),
     chooseMatch: msg("exercise.chooseMatch"),
+    chooseCategory: msg("exercise.chooseCategory"),
+    categoryScore: (correct: number, total: number) => msg("exercise.score", { correct, total }),
     chooseAll: msg("exercise.chooseAll"),
   };
 

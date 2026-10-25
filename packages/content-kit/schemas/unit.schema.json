@@ -486,6 +486,7 @@
             "transform",
             "true_false",
             "match_pairs",
+            "categorize",
             "reply_choice",
             "article_input",
             "form_input",
@@ -603,6 +604,69 @@
           },
           "required": [
             "pairs"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "categorize"
+            },
+            "categories": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "label"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "common.schema.json#/$defs/localId"
+                  },
+                  "label": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            },
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "de",
+                  "categoryId"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "common.schema.json#/$defs/localId"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "categoryId": {
+                    "$ref": "common.schema.json#/$defs/localId"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "categories",
+            "items"
           ],
           "type": "object"
         },

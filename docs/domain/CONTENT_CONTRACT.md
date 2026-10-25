@@ -54,6 +54,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | Type | Answer model | Validator self-checks |
 |---|---|---|
 | `single_choice` | options; exactly one `correct` | one correct; distractor feedback warning |
+| `categorize` | `categories[]` with localized labels; each German `items[]` entry maps to a category | unique ids; every category used; every item points to a known category; authored answer evaluates correct |
 | `word_order` | `tokens` (≤9 chunks, display order), `accept` sentences, `final_punctuation` | every accepted sentence is buildable from the tokens and evaluates correct; rules don't shadow answers; tokens not pre-solved |
 | `cloze` | `text_de` with `{{0}}…`, per-gap `accept` + rules | placeholders contiguous; gap rules don't shadow answers |
 | `transform` | `source_de`, `accept` sentences | accepted answers evaluate correct; source not already an answer |
@@ -65,7 +66,7 @@ Recommended, editable sequence of `unit` or `concept` steps (planned concepts al
 `entity`, `lang`, `based_on_version`, `status` (`machine_draft` → `draft` → `needs_review` → `reviewed`), `translator`, `reviewer` (required when reviewed), `strings {key: markdown}`. Markdown subset: paragraphs, `- ` lists, `**bold**`, `*italic*`. No HTML.
 
 ## 5. Answer normalization (evaluator)
-NFC; unify typographic quotes/dashes; trim/collapse spaces; drop space before punctuation; ignore final `. ! ?`; case-sensitive except the first letter. **ß ≠ ss** — Swiss spellings must be explicit accepted variants (editorial decision, see [regional varieties](./REGIONAL_VARIETIES.md)). Cloze gaps compare case-sensitively. Tests: `packages/content-kit/test/evaluate.test.ts`.
+NFC; unify typographic quotes/dashes; trim/collapse spaces; drop space before punctuation; ignore final `. ! ?`; case-sensitive except the first letter. **ß ≠ ss** — Swiss spellings must be explicit accepted variants (editorial decision, see [regional varieties](./REGIONAL_VARIETIES.md)). Cloze gaps compare case-sensitively. The categorization evaluator grades each assignment and returns a partial score plus per-item feedback. Evaluator version is 1.1.0. Tests: `packages/content-kit/test/evaluate.test.ts`.
 
 ## 6. Statuses and review gates
 Entity status: `planned → draft → needs_review → approved → published → deprecated`. `approved`/`published` **require** `review.linguistic`, `review.pedagogical`, `review.rights` = `passed` (or `not_applicable` for rights) with reviewer and date — enforced by the validator. A published unit may only teach approved/published concepts. Process: [content review](../quality/CONTENT_REVIEW.md).

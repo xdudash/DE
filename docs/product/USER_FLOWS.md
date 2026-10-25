@@ -11,7 +11,7 @@
 1. Open a topic from search, map, route, or recommendation.
 2. Display objectives, approximate level, prerequisites, and related concepts.
 3. Study a structured explanation and contextual examples.
-4. Complete exercises matching the learning objective.
+4. Complete exercises matching the learning objective, including sorting sentence chunks into grammar roles. Categorization reports a score per item and highlights the first targeted correction.
 5. Receive a reasoned answer explanation, not only a right/wrong indicator.
 6. Record the attempt and update an appropriately cautious learning state.
 7. Show related next steps while preserving freedom to choose another topic.

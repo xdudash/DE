@@ -183,6 +183,12 @@ export interface MatchPairsExercise extends ExerciseBase {
   pairs: { id: string; left_de: string; right_de: string }[];
 }
 
+export interface CategorizeExercise extends ExerciseBase {
+  type: "categorize";
+  categories: { id: string; label: L10nRef }[];
+  items: { id: string; de: string; categoryId: string; feedback?: L10nRef }[];
+}
+
 export interface ReplyChoiceExercise extends ExerciseBase {
   type: "reply_choice";
   line_de: string;
@@ -190,7 +196,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | ReplyChoiceExercise;
+  | TextInputExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

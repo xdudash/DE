@@ -35,6 +35,7 @@ export const ru: Catalog = {
   "exercise.true": "Правда",
   "exercise.false": "Ложь",
   "exercise.chooseMatch": "Выберите пару",
+  "exercise.chooseCategory": "Выберите категорию",
   "exercise.chooseAll": "Выберите все правильные",
   "exercise.saveFailed": "Ответ проверен и сохранён в этом браузере, но ваша учётная запись его не приняла.",
   "exercise.saveQueued": "Ответ проверен. В учётной записи его пока нет: этот браузер автоматически отправит его ещё раз.",

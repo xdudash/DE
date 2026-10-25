@@ -13,6 +13,7 @@
  */
 import type {
   ClozeExercise,
+  CategorizeExercise,
   MatchPairsExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
@@ -30,7 +31,7 @@ import type {
  * Bumped whenever normalization or any type's evaluation semantics change.
  * Stored with every graded event so past results stay interpretable.
  */
-export const EVALUATOR_VERSION = "1.0.0";
+export const EVALUATOR_VERSION = "1.1.0";
 
 export function normalizeAnswer(input: string): string {
   let s = input.normalize("NFC");
@@ -59,6 +60,7 @@ export type Response =
   | { type: "multi_choice"; optionIds: string[] }
   | { type: "true_false"; value: boolean }
   | { type: "match_pairs"; matches: Record<string, string> }
+  | { type: "categorize"; assignments: Record<string, string> }
   | { type: "reply_choice"; optionId: string }
   | { type: "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input"; text: string }
   | { type: "word_order"; order: number[] }
@@ -84,6 +86,7 @@ export interface EvaluationResult {
   /** Concept id signalled by a matched error rule (diagnostic evidence). */
   signals?: string;
   gaps?: GapResult[];
+  items?: { id: string; correct: boolean; feedback?: L10nRef }[];
   /** What was compared, for transparency and debugging. */
   normalizedResponse: string;
 }
@@ -192,6 +195,27 @@ function evalMatchPairs(ex: MatchPairsExercise, matches: Record<string, string>)
   return result(ex, correct, normalized, undefined, ex.pairs.length ? nCorrect / ex.pairs.length : 0);
 }
 
+function evalCategorize(ex: CategorizeExercise, assignments: Record<string, string>): EvaluationResult {
+  const itemIds = new Set(ex.items.map((item) => item.id));
+  const categoryIds = new Set(ex.categories.map((category) => category.id));
+  for (const [itemId, categoryId] of Object.entries(assignments)) {
+    if (!itemIds.has(itemId) || !categoryIds.has(categoryId)) {
+      throw new EvaluationError(`categorize ${ex.id}: unknown item or category ${itemId}→${categoryId}`);
+    }
+  }
+  const items = ex.items.map((item) => {
+    const correct = assignments[item.id] === item.categoryId;
+    return { id: item.id, correct, ...(!correct && item.feedback ? { feedback: item.feedback } : {}) };
+  });
+  const correctCount = items.filter((item) => item.correct).length;
+  const normalized = ex.items.map((item) => `${item.id}:${assignments[item.id] ?? "-"}`).join(",");
+  const r = result(ex, items.length > 0 && correctCount === items.length, normalized, undefined, items.length ? correctCount / items.length : 0);
+  const firstFeedback = items.find((item) => !item.correct)?.feedback;
+  if (firstFeedback) r.ruleFeedback = firstFeedback;
+  r.items = items;
+  return r;
+}
+
 function evalWordOrder(ex: WordOrderExercise, order: number[]): EvaluationResult {
   const sentence = assembleWordOrder(ex, order);
   const correct = ex.accept.some((a) => answersEqual(a, sentence));
@@ -243,6 +267,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
     case "match_pairs":
       return evalMatchPairs(ex, (response as Extract<Response, { type: "match_pairs" }>).matches);
+    case "categorize":
+      return evalCategorize(ex, (response as Extract<Response, { type: "categorize" }>).assignments);
     case "reply_choice":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "reply_choice" }>).optionId);
     case "article_input":

@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 import { EvaluationError, assembleWordOrder, evaluate, findOrderFor, normalizeAnswer, signalledConcepts } from "../src/evaluate.ts";
-import type { ClozeExercise, SingleChoiceExercise, TransformExercise } from "../src/types.ts";
+import type { CategorizeExercise, ClozeExercise, SingleChoiceExercise, TransformExercise } from "../src/types.ts";
 import { wordOrder } from "./fixtures.ts";
 
 const base = { objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const };
@@ -163,6 +163,18 @@ describe("batch 1 types (ADR-0023)", () => {
     assert.equal(evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "b", c: "c" } }).correct, true);
     assert.throws(() => evaluate(ex, { type: "match_pairs", matches: { a: "z" } }), EvaluationError);
     assert.throws(() => evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "a" } }), EvaluationError);
+  });
+  it("categorize: scores each assignment, reports row feedback, and rejects unknown ids", () => {
+    const ex: CategorizeExercise = { ...base, id: "cat", type: "categorize", feedback: { correct: "@ok", incorrect: "@no" },
+      categories: [{ id: "verb", label: "@verb" }, { id: "other", label: "@other" }],
+      items: [{ id: "a", de: "arbeite", categoryId: "verb", feedback: "@hint" }, { id: "b", de: "heute", categoryId: "other" }] };
+    const partial = evaluate(ex, { type: "categorize", assignments: { a: "other", b: "other" } });
+    assert.equal(partial.correct, false);
+    assert.equal(partial.score, 0.5);
+    assert.equal(partial.ruleFeedback, "@hint");
+    assert.deepEqual(partial.items?.map((item) => item.correct), [false, true]);
+    assert.equal(evaluate(ex, { type: "categorize", assignments: { a: "verb", b: "other" } }).correct, true);
+    assert.throws(() => evaluate(ex, { type: "categorize", assignments: { a: "missing" } }), EvaluationError);
   });
   it("reply_choice: behaves as a one-correct choice", () => {
     const ex = { ...meta, id: "rc", type: "reply_choice", line_de: "Danke!", options: [
