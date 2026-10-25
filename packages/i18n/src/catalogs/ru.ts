@@ -481,4 +481,9 @@ export const ru: Catalog = {
   "progress.activityTotal": "Ответов за неделю: {count}",
   "progress.activityDay": "Ответов: {count}",
   "progress.activityEmpty": "Здесь появятся ответы за последние 7 дней.",
+  "map.levelFilter": "Уровень",
+  "map.stateFilter": "Состояние темы",
+  "map.allLevels": "Все уровни",
+  "map.allTopics": "Все темы",
+  "map.plannedFilter": "Запланированные темы",
 };
