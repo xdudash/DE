@@ -114,7 +114,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   };
 
   const ready =
-    ((exercise.type === "single_choice" || exercise.type === "read_question" || exercise.type === "preposition_choice" || exercise.type === "case_choice" || exercise.type === "connector_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
+    ((exercise.type === "single_choice" || exercise.type === "modal_choice" || exercise.type === "read_question" || exercise.type === "preposition_choice" || exercise.type === "case_choice" || exercise.type === "connector_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
@@ -150,6 +150,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "case_choice": response = { type: "case_choice", optionId: choice }; break;
           case "preposition_choice": response = { type: "preposition_choice", optionId: choice }; break;
           case "read_question": response = { type: "read_question", optionId: choice }; break;
+          case "modal_choice": response = { type: "modal_choice", optionId: choice }; break;
           case "dialogue_gap": response = { type: "dialogue_gap", text: free }; break;
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
@@ -210,11 +211,11 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     <section className="exercise" aria-labelledby={`${exercise.id}-prompt`}>
       <p id={`${exercise.id}-prompt`} className="prompt">{inline(tr(text, exercise.prompt))}</p>
 
-      {(exercise.type === "single_choice" || exercise.type === "connector_choice" || exercise.type === "case_choice" || exercise.type === "preposition_choice" || exercise.type === "read_question" || exercise.type === "reply_choice") && (
+      {(exercise.type === "single_choice" || exercise.type === "modal_choice" || exercise.type === "connector_choice" || exercise.type === "case_choice" || exercise.type === "preposition_choice" || exercise.type === "read_question" || exercise.type === "reply_choice") && (
         <>
           {exercise.type === "single_choice" && exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
           {exercise.type === "read_question" && <><div lang="de" className="de reading-passage">{exercise.text_de}</div><p lang="de" className="de stem">{exercise.question_de}</p></>}
-          {(exercise.type === "connector_choice" || exercise.type === "case_choice" || exercise.type === "preposition_choice") && <p lang="de" className="de stem">{exercise.before_de} <span className="connector-gap" aria-label={labels.yourAnswer}>_____</span> {exercise.after_de}</p>}
+          {(exercise.type === "connector_choice" || exercise.type === "case_choice" || exercise.type === "preposition_choice" || exercise.type === "modal_choice") && <p lang="de" className="de stem">{exercise.before_de} <span className="connector-gap" aria-label={labels.yourAnswer}>_____</span> {exercise.after_de}</p>}
           {exercise.type === "reply_choice" && <p lang="de" className="de stem reply">{exercise.line_de}</p>}
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
