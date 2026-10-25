@@ -194,4 +194,9 @@ describe("batch 1 types (ADR-0023)", () => {
     assert.equal(evaluate(ex, { type: "dictation", text: "am Montag fahre ich zur Arbeit" }).correct, true);
     assert.equal(evaluate(ex, { type: "dictation", text: "Am Montag ich fahre zur Arbeit." }).correct, false);
   });
+  it("error_correction: accepts only an authored corrected sentence", () => {
+    const ex = { ...meta, id: "fix", type: "error_correction", source_de: "Heute ich arbeite zu Hause.", accept: ["Heute arbeite ich zu Hause."] } as import("../src/types.ts").ErrorCorrectionExercise;
+    assert.equal(evaluate(ex, { type: "error_correction", text: "Heute arbeite ich zu Hause" }).correct, true);
+    assert.equal(evaluate(ex, { type: "error_correction", text: "Heute ich arbeite zu Hause." }).correct, false);
+  });
 });

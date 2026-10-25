@@ -103,3 +103,4 @@ Loading, empty, success, validation error, recoverable failure, offline/unsynced
 
 Listening exercise: listen to a German sentence, replay on demand, choose its meaning, then review the correct choice and explanation. When browser speech is unavailable, the German transcript is shown.
 Dictation exercise: play or replay a German sentence, type the full sentence, submit it for normalized comparison, then review the result and explanation. Show the transcript if speech synthesis is unavailable.
+Error-correction exercise: inspect an incorrect sentence, rewrite it, submit the full sentence, and review either a targeted explanation for a known error or the general correction hint.

@@ -11,7 +11,7 @@
  */
 import { useEffect, useImperativeHandle, useState, type KeyboardEvent, type Ref } from "react";
 import { evaluate, signalledConcepts, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
-import type { DictationExercise, Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
+import type { DictationExercise, ErrorCorrectionExercise, Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { sendWithOutbox } from "../lib/attempts/outbox";
 import { ACCOUNT_PROGRESS_EVENT, deviceKeyValue, recordAttempt } from "../lib/device-state";
@@ -68,8 +68,9 @@ const TEXT_INPUT_TYPES: ReadonlySet<string> = new Set([
   "number_input",
   "time_input",
   "dictation",
+  "error_correction",
 ]);
-const isTextInput = (e: Exercise): e is TextInputExercise | DictationExercise => TEXT_INPUT_TYPES.has(e.type);
+const isTextInput = (e: Exercise): e is TextInputExercise | DictationExercise | ErrorCorrectionExercise => TEXT_INPUT_TYPES.has(e.type);
 
 export const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
@@ -140,6 +141,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
           case "listening_choice": response = { type: "listening_choice", optionId: choice }; break;
           case "dictation": response = { type: "dictation", text: free }; break;
+          case "error_correction": response = { type: "error_correction", text: free }; break;
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
@@ -429,9 +431,9 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {(exercise.type === "transform" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
+      {(exercise.type === "transform" || exercise.type === "error_correction" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
         <>
-          {exercise.type === "transform" ? (
+          {exercise.type === "transform" || exercise.type === "error_correction" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
           ) : (
             exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>
