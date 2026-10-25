@@ -486,6 +486,11 @@ export const en = {
   "progress.activityTotal": "{count} answers this week",
   "progress.activityDay": "{count} answers",
   "progress.activityEmpty": "Your answers from the last 7 days will appear here.",
+  "map.levelFilter": "Level",
+  "map.stateFilter": "Topic state",
+  "map.allLevels": "All levels",
+  "map.allTopics": "All topics",
+  "map.plannedFilter": "Planned topics",
 } as const;
 
 export type MessageKey = keyof typeof en;
