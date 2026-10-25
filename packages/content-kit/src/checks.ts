@@ -377,6 +377,16 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             for (const r of ex.feedback.rules ?? []) for (const m of r.match) if (ex.accept.some((a) => answersEqual(a, m))) c.error("exercise.rule_shadows_answer", u.id, `${where}: error rule matches accepted "${m}"`);
             break;
           }
+          case "negation": {
+            const negationWord = /\b(?:nicht|kein\w*)\b/iu;
+            for (const answer of ex.accept) {
+              if (!evaluate(ex, { type: "negation", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted negation "${answer}" does not evaluate as correct`);
+              if (!negationWord.test(answer)) c.error("exercise.negation_missing", u.id, `${where}: accepted answer "${answer}" must use nicht or a form of kein`);
+              if (answersEqual(answer, ex.source_de)) c.error("exercise.negation_unchanged", u.id, `${where}: accepted answer must change the positive source sentence`);
+            }
+            if (ex.accept.length === 0) c.error("exercise.accept_required", u.id, `${where}: at least one accepted negated sentence is required`);
+            break;
+          }
         }
       } catch (err) {
         c.error("exercise.evaluation_failed", u.id, `${where}: ${(err as Error).message}`);

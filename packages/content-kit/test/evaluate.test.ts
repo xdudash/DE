@@ -23,6 +23,16 @@ describe("normalizeAnswer", () => {
   });
 });
 
+describe("negation", () => {
+  const exercise = { id: "x_negation", type: "negation" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, source_de: "Ich habe Hunger.", accept: ["Ich habe keinen Hunger."] };
+  it("accepts authored negation and rejects wrong or unchanged sentences", () => {
+    assert.equal(evaluate(exercise, { type: "negation", text: "Ich habe keinen Hunger." }).correct, true);
+    assert.equal(evaluate(exercise, { type: "negation", text: "Ich habe nicht Hunger." }).correct, false);
+    assert.equal(evaluate(exercise, { type: "negation", text: "Ich habe Hunger." }).correct, false);
+    assert.equal(evaluate(exercise, { type: "negation", text: "" }).correct, false);
+  });
+});
+
 describe("verb_position", () => {
   const exercise = { ...base, id: "x_verb", type: "verb_position" as const, tokens: ["Heute", "lerne", "ich", "Deutsch"], finite_verb_index: 1, feedback: { correct: "@ok" as const, incorrect: "@no" as const } };
   it("accepts the marked finite verb and rejects other sentence chunks", () => {
