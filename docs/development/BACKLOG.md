@@ -37,6 +37,10 @@ DG-001 journey and release scope · DG-002 content contract + gold unit (review 
 | DG-043 | A1 batches 2–3 (to 10–15 reviewed units) | C | DG-042 | blocked |
 | DG-044 | Review records and content dashboard | C | — | ready |
 | DG-045 | Exercise types v2: matching, categorisation, error correction | C | contract §8 | ready (design) |
+| DG-065 | A0 lesson norms in the validator, lesson builder, lesson standard and production plan | C | ADR-0023 amendment | **done** (2026-10-25) |
+| DG-066 | Regenerate `curriculum/A0` from the A0 subtopic list (one subtopic per lesson, content titles) | C | owner approval of the subtopic list | ready |
+| DG-067 | Calibrate the per-type exercise times in `norms.ts` from real attempt durations | C | learners using the app | after launch data |
+| DG-068 | A0 batches: A0.02 rest + A0.03, then A0.04 + A0.05, then A0.06 (production plan §5) | C | DG-065 | next |
 | DG-046 | Lesson `depth` tag (core, standard, deep) in the contract, course tiers (fast, medium, full) in content-kit, and a per-tier, per-level count in the content report; tests for checkpoint per block | Schema fixtures; tests that each tier covers every level; report shows counts | DG-041, ADR-0018 |
 | DG-046 | Prerequisite guidance and catch-up path | D | DG-024 | P3 |
 | DG-047 | Route choice and personalisation | D | DG-029 | P3 |
@@ -168,6 +172,10 @@ CI job with PostgreSQL and a test-only token issuer (never in production builds)
 | DG-043 | Batches 2–3 to reach 10–15 reviewed units on `route.core.a1_sentence_foundations` | R1 content gate | DG-042 |
 | DG-044 | Review records in the repo and a generated content dashboard (coverage, review queues, stale translations) | Dashboard generated from validator output in CI | — |
 | DG-045 | Exercise types v2 (matching, categorisation, error correction) in schema + evaluator + player | Evaluator tests for each type, invalid fixtures, axe | contract §8 |
+| DG-065 | Lesson norms (`norms.ts`) as validator errors for A0, `scripts/lesson_builder.py`, the lesson standard and the [production plan](../domain/LESSON_PRODUCTION_PLAN.md) | Norm tests; repository content passes with zero errors | ADR-0023 |
+| DG-066 | `curriculum/A0` regenerated from `A0_SUBTOPICS_PROPOSAL.md` | `scripts/curriculum_plan.py --check` passes; no duplicate titles | owner approval |
+| DG-067 | Exercise-time calibration from attempt durations | Median time per type recorded; `EXERCISE_SECONDS` updated with the data source | learner data |
+| DG-068 | A0 batch production (50–100 lessons per PR) | Each batch: zero validator errors, sample review, route in plan order | DG-065 |
 
 ## Stages D–I — product depth (expanded into issues when their phase starts)
 

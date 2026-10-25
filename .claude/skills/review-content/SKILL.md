@@ -11,6 +11,7 @@ Check:
 - Explanation clarity, examples, contrasts, exceptions, and common learner errors.
 - CEFR/goal fit and consistency with prerequisites.
 - Exercise alignment, defensible answer keys, accepted variants, distractor quality, and feedback.
+- The lesson standard (docs/domain/CONTENT_STANDARD.md#lesson-standard-a0): one defensible answer per item, no German the learner has not met (except glossed chunks), varied exercises that build up from recognising to producing, targeted feedback on each wrong option. The validator checks the countable norms; you check whether they make sense.
 - Translation fidelity and completeness for each required explanation language.
 - Stable IDs, valid references, duplicates, and consistency across reused concepts.
 - Source provenance, exact license/terms, attribution, and intended commercial/display use.

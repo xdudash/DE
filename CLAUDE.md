@@ -6,7 +6,7 @@ Build DeutschGo: a deep, flexible German-learning system for life, work, and stu
 ## Orient fast (read only what the task needs)
 1. [Project status](./docs/development/PROJECT_STATUS.md) and [backlog](./docs/development/BACKLOG.md) — where we are, what is next.
 2. Product: [vision](./docs/product/PRODUCT_VISION.md), [functional spec](./docs/product/PRODUCT_SPEC.md), [release stages](./docs/product/RELEASE_STAGES.md), [user flows](./docs/product/USER_FLOWS.md), [visual system](./docs/product/VISUAL_SYSTEM.md).
-3. Content/language: [content contract](./docs/domain/CONTENT_CONTRACT.md), [knowledge model](./docs/domain/KNOWLEDGE_MODEL.md), [content standard](./docs/domain/CONTENT_STANDARD.md), [localization](./docs/domain/LOCALIZATION_POLICY.md), [curriculum](./docs/domain/CURRICULUM_FRAMEWORK.md).
+3. Content/language: [content contract](./docs/domain/CONTENT_CONTRACT.md), [knowledge model](./docs/domain/KNOWLEDGE_MODEL.md), [content standard](./docs/domain/CONTENT_STANDARD.md) (incl. the A0 lesson standard), [lesson production plan](./docs/domain/LESSON_PRODUCTION_PLAN.md), [localization](./docs/domain/LOCALIZATION_POLICY.md), [curriculum](./docs/domain/CURRICULUM_FRAMEWORK.md).
 4. Engine/skills: [learning engine](./docs/domain/LEARNING_ENGINE.md), [skills](./docs/domain/SKILLS.md).
 5. Technical: [architecture](./docs/architecture/ARCHITECTURE.md), [ADR index](./docs/architecture/decisions/README.md), [data & privacy](./docs/architecture/DATA_AND_PRIVACY.md), [quality gates](./docs/quality/QUALITY_GATES.md).
 Do not load all docs or all content files by default.
@@ -22,6 +22,7 @@ Do not load all docs or all content files by default.
 - `apps/web/lib/data/` — the only code that opens a database connection (ADR-0010); `lib/auth/` verifies session tokens.
 - `apps/web/` — Next.js app; reads `generated/content.json`; no teaching text in components.
 - `docs/` — canonical decisions; `scripts/check_foundation.py` — doc/link check.
+- `scripts/lesson_builder.py` — writes lesson YAML and en/uk/ru files from a spec ([production plan](./docs/domain/LESSON_PRODUCTION_PLAN.md)); the YAML stays canonical.
 
 ## Commands
 `npm ci` (install as locked, Node from `.nvmrc`) · `npm run check` (everything) · `npm run test:db` · `npm run content:report` · `npm run content:validate` · `npm test` · `npm run typecheck` · `npm run build` · `npm run foundation`

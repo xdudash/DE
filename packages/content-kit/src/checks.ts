@@ -5,6 +5,7 @@
 import { answersEqual, evaluate, findOrderFor } from "./evaluate.ts";
 import { findPrerequisiteCycles, prerequisitesOf } from "./graph.ts";
 import { collectKeys } from "./l10n.ts";
+import { duplicateTitles, lessonNorms, NORM_EXEMPT } from "./norms.ts";
 import type { Block, ContentRepo, Exercise, Issue, Review, Route, Unit } from "./types.ts";
 
 const ID_PREFIX = { concept: "concept.", unit: "unit.", route: "route." } as const;
@@ -353,6 +354,28 @@ export interface CheckReport {
   coverage: CoverageRow[];
 }
 
+/**
+ * Lesson norms (src/norms.ts). Errors, except for the units listed in NORM_EXEMPT, which keep
+ * warnings until they are brought up to the norms.
+ */
+function checkNorms(c: Collector, repo: ContentRepo): void {
+  const pivot = repo.languages.languages.find((l) => l.pivot)?.code ?? "en";
+  const titles = new Map<string, string>();
+  for (const u of repo.units.values()) {
+    const strings = repo.l10n.get(`${pivot}:${u.id}`)?.strings;
+    const report = NORM_EXEMPT.has(u.id) ? c.warn.bind(c) : c.error.bind(c);
+    for (const f of lessonNorms(u, strings)) report(f.code, u.id, f.message);
+    const title = strings?.[u.title.replace(/^@/, "")];
+    if (title) titles.set(u.id, title);
+  }
+  for (const ids of duplicateTitles(titles)) {
+    for (const id of ids) {
+      const report = NORM_EXEMPT.has(id) ? c.warn.bind(c) : c.error.bind(c);
+      report("norm.duplicate_title", id, `title is shared with ${ids.filter((x) => x !== id).join(", ")}; one subtopic per lesson, one title per lesson`);
+    }
+  }
+}
+
 export function runChecks(repo: ContentRepo): CheckReport {
   const c = new Collector(repo);
   checkIds(c, repo);
@@ -362,6 +385,7 @@ export function runChecks(repo: ContentRepo): CheckReport {
   }
   checkStatuses(c, repo);
   checkExercises(c, repo);
+  checkNorms(c, repo);
   const coverage = checkLocalization(c, repo);
   return { issues: c.issues, coverage };
 }

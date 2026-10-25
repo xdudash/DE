@@ -45,4 +45,4 @@ Record choices affecting data ownership, privacy/security, deployability, operat
 ~~~
 | [ADR-0021](./ADR-0021-batch-drafting-before-gold-review.md) | Batch drafting (50–100 lessons per PR) before the gold review; owner samples; approval unchanged | Accepted (owner decision) |
 | [ADR-0022](./ADR-0022-pre-launch-learner-labels.md) | Pre-launch exception: no draft or review labels in the learner interface until launch | Accepted (owner decision), implemented |
-| [ADR-0023](./ADR-0023-exercise-catalogue-and-lesson-norms.md) | Exercise catalogue (35 types) in batches; lesson norms (8–12 min, 15–25 exercises for A0) | Accepted (owner decision), not yet implemented (DG-054) |
+| [ADR-0023](./ADR-0023-exercise-catalogue-and-lesson-norms.md) | Exercise catalogue (35 types) in batches; lesson norms (8–12 min, 15–25 exercises for A0) | Accepted (owner decision), amended 2026-10-25; 14 types and the A0 lesson norms implemented, the rest planned |

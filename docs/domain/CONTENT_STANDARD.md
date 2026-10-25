@@ -44,3 +44,40 @@ Explanations name typical transfer errors for the learner's language (e.g. free 
 
 ## Gold-standard lesson
 The V2 unit is the reference: precise rule with scope and limits, pattern table, everyday DACH examples with highlighted forms, contrasts, position-0 vs position-1 connectors, typical errors, regional note, summary, and ten exercises of four types with accepted variants, error rules that signal concepts, and explanations. Bulk production starts only after its human review (DG-007).
+
+## Lesson standard (A0)
+Agreed norms (ADR-0023 and its amendment of 2026-10-25), enforced by the validator through [`norms.ts`](../../packages/content-kit/src/norms.ts). A finding is an error, except for the units listed in `NORM_EXEMPT` with their reason. How lessons are produced: [lesson production plan](./LESSON_PRODUCTION_PLAN.md). Batch reference lesson: [`unit.lex.a0_0113_begruessung_hallo_guten_tag`](../../content/units/lexicon/unit.lex.a0_0113_begruessung_hallo_guten_tag.yaml) (a draft; it shows the form, it is not reviewed German).
+
+### Structure
+1. One subtopic, with a content title that no other lesson uses.
+2. A short introduction: what the learner will be able to do and the one rule they need.
+3. At least five examples: new words in short natural phrases or sentences ("Guten Tag, Frau Weber!"), each with a gloss that gives the meaning and, where useful, when it is used.
+4. An optional tip for the most common confusion, and a summary of one or two lines.
+5. 15–25 exercises.
+
+### Exercises
+| Rule | Code |
+|---|---|
+| 15–25 exercises | `norm.exercise_count` |
+| At least 4 types; aim for 6 or more | `norm.type_variety` |
+| Never two exercises of the same type next to each other | `norm.adjacent_type` |
+| Never three of the same shape in a row (option lists: single, multi, true/false, reply; text boxes: all inputs, cloze, transform) | `norm.shape_run` |
+| One type at most a quarter of the exercises | `norm.type_share` |
+| The same question wording at most twice; numbers, quoted text and German words do not make a question new ("Which word means 30?" and "…40?" are the same question) | `norm.prompt_template` |
+| Every wrong option has its own feedback that names the mistake; a true/false item explains the wrong pick | `norm.distractor_feedback`, `norm.generic_feedback` |
+| At least 5 examples | `norm.examples` |
+| `estimated_minutes` from the formula below, and 8–12 minutes | `norm.minutes_mismatch`, `norm.minutes_range` |
+| Unique title | `norm.duplicate_title` |
+
+Not checked by a tool, and required all the same:
+- Each item has one defensible answer (for multi-choice, one defensible set) and can be answered from this lesson or earlier lessons.
+- Every correct variant is accepted (Tschüss and Tschüs). Answers are compared case-sensitively except for the first letter; final `.`, `!` and `?` are ignored; commas inside the answer count. Typical misspellings get an error rule with feedback (sechszehn → sechzehn).
+- Distractors are real confusions at this level (dreizehn for 30), not random words.
+- German a learner has not met yet appears only as a glossed chunk, and the chunk is named in `review.pedagogical.notes`.
+- The order builds up: recognise, then choose, then produce, then use in a short scene.
+
+### Minutes
+`estimated_minutes = round((sum of exercise seconds × 1.2 + reading seconds) / 60)`. Exercise seconds: single choice 15, true/false 12, multi-choice 22, reply 18, match 35, word order 30, cloze 25, transform 35, article 15, form 22, gap fill 22, spelling 22, number 15, time 18. Reading: 30 per explanation block, 10 per example, 40 per pattern table, 20 per contrast pair, common error or regional note, 20 for a summary block. These are estimates, not measurements (DG-067).
+
+### Translations
+en is the pivot. uk and ru are written in natural Ukrainian and Russian, at the learner's level, and stay `machine_draft` until a human reviews them. A transfer note for Ukrainian or Russian speakers goes into the explanation where it helps.
