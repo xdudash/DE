@@ -102,3 +102,72 @@ describe("signalledConcepts", () => {
     assert.deepEqual(signalledConcepts(evaluate(ex, { type: "cloze", gaps: ["x", "y"] })), []);
   });
 });
+
+describe("multi_choice", () => {
+  const mc: import("../src/types.ts").MultiChoiceExercise = {
+    ...base,
+    id: "mc1",
+    type: "multi_choice",
+    feedback: { correct: "@ok", incorrect: "@no" },
+    options: [
+      { id: "a", de: "Brot", correct: true },
+      { id: "b", de: "Milch", correct: true },
+      { id: "c", de: "Auto", correct: false, feedback: "@car" },
+      { id: "d", de: "Haus", correct: false },
+    ],
+  } as import("../src/types.ts").MultiChoiceExercise;
+
+  it("is correct only when the selection equals the correct set", () => {
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a", "b"] }).correct, true);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["b", "a"] }).correct, true);
+  });
+  it("is incorrect for a missing correct option, an extra wrong option, or an empty selection", () => {
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a"] }).correct, false);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: ["a", "b", "c"] }).correct, false);
+    assert.equal(evaluate(mc, { type: "multi_choice", optionIds: [] }).correct, false);
+  });
+  it("gives targeted feedback for a picked wrong option that has feedback", () => {
+    const r = evaluate(mc, { type: "multi_choice", optionIds: ["a", "b", "c"] });
+    assert.equal(r.ruleFeedback, "@car");
+    assert.equal(r.feedback, "@no");
+    assert.equal(r.score, 0);
+  });
+  it("rejects unknown and repeated ids instead of guessing", () => {
+    assert.throws(() => evaluate(mc, { type: "multi_choice", optionIds: ["a", "z"] }), EvaluationError);
+    assert.throws(() => evaluate(mc, { type: "multi_choice", optionIds: ["a", "a"] }), EvaluationError);
+  });
+});
+
+describe("batch 1 types (ADR-0023)", () => {
+  const meta = { ...base, feedback: { correct: "@ok", incorrect: "@no" } };
+  it("true_false: right value is correct, wrong value gets its feedback", () => {
+    const ex = { ...meta, id: "tf", type: "true_false", statement_de: "Berlin ist eine Stadt.", correct: true, wrong_feedback: "@tfw" } as import("../src/types.ts").TrueFalseExercise;
+    assert.equal(evaluate(ex, { type: "true_false", value: true }).correct, true);
+    const r = evaluate(ex, { type: "true_false", value: false });
+    assert.equal(r.correct, false);
+    assert.equal(r.ruleFeedback, "@tfw");
+  });
+  it("text inputs: accepted answers pass with the usual normalisation, others fail", () => {
+    const ex = { ...meta, id: "ai", type: "article_input", stem_de: "Tisch", accept: ["der"] } as import("../src/types.ts").TextInputExercise;
+    assert.equal(evaluate(ex, { type: "article_input", text: "Der" }).correct, true);
+    assert.equal(evaluate(ex, { type: "article_input", text: "die" }).correct, false);
+    assert.equal(evaluate(ex, { type: "article_input", text: "" }).correct, false);
+  });
+  it("match_pairs: score is the share of correct pairs; unknown and repeated rights are rejected", () => {
+    const ex = { ...meta, id: "mp", type: "match_pairs", pairs: [
+      { id: "a", left_de: "Hund", right_de: "Hund" }, { id: "b", left_de: "Katze", right_de: "Katze" }, { id: "c", left_de: "Maus", right_de: "Maus" }] } as import("../src/types.ts").MatchPairsExercise;
+    const oneRight = evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "c", c: "b" } });
+    assert.equal(oneRight.correct, false);
+    assert.equal(oneRight.score, 1 / 3);
+    assert.throws(() => evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "b", c: "a" } }), EvaluationError);
+    assert.equal(evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "b", c: "c" } }).correct, true);
+    assert.throws(() => evaluate(ex, { type: "match_pairs", matches: { a: "z" } }), EvaluationError);
+    assert.throws(() => evaluate(ex, { type: "match_pairs", matches: { a: "a", b: "a" } }), EvaluationError);
+  });
+  it("reply_choice: behaves as a one-correct choice", () => {
+    const ex = { ...meta, id: "rc", type: "reply_choice", line_de: "Danke!", options: [
+      { id: "a", de: "Bitte.", correct: true }, { id: "b", de: "Tschüss.", correct: false }] } as import("../src/types.ts").ReplyChoiceExercise;
+    assert.equal(evaluate(ex, { type: "reply_choice", optionId: "a" }).correct, true);
+    assert.equal(evaluate(ex, { type: "reply_choice", optionId: "b" }).correct, false);
+  });
+});

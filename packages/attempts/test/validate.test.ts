@@ -19,6 +19,16 @@ describe("parseAttemptRequest", () => {
       { type: "word_order", order: [0, 1, 2, 3] },
       { type: "cloze", gaps: ["lerne", "ich"] },
       { type: "transform", text: "Heute Abend gehe ich ins Kino." },
+      { type: "multi_choice", optionIds: ["a", "c"] },
+      { type: "true_false", value: false },
+      { type: "match_pairs", matches: { a: "a", b: "c" } },
+      { type: "reply_choice", optionId: "a" },
+      { type: "article_input", text: "der" },
+      { type: "form_input", text: "bin" },
+      { type: "gap_fill_input", text: "Tag" },
+      { type: "spelling_input", text: "Mai" },
+      { type: "number_input", text: "zwölf" },
+      { type: "time_input", text: "halb drei" },
     ]) {
       const parsed = parseAttemptRequest(request({ response: response as never }));
       assert.deepEqual(parsed.response, response);

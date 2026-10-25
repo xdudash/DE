@@ -480,9 +480,19 @@
         "type": {
           "enum": [
             "single_choice",
+            "multi_choice",
             "word_order",
             "cloze",
-            "transform"
+            "transform",
+            "true_false",
+            "match_pairs",
+            "reply_choice",
+            "article_input",
+            "form_input",
+            "gap_fill_input",
+            "spelling_input",
+            "number_input",
+            "time_input"
           ]
         }
       },
@@ -501,6 +511,301 @@
               "type": "array",
               "minItems": 2,
               "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "text": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "true_false"
+            },
+            "statement_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "correct": {
+              "type": "boolean"
+            },
+            "wrong_feedback": {
+              "$ref": "common.schema.json#/$defs/l10nRef"
+            }
+          },
+          "required": [
+            "statement_de",
+            "correct"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "match_pairs"
+            },
+            "pairs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "left_de",
+                  "right_de"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "left_de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "right_de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "pairs"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "reply_choice"
+            },
+            "line_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "correct"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "text": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  },
+                  "correct": {
+                    "type": "boolean"
+                  },
+                  "feedback": {
+                    "$ref": "common.schema.json#/$defs/l10nRef"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "line_de",
+            "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "article_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "form_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "gap_fill_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "spelling_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "number_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "time_input"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "multi_choice"
+            },
+            "stem_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
               "items": {
                 "type": "object",
                 "additionalProperties": false,
