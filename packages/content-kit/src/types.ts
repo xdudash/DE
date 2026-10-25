@@ -184,6 +184,14 @@ export interface TransformExercise extends ExerciseBase {
   accept: string[];
 }
 
+export interface SeparableVerbExercise extends ExerciseBase {
+  type: "separable_verb";
+  source_de: string;
+  finite_form_de: string;
+  prefix_de: string;
+  accept: string[];
+}
+
 export interface NegationExercise extends ExerciseBase {
   type: "negation";
   /** Positive German sentence to rewrite with a correct negation. */
@@ -278,7 +286,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise | NegationExercise | ConnectorChoiceExercise | CaseChoiceExercise | PrepositionChoiceExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise | NegationExercise | ConnectorChoiceExercise | CaseChoiceExercise | PrepositionChoiceExercise | SeparableVerbExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }
