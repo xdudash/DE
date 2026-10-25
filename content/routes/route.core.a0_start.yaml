@@ -1,8 +1,9 @@
-# First route: the A0 start. Pronunciation, greetings, numbers and first scenarios. Draft until the units are human-reviewed (DG-007).
-# Order is not yet the plan order of A0_SUBTOPICS_PROPOSAL: greetings and numbers come after the pronunciation steps for now.
+# The A0 route, in the order of docs/domain/A0_SUBTOPICS_PROPOSAL.md. Draft until the units are human-reviewed (DG-007).
+# One deviation: ß und ss (A0.01.6) comes after the vowel-length lessons (A0.01.7–9), because the ß rule depends on vowel length.
+# A0.02 lessons 3–5 are not written yet; 6 (Wochentage) follows 2.
 schema: deutschgo.route/1
 id: route.core.a0_start
-version: 0.1.0
+version: 0.2.0
 status: draft
 title: "@title"
 summary: "@summary"
@@ -10,21 +11,30 @@ goals: [general, everyday]
 cefr: { from: A0, to: A0 }
 steps:
   - { unit: unit.pron.alphabet_a0 }
+  - { unit: unit.pron.a0_0102_namen_buchstabieren }
+  - { unit: unit.pron.a0_0103_buchstaben_alltag }
   - { unit: unit.pron.a0_0104_umlaute_laut }
   - { unit: unit.pron.a0_0105_umlaute_woerter }
   - { unit: unit.pron.a0_0107_vowels_aei }
   - { unit: unit.pron.a0_0108_vowels_ou }
   - { unit: unit.pron.a0_0109_double_vowels_ie }
-  - { concept: concept.pron.ch_sounds }
-  - { concept: concept.pron.sch_st_sp }
-  - { concept: concept.pron.r_and_final_er }
   - { unit: unit.pron.a0_0106_eszett }
+  - { unit: unit.pron.a0_0110_ch_laute }
+  - { unit: unit.pron.a0_0111_st_sp }
+  - { unit: unit.pron.a0_0112_r_er }
   - { unit: unit.lex.a0_0113_begruessung_hallo_guten_tag }
   - { unit: unit.lex.a0_0114_guten_morgen_abend }
   - { unit: unit.lex.a0_0115_tschuess_auf_wiedersehen }
+  - { unit: unit.lex.a0_0116_danke_bitte }
+  - { unit: unit.lex.a0_0117_wie_bitte }
+  - { unit: unit.lex.a0_0118_gern_geschehen_entschuldigung }
   - { unit: unit.lex.a0_0119_zahlen_0_5 }
   - { unit: unit.lex.a0_0120_zahlen_6_12 }
   - { unit: unit.lex.a0_0121_zahlen_13_20 }
   - { unit: unit.lex.a0_0122_szenario_kurs }
   - { unit: unit.lex.a0_0123_szenario_cafe }
   - { unit: unit.lex.a0_0124_szenario_markt }
+  - { unit: unit.lex.a0_0125_blockkontrolle }
+  - { unit: unit.lex.a0_0201_zahlen_20_50 }
+  - { unit: unit.lex.a0_0202_zahlen_60_100 }
+  - { unit: unit.lex.a0_0206_wochentage }

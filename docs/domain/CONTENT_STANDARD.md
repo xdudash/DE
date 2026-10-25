@@ -68,6 +68,7 @@ Agreed norms (ADR-0023 and its amendment of 2026-10-25), enforced by the validat
 | At least 5 examples | `norm.examples` |
 | `estimated_minutes` from the formula below, and 8–12 minutes | `norm.minutes_mismatch`, `norm.minutes_range` |
 | Unique title | `norm.duplicate_title` |
+| Two neighbouring A0 lessons on a route share the exercise type at no more than half of the positions, so lessons do not all follow the same rhythm | `norm.route_rhythm` |
 
 Not checked by a tool, and required all the same:
 - Each item has one defensible answer (for multi-choice, one defensible set) and can be answered from this lesson or earlier lessons.

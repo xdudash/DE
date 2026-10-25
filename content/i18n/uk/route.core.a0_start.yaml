@@ -1,9 +1,9 @@
 schema: deutschgo.l10n/1
 entity: route.core.a0_start
 lang: uk
-based_on_version: 0.1.0
+based_on_version: 0.2.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-24)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: "Початок: алфавіт (A0)"
-  summary: "Назви літер і як диктувати слова, перший крок перед граматикою."
+  title: "Початок: звуки, привітання і числа (A0)"
+  summary: "Літери й звуки, як вітатися і дякувати, числа до 100 і дні тижня — ще до граматики."

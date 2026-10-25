@@ -5,7 +5,7 @@
 import { answersEqual, evaluate, findOrderFor } from "./evaluate.ts";
 import { findPrerequisiteCycles, prerequisitesOf } from "./graph.ts";
 import { collectKeys } from "./l10n.ts";
-import { duplicateTitles, lessonNorms, NORM_EXEMPT } from "./norms.ts";
+import { duplicateTitles, lessonNorms, MAX_RHYTHM_SIMILARITY, NORM_EXEMPT, rhythmSimilarity } from "./norms.ts";
 import type { Block, ContentRepo, Exercise, Issue, Review, Route, Unit } from "./types.ts";
 
 const ID_PREFIX = { concept: "concept.", unit: "unit.", route: "route." } as const;
@@ -367,6 +367,17 @@ function checkNorms(c: Collector, repo: ContentRepo): void {
     for (const f of lessonNorms(u, strings)) report(f.code, u.id, f.message);
     const title = strings?.[u.title.replace(/^@/, "")];
     if (title) titles.set(u.id, title);
+  }
+  for (const r of repo.routes.values()) {
+    const units = r.steps.map((st) => (st.unit ? repo.units.get(st.unit) : undefined)).filter((u): u is Unit => !!u && u.cefr === "A0");
+    for (let i = 1; i < units.length; i++) {
+      const a = units[i - 1]!, b = units[i]!;
+      const sim = rhythmSimilarity(a, b);
+      if (sim > MAX_RHYTHM_SIMILARITY) {
+        const report = NORM_EXEMPT.has(a.id) || NORM_EXEMPT.has(b.id) ? c.warn.bind(c) : c.error.bind(c);
+        report("norm.route_rhythm", b.id, `on ${r.id}, ${Math.round(sim * 100)}% of its exercise types sit at the same positions as in ${a.id}; vary the order (at most ${MAX_RHYTHM_SIMILARITY * 100}%)`);
+      }
+    }
   }
   for (const ids of duplicateTitles(titles)) {
     for (const id of ids) {

@@ -49,21 +49,6 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
 
-      - id: x2
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.prag.courtesy_phrases]
-        difficulty: 1
-        prompt: "@x2.prompt"
-        accept: ["Wie bitte?", "Wie bitte"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Wie bite?", "Wie bite"], feedback: "@x2.r1" }
-          - { match: ["Was?", "Was"], feedback: "@x2.r2" }
-        explanation: "@x2.expl"
-
       - id: x3
         type: true_false
         objective: obj_main
@@ -89,6 +74,21 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x4.expl"
 
+      - id: x2
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.prag.courtesy_phrases]
+        difficulty: 1
+        prompt: "@x2.prompt"
+        accept: ["Wie bitte?", "Wie bitte"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Wie bite?", "Wie bite"], feedback: "@x2.r1" }
+          - { match: ["Was?", "Was"], feedback: "@x2.r2" }
+        explanation: "@x2.expl"
+
       - id: x5
         type: multi_choice
         objective: obj_main
@@ -102,6 +102,19 @@ blocks:
           - { id: d, de: "Gute Nacht!", correct: false, feedback: "@x5.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
+
+      - id: x10
+        type: cloze
+        objective: obj_main
+        concepts: [concept.prag.courtesy_phrases]
+        difficulty: 1
+        prompt: "@x10.prompt"
+        text_de: "Ich bin Herr Szczepański. – Wie {{0}}? – Szczepański. – Noch {{1}}, bitte!"
+        gaps:
+          - { accept: ["bitte"] }
+          - { accept: ["einmal", "mal"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
 
       - id: x6
         type: gap_fill_input
@@ -118,6 +131,18 @@ blocks:
           - { match: ["Noch einmal"], feedback: "@x6.r1" }
           - { match: ["Lansam"], feedback: "@x6.r2" }
         explanation: "@x6.expl"
+
+      - id: x9
+        type: true_false
+        objective: obj_main
+        concepts: [concept.prag.courtesy_phrases]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        statement_de: "„Wie bitte?“ ist eine Verabschiedung."
+        correct: false
+        wrong_feedback: "@x9.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
 
       - id: x7
         type: reply_choice
@@ -145,44 +170,6 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
-      - id: x9
-        type: true_false
-        objective: obj_main
-        concepts: [concept.prag.courtesy_phrases]
-        difficulty: 1
-        prompt: "@x9.prompt"
-        statement_de: "„Wie bitte?“ ist eine Verabschiedung."
-        correct: false
-        wrong_feedback: "@x9.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
-
-      - id: x10
-        type: cloze
-        objective: obj_main
-        concepts: [concept.prag.courtesy_phrases]
-        difficulty: 1
-        prompt: "@x10.prompt"
-        text_de: "Ich bin Herr Szczepański. – Wie {{0}}? – Szczepański. – Noch {{1}}, bitte!"
-        gaps:
-          - { accept: ["bitte"] }
-          - { accept: ["einmal", "mal"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x10.expl"
-
-      - id: x11
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.prag.courtesy_phrases]
-        difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "Ich verstehe nicht.", correct: true }
-          - { id: b, de: "Ich verstehe.", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "Langsam, bitte.", correct: false, feedback: "@x11.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
-
       - id: x12
         type: transform
         objective: obj_main
@@ -208,17 +195,19 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
 
-      - id: x14
-        type: word_order
+      - id: x16
+        type: spelling_input
         objective: obj_main
         concepts: [concept.prag.courtesy_phrases]
         difficulty: 1
-        prompt: "@x14.prompt"
-        tokens: ["nicht", "verstehe", "Ich"]
-        final_punctuation: "."
-        accept: ["Ich verstehe nicht."]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
+        prompt: "@x16.prompt"
+        accept: ["Noch einmal", "Noch mal", "Nochmal"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Noch ein mal"], feedback: "@x16.r1" }
+        explanation: "@x16.expl"
 
       - id: x15
         type: single_choice
@@ -233,19 +222,30 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
 
-      - id: x16
-        type: spelling_input
+      - id: x14
+        type: word_order
         objective: obj_main
         concepts: [concept.prag.courtesy_phrases]
         difficulty: 1
-        prompt: "@x16.prompt"
-        accept: ["Noch einmal", "Noch mal", "Nochmal"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Noch ein mal"], feedback: "@x16.r1" }
-        explanation: "@x16.expl"
+        prompt: "@x14.prompt"
+        tokens: ["nicht", "verstehe", "Ich"]
+        final_punctuation: "."
+        accept: ["Ich verstehe nicht."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x14.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.courtesy_phrases]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "Ich verstehe nicht.", correct: true }
+          - { id: b, de: "Ich verstehe.", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "Langsam, bitte.", correct: false, feedback: "@x11.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }

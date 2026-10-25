@@ -39,18 +39,17 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x1
-        type: single_choice
+      - id: x4
+        type: true_false
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x1.prompt"
-        options:
-          - { id: a, de: "vier", correct: true }
-          - { id: b, de: "Mitte", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "Kind", correct: false, feedback: "@x1.o3.fb" }
+        prompt: "@x4.prompt"
+        statement_de: "„ie“ ist ein langes i."
+        correct: true
+        wrong_feedback: "@x4.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x1.expl"
+        explanation: "@x4.expl"
 
       - id: x2
         type: spelling_input
@@ -67,32 +66,6 @@ blocks:
           - { match: ["Sea"], feedback: "@x2.r2" }
         explanation: "@x2.expl"
 
-      - id: x3
-        type: match_pairs
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x3.prompt"
-        pairs:
-          - { id: a, left_de: "Haar", right_de: "aa" }
-          - { id: b, left_de: "See", right_de: "ee" }
-          - { id: c, left_de: "Boot", right_de: "oo" }
-          - { id: d, left_de: "Bier", right_de: "ie" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
-
-      - id: x4
-        type: true_false
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        statement_de: "„ie“ ist ein langes i."
-        correct: true
-        wrong_feedback: "@x4.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
       - id: x5
         type: multi_choice
         objective: obj_main
@@ -107,6 +80,33 @@ blocks:
           - { id: e, de: "Bett", correct: false, feedback: "@x5.o5.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
+
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "vier", correct: true }
+          - { id: b, de: "Mitte", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Kind", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x3
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x3.prompt"
+        pairs:
+          - { id: a, left_de: "Haar", right_de: "aa" }
+          - { id: b, left_de: "See", right_de: "ee" }
+          - { id: c, left_de: "Boot", right_de: "oo" }
+          - { id: d, left_de: "Bier", right_de: "ie" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x3.expl"
 
       - id: x6
         type: gap_fill_input
@@ -124,47 +124,6 @@ blocks:
           - { match: ["i"], feedback: "@x6.r2" }
         explanation: "@x6.expl"
 
-      - id: x7
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x7.prompt"
-        line_de: "Wie schreibt man „Bier“?"
-        options:
-          - { id: a, de: "B – i – e – r.", correct: true }
-          - { id: b, de: "B – e – i – r.", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "B – i – r.", correct: false, feedback: "@x7.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
-
-      - id: x8
-        type: cloze
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x8.prompt"
-        text_de: "B{{0}}t · S{{1}} · T{{2}}r"
-        gaps:
-          - { accept: ["oo"] }
-          - { accept: ["ee"] }
-          - { accept: ["ie"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
-
-      - id: x9
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x9.prompt"
-        options:
-          - { id: a, de: "Paar", correct: true }
-          - { id: b, de: "Mann", correct: false, feedback: "@x9.o2.fb" }
-          - { id: c, de: "Tag", correct: false, feedback: "@x9.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
-
       - id: x10
         type: spelling_input
         objective: obj_main
@@ -181,17 +140,88 @@ blocks:
           - { match: ["Beir"], feedback: "@x10.r3" }
         explanation: "@x10.expl"
 
-      - id: x11
-        type: true_false
+      - id: x7
+        type: reply_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x11.prompt"
-        statement_de: "In „Haar“ ist das a kurz."
-        correct: false
-        wrong_feedback: "@x11.wrong"
+        prompt: "@x7.prompt"
+        line_de: "Wie schreibt man „Bier“?"
+        options:
+          - { id: a, de: "B – i – e – r.", correct: true }
+          - { id: b, de: "B – e – i – r.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "B – i – r.", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
+        explanation: "@x7.expl"
+
+      - id: x9
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x9.prompt"
+        options:
+          - { id: a, de: "Paar", correct: true }
+          - { id: b, de: "Mann", correct: false, feedback: "@x9.o2.fb" }
+          - { id: c, de: "Tag", correct: false, feedback: "@x9.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x9.expl"
+
+      - id: x8
+        type: cloze
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        text_de: "B{{0}}t · S{{1}} · T{{2}}r"
+        gaps:
+          - { accept: ["oo"] }
+          - { accept: ["ee"] }
+          - { accept: ["ie"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
+      - id: x13
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x13.prompt"
+        options:
+          - { id: a, de: "sieben", correct: true }
+          - { id: b, de: "Tier", correct: true }
+          - { id: c, de: "wie", correct: true }
+          - { id: d, de: "Kind", correct: false, feedback: "@x13.o4.fb" }
+          - { id: e, de: "bitte", correct: false, feedback: "@x13.o5.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x13.expl"
+
+      - id: x15
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "tt", correct: true }
+          - { id: b, de: "ie", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "oo", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+      - id: x14
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x14.prompt"
+        accept: ["Zoo"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Zo"], feedback: "@x14.r1" }
+        explanation: "@x14.expl"
 
       - id: x12
         type: gap_fill_input
@@ -209,47 +239,17 @@ blocks:
           - { match: ["ei"], feedback: "@x12.r2" }
         explanation: "@x12.expl"
 
-      - id: x13
-        type: multi_choice
+      - id: x11
+        type: true_false
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "sieben", correct: true }
-          - { id: b, de: "Tier", correct: true }
-          - { id: c, de: "wie", correct: true }
-          - { id: d, de: "Kind", correct: false, feedback: "@x13.o4.fb" }
-          - { id: e, de: "bitte", correct: false, feedback: "@x13.o5.fb" }
+        prompt: "@x11.prompt"
+        statement_de: "In „Haar“ ist das a kurz."
+        correct: false
+        wrong_feedback: "@x11.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
-
-      - id: x14
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x14.prompt"
-        accept: ["Zoo"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Zo"], feedback: "@x14.r1" }
-        explanation: "@x14.expl"
-
-      - id: x15
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "tt", correct: true }
-          - { id: b, de: "ie", correct: false, feedback: "@x15.o2.fb" }
-          - { id: c, de: "oo", correct: false, feedback: "@x15.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
+        explanation: "@x11.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Words like Familie (i-e in two syllables) are left out as exceptions to 'ie is a long i'." }

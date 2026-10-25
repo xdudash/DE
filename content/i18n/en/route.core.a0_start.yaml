@@ -1,9 +1,9 @@
 schema: deutschgo.l10n/1
 entity: route.core.a0_start
 lang: en
-based_on_version: 0.1.0
+based_on_version: 0.2.0
 status: draft
-translator: claude (AI draft, 2026-10-24)
+translator: claude (AI draft, 2026-10-25)
 strings:
-  title: "Start: the alphabet (A0)"
-  summary: "Spelling and letter names, the first step before any grammar."
+  title: "Start: sounds, greetings and numbers (A0)"
+  summary: "Letters and sounds, greeting and thanking people, numbers to 100 and the days of the week, before any grammar."

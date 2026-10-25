@@ -36,18 +36,44 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x1
-        type: single_choice
+      - id: x3
+        type: true_false
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x1.prompt"
-        options:
-          - { id: a, de: "Tschüss!", correct: true }
-          - { id: b, de: "Guten Tag!", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "Hallo!", correct: false, feedback: "@x1.o3.fb" }
+        prompt: "@x3.prompt"
+        statement_de: "Tschüss sagt man zu Freunden."
+        correct: true
+        wrong_feedback: "@x3.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x1.expl"
+        explanation: "@x3.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "Tschüss", correct: true }
+          - { id: b, de: "Auf Wiedersehen", correct: true }
+          - { id: c, de: "Bis bald", correct: true }
+          - { id: d, de: "Guten Morgen", correct: false, feedback: "@x5.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
+
+      - id: x4
+        type: match_pairs
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: "Auf", right_de: "Wiedersehen" }
+          - { id: b, left_de: "Bis", right_de: "bald" }
+          - { id: c, left_de: "Gute", right_de: "Nacht" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x4.expl"
 
       - id: x2
         type: spelling_input
@@ -65,44 +91,69 @@ blocks:
           - { match: ["Auf Wiedersehn"], feedback: "@x2.r3" }
         explanation: "@x2.expl"
 
-      - id: x3
+      - id: x1
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "Tschüss!", correct: true }
+          - { id: b, de: "Guten Tag!", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Hallo!", correct: false, feedback: "@x1.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x1.expl"
+
+      - id: x9
         type: true_false
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x3.prompt"
-        statement_de: "Tschüss sagt man zu Freunden."
-        correct: true
-        wrong_feedback: "@x3.wrong"
+        prompt: "@x9.prompt"
+        statement_de: "Auf Wiedersehen sagt man nur zu Freunden."
+        correct: false
+        wrong_feedback: "@x9.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
+        explanation: "@x9.expl"
 
-      - id: x4
-        type: match_pairs
+      - id: x8
+        type: word_order
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x4.prompt"
-        pairs:
-          - { id: a, left_de: "Auf", right_de: "Wiedersehen" }
-          - { id: b, left_de: "Bis", right_de: "bald" }
-          - { id: c, left_de: "Gute", right_de: "Nacht" }
+        prompt: "@x8.prompt"
+        tokens: ["Anna", "bald,", "Bis"]
+        final_punctuation: "!"
+        accept: ["Bis bald, Anna!"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
+        explanation: "@x8.expl"
 
-      - id: x5
-        type: multi_choice
+      - id: x10
+        type: cloze
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x5.prompt"
+        prompt: "@x10.prompt"
+        text_de: "Tschüss, Lisa! Bis {{0}}! – {{1}}, Tom!"
+        gaps:
+          - { accept: ["morgen", "bald"] }
+          - { accept: ["Tschüss", "Tschüs"] }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x10.expl"
+
+      - id: x7
+        type: reply_choice
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x7.prompt"
+        line_de: "Auf Wiedersehen, Herr Klein!"
         options:
-          - { id: a, de: "Tschüss", correct: true }
-          - { id: b, de: "Auf Wiedersehen", correct: true }
-          - { id: c, de: "Bis bald", correct: true }
-          - { id: d, de: "Guten Morgen", correct: false, feedback: "@x5.o4.fb" }
+          - { id: a, de: "Auf Wiedersehen, Frau Weber!", correct: true }
+          - { id: b, de: "Hallo, Frau Weber!", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Guten Morgen, Frau Weber!", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x5.expl"
+        explanation: "@x7.expl"
 
       - id: x6
         type: gap_fill_input
@@ -119,56 +170,58 @@ blocks:
           - { match: ["bald"], feedback: "@x6.r1" }
         explanation: "@x6.expl"
 
-      - id: x7
+      - id: x13
         type: reply_choice
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x7.prompt"
-        line_de: "Auf Wiedersehen, Herr Klein!"
+        prompt: "@x13.prompt"
+        line_de: "Tschüss, bis morgen!"
         options:
-          - { id: a, de: "Auf Wiedersehen, Frau Weber!", correct: true }
-          - { id: b, de: "Hallo, Frau Weber!", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "Guten Morgen, Frau Weber!", correct: false, feedback: "@x7.o3.fb" }
+          - { id: a, de: "Tschüss, bis morgen!", correct: true }
+          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@x13.o2.fb" }
+          - { id: c, de: "Hallo!", correct: false, feedback: "@x13.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
+        explanation: "@x13.expl"
 
-      - id: x8
+      - id: x16
+        type: spelling_input
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x16.prompt"
+        accept: ["Tschüss", "Tschüs"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Tschuss", "Tschus"], feedback: "@x16.r1" }
+        explanation: "@x16.expl"
+
+      - id: x15
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.goodbyes]
+        difficulty: 1
+        prompt: "@x15.prompt"
+        options:
+          - { id: a, de: "bald", correct: true }
+          - { id: b, de: "morgen", correct: false, feedback: "@x15.o2.fb" }
+          - { id: c, de: "Nacht", correct: false, feedback: "@x15.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x15.expl"
+
+      - id: x14
         type: word_order
         objective: obj_main
         concepts: [concept.prag.goodbyes]
         difficulty: 1
-        prompt: "@x8.prompt"
-        tokens: ["Anna", "bald,", "Bis"]
+        prompt: "@x14.prompt"
+        tokens: ["Herr Klein", "Wiedersehen,", "Auf"]
         final_punctuation: "!"
-        accept: ["Bis bald, Anna!"]
+        accept: ["Auf Wiedersehen, Herr Klein!"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
-
-      - id: x9
-        type: true_false
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x9.prompt"
-        statement_de: "Auf Wiedersehen sagt man nur zu Freunden."
-        correct: false
-        wrong_feedback: "@x9.wrong"
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
-
-      - id: x10
-        type: cloze
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x10.prompt"
-        text_de: "Tschüss, Lisa! Bis {{0}}! – {{1}}, Tom!"
-        gaps:
-          - { accept: ["morgen", "bald"] }
-          - { accept: ["Tschüss", "Tschüs"] }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x10.expl"
+        explanation: "@x14.expl"
 
       - id: x11
         type: single_choice
@@ -193,59 +246,6 @@ blocks:
         accept: ["Auf Wiedersehen, Frau Weber!", "Auf Wiedersehen Frau Weber!"]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x12.expl"
-
-      - id: x13
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x13.prompt"
-        line_de: "Tschüss, bis morgen!"
-        options:
-          - { id: a, de: "Tschüss, bis morgen!", correct: true }
-          - { id: b, de: "Guten Morgen!", correct: false, feedback: "@x13.o2.fb" }
-          - { id: c, de: "Hallo!", correct: false, feedback: "@x13.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
-
-      - id: x14
-        type: word_order
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x14.prompt"
-        tokens: ["Herr Klein", "Wiedersehen,", "Auf"]
-        final_punctuation: "!"
-        accept: ["Auf Wiedersehen, Herr Klein!"]
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x14.expl"
-
-      - id: x15
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x15.prompt"
-        options:
-          - { id: a, de: "bald", correct: true }
-          - { id: b, de: "morgen", correct: false, feedback: "@x15.o2.fb" }
-          - { id: c, de: "Nacht", correct: false, feedback: "@x15.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x15.expl"
-
-      - id: x16
-        type: spelling_input
-        objective: obj_main
-        concepts: [concept.prag.goodbyes]
-        difficulty: 1
-        prompt: "@x16.prompt"
-        accept: ["Tschüss", "Tschüs"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["Tschuss", "Tschus"], feedback: "@x16.r1" }
-        explanation: "@x16.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }

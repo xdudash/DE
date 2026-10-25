@@ -230,6 +230,23 @@ export function lessonNorms(u: Unit, strings: Record<string, string> | undefined
   return out;
 }
 
+/**
+ * Share of positions at which two lessons use the same exercise type (0..1), over the shorter
+ * lesson. Two lessons in a row with the same rhythm feel like the same lesson again.
+ */
+export function rhythmSimilarity(a: Unit, b: Unit): number {
+  const x = exercisesOf(a).map((e) => e.type);
+  const y = exercisesOf(b).map((e) => e.type);
+  const n = Math.min(x.length, y.length);
+  if (n === 0) return 0;
+  let same = 0;
+  for (let i = 0; i < n; i++) if (x[i] === y[i]) same++;
+  return same / n;
+}
+
+/** Neighbouring A0 lessons on a route may share the type at no more than this share of positions. */
+export const MAX_RHYTHM_SIMILARITY = 0.5;
+
 /** Units whose pivot titles are identical; one subtopic per lesson means one title per lesson. */
 export function duplicateTitles(titles: Map<string, string>): string[][] {
   const byTitle = new Map<string, string[]>();

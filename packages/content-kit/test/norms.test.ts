@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 import { runChecks } from "../src/checks.ts";
-import { duplicateTitles, estimateMinutes, lessonNorms, promptTemplate } from "../src/norms.ts";
+import { duplicateTitles, estimateMinutes, lessonNorms, promptTemplate, rhythmSimilarity } from "../src/norms.ts";
 import type { Exercise, Unit } from "../src/types.ts";
 import { l10n, unit, validRepo } from "./fixtures.ts";
 
@@ -172,5 +172,31 @@ describe("norms in runChecks", () => {
     const issues = withLesson("unit.pron.alphabet_a0");
     assert.ok(issues.length > 0);
     assert.ok(issues.every((i) => i.severity === "warning"));
+  });
+});
+
+describe("rhythm across neighbouring lessons", () => {
+  const routeWith = (second: Exercise["type"][]) => {
+    const repo = validRepo();
+    const a = a0Lesson().u; a.id = "unit.lex.test_a";
+    const b = a0Lesson(second).u; b.id = "unit.lex.test_b";
+    repo.units.set(a.id, a); repo.units.set(b.id, b);
+    repo.routes.set("route.test", { schema: "deutschgo.route/1", id: "route.test", version: "1.0.0", status: "draft", title: "@t", summary: "@s", goals: ["general"], cefr: { from: "A0", to: "A0" }, steps: [{ unit: a.id }, { unit: b.id }] });
+    return runChecks(repo).issues.filter((i) => i.code === "norm.route_rhythm");
+  };
+  it("measures the share of positions with the same type", () => {
+    const a = a0Lesson().u;
+    assert.equal(rhythmSimilarity(a, a0Lesson().u), 1);
+  });
+  it("reports two neighbouring lessons with the same order of types", () => {
+    assert.equal(routeWith(GOOD_ORDER).length, 1);
+  });
+  it("accepts a neighbour whose order differs", () => {
+    const other: Exercise["type"][] = [
+      "number_input", "match_pairs", "spelling_input", "single_choice", "number_input", "true_false", "spelling_input", "multi_choice",
+      "match_pairs", "reply_choice", "number_input", "single_choice", "spelling_input", "true_false", "multi_choice",
+    ];
+    assert.ok(rhythmSimilarity(a0Lesson().u, a0Lesson(other).u) <= 0.5);
+    assert.equal(routeWith(other).length, 0);
   });
 });

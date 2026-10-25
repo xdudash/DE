@@ -59,6 +59,7 @@ Speaking is not in this catalogue; it needs a separate decision.
 Owner direction in chat on 2026-10-25: lessons must not repeat the same kind of exercise ("two exercises of the same type in a lesson"), and the agent should write the standards and complete what is missing. Changes to the norms above:
 - The norms are implemented in `packages/content-kit/src/norms.ts` and are **errors** for A0 units, not warnings. Units listed in `NORM_EXEMPT` keep warnings, each with its reason (today only the alphabet unit, which the owner approved before the norms). The repository test fails on any validator error, so CI enforces the norms.
 - Added variety rules: no two exercises of the same type next to each other; no three of the same shape in a row; one type at most a quarter of a lesson; the same question wording at most twice.
+- Added: two neighbouring A0 lessons on a route may share the exercise type at no more than half of the positions (`norm.route_rhythm`).
 - Added: every wrong option has its own feedback; one feedback text shared by several wrong options counts as generic.
 - The minutes formula and per-type times are fixed in `norms.ts` and in the content standard; they are estimates to be calibrated from real attempts (DG-067).
 - Norms for A1 and above are not set yet; they apply to A0 only.

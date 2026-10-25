@@ -39,19 +39,6 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x1
-        type: single_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x1.prompt"
-        options:
-          - { id: a, de: "Tag", correct: true }
-          - { id: b, de: "Mann", correct: false, feedback: "@x1.o2.fb" }
-          - { id: c, de: "Platz", correct: false, feedback: "@x1.o3.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x1.expl"
-
       - id: x2
         type: spelling_input
         objective: obj_main
@@ -66,17 +53,18 @@ blocks:
           - { match: ["Man"], feedback: "@x2.r1" }
         explanation: "@x2.expl"
 
-      - id: x3
-        type: true_false
+      - id: x1
+        type: single_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x3.prompt"
-        statement_de: "In „Bett“ ist das e kurz."
-        correct: true
-        wrong_feedback: "@x3.wrong"
+        prompt: "@x1.prompt"
+        options:
+          - { id: a, de: "Tag", correct: true }
+          - { id: b, de: "Mann", correct: false, feedback: "@x1.o2.fb" }
+          - { id: c, de: "Platz", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x3.expl"
+        explanation: "@x1.expl"
 
       - id: x4
         type: match_pairs
@@ -107,34 +95,17 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x5.expl"
 
-      - id: x6
-        type: gap_fill_input
+      - id: x3
+        type: true_false
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x6.prompt"
-        stem_de: "Be___"
-        accept: ["tt"]
-        feedback:
-          correct: "@fb.correct"
-          incorrect: "@fb.incorrect"
-          rules:
-          - { match: ["t"], feedback: "@x6.r1" }
-        explanation: "@x6.expl"
-
-      - id: x7
-        type: reply_choice
-        objective: obj_main
-        concepts: [concept.pron.long_short_vowels]
-        difficulty: 1
-        prompt: "@x7.prompt"
-        line_de: "Ist das a in „Name“ lang oder kurz?"
-        options:
-          - { id: a, de: "Lang.", correct: true }
-          - { id: b, de: "Kurz.", correct: false, feedback: "@x7.o2.fb" }
-          - { id: c, de: "Es gibt kein a.", correct: false, feedback: "@x7.o3.fb" }
+        prompt: "@x3.prompt"
+        statement_de: "In „Bett“ ist das e kurz."
+        correct: true
+        wrong_feedback: "@x3.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x7.expl"
+        explanation: "@x3.expl"
 
       - id: x8
         type: cloze
@@ -150,17 +121,19 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x8.expl"
 
-      - id: x9
-        type: true_false
+      - id: x7
+        type: reply_choice
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x9.prompt"
-        statement_de: "In „Tier“ ist das i kurz."
-        correct: false
-        wrong_feedback: "@x9.wrong"
+        prompt: "@x7.prompt"
+        line_de: "Ist das a in „Name“ lang oder kurz?"
+        options:
+          - { id: a, de: "Lang.", correct: true }
+          - { id: b, de: "Kurz.", correct: false, feedback: "@x7.o2.fb" }
+          - { id: c, de: "Es gibt kein a.", correct: false, feedback: "@x7.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x9.expl"
+        explanation: "@x7.expl"
 
       - id: x10
         type: spelling_input
@@ -177,33 +150,32 @@ blocks:
           - { match: ["Tea"], feedback: "@x10.r2" }
         explanation: "@x10.expl"
 
-      - id: x11
-        type: single_choice
+      - id: x9
+        type: true_false
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x11.prompt"
-        options:
-          - { id: a, de: "Kind", correct: true }
-          - { id: b, de: "Kino", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "Tier", correct: false, feedback: "@x11.o3.fb" }
+        prompt: "@x9.prompt"
+        statement_de: "In „Tier“ ist das i kurz."
+        correct: false
+        wrong_feedback: "@x9.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
+        explanation: "@x9.expl"
 
-      - id: x12
+      - id: x6
         type: gap_fill_input
         objective: obj_main
         concepts: [concept.pron.long_short_vowels]
         difficulty: 1
-        prompt: "@x12.prompt"
-        stem_de: "Ich trinke ___."
-        accept: ["Tee"]
+        prompt: "@x6.prompt"
+        stem_de: "Be___"
+        accept: ["tt"]
         feedback:
           correct: "@fb.correct"
           incorrect: "@fb.incorrect"
           rules:
-          - { match: ["Te"], feedback: "@x12.r1" }
-        explanation: "@x12.expl"
+          - { match: ["t"], feedback: "@x6.r1" }
+        explanation: "@x6.expl"
 
       - id: x13
         type: multi_choice
@@ -219,6 +191,19 @@ blocks:
           - { id: e, de: "Bitte", correct: false, feedback: "@x13.o5.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x13.expl"
+
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "Kind", correct: true }
+          - { id: b, de: "Kino", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "Tier", correct: false, feedback: "@x11.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
 
       - id: x14
         type: spelling_input
@@ -247,6 +232,21 @@ blocks:
           - { id: c, de: "Katze", correct: false, feedback: "@x15.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
+
+      - id: x12
+        type: gap_fill_input
+        objective: obj_main
+        concepts: [concept.pron.long_short_vowels]
+        difficulty: 1
+        prompt: "@x12.prompt"
+        stem_de: "Ich trinke ___."
+        accept: ["Tee"]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+          - { match: ["Te"], feedback: "@x12.r1" }
+        explanation: "@x12.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007). Check that every example follows the spelling rule and that the 'usually' caveat is enough for A0." }
