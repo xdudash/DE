@@ -497,7 +497,8 @@
             "gap_fill_input",
             "spelling_input",
             "number_input",
-            "time_input"
+            "time_input",
+            "keyword_build"
           ]
         }
       },
@@ -1161,6 +1162,35 @@
           "required": [
             "audio_text_de",
             "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "keyword_build"
+            },
+            "keywords": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "keywords",
+            "accept"
           ],
           "type": "object"
         }

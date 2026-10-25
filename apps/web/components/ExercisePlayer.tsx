@@ -120,7 +120,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    ((exercise.type === "transform" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
+    ((exercise.type === "transform" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
@@ -155,6 +155,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "word_order": response = { type: "word_order", order }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
+          case "keyword_build": response = { type: "keyword_build", text: free }; break;
           default: response = { type: exercise.type, text: free }; break;
         }
         let outcome: EvaluationResult;
@@ -467,13 +468,14 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {(exercise.type === "transform" || exercise.type === "error_correction" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
+      {(exercise.type === "transform" || exercise.type === "error_correction" || exercise.type === "keyword_build" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
         <>
           {exercise.type === "transform" || exercise.type === "error_correction" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
-          ) : (
-            exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>
-          )}
+          ) : exercise.type !== "keyword_build" && exercise.stem_de ? (
+            <p lang="de" className="de stem">{exercise.stem_de}</p>
+          ) : null}
+          {exercise.type === "keyword_build" && <ul className="keyword-build-bank" aria-label={labels.yourAnswer}>{exercise.keywords.map((keyword, index) => <li key={index} lang="de">{keyword}</li>)}</ul>}
           <input
             className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
             lang="de"

@@ -1467,3 +1467,5 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .map-filter-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:.8rem 0}.map-filter{display:grid;gap:.3rem;min-width:10rem;color:var(--ink-2);font-size:.82rem}.map-filter select{min-height:2.75rem;padding:.45rem .7rem;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--paper);color:var(--ink);font:inherit}@media(max-width:520px){.map-filter{flex:1 1 9rem}}
 
 .map-actions{display:flex;justify-content:flex-end;margin:.5rem 0 1rem}
+
+.keyword-build-bank{display:flex;flex-wrap:wrap;gap:.55rem;list-style:none;padding:0;margin:.75rem 0}.keyword-build-bank li{padding:.4rem .75rem;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);font-family:var(--serif)}

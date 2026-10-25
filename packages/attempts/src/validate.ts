@@ -57,8 +57,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
       if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
       return { type: r.type, text: r.text };
     case "transform":
+    case "keyword_build":
       if (typeof r.text !== "string") throw new AttemptError("malformed_request", '"text" must be a string');
-      return { type: "transform", text: r.text };
+      return { type: r.type, text: r.text };
     default:
       throw new AttemptError("malformed_request", `unsupported response type "${String(r.type)}"`);
   }

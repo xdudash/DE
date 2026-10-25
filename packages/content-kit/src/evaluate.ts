@@ -18,6 +18,7 @@ import type {
   ErrorCorrectionExercise,
   MatchPairsExercise,
   MinimalPairsExercise,
+  KeywordBuildExercise,
   MultiChoiceExercise,
   ReplyChoiceExercise,
   TextInputExercise,
@@ -34,7 +35,7 @@ import type {
  * Bumped whenever normalization or any type's evaluation semantics change.
  * Stored with every graded event so past results stay interpretable.
  */
-export const EVALUATOR_VERSION = "1.5.0";
+export const EVALUATOR_VERSION = "1.6.0";
 
 export function normalizeAnswer(input: string): string {
   let s = input.normalize("NFC");
@@ -72,7 +73,8 @@ export type Response =
   | { type: "article_input" | "form_input" | "gap_fill_input" | "spelling_input" | "number_input" | "time_input"; text: string }
   | { type: "word_order"; order: number[] }
   | { type: "cloze"; gaps: string[] }
-  | { type: "transform"; text: string };
+  | { type: "transform"; text: string }
+  | { type: "keyword_build"; text: string };
 
 export interface GapResult {
   index: number;
@@ -301,6 +303,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalCloze(ex, (response as Extract<Response, { type: "cloze" }>).gaps);
     case "transform":
       return evalTransform(ex, (response as Extract<Response, { type: "transform" }>).text);
+    case "keyword_build":
+      return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "keyword_build" }>).text);
   }
 }
 

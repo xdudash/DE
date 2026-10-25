@@ -87,7 +87,7 @@ describe("attempt recording against PostgreSQL", { skip, timeout: 30_000 }, () =
     const events = await db().query("select * from public.learning_events where user_id = $1", [ALICE]);
     assert.equal(events.rowCount, 1);
     assert.equal(events.rows[0]!.correct, true);
-    assert.equal(events.rows[0]!.evaluator_version, "1.5.0");
+    assert.equal(events.rows[0]!.evaluator_version, "1.6.0");
     assert.deepEqual(events.rows[0]!.concept_ids, [V2]);
 
     const states = await db().query("select * from public.concept_states where user_id = $1", [ALICE]);
