@@ -21,10 +21,11 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "single_choice", optionId: r.optionId };
     case "word_order":
+    case "token_bank_build":
       if (!Array.isArray(r.order) || r.order.some((i) => !Number.isInteger(i) || (i as number) < 0)) {
         throw new AttemptError("malformed_request", '"order" must be an array of token indices');
       }
-      return { type: "word_order", order: r.order as number[] };
+      return { type: r.type, order: r.order as number[] };
     case "cloze":
       if (!Array.isArray(r.gaps) || r.gaps.some((g) => typeof g !== "string")) {
         throw new AttemptError("malformed_request", '"gaps" must be an array of strings');
