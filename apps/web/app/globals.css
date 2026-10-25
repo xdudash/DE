@@ -1079,3 +1079,33 @@ button.switch::before { content: ""; position: absolute; inset: -5px -2px; }
 @media (display-mode: standalone) {
   html, body { overscroll-behavior-y: none; }
 }
+
+/* Matching: each left item is paired with one right-hand choice. */
+.match { border: 0; margin: 0; padding: 0; display: grid; gap: 0.6rem; min-inline-size: 0; }
+.match-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.5rem 0.7rem;
+  border-radius: 12px;
+  border: 2px solid var(--line-2);
+  background: var(--paper);
+}
+.match-row.is-right { border-color: var(--ok-fill); background: var(--ok-soft); }
+.match-row.is-wrong { border-color: var(--bad-fill); background: var(--bad-soft); }
+.match-left { font-family: var(--serif); font-size: var(--step-0); overflow-wrap: anywhere; }
+select.match-right {
+  font: inherit;
+  font-family: var(--serif);
+  min-height: 48px;
+  max-width: 100%;
+  padding: 0.3rem 0.5rem;
+  border: 2px solid var(--line-2);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+}
+select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 380px) { .match-row { grid-template-columns: minmax(0, 1fr); } }
+.reply { font-style: italic; }

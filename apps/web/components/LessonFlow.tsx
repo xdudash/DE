@@ -75,7 +75,16 @@ export function LessonFlow({ lang, unit, steps, text, next, saveNotice }: Lesson
   const hearts = motivation?.hearts ?? HEARTS.max;
   const outOfHearts = practice && motivation !== null && hearts === 0;
   const isLast = index === queue.length - 1;
-  const labels = { yourAnswer: msg("exercise.yourAnswer"), saveFailed: msg("exercise.saveFailed"), saveQueued: msg("exercise.saveQueued"), stale: msg("exercise.stale") };
+  const labels = {
+    yourAnswer: msg("exercise.yourAnswer"),
+    saveFailed: msg("exercise.saveFailed"),
+    saveQueued: msg("exercise.saveQueued"),
+    stale: msg("exercise.stale"),
+    true: msg("exercise.true"),
+    false: msg("exercise.false"),
+    chooseMatch: msg("exercise.chooseMatch"),
+    chooseAll: msg("exercise.chooseAll"),
+  };
 
   const check = useCallback(() => {
     if (!step || step.kind !== "exercise" || checked || outOfHearts) return;

@@ -11,7 +11,7 @@
  */
 import { useEffect, useImperativeHandle, useState, type KeyboardEvent, type Ref } from "react";
 import { evaluate, signalledConcepts, type EvaluationResult, type Response } from "@deutschgo/content-kit/evaluate";
-import type { Exercise } from "@deutschgo/content-kit/types";
+import type { Exercise, TextInputExercise } from "@deutschgo/content-kit/types";
 import { submitAttempt, type SubmitState } from "../lib/attempts/submit";
 import { sendWithOutbox } from "../lib/attempts/outbox";
 import { deviceKeyValue, recordAttempt } from "../lib/device-state";
@@ -26,6 +26,10 @@ export interface PlayerLabels {
   saveFailed: string;
   saveQueued: string;
   stale: string;
+  true: string;
+  false: string;
+  chooseMatch: string;
+  chooseAll: string;
 }
 
 export interface ExerciseHandle {
@@ -49,24 +53,51 @@ interface Props {
   ref?: Ref<ExerciseHandle>;
 }
 
+/** The six single-box answer types (ADR-0023 batch 1); transform shares the same box. */
+const TEXT_INPUT_TYPES: ReadonlySet<string> = new Set([
+  "article_input",
+  "form_input",
+  "gap_fill_input",
+  "spelling_input",
+  "number_input",
+  "time_input",
+]);
+const isTextInput = (e: Exercise): e is TextInputExercise => TEXT_INPUT_TYPES.has(e.type);
+
 export const tr = (text: PlayerText, ref: string | undefined) => (ref ? text[ref.replace(/^@/, "")] ?? ref : "");
 
 export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyChange, onSubmit, ref, practice }: Props) {
   const [save, setSave] = useState<SubmitState>({ status: "off" });
   const [choice, setChoice] = useState<string>("");
+  const [multi, setMulti] = useState<string[]>([]);
+  const [truth, setTruth] = useState<boolean | null>(null);
+  const [matches, setMatches] = useState<Record<string, string>>({});
   const [order, setOrder] = useState<number[]>([]);
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const ready =
-    (exercise.type === "single_choice" && choice !== "") ||
+    ((exercise.type === "single_choice" || exercise.type === "reply_choice") && choice !== "") ||
+    (exercise.type === "multi_choice" && multi.length > 0) ||
+    (exercise.type === "true_false" && truth !== null) ||
+    (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    (exercise.type === "transform" && free.trim() !== "");
+    ((exercise.type === "transform" || isTextInput(exercise)) && free.trim() !== "");
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
+
+  /** Picking a right-hand item that another row already uses moves it, so no item is paired twice. */
+  const pickMatch = (leftId: string, rightId: string) =>
+    setMatches((current) => {
+      const next = { ...current };
+      for (const key of Object.keys(next)) if (next[key] === rightId) delete next[key];
+      if (rightId === "") delete next[leftId];
+      else next[leftId] = rightId;
+      return next;
+    });
 
   useImperativeHandle(
     ref,
@@ -76,9 +107,14 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         let response: Response;
         switch (exercise.type) {
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
+          case "reply_choice": response = { type: "reply_choice", optionId: choice }; break;
+          case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
+          case "true_false": response = { type: "true_false", value: truth === true }; break;
+          case "match_pairs": response = { type: "match_pairs", matches }; break;
           case "word_order": response = { type: "word_order", order }; break;
           case "cloze": response = { type: "cloze", gaps }; break;
           case "transform": response = { type: "transform", text: free }; break;
+          default: response = { type: exercise.type, text: free }; break;
         }
         let outcome: EvaluationResult;
         try {
@@ -103,7 +139,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         return outcome;
       },
     }),
-    [ready, locked, exercise, choice, order, gaps, free, unit, practice],
+    [ready, locked, exercise, choice, multi, truth, matches, order, gaps, free, unit, practice],
   );
 
   const enterChecks = (e: KeyboardEvent) => {
@@ -117,9 +153,10 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     <section className="exercise" aria-labelledby={`${exercise.id}-prompt`}>
       <p id={`${exercise.id}-prompt`} className="prompt">{inline(tr(text, exercise.prompt))}</p>
 
-      {exercise.type === "single_choice" && (
+      {(exercise.type === "single_choice" || exercise.type === "reply_choice") && (
         <>
-          {exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
+          {exercise.type === "single_choice" && exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
+          {exercise.type === "reply_choice" && <p lang="de" className="de stem reply">{exercise.line_de}</p>}
           <fieldset className="options" disabled={locked}>
             <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
             {exercise.options.map((o, i) => {
@@ -134,6 +171,80 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             })}
           </fieldset>
         </>
+      )}
+
+      {exercise.type === "multi_choice" && (
+        <>
+          {exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>}
+          <p className="muted small">{labels.chooseAll}</p>
+          <fieldset className="options" disabled={locked}>
+            <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
+            {exercise.options.map((o, i) => {
+              const picked = multi.includes(o.id);
+              // Every correct option is shown as right, so a missed one is visible too.
+              const mark = locked ? (o.correct ? " is-right" : picked ? " is-wrong" : "") : "";
+              return (
+                <label key={o.id} className={`option${picked ? " selected" : ""}${mark}`}>
+                  <input
+                    type="checkbox"
+                    name={exercise.id}
+                    value={o.id}
+                    checked={picked}
+                    onChange={() => setMulti(picked ? multi.filter((id) => id !== o.id) : [...multi, o.id])}
+                  />
+                  <span className="option-key" aria-hidden="true">{i + 1}</span>
+                  <span className="option-text" lang={o.de ? "de" : undefined}>{o.de ?? tr(text, o.text)}</span>
+                </label>
+              );
+            })}
+          </fieldset>
+        </>
+      )}
+
+      {exercise.type === "true_false" && (
+        <>
+          <p lang="de" className="de stem">{exercise.statement_de}</p>
+          <fieldset className="options" disabled={locked}>
+            <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
+            {[true, false].map((value) => {
+              const picked = truth === value;
+              const mark = locked ? (value === exercise.correct ? " is-right" : picked ? " is-wrong" : "") : "";
+              return (
+                <label key={String(value)} className={`option${picked ? " selected" : ""}${mark}`}>
+                  <input type="radio" name={exercise.id} value={String(value)} checked={picked} onChange={() => setTruth(value)} />
+                  <span className="option-text">{value ? labels.true : labels.false}</span>
+                </label>
+              );
+            })}
+          </fieldset>
+        </>
+      )}
+
+      {exercise.type === "match_pairs" && (
+        // The right-hand column is rotated so it never starts in the order of the left side.
+        <fieldset className="match" disabled={locked}>
+          <legend className="sr-only">{tr(text, exercise.prompt)}</legend>
+          {exercise.pairs.map((p) => {
+            const mark = locked ? (matches[p.id] === p.id ? " is-right" : " is-wrong") : "";
+            return (
+              <div key={p.id} className={`match-row${mark}`}>
+                <span className="match-left" lang="de">{p.left_de}</span>
+                <select
+                  className="match-right"
+                  lang="de"
+                  aria-label={`${labels.yourAnswer}: ${p.left_de}`}
+                  value={matches[p.id] ?? ""}
+                  onChange={(e) => pickMatch(p.id, e.target.value)}
+                >
+                  <option value="">{labels.chooseMatch}</option>
+                  {[...exercise.pairs.slice(1), ...exercise.pairs.slice(0, 1)].map((r) => (
+                    <option key={r.id} value={r.id}>{r.right_de}</option>
+                  ))}
+                </select>
+              </div>
+            );
+          })}
+        </fieldset>
       )}
 
       {exercise.type === "word_order" && (
@@ -203,12 +314,17 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {exercise.type === "transform" && (
+      {(exercise.type === "transform" || isTextInput(exercise)) && (
         <>
-          <p lang="de" className="de stem">{exercise.source_de}</p>
+          {exercise.type === "transform" ? (
+            <p lang="de" className="de stem">{exercise.source_de}</p>
+          ) : (
+            exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>
+          )}
           <input
             className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
             lang="de"
+            inputMode={exercise.type === "number_input" ? "numeric" : undefined}
             aria-label={labels.yourAnswer}
             value={free}
             disabled={locked}
