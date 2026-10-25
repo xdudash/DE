@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78, #79, and #80 merged; listening and dictation exercise types are in progress)
+Last updated: 2026-10-25 (PRs #78, #79, and #80 merged; listening, dictation, and error-correction exercise types are in progress)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -12,7 +12,7 @@ Last updated: 2026-10-25 (PRs #78, #79, and #80 merged; listening and dictation 
 - PR #78 is merged as `8e1b0e5`. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard. CI passed all four job groups, including Playwright and axe.
 - PR #79 is merged as `288a994`. Lessons store a device-local checkpoint with the remaining steps, retries, session answers, and active time. Home offers a localized resume action; completion and Clear device data remove it. CI passed all four job groups.
 - PR #80 is merged as `a0e8e40`. It adds the `categorize` exercise end to end, including partial scoring and per-item feedback. CI passed all four job groups.
-- PR #81 adds `listening_choice`: browser German speech with replay, localized meaning choices, and a transcript fallback. PR #82 adds full-sentence dictation using the same browser speech path. Its evaluator version is 1.3.0.
+- PR #81 adds `listening_choice`: browser German speech with replay, localized meaning choices, and a transcript fallback. PR #82 adds full-sentence dictation using the same browser speech path. PR #83 adds deterministic sentence correction with targeted feedback. Evaluator version: 1.4.0.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
 - The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
@@ -67,8 +67,8 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Finish the dictation exercise. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Finish the error-correction exercise. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Current implementation block — dictation
-- Add full-sentence speech transcription with browser `de-DE` audio, replay, transcript fallback, schema validation, and a gold-unit example.
-- Evaluator version: 1.3.0. Branch: `feat/dg-068-dictation-exercise`.
+## Current implementation block — error correction
+- Add a full-sentence correction input with accepted answers, targeted feedback, schema validation, and a gold-unit example.
+- Evaluator version: 1.4.0. Branch: `feat/dg-069-error-correction-exercise`.

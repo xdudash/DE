@@ -30,3 +30,4 @@ Each saved record is keyed by `storyId:paragraphIndex:tokenIndex`, so a lemma us
 
 Listening choice is now implemented in the exercise player, including German browser speech, replay, localized meaning choices, and a transcript fallback.
 The lesson player also supports full-sentence dictation with replay, normalized text evaluation, and a transcript fallback.
+Error correction is available inside lessons as a full-sentence rewrite with normalized accepted answers and targeted feedback for known mistakes.

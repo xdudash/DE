@@ -204,6 +204,13 @@ export interface DictationExercise extends ExerciseBase {
   accept: string[];
 }
 
+export interface ErrorCorrectionExercise extends ExerciseBase {
+  type: "error_correction";
+  source_de: string;
+  /** One or more accepted corrected sentences. */
+  accept: string[];
+}
+
 export interface ReplyChoiceExercise extends ExerciseBase {
   type: "reply_choice";
   line_de: string;
@@ -211,7 +218,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
 }
 
 export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
-  | TextInputExercise | DictationExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
+  | TextInputExercise | DictationExercise | ErrorCorrectionExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise;
 
 export type Block =
   | { type: "explanation"; id: string; body: L10nRef }

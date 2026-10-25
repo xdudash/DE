@@ -248,6 +248,13 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (ex.accept[0] && !evaluate(ex, { type: "dictation", text: ex.accept[0] }).correct) c.error("exercise.self_check", u.id, `${where}: authored dictation answer does not evaluate as correct`);
             break;
           }
+          case "error_correction": {
+            if (!ex.source_de.trim()) c.error("exercise.empty_source", u.id, `${where}: source_de is empty`);
+            if (!ex.accept.length || ex.accept.some((answer) => !answer.trim())) c.error("exercise.empty_accept", u.id, `${where}: at least one non-empty correction is required`);
+            if (ex.source_de.trim() && evaluate(ex, { type: "error_correction", text: ex.source_de }).correct) c.error("exercise.source_is_answer", u.id, `${where}: source_de is already an accepted correction`);
+            if (ex.accept[0] && !evaluate(ex, { type: "error_correction", text: ex.accept[0] }).correct) c.error("exercise.self_check", u.id, `${where}: authored correction does not evaluate as correct`);
+            break;
+          }
           case "article_input":
           case "form_input":
           case "gap_fill_input":

@@ -489,6 +489,7 @@
             "categorize",
             "listening_choice",
             "dictation",
+            "error_correction",
             "reply_choice",
             "article_input",
             "form_input",
@@ -734,6 +735,21 @@
             }
           },
           "required": ["audio_text_de", "accept"],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": { "const": "error_correction" },
+            "source_de": { "$ref": "common.schema.json#/$defs/de" },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "common.schema.json#/$defs/de" }
+            }
+          },
+          "required": ["source_de", "accept"],
           "type": "object"
         },
         {

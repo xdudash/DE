@@ -4,7 +4,7 @@
 # pedagogically reviewed by a qualified human. See docs/quality/CONTENT_REVIEW.md.
 schema: deutschgo.unit/1
 id: unit.syntax.v2_declarative.a1
-version: 1.3.0
+version: 1.4.0
 status: needs_review
 title: "@title"
 summary: "@summary"
@@ -277,6 +277,21 @@ blocks:
         accept: ["Am Montag fahre ich zur Arbeit."]
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x.dictation_monday.explanation"
+
+      - id: x_correct_v2
+        type: error_correction
+        objective: obj_produce
+        concepts: [concept.syntax.v2_declarative]
+        difficulty: 1
+        prompt: "@x.correct_v2.prompt"
+        source_de: "Heute ich arbeite zu Hause."
+        accept: ["Heute arbeite ich zu Hause."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Heute ich arbeite zu Hause."], feedback: "@x.correct_v2.verb", signals: concept.syntax.v2_declarative }
+        explanation: "@x.correct_v2.explanation"
 
       - id: x_limits
         type: single_choice

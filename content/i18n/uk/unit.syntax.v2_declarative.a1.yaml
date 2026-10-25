@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: uk
-based_on_version: 1.3.0
+based_on_version: 1.4.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -153,3 +153,6 @@ strings:
   x.listening_v2.explanation: "*Heute* — перший елемент, а *arbeite*, дієслово зі змінюваною формою, стоїть на позиції 2."
   x.dictation_monday.prompt: "Прослухайте й запишіть повне речення німецькою."
   x.dictation_monday.explanation: "*Am Montag* — перший елемент, *fahre* — дієслово зі змінюваною формою на позиції 2, за ним іде *ich*."
+  x.correct_v2.prompt: "Перепишіть речення, виправивши порядок слів."
+  x.correct_v2.verb: "Після першого елемента *Heute* поставте дієслово *arbeite* перед підметом."
+  x.correct_v2.explanation: "*Heute* займає позицію 1, *arbeite* — дієслово зі змінюваною формою на позиції 2, далі йде *ich*."

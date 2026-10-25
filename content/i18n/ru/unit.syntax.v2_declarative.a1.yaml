@@ -1,7 +1,7 @@
 schema: deutschgo.l10n/1
 entity: unit.syntax.v2_declarative.a1
 lang: ru
-based_on_version: 1.3.0
+based_on_version: 1.4.0
 status: machine_draft
 translator: claude (AI draft, 2026-10-12)
 strings:
@@ -153,3 +153,6 @@ strings:
   x.listening_v2.explanation: "*Heute* — первый элемент, а *arbeite*, спрягаемый глагол, стоит на позиции 2."
   x.dictation_monday.prompt: "Прослушайте и запишите предложение полностью на немецком."
   x.dictation_monday.explanation: "*Am Montag* — первый элемент, *fahre* — спрягаемый глагол на позиции 2, за ним следует *ich*."
+  x.correct_v2.prompt: "Перепишите предложение, исправив порядок слов."
+  x.correct_v2.verb: "После первого элемента *Heute* поставьте спрягаемый глагол *arbeite* перед подлежащим."
+  x.correct_v2.explanation: "*Heute* занимает позицию 1, *arbeite* — спрягаемый глагол на позиции 2, затем идёт *ich*."
