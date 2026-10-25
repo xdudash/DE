@@ -81,6 +81,10 @@ export const A0_NORMS = {
   maxSameTemplate: 2,
   /** No shape (choice, input, build, match) more than this many times in a row. */
   maxShapeRun: 2,
+  /** A type at most this often, and at most a quarter of the lesson. */
+  maxPerType: 3,
+  /** The same answer at most this often: a lesson that asks for "Bier" three times drills one word. */
+  maxSameAnswer: 2,
 } as const;
 
 /**
@@ -161,6 +165,30 @@ export function promptTemplate(prompt: string, german: Set<string>): string {
     .join(" ");
 }
 
+/**
+ * What a learner must produce or pick to be right, normalised for comparison; undefined where the
+ * answer is a judgement (true/false) or a set of pairs.
+ */
+export function answerKey(ex: Exercise): string | undefined {
+  const norm = (x: string) => x.normalize("NFC").toLowerCase().replace(/[.!?,]+/g, "").replace(/\s+/g, " ").trim();
+  switch (ex.type) {
+    case "single_choice":
+    case "reply_choice": {
+      const o = ex.options.find((x) => x.correct);
+      return o ? norm(o.de ?? o.text ?? "") : undefined;
+    }
+    case "multi_choice":
+      return ex.options.filter((o) => o.correct).map((o) => norm(o.de ?? o.text ?? "")).sort().join(" + ");
+    case "true_false":
+    case "match_pairs":
+      return undefined;
+    case "cloze":
+      return ex.gaps.map((g) => norm(g.accept[0] ?? "")).join(" / ");
+    default:
+      return ex.accept[0] ? norm(ex.accept[0]) : undefined;
+  }
+}
+
 /** Every norm the unit misses. `strings` are the pivot-language strings of the unit, if present. */
 export function lessonNorms(u: Unit, strings: Record<string, string> | undefined): NormFinding[] {
   const out: NormFinding[] = [];
@@ -183,7 +211,7 @@ export function lessonNorms(u: Unit, strings: Record<string, string> | undefined
   for (const ex of exs) types.set(ex.type, (types.get(ex.type) ?? 0) + 1);
   if (exs.length > 0 && types.size < n.minTypes) out.push({ code: "norm.type_variety", message: `${types.size} exercise types; use at least ${n.minTypes}` });
 
-  const maxShare = Math.ceil(exs.length / 4);
+  const maxShare = Math.min(n.maxPerType, Math.ceil(exs.length / 4));
   for (const [t, count] of types) {
     if (count > maxShare) out.push({ code: "norm.type_share", message: `${t} is used ${count} times; at most ${maxShare} in a lesson of ${exs.length}` });
   }
@@ -210,6 +238,15 @@ export function lessonNorms(u: Unit, strings: Record<string, string> | undefined
     for (const [t, ids] of byTemplate) {
       if (ids.length > n.maxSameTemplate) out.push({ code: "norm.prompt_template", message: `${ids.length} exercises (${ids.join(", ")}) ask the same question "${t}"; at most ${n.maxSameTemplate}` });
     }
+  }
+
+  const byAnswer = new Map<string, string[]>();
+  for (const ex of exs) {
+    const key = answerKey(ex);
+    if (key) byAnswer.set(key, [...(byAnswer.get(key) ?? []), ex.id]);
+  }
+  for (const [key, ids] of byAnswer) {
+    if (ids.length > n.maxSameAnswer) out.push({ code: "norm.repeated_answer", message: `${ids.length} exercises (${ids.join(", ")}) have the same answer "${key}"; at most ${n.maxSameAnswer}` });
   }
 
   // Wrong answers get their own explanation: one feedback text shared by several distractors is generic.

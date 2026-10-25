@@ -1,9 +1,15 @@
 # Project Status
 
-Last updated: 2026-10-22 (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2026-10-22.md))
+Last updated: 2026-10-25 (content section); 2026-10-22 for the rest (project audit DG-AUDIT-001: [report](./PROJECT_AUDIT_2026-10-22.md))
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. The web app is on `main` (last merges #46 `e99c7f9` and #52 `1ed94f3`) and deployed by Vercel from `main`. See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
+
+## Content production (2026-10-25)
+- Lesson standard and production plan: [CONTENT_STANDARD §Lesson standard (A0)](../domain/CONTENT_STANDARD.md#lesson-standard-a0), [LESSON_PRODUCTION_PLAN.md](../domain/LESSON_PRODUCTION_PLAN.md). The A0 lesson norms are validator errors (`packages/content-kit/src/norms.ts`, ADR-0023 amendment); lessons are written with `scripts/lesson_builder.py`.
+- 14 exercise types have schema, evaluator, learner UI and tests (ADR-0023 batch 1 plus the text inputs).
+- A0.01 (25 lessons) is drafted in full and A0.02 lessons 1, 2 and 6; all on `route.core.a0_start` in plan order. Lesson 1 (alphabet) is approved by the owner; the other 27 are `needs_review`, uk/ru `machine_draft`. An independent agent reviewed 7 of them; its findings were applied across the batch. German, pedagogy and uk/ru still need human review (owner sample, ADR-0021).
+- The approved alphabet lesson is below the new norms (5 single-choice items); it keeps warnings until the owner decides whether it is rewritten (it would need a new owner review).
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).

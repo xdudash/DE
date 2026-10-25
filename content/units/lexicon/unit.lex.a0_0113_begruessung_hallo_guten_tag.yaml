@@ -36,19 +36,6 @@ blocks:
     id: b_practice
     title: "@practice"
     items:
-      - id: x4
-        type: match_pairs
-        objective: obj_main
-        concepts: [concept.prag.greetings_dach]
-        difficulty: 1
-        prompt: "@x4.prompt"
-        pairs:
-          - { id: a, left_de: "Guten", right_de: "Tag" }
-          - { id: b, left_de: "Hallo", right_de: "zusammen" }
-          - { id: c, left_de: "Freut", right_de: "mich" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x4.expl"
-
       - id: x1
         type: single_choice
         objective: obj_main
@@ -61,20 +48,6 @@ blocks:
           - { id: c, de: "Gute Nacht!", correct: false, feedback: "@x1.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x1.expl"
-
-      - id: x5
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.prag.greetings_dach]
-        difficulty: 1
-        prompt: "@x5.prompt"
-        options:
-          - { id: a, de: "Hallo", correct: true }
-          - { id: b, de: "Guten Tag", correct: true }
-          - { id: c, de: "Hi", correct: true }
-          - { id: d, de: "Tschüss", correct: false, feedback: "@x5.o4.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x5.expl"
 
       - id: x2
         type: spelling_input
@@ -103,17 +76,32 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x3.expl"
 
-      - id: x8
-        type: word_order
+      - id: x4
+        type: match_pairs
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
-        prompt: "@x8.prompt"
-        tokens: ["Frau Weber", "Tag,", "Guten"]
-        final_punctuation: "!"
-        accept: ["Guten Tag, Frau Weber!"]
+        prompt: "@x4.prompt"
+        pairs:
+          - { id: a, left_de: "Guten", right_de: "Tag" }
+          - { id: b, left_de: "Hallo", right_de: "zusammen" }
+          - { id: c, left_de: "Freut", right_de: "mich" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x8.expl"
+        explanation: "@x4.expl"
+
+      - id: x5
+        type: multi_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x5.prompt"
+        options:
+          - { id: a, de: "Hallo", correct: true }
+          - { id: b, de: "Guten Tag", correct: true }
+          - { id: c, de: "Hi", correct: true }
+          - { id: d, de: "Tschüss", correct: false, feedback: "@x5.o4.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x5.expl"
 
       - id: x6
         type: gap_fill_input
@@ -145,13 +133,25 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x7.expl"
 
+      - id: x8
+        type: word_order
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x8.prompt"
+        tokens: ["Herr Klein", "Tag,", "Guten"]
+        final_punctuation: "!"
+        accept: ["Guten Tag, Herr Klein!"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x8.expl"
+
       - id: x9
         type: true_false
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
         prompt: "@x9.prompt"
-        statement_de: "Hallo sagt man zu Freunden und Kollegen."
+        statement_de: "Hallo ist informell."
         correct: true
         wrong_feedback: "@x9.wrong"
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
@@ -171,6 +171,19 @@ blocks:
           - { match: ["Hallo zusamen"], feedback: "@x10.r1" }
         explanation: "@x10.expl"
 
+      - id: x11
+        type: single_choice
+        objective: obj_main
+        concepts: [concept.prag.greetings_dach]
+        difficulty: 1
+        prompt: "@x11.prompt"
+        options:
+          - { id: a, de: "Guten Tag!", correct: true }
+          - { id: b, de: "Hi!", correct: false, feedback: "@x11.o2.fb" }
+          - { id: c, de: "Hallo zusammen!", correct: false, feedback: "@x11.o3.fb" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x11.expl"
+
       - id: x12
         type: cloze
         objective: obj_main
@@ -184,18 +197,19 @@ blocks:
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x12.expl"
 
-      - id: x11
-        type: single_choice
+      - id: x13
+        type: multi_choice
         objective: obj_main
         concepts: [concept.prag.greetings_dach]
         difficulty: 1
-        prompt: "@x11.prompt"
+        prompt: "@x13.prompt"
         options:
-          - { id: a, de: "Guten Tag!", correct: true }
-          - { id: b, de: "Hi!", correct: false, feedback: "@x11.o2.fb" }
-          - { id: c, de: "Hallo zusammen!", correct: false, feedback: "@x11.o3.fb" }
+          - { id: a, de: "Hallo", correct: true }
+          - { id: b, de: "Hi", correct: true }
+          - { id: c, de: "Hallo zusammen", correct: true }
+          - { id: d, de: "Guten Tag", correct: false, feedback: "@x13.o4.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x11.expl"
+        explanation: "@x13.expl"
 
       - id: x14
         type: transform
@@ -221,20 +235,6 @@ blocks:
           - { id: c, de: "Tschüss, Frau Weber!", correct: false, feedback: "@x15.o3.fb" }
         feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
         explanation: "@x15.expl"
-
-      - id: x13
-        type: multi_choice
-        objective: obj_main
-        concepts: [concept.prag.greetings_dach]
-        difficulty: 1
-        prompt: "@x13.prompt"
-        options:
-          - { id: a, de: "Hallo", correct: true }
-          - { id: b, de: "Hi", correct: true }
-          - { id: c, de: "Hallo zusammen", correct: true }
-          - { id: d, de: "Guten Tag", correct: false, feedback: "@x13.o4.fb" }
-        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
-        explanation: "@x13.expl"
 
 review:
   linguistic: { status: pending, notes: "Batch draft (ADR-0021). Needs a qualified German teacher or native speaker (DG-007)." }

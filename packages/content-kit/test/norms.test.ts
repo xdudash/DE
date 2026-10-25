@@ -14,7 +14,7 @@ const base = (id: string) => ({
 });
 type Option = { id: string; de?: string; correct: boolean; feedback?: Ref };
 const opts = (id: string): Option[] => [
-  { id: "a", de: "eins", correct: true },
+  { id: "a", de: `richtig ${id}`, correct: true },
   { id: "b", de: "zwei", correct: false, feedback: ref(`${id}.b`) },
   { id: "c", de: "drei", correct: false, feedback: ref(`${id}.c`) },
 ];
@@ -25,11 +25,11 @@ function make(type: Exercise["type"], id: string): Exercise {
   switch (type) {
     case "single_choice": return { ...b, type, options: opts(id) };
     case "reply_choice": return { ...b, type, line_de: "Hallo!", options: opts(id) };
-    case "multi_choice": return { ...b, type, options: [{ id: "a", de: "eins", correct: true }, { id: "b", de: "fünf", correct: true }, { id: "c", de: "acht", correct: false, feedback: ref(`${id}.c`) }] };
+    case "multi_choice": return { ...b, type, options: [{ id: "a", de: `eins ${id}`, correct: true }, { id: "b", de: "fünf", correct: true }, { id: "c", de: "acht", correct: false, feedback: ref(`${id}.c`) }] };
     case "true_false": return { ...b, type, statement_de: "Eins ist 1.", correct: true, wrong_feedback: ref(`${id}.wrong`) };
     case "match_pairs": return { ...b, type, pairs: [{ id: "a", left_de: "eins", right_de: "1" }, { id: "b", left_de: "zwei", right_de: "2" }] };
-    case "number_input": return { ...b, type, accept: ["3"] };
-    case "spelling_input": return { ...b, type, accept: ["vier"] };
+    case "number_input": return { ...b, type, accept: [id.slice(1)] };
+    case "spelling_input": return { ...b, type, accept: [`wort${id}`] };
     default: throw new Error(`no fixture for ${type}`);
   }
 }
@@ -133,6 +133,19 @@ describe("lesson norms (A0)", () => {
     const tf = exs(u)[2] as Extract<Exercise, { type: "true_false" }>;
     delete tf.wrong_feedback;
     assert.ok(codes(u, strings).includes("norm.distractor_feedback"));
+  });
+});
+
+describe("repeated answers and type cap", () => {
+  it("reports the same answer asked for three times", () => {
+    const { u, strings } = a0Lesson();
+    for (const i of [1, 5, 11]) (exs(u)[i] as { accept: string[] }).accept = ["vier"]; // number_input x2, spelling x6, spelling x12
+    assert.ok(codes(u, strings).includes("norm.repeated_answer"), codes(u, strings).join());
+  });
+  it("caps a type at three uses even in a long lesson", () => {
+    const order: Exercise["type"][] = [...GOOD_ORDER, "single_choice", "number_input", "true_false", "match_pairs", "spelling_input"];
+    const { u, strings } = a0Lesson(order);
+    assert.ok(lessonNorms(u, strings).some((f) => f.code === "norm.type_share" && f.message.includes("at most 3")));
   });
 });
 

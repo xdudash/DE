@@ -62,7 +62,8 @@ Agreed norms (ADR-0023 and its amendment of 2026-10-25), enforced by the validat
 | At least 4 types; aim for 6 or more | `norm.type_variety` |
 | Never two exercises of the same type next to each other | `norm.adjacent_type` |
 | Never three of the same shape in a row (option lists: single, multi, true/false, reply; text boxes: all inputs, cloze, transform) | `norm.shape_run` |
-| One type at most a quarter of the exercises | `norm.type_share` |
+| One type at most three times, and at most a quarter of the exercises | `norm.type_share` |
+| The same answer (correct option, accepted text, cloze gaps) at most twice | `norm.repeated_answer` |
 | The same question wording at most twice; numbers, quoted text and German words do not make a question new ("Which word means 30?" and "…40?" are the same question) | `norm.prompt_template` |
 | Every wrong option has its own feedback that names the mistake; a true/false item explains the wrong pick | `norm.distractor_feedback`, `norm.generic_feedback` |
 | At least 5 examples | `norm.examples` |
@@ -70,7 +71,15 @@ Agreed norms (ADR-0023 and its amendment of 2026-10-25), enforced by the validat
 | Unique title | `norm.duplicate_title` |
 | Two neighbouring A0 lessons on a route share the exercise type at no more than half of the positions, so lessons do not all follow the same rhythm | `norm.route_rhythm` |
 
-Not checked by a tool, and required all the same:
+Not checked by a tool, and required all the same (the independent review of 2026-10-25 found each of these in the first batch):
+- No exercise practises the same thing as another one under new wording ("Write / Spell / Type the word for …" three times is one exercise three times).
+- The prompt, the line or the stem does not show the answer ("Wie schreibt man „Bier“?" with the spelling as the answer).
+- Rules are not stated as absolute when the route soon shows an exception: "usually" plus the exception (ie is long — but vierzehn, vierzig; st at the start of a word or word part — Hauptstraße, verstehen).
+- Where spelling and sound differ in a word the lesson teaches, the lesson says so (sechzehn, sechzig with the ich-sound; -ig said -ich in Germany, -ik in the south, Austria and Switzerland).
+- True/false statements and German prompts use only words the learner knows, or gloss a new word in the prompt itself (höflich = polite).
+- Swiss spellings (ss for ß) and ae/oe/ue for umlauts are not marked wrong where earlier lessons taught them.
+- German to be read goes into `stem_de`, `line_de` or `statement_de`, never into a translatable prompt.
+- A distractor is a real learner error (dreizehn for 30), not an invented word, unless the invented form is itself the typical error (sechszehn).
 - Each item has one defensible answer (for multi-choice, one defensible set) and can be answered from this lesson or earlier lessons.
 - Every correct variant is accepted (Tschüss and Tschüs). Answers are compared case-sensitively except for the first letter; final `.`, `!` and `?` are ignored; commas inside the answer count. Typical misspellings get an error rule with feedback (sechszehn → sechzehn).
 - Distractors are real confusions at this level (dreizehn for 30), not random words.
