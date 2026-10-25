@@ -499,7 +499,8 @@
             "number_input",
             "time_input",
             "keyword_build",
-            "token_bank_build"
+            "token_bank_build",
+            "verb_position"
           ]
         }
       },
@@ -1234,6 +1235,32 @@
             "tokens",
             "solutions",
             "final_punctuation"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "verb_position"
+            },
+            "tokens": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 15,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            },
+            "finite_verb_index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "tokens",
+            "finite_verb_index"
           ],
           "type": "object"
         }
