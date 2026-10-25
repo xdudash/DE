@@ -18,9 +18,11 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
   const r = raw as Record<string, unknown>;
   switch (r.type) {
     case "single_choice":
+      if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
+      return { type: "single_choice", optionId: r.optionId };
     case "connector_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
-      return { type: r.type, optionId: r.optionId };
+      return { type: "connector_choice", optionId: r.optionId };
     case "verb_position":
       if (!Number.isInteger(r.tokenIndex) || (r.tokenIndex as number) < 0) {
         throw new AttemptError("malformed_request", '"tokenIndex" must be a non-negative integer');
