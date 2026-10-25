@@ -386,6 +386,16 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             for (const r of ex.feedback.rules ?? []) for (const m of r.match) if (ex.accept.some((a) => answersEqual(a, m))) c.error("exercise.rule_shadows_answer", u.id, `${where}: error rule matches accepted "${m}"`);
             break;
           }
+          case "dialogue_gap": {
+            const gaps = ex.lines.filter((line) => "accept" in line);
+            if (ex.lines.length < 2 || ex.lines.length > 8) c.error("exercise.dialogue_line_count", u.id, `${where}: dialogues need 2 to 8 lines`);
+            if (gaps.length !== 1) c.error("exercise.dialogue_gap_count", u.id, `${where}: exactly one line must be missing`);
+            for (const line of ex.lines) if ("accept" in line) {
+              if (line.accept.length === 0) c.error("exercise.accept_required", u.id, `${where}: the missing line needs at least one accepted reply`);
+              for (const answer of line.accept) if (!evaluate(ex, { type: "dialogue_gap", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted reply "${answer}" does not evaluate as correct`);
+            }
+            break;
+          }
           case "read_question": {
             const correct = ex.options.filter((option) => option.correct);
             if (ex.options.length < 2) c.error("exercise.choice_count", u.id, `${where}: at least two reading answers are required`);

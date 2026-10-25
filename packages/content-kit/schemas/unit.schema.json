@@ -506,7 +506,8 @@
             "case_choice",
             "preposition_choice",
             "separable_verb",
-            "read_question"
+            "read_question",
+            "dialogue_gap"
           ]
         }
       },
@@ -1469,6 +1470,62 @@
             "text_de",
             "question_de",
             "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "dialogue_gap"
+            },
+            "lines": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "speaker"
+                ],
+                "properties": {
+                  "speaker": {
+                    "enum": [
+                      "a",
+                      "b"
+                    ]
+                  },
+                  "text_de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "accept": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "$ref": "common.schema.json#/$defs/de"
+                    }
+                  }
+                },
+                "anyOf": [
+                  {
+                    "required": [
+                      "text_de"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "accept"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "lines"
           ],
           "type": "object"
         }
