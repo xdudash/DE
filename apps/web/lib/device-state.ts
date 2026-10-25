@@ -299,6 +299,12 @@ export function deviceKeyValue(): KeyValue {
 export function clearDeviceData(): boolean {
   try {
     for (const key of [SETUP_KEY, PLACEMENT_KEY, LESSON_CHECKPOINT_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]) window.localStorage.removeItem(key);
+    const writingKeys: string[] = [];
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      if (key?.startsWith("deutschgo-writing-v1:")) writingKeys.push(key);
+    }
+    for (const key of writingKeys) window.localStorage.removeItem(key);
     notifyProgress();
     return readAttempts().length === 0 && readSetup() === null;
   } catch {

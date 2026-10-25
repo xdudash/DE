@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78–#84 merged; learner boards and three audio/writing exercise types are live)
+Last updated: 2026-10-25 (PRs #78–#85 merged; minimal pairs and local Writing Studio are implemented)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -12,7 +12,8 @@ Last updated: 2026-10-25 (PRs #78–#84 merged; learner boards and three audio/w
 - PR #78 is merged as `8e1b0e5`. It adds a Review Room board, an original-text Library with contextual word lookup and local vocabulary scheduling, Route Studio for choosing/reordering/skipping the active learning line, and a guided study-plan wizard. CI passed all four job groups, including Playwright and axe.
 - PR #79 is merged as `288a994`. Lessons store a device-local checkpoint with the remaining steps, retries, session answers, and active time. Home offers a localized resume action; completion and Clear device data remove it. CI passed all four job groups.
 - PR #80 is merged as `a0e8e40`. It adds the `categorize` exercise end to end, including partial scoring and per-item feedback. CI passed all four job groups.
-- PR #81 adds `listening_choice`: browser German speech with replay, localized meaning choices, and a transcript fallback. PR #82 adds full-sentence dictation using the same browser speech path. PR #83 adds deterministic sentence correction with targeted feedback. Evaluator version: 1.4.0.
+- PRs #81–#85 add browser-voiced listening, dictation, error correction, and minimal-pair exercises. The evaluator is at version 1.5.0.
+- PR #86 adds Writing Studio at `/{lang}/writing`: localized A1–A2 prompts, device-local drafts, word count, and self-review without automated scoring.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
 - The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
@@ -49,7 +50,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; guided writing and speaking activities; minimal-pair practice; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; speaking workshop; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -67,8 +68,8 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Add transparent guided writing and speaking practice. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Add a speaking workshop with clear microphone consent and honest pronunciation feedback. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Next implementation block — productive practice
-- Add guided writing and speaking practice with honest self-review, accessible controls, and clear explanation of what is and is not automatically assessed.
-- Continue with pronunciation contrasts and remaining planned exercise types.
+## Next implementation block — speaking practice
+- Add an accessible speaking workshop with explicit microphone consent and no unsupported pronunciation-scoring claims.
+- Continue broadening content for the supported exercise types.
