@@ -472,9 +472,9 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         <>
           {exercise.type === "transform" || exercise.type === "error_correction" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
-          ) : (
-            exercise.stem_de && <p lang="de" className="de stem">{exercise.stem_de}</p>
-          )}
+          ) : exercise.type !== "keyword_build" && exercise.stem_de ? (
+            <p lang="de" className="de stem">{exercise.stem_de}</p>
+          ) : null}
           {exercise.type === "keyword_build" && <ul className="keyword-build-bank" aria-label={labels.yourAnswer}>{exercise.keywords.map((keyword, index) => <li key={index} lang="de">{keyword}</li>)}</ul>}
           <input
             className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
