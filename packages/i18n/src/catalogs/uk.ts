@@ -481,4 +481,9 @@ export const uk: Catalog = {
   "progress.activityTotal": "Відповідей за тиждень: {count}",
   "progress.activityDay": "Відповідей: {count}",
   "progress.activityEmpty": "Тут з’являться відповіді за останні 7 днів.",
+  "map.levelFilter": "Рівень",
+  "map.stateFilter": "Стан теми",
+  "map.allLevels": "Усі рівні",
+  "map.allTopics": "Усі теми",
+  "map.plannedFilter": "Заплановані теми",
 };
