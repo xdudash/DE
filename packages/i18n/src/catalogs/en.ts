@@ -571,6 +571,7 @@ export const en = {
   "dictionary.savedAlready": 'This occurrence is already saved.',
   "dictionary.openStory": 'Read the story',
   "dictionary.localNote": 'Meanings are available for marked words in the current reading collection. More dictionary entries will be added with future reading content.',
+  "practice.exerciseCatalog": "Browse exercise formats",
 } as const;
 
 export type MessageKey = keyof typeof en;

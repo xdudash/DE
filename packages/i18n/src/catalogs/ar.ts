@@ -578,4 +578,5 @@ export const ar: Catalog = {
   "dictionary.savedAlready": 'هذا الاستخدام محفوظ بالفعل.',
   "dictionary.openStory": 'اقرأ القصة',
   "dictionary.localNote": 'تتوفر المعاني للكلمات المحددة في مجموعة القراءة الحالية. ستضاف كلمات أخرى مع القصص القادمة.',
+  "practice.exerciseCatalog": "استكشف أنماط التمارين",
 };
