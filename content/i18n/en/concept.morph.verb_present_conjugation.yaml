@@ -1,9 +1,13 @@
 schema: deutschgo.l10n/1
 entity: concept.morph.verb_present_conjugation
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
-  title: Present-tense verb conjugation
-  summary: Personal endings of verbs in the present tense, including stem changes and irregular verbs (sein, haben, werden).
+  title: "Present tense: regular verb endings"
+  summary: Regular verbs use personal endings in the present tense. Irregular forms and stem changes are separate topics.
+  pattern.scope: "Regular verbs in the present tense."
+  pattern.limits: "Irregular verbs and stem-changing verbs are taught separately."
+  ex.ich_lernen: "I am learning German."
+  ex.du_wohnen: "You live in Vienna."
