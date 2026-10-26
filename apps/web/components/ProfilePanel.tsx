@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { offeredLocales, translator } from "@deutschgo/i18n";
-import { clearDeviceData, readSound, writeSound } from "../lib/device-state";
+import { clearDeviceData, exportDeviceData, readSound, writeSound } from "../lib/device-state";
 import { Icon } from "./Icon";
 import { SetupForm } from "./SetupForm";
 
@@ -82,6 +82,7 @@ export function ProfileDevice({ lang }: { lang: string }) {
   const [standalone, setStandalone] = useState(false);
   const [asking, setAsking] = useState(false);
   const [result, setResult] = useState<"cleared" | "failed" | null>(null);
+  const [exportResult, setExportResult] = useState<"done" | "failed" | null>(null);
 
   useEffect(() => {
     setStandalone(window.matchMedia("(display-mode: standalone)").matches);
@@ -91,6 +92,21 @@ export function ProfileDevice({ lang }: { lang: string }) {
     const ok = clearDeviceData();
     setResult(ok ? "cleared" : "failed");
     setAsking(false);
+  }
+
+  function downloadData() {
+    try {
+      const snapshot = exportDeviceData();
+      const url = URL.createObjectURL(new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" }));
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `deutschgo-device-data-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+      setExportResult("done");
+    } catch {
+      setExportResult("failed");
+    }
   }
 
   return (
@@ -110,11 +126,16 @@ export function ProfileDevice({ lang }: { lang: string }) {
         </h2>
         <p className="muted">{msg("profile.accountNote")}</p>
         <p className="muted">{msg("profile.dataNote")}</p>
-        {!asking && (
-          <button type="button" className="btn btn-danger" onClick={() => { setAsking(true); setResult(null); }}>
+        {!asking && <div className="actions">
+          <button type="button" className="btn btn-secondary" onClick={downloadData}>{msg("profile.exportDevice")}</button>
+          <button type="button" className="btn btn-danger" onClick={() => { setAsking(true); setResult(null); setExportResult(null); }}>
             {msg("profile.clear")}
           </button>
-        )}
+        </div>}
+        <div aria-live="polite">
+          {exportResult === "done" && <p className="notice ok">{msg("profile.exportDeviceDone")}</p>}
+          {exportResult === "failed" && <p className="notice bad">{msg("profile.exportDeviceFailed")}</p>}
+        </div>
         {asking && (
           <div className="confirm">
             <p>{msg("profile.clearConfirm")}</p>

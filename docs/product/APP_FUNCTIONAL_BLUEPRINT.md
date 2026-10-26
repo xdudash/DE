@@ -51,7 +51,7 @@ flowchart TD
 | Story reader | German text in a calm reading column; selectable words open a contextual meaning panel with the sentence and save action | Story content → local vocabulary board; related concept can open Map | Implemented in PR #78; dictionary breadth planned |
 | Dictionary | Searchable word list with a selected entry, translation, original sentence, source story, and save action | Original reading tokens → local vocabulary scheduler and story reader | Client screen at `/{lang}/dictionary`; coverage follows the glossed word inventory in published reading stories |
 | Vocabulary board | Front/back flashcard, “Again” and “I remembered”, due/scheduled lists, remove action | Device-local word occurrences → scheduler and story context | Implemented in PR #78; no account sync yet |
-| You / profile | Goal, language, account state, progress source, reminder controls, data export/clear/sign-out | Device preferences and account APIs → settings and privacy actions | Account shell exists; complete export and settings are planned |
+| You / profile | Goal, language, account state, progress source, reminder controls, device/account export, clear data and sign-out | Device preferences and account APIs → settings and privacy actions | Device JSON export and clear are client-side; account export/import use the progress API |
 | Sign-in and session | Provider handoff, callback/loading/error, signed-in state, refresh and sign-out | Auth provider → profile, progress APIs | API/UI foundations exist; provider configuration is pending |
 
 ## Shared logic and data flow
