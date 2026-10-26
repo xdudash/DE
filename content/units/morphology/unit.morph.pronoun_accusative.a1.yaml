@@ -1,0 +1,133 @@
+# A1 lesson draft. German correctness and teaching sequence require review (DG-007).
+schema: deutschgo.unit/1
+id: unit.morph.pronoun_accusative.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.morph.pronoun_accusative, concept.morph.case_accusative]
+prerequisites: [concept.morph.pronoun_nominative, concept.morph.case_accusative]
+goals: [general, everyday, work, study]
+estimated_minutes: 13
+objectives:
+  - { id: obj_forms, text: "@obj.forms", skill: knowledge }
+  - { id: obj_replace, text: "@obj.replace", skill: writing }
+sources:
+  - { source: src.deutschgo_original }
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.subject", "@col.object", "@col.example"]
+    rows:
+      - ["ich", "mich", "Er sieht mich."]
+      - ["du", "dich", "Ich höre dich."]
+      - ["er", "ihn", "Sie besucht ihn."]
+      - ["sie", "sie", "Wir treffen sie."]
+      - ["es", "es", "Ich kaufe es."]
+      - ["wir", "uns", "Er kennt uns."]
+      - ["ihr", "euch", "Ich sehe euch."]
+      - ["sie / Sie", "sie / Sie", "Wir fragen sie / Sie."]
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_friend, de: "Ich kenne den Mann. Ich kenne ihn.", gloss: "@ex.friend", highlight: [7] }
+      - { id: ex_friend_f, de: "Wir besuchen die Nachbarin. Wir besuchen sie.", gloss: "@ex.friend_f", highlight: [6] }
+      - { id: ex_thing, de: "Er nimmt das Buch. Er nimmt es.", gloss: "@ex.thing", highlight: [6] }
+      - { id: ex_plural, de: "Sie ruft die Kinder. Sie ruft sie.", gloss: "@ex.plural", highlight: [6] }
+  - { type: explanation, id: b_rule, body: "@b.rule" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_ihn
+        type: single_choice
+        objective: obj_forms
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 1
+        prompt: "@x.ihn.prompt"
+        stem_de: "Der Mann ist nett. Ich mag ___."
+        options:
+          - { id: a, de: "er", correct: false, feedback: "@x.ihn.a" }
+          - { id: b, de: "ihn", correct: true }
+          - { id: c, de: "ihm", correct: false, feedback: "@x.ihn.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.ihn.explanation"
+      - id: x_cloze
+        type: cloze
+        objective: obj_forms
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Ich sehe Anna. Ich sehe {{0}}."
+        gaps:
+          - accept: ["sie"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+      - id: x_match
+        type: match_pairs
+        objective: obj_forms
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 1
+        prompt: "@x.match.prompt"
+        pairs:
+          - { id: a, left_de: "ich", right_de: "mich" }
+          - { id: b, left_de: "du", right_de: "dich" }
+          - { id: c, left_de: "er", right_de: "ihn" }
+          - { id: d, left_de: "wir", right_de: "uns" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match.explanation"
+      - id: x_order
+        type: word_order
+        objective: obj_replace
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 1
+        prompt: "@x.order.prompt"
+        tokens: ["Ich", "sehe", "euch", "heute"]
+        final_punctuation: "."
+        accept: ["Ich sehe euch heute."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order.explanation"
+      - id: x_transform
+        type: transform
+        objective: obj_replace
+        concepts: [concept.morph.pronoun_accusative, concept.morph.case_accusative]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Wir besuchen den Lehrer."
+        accept: ["Wir besuchen ihn."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+      - id: x_error
+        type: error_correction
+        objective: obj_forms
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 2
+        prompt: "@x.error.prompt"
+        source_de: "Er sieht ich im Café."
+        accept: ["Er sieht mich im Café."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Er sieht ich im Café."], feedback: "@x.error.rule", signals: concept.morph.pronoun_accusative }
+        explanation: "@x.error.explanation"
+      - id: x_true_false
+        type: true_false
+        objective: obj_forms
+        concepts: [concept.morph.pronoun_accusative]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "Das Akkusativpronomen für 'er' ist 'ihn'."
+        correct: true
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; pronoun forms, examples and usage require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check the transition from article declension to object pronouns." }
+  rights: { status: pending, notes: "All examples are original DeutschGo content; owner confirmation pending." }

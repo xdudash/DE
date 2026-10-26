@@ -3,7 +3,12 @@ entity: concept.morph.pronoun_accusative
 lang: ru
 based_on_version: 0.1.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: Codex (AI draft, 2026-10-26)
 strings:
-  title: Личные местоимения в Akkusativ
-  summary: 'mich, dich, ihn, sie, es, uns, euch, sie/Sie: Ich rufe dich an. Kannst du mich verstehen?'
+  title: "Личные местоимения в Akkusativ"
+  summary: "Местоимения в Akkusativ заменяют людей или предметы в роли прямого дополнения."
+  pattern.scope: "Эта модель описывает личные местоимения в роли прямого дополнения в простых главных предложениях."
+  pattern.limits: "Для местоимений в Dativ и местоимений после предлогов действуют другие модели."
+  ex.me: "Она видит меня."
+  ex.you: "Я слышу тебя."
+  ex.it: "Мы покупаем это."

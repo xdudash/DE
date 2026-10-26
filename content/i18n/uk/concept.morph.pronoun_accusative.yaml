@@ -3,7 +3,12 @@ entity: concept.morph.pronoun_accusative
 lang: uk
 based_on_version: 0.1.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: Codex (AI draft, 2026-10-26)
 strings:
-  title: Особові займенники в Akkusativ
-  summary: 'mich, dich, ihn, sie, es, uns, euch, sie/Sie: Ich rufe dich an. Kannst du mich verstehen?'
+  title: "Особові займенники в Akkusativ"
+  summary: "Займенники в Akkusativ замінюють людей або предмети в ролі прямого додатка."
+  pattern.scope: "Ця модель описує особові займенники в ролі прямого додатка у простих головних реченнях."
+  pattern.limits: "Для займенників у Dativ і займенників після прийменників діють інші моделі."
+  ex.me: "Вона бачить мене."
+  ex.you: "Я чую тебе."
+  ex.it: "Ми купуємо це."
