@@ -1,0 +1,68 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.w_questions.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "W-questions: ask for what you need"
+  summary: "Ask about a person, thing, place, time, reason, or amount with the question word first and the finite verb second."
+  obj.recognize: "Recognize what information a W-question asks for and where its finite verb stands."
+  obj.ask: "Form a simple W-question with the finite verb in position 2."
+  b.intro: |
+    Use a W-question when you need one piece of information. The question word comes first; the **conjugated (finite) verb** comes next, in position 2. The subject normally follows the verb: *Wo **wohnst** du?* (Where do you live?)
+
+    The question word tells the other person what kind of answer you need: a place, a time, a person, or something else. The pattern connects to the statement word order you just learned.
+  b.pattern.caption: "Question word first, finite verb second"
+  col.question: "Position 1: question word"
+  col.verb: "Position 2: finite verb"
+  col.subject: "Subject"
+  col.rest: "Other details"
+  b.examples.title: "Everyday questions"
+  ex.when: "When does the bus leave?"
+  ex.where: "Where do you live?"
+  ex.who_subject: "Who lives here?"
+  ex.where_from: "Where are you from? (formal)"
+  ex.price: "How much does a ticket cost?"
+  b.word_meaning: |
+    **Choose the question word for the answer you need.** *Wo?* asks about a place; *wohin?* asks about a destination; *woher?* asks about an origin. *Wann?* asks about time, *warum?* about a reason, and *wie viel?* about an amount or price.
+
+    One useful exception: in *Wer wohnt hier?* (Who lives here?), *wer* is the subject. There is no extra subject after the verb. In most other examples, such as *Wo wohnst du?*, the subject follows the finite verb.
+  b.errors.title: "A common mix-up"
+  e.verb_third: "The question word already fills position 1. Put the finite verb directly after it, then the subject: *Wo wohnst du?*"
+  e.indirect: "This is a direct question, so use question word + finite verb + subject: *Wann fährt der Bus?* An indirect question has a different order: *Weißt du, wann der Bus fährt?*"
+  b.summary: |
+    - Put the question word in position 1 and the finite verb in position 2: *Wann fährt der Bus?*
+    - The subject normally follows the verb: *Wo wohnst du?*
+    - If *wer* is the subject, do not add another subject: *Wer wohnt hier?*
+    - Use *wo*, *wohin*, and *woher* for a place, destination, and origin respectively.
+  b.practice.title: "Practice"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check what kind of answer the question word asks for, then place the finite verb second."
+  x.choose_order.prompt: "Which is a correctly ordered direct question?"
+  x.choose_order.b: "In a direct question, the finite verb comes straight after the question word."
+  x.choose_order.c: "The question word takes position 1, followed by the finite verb in position 2."
+  x.choose_order.explanation: "A direct W-question starts with its question word. The finite verb follows in position 2, then the subject: *Wann beginnt der Deutschkurs?*"
+  x.choose_word.prompt: "Choose the question word that fits the answer."
+  x.choose_word.a: "*Wo?* asks for a place, not a time."
+  x.choose_word.c: "*Wer?* asks which person. The answer here is a time."
+  x.choose_word.explanation: "*Um acht Uhr* gives a time, so ask *Wann fährt der Bus?*"
+  x.match_words.prompt: "Match each question word to the kind of information it asks for."
+  x.match_words.explanation: "*Wo?* asks for a place; *wann?* for a time; *wohin?* for a destination; and *woher?* for an origin."
+  x.cloze.prompt: "Complete the question and answer with the correct forms of *heißen*."
+  x.cloze.explanation: "Ask *Wie heißt du?* with the verb in position 2. In the answer, the subject *ich* takes the form *heiße*."
+  x.order_where.prompt: "Build the question: “Where do you live?”"
+  x.order_where.explanation: "*Wo* is in position 1, *wohnst* is the finite verb in position 2, and *du* is the subject."
+  x.transform_time.prompt: "Turn the statement into a question asking for the time: Der Bus fährt um acht Uhr."
+  x.transform_time.explanation: "Replace the time detail with *wann* in position 1. The finite verb *fährt* moves to position 2, before the subject *der Bus*."
+  x.categorize.prompt: "Sort each question word by the information it asks for."
+  x.categorize.time: "Time"
+  x.categorize.place: "Place"
+  x.categorize.person: "Person"
+  x.categorize.reason: "Reason"
+  x.categorize.explanation: "*Wann* asks for time, *wo* for place, *wer* for a person, and *warum* for a reason."
+  x.wer_subject.prompt: "True or false? In this question, *wer* is the subject."
+  x.wer_subject.wrong: "Here *wer* names the person doing the action, so it is the subject."
+  x.wer_subject.explanation: "In *Wer wohnt hier?*, *wer* is the subject. The finite verb *wohnt* follows it, and no separate subject is needed."
+  x.correct_order.prompt: "Correct the word order in this direct question."
+  x.correct_order.explanation: "This is a direct question: *wo* is first, the finite verb *findet* is second, and the subject *der Deutschkurs* follows."

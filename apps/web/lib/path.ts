@@ -21,6 +21,26 @@ export interface StationInput {
 /** Answered exercise ids per unit, as stored on this device. */
 export type AnsweredByUnit = Record<string, ReadonlySet<string> | undefined>;
 
+export interface RouteLessonInput {
+  /** Route-step id used by the learning-engine recommendation. */
+  id: string;
+  unitId: string;
+  exerciseIds: readonly string[];
+}
+
+/** Keep unfinished, startable lessons in the Home recommendation route. */
+export function pendingRouteRecommendations<R extends { target: string }>(
+  route: readonly R[],
+  lessons: readonly RouteLessonInput[],
+  answered: AnsweredByUnit,
+): R[] {
+  const pending = new Set(lessons.filter((lesson) => {
+    const unitAnswers = answered[lesson.unitId];
+    return lesson.exerciseIds.length === 0 || !lesson.exerciseIds.every((id) => unitAnswers?.has(id));
+  }).map((lesson) => lesson.id));
+  return route.filter((step) => pending.has(step.target));
+}
+
 export function stationStates(stations: readonly StationInput[], answered: AnsweredByUnit): StationState[] {
   let currentTaken = false;
   return stations.map((s) => {

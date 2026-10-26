@@ -1,7 +1,7 @@
 schema: deutschgo.concept/1
 id: concept.syntax.w_questions
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: grammar
 domain: syntax
 title: "@title"
@@ -9,3 +9,21 @@ summary: "@summary"
 cefr: { introduced: A1, expected_mastery: A1 }
 relations:
   - { type: depends_on, target: concept.syntax.v2_declarative }
+pattern:
+  schema_de: "[Fragewort] – [finites Verb] – [Subjekt] – [weitere Angaben]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_when, de: "Wann fährt der Bus?", gloss: "@ex.when", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_where, de: "Wo wohnst du?", gloss: "@ex.where", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_who_subject, de: "Wer wohnt hier?", gloss: "@ex.who_subject", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_where_from, de: "Woher kommen Sie?", gloss: "@ex.where_from", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_price, de: "Was kostet ein Ticket?", gloss: "@ex.price", highlight: [1], source: src.deutschgo_original }
+confusions:
+  - { id: err_verb_third, wrong: "Wo du wohnst?", right: "Wo wohnst du?", explanation: "@err.verb_third" }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; requires review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check the sequence, scope and question-word distinctions for A1 learners." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

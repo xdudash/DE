@@ -7,6 +7,7 @@ import { translator } from "@deutschgo/i18n";
 import { useProgress } from "../lib/progress/client";
 import { useRoutePlan, type RoutePlanOption } from "../lib/route-plan-client";
 import { LESSON_CHECKPOINT_EVENT, readLessonCheckpoint, type LessonCheckpoint } from "../lib/device-state";
+import { pendingRouteRecommendations, type AnsweredByUnit } from "../lib/path";
 
 interface Target { title: string; href: string }
 export function NextStepCard({ lang, graph, routes, defaultRouteId, targets }: { lang: string; graph: GraphConcept[]; routes: RoutePlanOption[]; defaultRouteId: string; targets: Record<string, Target> }) {
@@ -21,10 +22,15 @@ export function NextStepCard({ lang, graph, routes, defaultRouteId, targets }: {
   }, []);
   const { activeRoute, activeRouteId, activeSteps } = useRoutePlan(routes, defaultRouteId);
   // Keep planned concepts visible on the line, but never recommend one as the
-  // next action: the learner needs a startable lesson or review to make progress.
-  const route = activeRoute?.recommendation.filter((step) =>
-    activeSteps.some((activeStep) => activeStep.kind === "lesson" && activeStep.id === step.target),
-  ) ?? [];
+  // next action; also advance past lessons whose exercises have all been answered.
+  const routeLessons = activeSteps.filter((step) => step.kind === "lesson" && step.unitId);
+  const answered: AnsweredByUnit = {};
+  for (const step of routeLessons) {
+    answered[step.unitId!] = new Set(attempts.filter((attempt) => attempt.unitId === step.unitId).map((attempt) => attempt.exerciseId));
+  }
+  const route = activeRoute
+    ? pendingRouteRecommendations(activeRoute.recommendation, routeLessons.map((step) => ({ id: step.id, unitId: step.unitId!, exerciseIds: step.exerciseIds })), answered)
+    : [];
   const pick = useMemo(() => {
     const states = deriveConceptStates(graph, attempts, Date.now());
     return recommend({ graph, states, route, reviewBudget: 3, limit: 1 })[0];

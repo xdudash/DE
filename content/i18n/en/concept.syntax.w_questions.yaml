@@ -1,9 +1,17 @@
 schema: deutschgo.l10n/1
 entity: concept.syntax.w_questions
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
   title: W-questions
-  summary: 'Questions with wer, was, wann, wo, wie … : question word in position 1, verb in position 2.'
+  summary: 'Ask for information with wer, was, wann, wo, wohin, woher, wie, and wie viel. The question word is first and the finite verb is second.'
+  pattern.scope: "An open question in a main clause asks for one missing piece of information. The question word takes position 1 and the finite verb follows in position 2. A subject such as *du* or *der Bus* normally comes after the verb."
+  pattern.limits: "In *Wer wohnt hier?*, *wer* is itself the subject, so no separate subject follows. Yes/no questions start with the verb. In an indirect question after *weißt du, …* or *ich frage, …*, the verb goes to the end; that pattern is outside this lesson."
+  ex.when: "When does the bus leave?"
+  ex.where: "Where do you live?"
+  ex.who_subject: "Who lives here?"
+  ex.where_from: "Where are you from? (formal)"
+  ex.price: "How much does a ticket cost?"
+  err.verb_third: "The question word is already in position 1. Put the finite verb next, then the subject: *Wo wohnst du?*"
