@@ -44,8 +44,8 @@ describe("first-visit setup", () => {
   });
 
   it("round-trips a valid plan", () => {
-    assert.equal(writeSetup({ goal: "work", minutes: 15 }), true);
-    assert.deepEqual(readSetup(), { goal: "work", minutes: 15 });
+    assert.equal(writeSetup({ goal: "work", minutes: 15, difficulty: "hard" }), true);
+    assert.deepEqual(readSetup(), { goal: "work", minutes: 15, difficulty: "hard" });
   });
 
   it("ignores a stored plan with an unknown goal or an unsupported duration", () => {
@@ -62,7 +62,7 @@ describe("first-visit setup", () => {
 
   it("reports a failed write instead of claiming success", () => {
     installStorage({ failWrites: true });
-    assert.equal(writeSetup({ goal: "study", minutes: 5 }), false);
+    assert.equal(writeSetup({ goal: "study", minutes: 5, difficulty: "easy" }), false);
   });
 });
 

@@ -143,10 +143,15 @@ test.describe("home: the line", () => {
     await expect(page).toHaveURL(/\/en\/start$/);
     await expect(page.getByRole("heading", { name: "Your route starts here" })).toBeVisible();
     await page.getByRole("button", { name: /Continue/ }).click();
+    await expect(page.getByRole("heading", { name: "Choose how deep to go" })).toBeVisible();
+    await expect(page.getByRole("radio", { name: /5,000 study steps/ })).toBeVisible();
+    await page.getByRole("radio", { name: /Hard path/ }).click();
+    await page.getByRole("button", { name: /Continue/ }).click();
     await page.getByRole("button", { name: /Continue/ }).click();
     await page.getByRole("button", { name: "Save and start learning" }).click();
 
     await expect(page).toHaveURL(/\/en$/);
+    await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("deutschgo.setup.v1") ?? "{}").difficulty)).toBe("hard");
     const current = page.locator(".station.is-current");
     await expect(current).toHaveAttribute("aria-current", "step");
     await current.getByRole("link", { name: "Start", exact: true }).click();

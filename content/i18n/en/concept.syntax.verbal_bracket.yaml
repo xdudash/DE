@@ -7,3 +7,8 @@ translator: claude (AI draft, 2026-10-12)
 strings:
   title: The verbal bracket (Satzklammer)
   summary: Modal + infinitive, perfect participle and separable prefixes go to the end of the clause.
+  pattern.scope: "In a main clause, the finite verb occupies position 2 and a non-finite verb part closes the bracket at the end."
+  pattern.limits: "This is an overview of modal infinitives, perfect participles and separable prefixes; subordinate clauses and complex verb clusters need later study."
+  ex.modal: "I can stay longer today."
+  ex.perfect: "We took the train."
+  ex.separable: "She is calling her mother."

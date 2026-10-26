@@ -1,7 +1,7 @@
 schema: deutschgo.concept/1
 id: concept.syntax.verbal_bracket
 version: 0.1.0
-status: planned
+status: needs_review
 kind: grammar
 domain: syntax
 title: "@title"
@@ -9,3 +9,17 @@ summary: "@summary"
 cefr: { introduced: A1, expected_mastery: B1 }
 relations:
   - { type: depends_on, target: concept.syntax.v2_declarative }
+pattern:
+  schema_de: "[finite verb in position 2] – [middle field] – [non-finite verb part at clause end]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_modal, de: "Ich kann heute länger bleiben.", gloss: "@ex.modal", highlight: [1, 4], source: src.deutschgo_original }
+  - { id: ex_perfect, de: "Wir haben den Zug genommen.", gloss: "@ex.perfect", highlight: [1, 5], source: src.deutschgo_original }
+  - { id: ex_separable, de: "Sie ruft ihre Mutter an.", gloss: "@ex.separable", highlight: [1, 4], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored concept; clause patterns need review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

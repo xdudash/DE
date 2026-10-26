@@ -7,3 +7,8 @@ translator: claude (AI draft, 2026-10-12)
 strings:
   title: 'Modal verbs: können, müssen, wollen, dürfen, sollen, möchten'
   summary: Modal verbs express ability, necessity, intention and permission. They are irregular in the singular and send the main verb to the end as an infinitive.
+  pattern.scope: "This concept covers common present-tense modal forms and their basic meaning in main clauses and yes/no questions."
+  pattern.limits: "Past-tense modal forms, subordinate clauses and nuanced differences between wollen and möchten need later study."
+  ex.ability: "I can stay longer today."
+  ex.necessity: "We have to go now."
+  ex.permission: "May I wait here?"
