@@ -511,7 +511,8 @@
             "modal_choice",
             "odd_one_out",
             "flashcard_recall",
-            "translation_input"
+            "translation_input",
+            "join_halves"
           ]
         }
       },
@@ -1673,6 +1674,45 @@
           "required": [
             "front",
             "accept"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "join_halves"
+            },
+            "pairs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "left_de",
+                  "right_de"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "left_de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  },
+                  "right_de": {
+                    "$ref": "common.schema.json#/$defs/de"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "pairs"
           ],
           "type": "object"
         }

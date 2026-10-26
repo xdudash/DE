@@ -225,6 +225,17 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (!ex.statement_de.trim()) c.error("exercise.empty_statement", u.id, `${where}: statement_de is empty`);
             break;
           }
+          case "join_halves": {
+            const lefts = new Set(ex.pairs.map((pair) => pair.id));
+            const rights = new Set(ex.pairs.map((pair) => pair.right_de));
+            if (ex.pairs.length < 2 || ex.pairs.length > 6) c.error("exercise.join_halves_count", u.id, `${where}: provide 2 to 6 sentence halves`);
+            if (lefts.size !== ex.pairs.length) c.error("exercise.option_id", u.id, `${where}: duplicate sentence half id`);
+            if (rights.size !== ex.pairs.length) c.error("exercise.match_rights", u.id, `${where}: two beginnings share the same ending`);
+            const all: Record<string, string> = {};
+            for (const pair of ex.pairs) all[pair.id] = pair.id;
+            if (!evaluate(ex, { type: "join_halves", matches: all }).correct) c.error("exercise.self_check", u.id, `${where}: the authored sentence pairs do not evaluate as correct`);
+            break;
+          }
           case "match_pairs": {
             const lefts = new Set(ex.pairs.map((p) => p.id));
             const rights = new Set(ex.pairs.map((p) => p.right_de));

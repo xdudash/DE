@@ -125,7 +125,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "flashcard_recall" && flashcardRating !== null) ||
-    (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
+    ((exercise.type === "match_pairs" || exercise.type === "join_halves") && exercise.pairs.every((p) => !!matches[p.id])) ||
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "token_bank_build" && order.length > 0) ||
@@ -171,6 +171,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "multi_choice": response = { type: "multi_choice", optionIds: multi }; break;
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
+          case "join_halves": response = { type: "join_halves", matches }; break;
           case "categorize": response = { type: "categorize", assignments }; break;
           case "word_order": response = { type: "word_order", order }; break;
           case "token_bank_build": response = { type: "token_bank_build", order }; break;
@@ -369,7 +370,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </>
       )}
 
-      {exercise.type === "match_pairs" && (
+      {(exercise.type === "match_pairs" || exercise.type === "join_halves") && (
         // The right-hand column is rotated so it never starts in the order of the left side.
         <fieldset className="match" disabled={locked}>
           <legend className="sr-only">{tr(text, exercise.prompt)}</legend>

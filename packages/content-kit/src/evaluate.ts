@@ -66,6 +66,7 @@ export type Response =
   | { type: "multi_choice"; optionIds: string[] }
   | { type: "true_false"; value: boolean }
   | { type: "match_pairs"; matches: Record<string, string> }
+  | { type: "join_halves"; matches: Record<string, string> }
   | { type: "categorize"; assignments: Record<string, string> }
   | { type: "listening_choice"; optionId: string }
   | { type: "minimal_pairs"; optionId: string }
@@ -341,6 +342,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalTrueFalse(ex, (response as Extract<Response, { type: "true_false" }>).value);
     case "match_pairs":
       return evalMatchPairs(ex, (response as Extract<Response, { type: "match_pairs" }>).matches);
+    case "join_halves":
+      return evalMatchPairs(ex as unknown as MatchPairsExercise, (response as Extract<Response, { type: "join_halves" }>).matches);
     case "categorize":
       return evalCategorize(ex, (response as Extract<Response, { type: "categorize" }>).assignments);
     case "reply_choice":

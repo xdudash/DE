@@ -282,6 +282,11 @@ export interface MatchPairsExercise extends ExerciseBase {
   pairs: { id: string; left_de: string; right_de: string }[];
 }
 
+export interface JoinHalvesExercise extends ExerciseBase {
+  type: "join_halves";
+  pairs: { id: string; left_de: string; right_de: string }[];
+}
+
 export interface CategorizeExercise extends ExerciseBase {
   type: "categorize";
   categories: { id: string; label: L10nRef }[];
@@ -323,7 +328,7 @@ export interface ReplyChoiceExercise extends ExerciseBase {
   options: { id: string; de?: string; text?: L10nRef; correct: boolean; feedback?: L10nRef }[];
 }
 
-export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | ClozeExercise | TransformExercise
+export type Exercise = SingleChoiceExercise | MultiChoiceExercise | WordOrderExercise | JoinHalvesExercise | ClozeExercise | TransformExercise
   | TextInputExercise | DictationExercise | ErrorCorrectionExercise | MinimalPairsExercise | TrueFalseExercise | MatchPairsExercise | CategorizeExercise | ListeningChoiceExercise | ReplyChoiceExercise | KeywordBuildExercise | TokenBankBuildExercise | VerbPositionExercise | NegationExercise | ConnectorChoiceExercise | CaseChoiceExercise | PrepositionChoiceExercise | SeparableVerbExercise | ReadQuestionExercise | DialogueGapExercise | ModalChoiceExercise | OddOneOutExercise | FlashcardRecallExercise | TranslationInputExercise;
 
 export type Block =
