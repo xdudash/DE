@@ -290,6 +290,7 @@ test.describe("writing studio: picture prompt", () => {
     })).toBe(sentence);
 
     await page.reload();
+    await expect(page.getByRole("button", { name: /At the morning market/ })).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByRole("textbox", { name: "Your German draft" })).toHaveValue(sentence);
     expect(await page.evaluate(() => JSON.parse(localStorage.getItem("deutschgo.events.v1") ?? "[]"))).toEqual([]);
   });
