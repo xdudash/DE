@@ -1,0 +1,64 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_present_conjugation.a1
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Теперішній час: правильні дієслова (Präsens)"
+  summary: "Утворюйте прості форми теперішнього часу, добираючи закінчення правильного дієслова до підмета."
+  obj.main: "Складати прості речення в теперішньому часі з правильними дієсловами."
+  obj.endings: "Обирати й використовувати закінчення, яке узгоджується з підметом."
+  b.intro: |
+    У німецькій мові закінчення дієслова змінюється залежно від підмета. Візьмімо інфінітив *lernen* (вчити) і заберімо **-en**: отримаємо основу **lern-**. Потім додамо особове закінчення.
+
+    У цьому уроці тренуємо правильні дієслова: *lernen*, *wohnen*, *kommen* і *machen*. Дієслова *sein* і *haben*, модальні дієслова та дієслова зі зміною голосної в основі мають свої форми й вивчаються окремо.
+  b.pattern.caption: "Основа незмінна, а закінчення залежить від підмета"
+  col.person: "Підмет"
+  col.ending: "Закінчення"
+  col.form: "lernen"
+  b.examples.title: "Правильні дієслова в повсякденних фразах"
+  ex.ich: "Я вивчаю німецьку."
+  ex.du: "Ти живеш у Відні."
+  ex.er: "Мій брат родом із Ґраца."
+  ex.wir: "Ми вчимося разом."
+  ex.ihr: "Ви виконуєте вправу."
+  ex.sie: "Діти грають у футбол."
+  b.spelling: |
+    Закінчення **-t** вживається з *er, sie, es* та *ihr*. Зрозуміти, кого мають на увазі, допомагає підмет. У ввічливому звертанні *Sie* пишеться з великої літери, а дієслово має закінчення **-en**: *Sie lernen Deutsch.*
+
+    У деяких основах перед особовим закінченням з’являється додаткова **-e-**, щоб слово було легше вимовляти: наприклад, *du arbeitest*. Цей правописний випадок не входить до першого уроку. Спочатку засвойте звичайні форми, а потім вивчайте такі приклади окремо.
+  b.summary: |
+    - У правильного інфінітива заберіть **-en**, щоб отримати основу: *lernen → lern-*.
+    - Додайте закінчення **-e, -st, -t, -en, -t, -en** до форм *ich, du, er/sie/es, wir, ihr, sie/Sie*.
+    - Узгоджуйте дієслово з підметом: *du lernst*, *mein Bruder lernt*, *wir lernen*.
+    - Неправильні дієслова, наприклад *sein* і *haben*, вивчаються окремо.
+  b.practice.title: "Потренуйте закінчення"
+  fb.correct: "Правильно."
+  fb.incorrect: "Поки неправильно. Перевірте підмет і закінчення дієслова."
+  x.du_wohnen.prompt: "Оберіть правильну форму дієслова *wohnen*."
+  x.du_wohnen.a: "*Wohne* вживається з *ich*: *Ich wohne in Wien.*"
+  x.du_wohnen.c: "*Wohnt* вживається з *er/sie/es* або *ihr*, але не з *du*."
+  x.du_wohnen.explanation: "З *du* правильне дієслово отримує закінчення **-st**: *du wohnst*."
+  x.er_lernen.prompt: "Оберіть правильну форму дієслова *lernen*."
+  x.er_lernen.a: "Інфінітив не узгоджується з підметом *er*."
+  x.er_lernen.b: "*Lernst* вживається з *du*."
+  x.er_lernen.explanation: "З *er* правильне дієслово отримує закінчення **-t**: *er lernt*."
+  x.match_endings.prompt: "З’єднайте кожен підмет із закінченням дієслова *lernen*."
+  x.match_endings.explanation: "Закінчення в теперішньому часі залежить від підмета: *ich -e*, *du -st*, *er/sie/es -t*, *wir -en*."
+  x.cloze.prompt: "Доповніть обидва речення правильними формами теперішнього часу."
+  x.cloze.explanation: "З *ich* вживається *lerne*, а з підметом в однині *mein Bruder* — *wohnt*."
+  x.word_order.prompt: "Складіть фразу «Я сьогодні вивчаю німецьку». Можна почати зі слова *Heute*."
+  x.word_order.explanation: "Обидва порядки слів правильні: *Ich lerne heute Deutsch* і *Heute lerne ich Deutsch*. Підмет і дієслово узгоджуються в обох варіантах."
+  x.transform.prompt: "Змініть фразу для *ihr* і почніть з *Ihr*."
+  x.transform.explanation: "З *ihr* правильне дієслово отримує закінчення **-t**: *Ihr lernt heute Deutsch.*"
+  x.error.prompt: "Виправте закінчення дієслова в реченні."
+  x.error.rule: "*Meine Schwester* — одна людина, тому дієслово отримує закінчення **-t**: *wohnt*."
+  x.error.explanation: "Підмет в однині *meine Schwester* потребує форми *wohnt*."
+  x.categorize.prompt: "Розподіліть словосполучення за числом підмета: однина чи множина."
+  x.categorize.singular: "Підмет в однині"
+  x.categorize.plural: "Підмет у множині"
+  x.categorize.explanation: "*Ich, du* і *mein Bruder* — однина; *wir, ihr* і *die Kinder* — множина."
+  x.true_false.prompt: "Чи правильно обрано закінчення дієслова для *wir*?"
+  x.true_false.wrong: "З *wir* правильне дієслово має закінчення **-en**: *Wir lernen Deutsch.*"
+  x.true_false.explanation: "Форма *lernt* не узгоджується з *wir*. Правильно: *Wir lernen Deutsch.*"

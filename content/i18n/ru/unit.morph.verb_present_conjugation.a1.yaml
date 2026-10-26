@@ -1,0 +1,64 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_present_conjugation.a1
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Настоящее время: правильные глаголы (Präsens)"
+  summary: "Составляйте простые формы настоящего времени, подбирая окончание правильного глагола к подлежащему."
+  obj.main: "Составлять простые предложения в настоящем времени с правильными глаголами."
+  obj.endings: "Выбирать и использовать окончание, которое согласуется с подлежащим."
+  b.intro: |
+    В немецком окончание глагола меняется в зависимости от подлежащего. Возьмём инфинитив *lernen* (учить) и уберём **-en**: получим основу **lern-**. Затем добавим личное окончание.
+
+    В этом уроке тренируются правильные глаголы: *lernen*, *wohnen*, *kommen* и *machen*. У глаголов *sein* и *haben*, модальных и глаголов со сменой гласной в основе свои формы; они изучаются отдельно.
+  b.pattern.caption: "Основа остаётся, а окончание зависит от подлежащего"
+  col.person: "Подлежащее"
+  col.ending: "Окончание"
+  col.form: "lernen"
+  b.examples.title: "Правильные глаголы в повседневных фразах"
+  ex.ich: "Я учу немецкий."
+  ex.du: "Ты живёшь в Вене."
+  ex.er: "Мой брат родом из Граца."
+  ex.wir: "Мы учимся вместе."
+  ex.ihr: "Вы делаете упражнение."
+  ex.sie: "Дети играют в футбол."
+  b.spelling: |
+    Окончание **-t** используется с *er, sie, es* и *ihr*. Понять, кого имеют в виду, помогает подлежащее. В вежливом обращении *Sie* пишется с заглавной буквы, а глагол оканчивается на **-en**: *Sie lernen Deutsch.*
+
+    В некоторых основах перед личным окончанием появляется дополнительная **-e-**, чтобы слово было легче произнести: например, *du arbeitest*. Этот орфографический случай не входит в первый урок. Сначала разберитесь с обычными формами, затем изучайте такие примеры отдельно.
+  b.summary: |
+    - У правильного инфинитива уберите **-en**, чтобы получить основу: *lernen → lern-*.
+    - Добавьте окончания **-e, -st, -t, -en, -t, -en** к формам *ich, du, er/sie/es, wir, ihr, sie/Sie*.
+    - Согласуйте глагол с подлежащим: *du lernst*, *mein Bruder lernt*, *wir lernen*.
+    - Неправильные глаголы, например *sein* и *haben*, изучаются отдельно.
+  b.practice.title: "Потренируйте окончания"
+  fb.correct: "Верно."
+  fb.incorrect: "Пока неверно. Проверьте подлежащее и окончание глагола."
+  x.du_wohnen.prompt: "Выберите правильную форму глагола *wohnen*."
+  x.du_wohnen.a: "*Wohne* употребляется с *ich*: *Ich wohne in Wien.*"
+  x.du_wohnen.c: "*Wohnt* употребляется с *er/sie/es* или *ihr*, но не с *du*."
+  x.du_wohnen.explanation: "С *du* правильный глагол получает окончание **-st**: *du wohnst*."
+  x.er_lernen.prompt: "Выберите правильную форму глагола *lernen*."
+  x.er_lernen.a: "Инфинитив не согласуется с подлежащим *er*."
+  x.er_lernen.b: "*Lernst* употребляется с *du*."
+  x.er_lernen.explanation: "С *er* правильный глагол получает окончание **-t**: *er lernt*."
+  x.match_endings.prompt: "Соедините каждое подлежащее с окончанием глагола *lernen*."
+  x.match_endings.explanation: "Окончание в настоящем времени зависит от подлежащего: *ich -e*, *du -st*, *er/sie/es -t*, *wir -en*."
+  x.cloze.prompt: "Дополните оба предложения правильными формами настоящего времени."
+  x.cloze.explanation: "С *ich* используется *lerne*, а с подлежащим в единственном числе *mein Bruder* — *wohnt*."
+  x.word_order.prompt: "Составьте фразу «Я сегодня учу немецкий». Можно начать со слова *Heute*."
+  x.word_order.explanation: "Оба порядка слов правильные: *Ich lerne heute Deutsch* и *Heute lerne ich Deutsch*. Подлежащее и глагол согласуются в обоих вариантах."
+  x.transform.prompt: "Измените фразу для *ihr* и начните с *Ihr*."
+  x.transform.explanation: "С *ihr* правильный глагол получает окончание **-t**: *Ihr lernt heute Deutsch.*"
+  x.error.prompt: "Исправьте окончание глагола в предложении."
+  x.error.rule: "*Meine Schwester* — один человек, поэтому глагол получает окончание **-t**: *wohnt*."
+  x.error.explanation: "Подлежащее в единственном числе *meine Schwester* требует формы *wohnt*."
+  x.categorize.prompt: "Распределите сочетания по числу подлежащего: единственное или множественное."
+  x.categorize.singular: "Единственное число"
+  x.categorize.plural: "Множественное число"
+  x.categorize.explanation: "*Ich, du* и *mein Bruder* стоят в единственном числе; *wir, ihr* и *die Kinder* — во множественном."
+  x.true_false.prompt: "Правильно ли выбрано окончание глагола для *wir*?"
+  x.true_false.wrong: "С *wir* правильный глагол оканчивается на **-en**: *Wir lernen Deutsch.*"
+  x.true_false.explanation: "Форма *lernt* не согласуется с *wir*. Правильно: *Wir lernen Deutsch.*"

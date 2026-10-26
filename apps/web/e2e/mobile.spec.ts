@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const LESSON = "/en/learn/unit.syntax.v2_declarative.a1";
+const A1_LESSON = "/en/learn/unit.morph.verb_present_conjugation.a1";
 
 /** Reads past the explanation to the first exercise. */
 async function toFirstExercise(page: Page) {
@@ -14,7 +15,7 @@ async function toFirstExercise(page: Page) {
 test.describe("narrowest supported phone", () => {
   test.use({ viewport: { width: 320, height: 640 } });
 
-  for (const path of ["/en", "/en/me", LESSON]) {
+  for (const path of ["/en", "/en/me", LESSON, A1_LESSON]) {
     test(`no sideways scroll at 320px on ${path}`, async ({ page }) => {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -99,7 +100,7 @@ test.describe("phone navigation", () => {
     await page.getByRole("button", { name: "Save and start learning" }).click();
     await expect(page).toHaveURL(/\/en$/);
     await page.locator(".station.is-current").getByRole("link", { name: "Start", exact: true }).click();
-    await expect(page).toHaveURL(/\/en\/learn\/unit\.pron\.alphabet_a0$/);
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.morph\.verb_present_conjugation\.a1$/);
     await expect(page.locator("nav.tabbar")).toBeHidden();
   });
 
