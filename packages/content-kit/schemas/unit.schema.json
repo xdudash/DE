@@ -510,7 +510,8 @@
             "dialogue_gap",
             "modal_choice",
             "odd_one_out",
-            "flashcard_recall"
+            "flashcard_recall",
+            "translation_input"
           ]
         }
       },
@@ -1647,6 +1648,31 @@
           "required": [
             "front",
             "back_de"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "translation_input"
+            },
+            "front": {
+              "$ref": "common.schema.json#/$defs/l10nRef"
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            }
+          },
+          "required": [
+            "front",
+            "accept"
           ],
           "type": "object"
         }
