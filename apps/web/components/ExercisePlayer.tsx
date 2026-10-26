@@ -86,6 +86,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   const [assignments, setAssignments] = useState<Record<string, string>>({});
   const [order, setOrder] = useState<number[]>([]);
   const [verbPosition, setVerbPosition] = useState<number | null>(null);
+  const [stressMark, setStressMark] = useState<number | null>(null);
   const [flashcardRevealed, setFlashcardRevealed] = useState(false);
   const [flashcardRating, setFlashcardRating] = useState<"again" | "got_it" | null>(null);
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
@@ -96,6 +97,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
 
   useEffect(() => {
     setHasPlayed(false);
+    setStressMark(null);
     setFlashcardRevealed(false);
     setFlashcardRating(null);
     setSpeechAvailable(typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
@@ -126,6 +128,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "true_false" && truth !== null) ||
     (exercise.type === "flashcard_recall" && flashcardRating !== null) ||
     ((exercise.type === "match_pairs" || exercise.type === "join_halves") && exercise.pairs.every((p) => !!matches[p.id])) ||
+    (exercise.type === "stress_mark" && stressMark !== null) ||
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
     (exercise.type === "token_bank_build" && order.length > 0) ||
@@ -172,6 +175,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "true_false": response = { type: "true_false", value: truth === true }; break;
           case "match_pairs": response = { type: "match_pairs", matches }; break;
           case "join_halves": response = { type: "join_halves", matches }; break;
+          case "stress_mark": response = { type: "stress_mark", syllableIndex: stressMark ?? -1 }; break;
           case "categorize": response = { type: "categorize", assignments }; break;
           case "word_order": response = { type: "word_order", order }; break;
           case "token_bank_build": response = { type: "token_bank_build", order }; break;
@@ -463,6 +467,24 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             ))}
           </div>
         </>
+      )}
+
+      {exercise.type === "stress_mark" && (
+        <div className="tokens stress-mark" role="group" aria-label={labels.yourAnswer}>
+          {exercise.syllables.map((syllable, index) => (
+            <button
+              key={index}
+              type="button"
+              lang="de"
+              className={`token${stressMark === index ? " placed" : ""}${locked ? (exercise.stress_index === index ? " is-right" : stressMark === index ? " is-wrong" : "") : ""}`}
+              aria-pressed={stressMark === index}
+              disabled={locked}
+              onClick={() => setStressMark(index)}
+            >
+              {syllable}
+            </button>
+          ))}
+        </div>
       )}
 
       {exercise.type === "flashcard_recall" && (

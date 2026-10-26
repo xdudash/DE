@@ -67,6 +67,7 @@ export type Response =
   | { type: "true_false"; value: boolean }
   | { type: "match_pairs"; matches: Record<string, string> }
   | { type: "join_halves"; matches: Record<string, string> }
+  | { type: "stress_mark"; syllableIndex: number }
   | { type: "categorize"; assignments: Record<string, string> }
   | { type: "listening_choice"; optionId: string }
   | { type: "minimal_pairs"; optionId: string }
@@ -344,6 +345,11 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalMatchPairs(ex, (response as Extract<Response, { type: "match_pairs" }>).matches);
     case "join_halves":
       return evalMatchPairs(ex as unknown as MatchPairsExercise, (response as Extract<Response, { type: "join_halves" }>).matches);
+    case "stress_mark": {
+      const index = (response as Extract<Response, { type: "stress_mark" }>).syllableIndex;
+      if (!Number.isInteger(index) || index < 0 || index >= ex.syllables.length) throw new EvaluationError(`stress_mark ${ex.id}: syllable index is outside the word`);
+      return result(ex, index === ex.stress_index, String(index));
+    }
     case "categorize":
       return evalCategorize(ex, (response as Extract<Response, { type: "categorize" }>).assignments);
     case "reply_choice":

@@ -57,6 +57,15 @@ describe("translation_input", () => {
   });
 });
 
+describe("stress_mark", () => {
+  const exercise = { id: "x_stress", type: "stress_mark" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, syllables: ["Fa", "mi", "lie"], stress_index: 1 };
+  it("accepts the marked stressed syllable and rejects another", () => {
+    assert.equal(evaluate(exercise, { type: "stress_mark", syllableIndex: 1 }).correct, true);
+    assert.equal(evaluate(exercise, { type: "stress_mark", syllableIndex: 0 }).correct, false);
+    assert.throws(() => evaluate(exercise, { type: "stress_mark", syllableIndex: 3 }), EvaluationError);
+  });
+});
+
 describe("join_halves", () => {
   const exercise = { id: "x_halves", type: "join_halves" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, pairs: [{ id: "a", left_de: "Wenn es regnet,", right_de: "bleibe ich zu Hause." }, { id: "b", left_de: "Obwohl er müde ist,", right_de: "lernt er weiter." }] };
   it("accepts the authored joins and rejects swapped endings", () => {
