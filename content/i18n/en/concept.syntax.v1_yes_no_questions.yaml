@@ -1,9 +1,16 @@
 schema: deutschgo.l10n/1
 entity: concept.syntax.v1_yes_no_questions
 lang: en
-based_on_version: 0.1.0
+based_on_version: 1.0.0
 status: draft
 translator: claude (AI draft, 2026-10-12)
 strings:
   title: 'Yes/no questions: verb first'
-  summary: Questions answered with ja/nein start with the conjugated verb.
+  summary: Direct questions answered with ja or nein start with the finite verb, followed by the subject.
+  pattern.scope: "In a direct yes/no question, put the finite (conjugated) verb in position 1 and the subject next: *Wohnst du in Wien?* This lesson uses simple present-tense questions."
+  pattern.limits: "A W-question starts with its question word and keeps the finite verb in position 2: *Wo wohnst du?* In an indirect question after *ob*, the finite verb goes to the end: *Ich weiß nicht, ob du in Wien wohnst.* With a modal, auxiliary, or separable verb, only the finite part moves to the front; those verb brackets are taught separately."
+  ex.come: "Are you coming today?"
+  ex.work: "Is she working tomorrow?"
+  ex.appointment: "Do you have an appointment? (formal)"
+  ex.live: "Do you live in Vienna?"
+  err.verb_agreement: "With *du*, use *arbeitest*. The verb ending must agree with its subject: *Arbeitest du heute?*"
