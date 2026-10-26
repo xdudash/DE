@@ -225,6 +225,12 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             if (!ex.statement_de.trim()) c.error("exercise.empty_statement", u.id, `${where}: statement_de is empty`);
             break;
           }
+          case "stress_mark": {
+            if (ex.syllables.length < 2 || ex.syllables.length > 6) c.error("exercise.stress_syllables", u.id, `${where}: provide 2 to 6 syllables`);
+            if (!Number.isInteger(ex.stress_index) || ex.stress_index < 0 || ex.stress_index >= ex.syllables.length) c.error("exercise.stress_index", u.id, `${where}: stress_index must select one syllable`);
+            else if (!evaluate(ex, { type: "stress_mark", syllableIndex: ex.stress_index }).correct) c.error("exercise.self_check", u.id, `${where}: marked stress position does not evaluate as correct`);
+            break;
+          }
           case "join_halves": {
             const lefts = new Set(ex.pairs.map((pair) => pair.id));
             const rights = new Set(ex.pairs.map((pair) => pair.right_de));
