@@ -1,0 +1,179 @@
+# A1 lesson draft. German correctness and pedagogy still need human review (DG-007).
+schema: deutschgo.unit/1
+id: unit.morph.verb_present_conjugation.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.morph.verb_present_conjugation]
+prerequisites: []
+goals: [general, everyday, work, study]
+estimated_minutes: 12
+objectives:
+  - { id: obj_main, text: "@obj.main", skill: knowledge }
+  - { id: obj_endings, text: "@obj.endings", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.person", "@col.ending", "@col.form"]
+    rows:
+      - ["ich", "-e", "lerne"]
+      - ["du", "-st", "lernst"]
+      - ["er / sie / es", "-t", "lernt"]
+      - ["wir", "-en", "lernen"]
+      - ["ihr", "-t", "lernt"]
+      - ["sie / Sie", "-en", "lernen"]
+
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_ich, de: "Ich lerne Deutsch.", gloss: "@ex.ich", highlight: [1] }
+      - { id: ex_du, de: "Du wohnst in Wien.", gloss: "@ex.du", highlight: [1] }
+      - { id: ex_er, de: "Mein Bruder kommt aus Graz.", gloss: "@ex.er", highlight: [2] }
+      - { id: ex_wir, de: "Wir lernen zusammen.", gloss: "@ex.wir", highlight: [1] }
+      - { id: ex_ihr, de: "Ihr macht die Übung.", gloss: "@ex.ihr", highlight: [1] }
+      - { id: ex_sie, de: "Die Kinder spielen Fußball.", gloss: "@ex.sie", highlight: [2] }
+
+  - { type: explanation, id: b_spelling, body: "@b.spelling" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_du_wohnen
+        type: single_choice
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.du_wohnen.prompt"
+        stem_de: "Du ___ in Wien. (wohnen)"
+        options:
+          - { id: a, de: "wohne", correct: false, feedback: "@x.du_wohnen.a" }
+          - { id: b, de: "wohnst", correct: true }
+          - { id: c, de: "wohnt", correct: false, feedback: "@x.du_wohnen.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.du_wohnen.explanation"
+
+      - id: x_er_lernen
+        type: single_choice
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.er_lernen.prompt"
+        stem_de: "Er ___ heute Deutsch. (lernen)"
+        options:
+          - { id: a, de: "lernen", correct: false, feedback: "@x.er_lernen.a" }
+          - { id: b, de: "lernst", correct: false, feedback: "@x.er_lernen.b" }
+          - { id: c, de: "lernt", correct: true }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.er_lernen.explanation"
+
+      - id: x_match_endings
+        type: match_pairs
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.match_endings.prompt"
+        pairs:
+          - { id: a, left_de: "ich", right_de: "-e" }
+          - { id: b, left_de: "du", right_de: "-st" }
+          - { id: c, left_de: "er / sie / es", right_de: "-t" }
+          - { id: d, left_de: "wir", right_de: "-en" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match_endings.explanation"
+
+      - id: x_cloze
+        type: cloze
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Ich {{0}} Deutsch, und mein Bruder {{1}} in Graz."
+        gaps:
+          - accept: ["lerne"]
+          - accept: ["wohnt"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+
+      - id: x_word_order
+        type: word_order
+        objective: obj_main
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.word_order.prompt"
+        tokens: ["Deutsch", "ich", "heute", "lerne"]
+        final_punctuation: "."
+        accept: ["Ich lerne heute Deutsch.", "Heute lerne ich Deutsch."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.word_order.explanation"
+
+      - id: x_transform_person
+        type: transform
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Du lernst heute Deutsch."
+        accept: ["Ihr lernt heute Deutsch."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+
+      - id: x_error_sister
+        type: error_correction
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 2
+        prompt: "@x.error.prompt"
+        source_de: "Meine Schwester wohnen in Graz."
+        accept: ["Meine Schwester wohnt in Graz."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Meine Schwester wohnen in Graz."], feedback: "@x.error.rule", signals: concept.morph.verb_present_conjugation }
+        explanation: "@x.error.explanation"
+
+      - id: x_categorize
+        type: categorize
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: singular, label: "@x.categorize.singular" }
+          - { id: plural, label: "@x.categorize.plural" }
+        items:
+          - { id: ich, de: "ich lerne", categoryId: singular }
+          - { id: du, de: "du lernst", categoryId: singular }
+          - { id: bruder, de: "mein Bruder lernt", categoryId: singular }
+          - { id: wir, de: "wir lernen", categoryId: plural }
+          - { id: ihr, de: "ihr lernt", categoryId: plural }
+          - { id: kinder, de: "die Kinder spielen", categoryId: plural }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+
+      - id: x_true_false
+        type: true_false
+        objective: obj_endings
+        concepts: [concept.morph.verb_present_conjugation]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "Wir lernt Deutsch."
+        correct: false
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+
+review:
+  linguistic: { status: pending, notes: "AI-authored lesson draft; requires review by a qualified German teacher or native speaker (DG-007)." }
+  pedagogical: { status: pending, notes: "Check whether endings and spelling notes suit the A1 sequence." }
+  rights: { status: pending, notes: "All text is original DeutschGo content; owner confirmation pending." }
