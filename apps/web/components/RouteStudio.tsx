@@ -8,9 +8,9 @@ import { orderedRouteSteps, useRoutePlan, type RoutePlanOption } from "../lib/ro
 import { readSetup, writeSetup, type PathDifficulty, type Setup } from "../lib/device-state";
 import { LearningPathPicker, type LearningPathCounts } from "./LearningPathPicker";
 import { CourseRoadmap } from "./CourseRoadmap";
-import type { CourseRoadmapLevel } from "../lib/course-paths";
+import type { CourseRoadmapLevel, CourseRoadmapModule } from "../lib/course-paths";
 
-export function RouteStudio({ lang, routes, defaultRouteId, coursePaths, courseRoadmaps }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[]; courseRoadmaps: Record<PathDifficulty, CourseRoadmapLevel[]> }) {
+export function RouteStudio({ lang, routes, defaultRouteId, coursePaths, courseRoadmaps, courseSequences }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[]; courseRoadmaps: Record<PathDifficulty, CourseRoadmapLevel[]>; courseSequences: Record<PathDifficulty, CourseRoadmapModule[]> }) {
   const msg = translator(lang);
   const plan = useRoutePlan(routes, defaultRouteId);
   const { attempts, status } = useProgress();
@@ -33,6 +33,7 @@ export function RouteStudio({ lang, routes, defaultRouteId, coursePaths, courseR
   const visibleSteps = plan.activeSteps;
   const skipped = new Set(settings?.skipped ?? []);
   const doneSteps = visibleSteps.filter((step) => step.kind === "lesson" && step.exerciseIds.length > 0 && step.exerciseIds.every((id) => answered.get(step.unitId ?? "")?.has(id)));
+  const completedCourseModules = new Set(courseSequences[difficulty].filter((module) => module.exerciseIds.length > 0 && module.exerciseIds.every((id) => answered.get(module.id)?.has(id))).map((module) => module.id));
   const openLessons = visibleSteps.filter((step) => step.kind === "lesson").length;
   const progress = openLessons > 0 ? Math.round(doneSteps.length / openLessons * 100) : 0;
   const msgWrite = (ok: boolean, key: MessageKey) => setNotice(msg(ok ? key : "routeStudio.storageError"));
@@ -64,7 +65,7 @@ export function RouteStudio({ lang, routes, defaultRouteId, coursePaths, courseR
       {notice === msg("learningPath.saved") && <p role="status" className="route-notice">{notice}</p>}
     </section>
 
-    <CourseRoadmap lang={lang} difficulty={difficulty} levels={courseRoadmaps[difficulty]} />
+    <CourseRoadmap lang={lang} difficulty={difficulty} levels={courseRoadmaps[difficulty]} sequence={courseSequences[difficulty]} completedModuleIds={completedCourseModules} />
 
     <section className="route-choice-section">
       <div className="route-section-heading"><div><p className="eyebrow">{msg("routeStudio.chooseEyebrow")}</p><h2>{msg("routeStudio.availableRoutes")}</h2></div><span className="muted small">{msg("routeStudio.devicePlan")}</span></div>

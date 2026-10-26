@@ -4,7 +4,7 @@ import type { PathDifficulty } from "./plan";
 
 type CurriculumEntry = { id: string; level: string; block: string; topic: string; depth: "core" | "standard" | "deep"; kind: "lesson" | "scenario" | "checkpoint" };
 type PathCounts = { difficulty: PathDifficulty; steps: number; lessons: number; scenarios: number; checkpoints: number; authoredLessons: number; levels: Array<{ level: string; steps: number }> };
-export type CourseRoadmapModule = { id: string; title: string; href: string };
+export type CourseRoadmapModule = { id: string; title: string; href: string; exerciseIds: string[] };
 export type CourseRoadmapBlock = { id: string; steps: number; lessons: number; scenarios: number; checkpoints: number; topics: string[]; modules: CourseRoadmapModule[] };
 export type CourseRoadmapLevel = { level: string; steps: number; blocks: CourseRoadmapBlock[] };
 
@@ -40,6 +40,18 @@ export function coursePathCounts(authoredLessons: number): PathCounts[] {
       levels,
     };
   });
+}
+
+/** Ordered, deduplicated authored lessons that a learner can actually open on this depth. */
+export function courseSequence(difficulty: PathDifficulty, modulesByTopic: Record<string, CourseRoadmapModule[]> = {}): CourseRoadmapModule[] {
+  const seen = new Set<string>();
+  return entries.filter((entry) => entry.kind === "lesson" && DEPTHS[difficulty].includes(entry.depth))
+    .flatMap((entry) => modulesByTopic[entry.topic] ?? [])
+    .filter((module) => {
+      if (seen.has(module.id)) return false;
+      seen.add(module.id);
+      return true;
+    });
 }
 
 /** Group only the selected depth's blueprint into levels and blocks for the route board. */
