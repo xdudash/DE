@@ -183,6 +183,11 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
       const where = `exercise ${ex.id}`;
       try {
         switch (ex.type) {
+          case "flashcard_recall": {
+            if (!ex.front || !ex.back_de.trim()) c.error("exercise.flashcard_content", u.id, `${where}: recall cards need a front and a German answer`);
+            if (ex.example_de !== undefined && !ex.example_de.trim()) c.error("exercise.flashcard_example", u.id, `${where}: example sentence must not be empty`);
+            break;
+          }
           case "odd_one_out": {
             const correct = ex.options.filter((option) => option.correct);
             if (ex.options.length < 3) c.error("exercise.odd_one_out_count", u.id, `${where}: provide at least three items for comparison`);
