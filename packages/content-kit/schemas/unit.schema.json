@@ -512,7 +512,8 @@
             "odd_one_out",
             "flashcard_recall",
             "translation_input",
-            "join_halves"
+            "join_halves",
+            "stress_mark"
           ]
         }
       },
@@ -1713,6 +1714,32 @@
           },
           "required": [
             "pairs"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "stress_mark"
+            },
+            "syllables": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "$ref": "common.schema.json#/$defs/de"
+              }
+            },
+            "stress_index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "syllables",
+            "stress_index"
           ],
           "type": "object"
         }
