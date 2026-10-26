@@ -66,8 +66,9 @@
 
 ## J — Explainable next step
 1. Rank a due review, repeated error, prerequisite catch-up, then the next available route step.
-2. Show one direct action with its reason in plain language.
-3. Let the learner continue along the line, choose another map topic, or dismiss the suggestion without losing the route.
+2. Skip route topics that have no startable lesson; keep them visible as planned on the line and Knowledge Map.
+3. Show one direct action to a startable lesson or review with its reason in plain language.
+4. Let the learner continue along the line, choose another map topic, or dismiss the suggestion without losing the route.
 
 ## K — Read, look up, and review a word (P4 pilot)
 1. Open **Library** from the desktop navigation or phone tab bar and choose an original, level-labelled short story.
