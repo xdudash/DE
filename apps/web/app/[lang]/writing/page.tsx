@@ -8,6 +8,7 @@ export default async function WritingPage({ params }: { params: Promise<{ lang: 
     { id: "neighbor", title: msg("writing.prompt.neighbor.title"), level: "A1", situation: msg("writing.prompt.neighbor.situation"), tasks: [msg("writing.prompt.neighbor.task1"), msg("writing.prompt.neighbor.task2"), msg("writing.prompt.neighbor.task3")] },
     { id: "appointment", title: msg("writing.prompt.appointment.title"), level: "A2", situation: msg("writing.prompt.appointment.situation"), tasks: [msg("writing.prompt.appointment.task1"), msg("writing.prompt.appointment.task2"), msg("writing.prompt.appointment.task3")] },
     { id: "colleague", title: msg("writing.prompt.colleague.title"), level: "A2", situation: msg("writing.prompt.colleague.situation"), tasks: [msg("writing.prompt.colleague.task1"), msg("writing.prompt.colleague.task2"), msg("writing.prompt.colleague.task3")] },
+    { id: "picture-market", title: msg("writing.prompt.picture.title"), level: "A1", situation: msg("writing.prompt.picture.situation"), tasks: [msg("writing.prompt.picture.task1"), msg("writing.prompt.picture.task2"), msg("writing.prompt.picture.task3")], image: { src: "/prompt-scenes/market-morning.svg", alt: msg("writing.prompt.picture.alt") } },
   ];
   const labels = {
     choosePrompt: msg("writing.choosePrompt"), situation: msg("writing.situation"), tasks: msg("writing.tasks"), answer: msg("writing.answer"),
