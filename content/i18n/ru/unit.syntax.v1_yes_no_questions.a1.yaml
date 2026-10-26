@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.v1_yes_no_questions.a1
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Общие вопросы: глагол на первом месте"
+  summary: "Задавайте прямой вопрос: сначала спрягаемый глагол, затем подлежащее."
+  obj.recognize: "Распознавать общий вопрос и отличать его от утверждения и W-вопроса."
+  obj.ask: "Составлять простой общий вопрос в настоящем времени и давать краткий ответ."
+  b.intro: |
+    Прямой общий вопрос уточняет, верно ли что-то. Начните его со **спрягаемого глагола**, затем поставьте подлежащее: *Wohnst du in Wien?* (Ты живёшь в Вене?)
+
+    Сравните три схемы: утверждение начинается с подлежащего (*Du wohnst in Wien.*); W-вопрос начинается с вопросительного слова, а глагол стоит вторым (*Wo wohnst du?*); общий вопрос начинается с глагола (*Wohnst du in Wien?*).
+  b.pattern.caption: "Спрягаемый глагол стоит перед подлежащим"
+  col.verb: "Место 1: спрягаемый глагол"
+  col.subject: "Подлежащее"
+  col.rest: "Другие сведения"
+  b.examples.title: "Вопросы на каждый день"
+  ex.come: "Ты сегодня придёшь?"
+  ex.work: "Она работает завтра?"
+  ex.appointment: "У Вас назначена встреча? (вежливое обращение)"
+  ex.live: "Ты живёшь в Вене?"
+  b.answers: |
+    Отвечайте *ja* или *nein*, а затем используйте обычный порядок слов в утверждении. В немецком не добавляют аналог английского *do*:
+
+    - *Kommst du heute? – Ja, ich komme heute.*
+    - *Kommst du heute? – Nein, ich komme heute nicht.*
+
+    Форма спрягаемого глагола зависит от подлежащего: *Kommst du?*, но *Kommt er?* В вопросе с модальным глаголом или другой частью сказуемого вперёд выносится только спрягаемый глагол, а другая часть остаётся дальше в предложении. Такие формы будут в отдельном уроке.
+  b.errors.title: "Проверьте форму глагола"
+  e.verb_agreement: "С *du* используется форма *arbeitest*. Окончание глагола должно согласовываться с подлежащим: *Arbeitest du heute?*"
+  b.summary: |
+    - В прямом общем вопросе поставьте спрягаемый глагол первым: *Wohnst du in Wien?*
+    - Подлежащее идёт после глагола: *Arbeitet sie morgen?*
+    - Отвечайте *ja* или *nein*, используя обычное утверждение: *Ja, ich wohne hier.*
+    - W-вопрос начинается с вопросительного слова, а глагол стоит вторым: *Wo wohnst du?*
+  b.practice.title: "Практика"
+  fb.correct: "Правильно."
+  fb.incorrect: "Не совсем. Определите, перед вами общий вопрос, W-вопрос или утверждение."
+  x.choose_question.prompt: "Какое предложение является прямым общим вопросом?"
+  x.choose_question.a: "Это утверждение: сначала стоит подлежащее, затем глагол."
+  x.choose_question.c: "Это W-вопрос. Он начинается с вопросительного слова, а не с глагола."
+  x.choose_question.explanation: "Прямой общий вопрос начинается со спрягаемого глагола: *Lernst du heute Deutsch?*"
+  x.choose_form.prompt: "Выберите форму глагола, которая согласуется с *du*."
+  x.choose_form.b: "*Wohnt* используется с *er/sie/es* или *ihr*, но не с *du*."
+  x.choose_form.c: "*Wohnen* используется с *wir* или вежливым *Sie*, но не с *du*."
+  x.choose_form.explanation: "С *du* используйте *wohnst*: *Wohnst du morgen in Wien?*"
+  x.match_forms.prompt: "Соедините каждое подлежащее с правильной формой глагола в настоящем времени."
+  x.match_forms.explanation: "Окончание меняется в зависимости от подлежащего: *ich wohne*, *du kommst*, *er arbeitet*, *wir lernen*."
+  x.cloze.prompt: "Дополните вопрос и краткий ответ правильными формами глагола *lernen*."
+  x.cloze.explanation: "Вопрос начинается с *lernst* — формы для *du*. В ответе с *ich* используется *lerne*."
+  x.order_question.prompt: "Составьте вопрос: «Ты сегодня придёшь?»"
+  x.order_question.explanation: "Поставьте спрягаемый глагол *kommst* первым, затем подлежащее *du*, а после него *heute*."
+  x.transform_question.prompt: "Преобразуйте утверждение в прямой общий вопрос: Du wohnst in Wien."
+  x.transform_question.explanation: "Поставьте спрягаемый глагол *wohnst* перед подлежащим *du*: *Wohnst du in Wien?*"
+  x.categorize.prompt: "Распределите предложения по типу порядка слов."
+  x.categorize.statement: "Утверждение"
+  x.categorize.yes_no: "Общий вопрос"
+  x.categorize.w_question: "W-вопрос"
+  x.categorize.explanation: "Утверждение обычно начинается с подлежащего; общий вопрос — со спрягаемого глагола; W-вопрос — с вопросительного слова, а глагол стоит вторым."
+  x.verb_first.prompt: "Верно или неверно? В прямом общем вопросе спрягаемый глагол стоит перед подлежащим."
+  x.verb_first.wrong: "В этой схеме сначала стоит спрягаемый глагол, затем подлежащее."
+  x.verb_first.explanation: "Например, *Haben Sie einen Termin?* начинается с *haben*, за которым следует подлежащее *Sie*."
+  x.correct_order.prompt: "Исправьте форму глагола в этом вопросе."
+  x.correct_order.explanation: "С *du* используется *arbeitest*: *Arbeitest du heute im Büro?* Спрягаемый глагол стоит первым, затем идёт подлежащее."
