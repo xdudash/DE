@@ -1,0 +1,179 @@
+# A1 lesson draft; German, teaching sequence, and translations need human review.
+schema: deutschgo.unit/1
+id: unit.syntax.w_questions.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.syntax.w_questions]
+prerequisites: [concept.syntax.v2_declarative]
+goals: [general, everyday, work]
+estimated_minutes: 14
+objectives:
+  - { id: obj_recognize, text: "@obj.recognize", skill: knowledge }
+  - { id: obj_ask, text: "@obj.ask", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.question", "@col.verb", "@col.subject", "@col.rest"]
+    rows:
+      - ["Wann", "fährt", "der Bus", "nach Graz?"]
+      - ["Wo", "wohnst", "du", "in Wien?"]
+      - ["Woher", "kommen", "Sie", "?"]
+      - ["Wer", "wohnt", "", "hier?"]
+
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_when, de: "Wann fährt der Bus?", gloss: "@ex.when", highlight: [1] }
+      - { id: ex_where, de: "Wo wohnst du?", gloss: "@ex.where", highlight: [1] }
+      - { id: ex_who_subject, de: "Wer wohnt hier?", gloss: "@ex.who_subject", highlight: [1] }
+      - { id: ex_where_from, de: "Woher kommen Sie?", gloss: "@ex.where_from", highlight: [1] }
+      - { id: ex_price, de: "Was kostet ein Ticket?", gloss: "@ex.price", highlight: [1] }
+
+  - { type: explanation, id: b_word_meaning, body: "@b.word_meaning" }
+
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_verb_third, wrong: "Wo du wohnst?", right: "Wo wohnst du?", explanation: "@e.verb_third" }
+      - { id: e_indirect, wrong: "Wann der Bus fährt?", right: "Wann fährt der Bus?", explanation: "@e.indirect" }
+
+  - { type: summary, id: b_summary, body: "@b.summary" }
+
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_choose_order
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.choose_order.prompt"
+        options:
+          - { id: a, de: "Wann beginnt der Deutschkurs?", correct: true }
+          - { id: b, de: "Wann der Deutschkurs beginnt?", correct: false, feedback: "@x.choose_order.b" }
+          - { id: c, de: "Beginnt wann der Deutschkurs?", correct: false, feedback: "@x.choose_order.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_order.explanation"
+
+      - id: x_choose_word
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.choose_word.prompt"
+        stem_de: "___ fährt der Bus? – Um acht Uhr."
+        options:
+          - { id: a, de: "Wo", correct: false, feedback: "@x.choose_word.a" }
+          - { id: b, de: "Wann", correct: true }
+          - { id: c, de: "Wer", correct: false, feedback: "@x.choose_word.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_word.explanation"
+
+      - id: x_match_words
+        type: match_pairs
+        objective: obj_recognize
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.match_words.prompt"
+        pairs:
+          - { id: a, left_de: "wo", right_de: "Ort" }
+          - { id: b, left_de: "wann", right_de: "Zeit" }
+          - { id: c, left_de: "wohin", right_de: "Richtung zu einem Ziel" }
+          - { id: d, left_de: "woher", right_de: "Herkunft oder Ausgangspunkt" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match_words.explanation"
+
+      - id: x_cloze
+        type: cloze
+        objective: obj_ask
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Wie {{0}} du? – Ich {{1}} Lena."
+        gaps:
+          - accept: ["heißt"]
+          - accept: ["heiße"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+
+      - id: x_order_where
+        type: word_order
+        objective: obj_ask
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.order_where.prompt"
+        tokens: ["du", "Wo", "wohnst"]
+        final_punctuation: "?"
+        accept: ["Wo wohnst du?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order_where.explanation"
+
+      - id: x_transform_time
+        type: transform
+        objective: obj_ask
+        concepts: [concept.syntax.w_questions]
+        difficulty: 2
+        prompt: "@x.transform_time.prompt"
+        source_de: "Der Bus fährt um acht Uhr."
+        accept: ["Wann fährt der Bus?", "Um wie viel Uhr fährt der Bus?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform_time.explanation"
+
+      - id: x_categorize
+        type: categorize
+        objective: obj_recognize
+        concepts: [concept.syntax.w_questions]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: time, label: "@x.categorize.time" }
+          - { id: place, label: "@x.categorize.place" }
+          - { id: person, label: "@x.categorize.person" }
+          - { id: reason, label: "@x.categorize.reason" }
+        items:
+          - { id: wann, de: "wann", categoryId: time }
+          - { id: wo, de: "wo", categoryId: place }
+          - { id: wer, de: "wer", categoryId: person }
+          - { id: warum, de: "warum", categoryId: reason }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+
+      - id: x_wer_subject
+        type: true_false
+        objective: obj_recognize
+        concepts: [concept.syntax.w_questions]
+        difficulty: 2
+        prompt: "@x.wer_subject.prompt"
+        statement_de: "In ‚Wer wohnt hier?‘, wer ist das Subjekt."
+        correct: true
+        wrong_feedback: "@x.wer_subject.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.wer_subject.explanation"
+
+      - id: x_correct_order
+        type: error_correction
+        objective: obj_ask
+        concepts: [concept.syntax.w_questions]
+        difficulty: 2
+        prompt: "@x.correct_order.prompt"
+        source_de: "Wo der Deutschkurs stattfindet?"
+        accept: ["Wo findet der Deutschkurs statt?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.correct_order.explanation"
+
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; requires review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check the sequencing, exercise validity, and A1 scope." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }
