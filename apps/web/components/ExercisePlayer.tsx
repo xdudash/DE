@@ -131,7 +131,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     (exercise.type === "token_bank_build" && order.length > 0) ||
     (exercise.type === "verb_position" && verbPosition !== null) ||
     (exercise.type === "cloze" && gaps.every((g) => g.trim() !== "")) ||
-    ((exercise.type === "transform" || exercise.type === "dialogue_gap" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
+    ((exercise.type === "transform" || exercise.type === "translation_input" || exercise.type === "dialogue_gap" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "keyword_build" || isTextInput(exercise)) && free.trim() !== "" && (exercise.type !== "dictation" || !speechAvailable || hasPlayed));
   const locked = checked !== null;
 
   useEffect(() => onReadyChange(ready), [ready, onReadyChange]);
@@ -156,6 +156,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
           case "odd_one_out": response = { type: "odd_one_out", optionId: choice }; break;
           case "flashcard_recall": if (flashcardRating === null) return null; response = { type: "flashcard_recall", rating: flashcardRating }; break;
+          case "translation_input": response = { type: "translation_input", text: free }; break;
           case "connector_choice": response = { type: "connector_choice", optionId: choice }; break;
           case "case_choice": response = { type: "case_choice", optionId: choice }; break;
           case "preposition_choice": response = { type: "preposition_choice", optionId: choice }; break;
@@ -580,14 +581,15 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         </p>
       )}
 
-      {(exercise.type === "transform" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "error_correction" || exercise.type === "keyword_build" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
+      {(exercise.type === "transform" || exercise.type === "translation_input" || exercise.type === "separable_verb" || exercise.type === "negation" || exercise.type === "error_correction" || exercise.type === "keyword_build" || (isTextInput(exercise) && exercise.type !== "dictation")) && (
         <>
           {exercise.type === "transform" || exercise.type === "error_correction" || exercise.type === "negation" || exercise.type === "separable_verb" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
-          ) : exercise.type !== "keyword_build" && exercise.stem_de ? (
+          ) : exercise.type !== "keyword_build" && exercise.type !== "translation_input" && isTextInput(exercise) && exercise.stem_de ? (
             <p lang="de" className="de stem">{exercise.stem_de}</p>
           ) : null}
           {exercise.type === "separable_verb" && <p className="muted small de separable-parts" lang="de">{exercise.finite_form_de} + {exercise.prefix_de}</p>}
+          {exercise.type === "translation_input" && <p className="translation-prompt">{tr(text, exercise.front)}</p>}
           {exercise.type === "keyword_build" && <ul className="keyword-build-bank" aria-label={labels.yourAnswer}>{exercise.keywords.map((keyword, index) => <li key={index} lang="de">{keyword}</li>)}</ul>}
           <input
             className={`free${locked ? (checked?.correct ? " ok" : " bad") : ""}`}
