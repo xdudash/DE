@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (PR #113 merged; A1 W-question lesson added)
+Last updated: 2026-10-26 (PR #114 merged; A1 yes/no-question lesson added)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -24,7 +24,7 @@ Last updated: 2026-10-26 (PR #113 merged; A1 W-question lesson added)
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
-- Content: A1 graph mapped (DG-012): 67 concepts, 64 `planned` and 3 authored as `needs_review`; three A1 lesson units are available across 2 A1 routes. The V2 gold unit, regular-present lesson, and W-question lesson still need human review. `npm run content:report`.
+- Content: A1 graph mapped (DG-012): 67 concepts, 63 `planned` and 4 authored as `needs_review`; four A1 lesson units are available across 2 A1 routes. The V2 gold unit, regular-present lesson, W-question lesson, and yes/no-question lesson still need human review. `npm run content:report`.
 - Learning engine v1 (`packages/learning-engine`, DG-010): states, review scheduler, explainable recommendations.
 - Attempt recording (`packages/attempts`, `POST /api/attempts`, DG-009): server re-evaluation, append-only events, derived caches.
 - Learner-data schema (`supabase/migrations` 0001, 0002): RLS on every table, GDPR export function, cascade deletion. Hosted project `deutschgo` (EU) exists; 0001 is recorded as applied, 0002 (push subscriptions) is not recorded.
@@ -88,3 +88,4 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 - Home recommendations skip planned route topics without lessons and point to the next available lesson or review; the planned topics stay visible on the line and map.
 - The A1 sentence route now begins with a regular-present lesson, followed by the V2 lesson. The new 9-exercise draft uses 8 supported formats; it remains `needs_review` and is never described as human-verified.
 - The existing W-question step now resolves to a 9-exercise lesson in 8 supported formats. It follows the route's present-tense and V2 lessons and remains `needs_review`; English copy is draft and Russian/Ukrainian translations are machine drafts.
+- The yes/no-question step now resolves to a 9-exercise lesson in 8 supported formats, following W-questions. It distinguishes statements, W-questions, and verb-first yes/no questions, and remains `needs_review`.
