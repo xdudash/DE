@@ -37,4 +37,4 @@ Error correction is available inside lessons as a full-sentence rewrite with nor
 The lesson player supports minimal-pair listening with replayable target and candidate pronunciations, a single-choice response, and a text fallback.
 
 
-| Writing Studio | `/{lang}/writing` | Practice board | Choose one of three A1–A2 situations, compose in German, review a checklist, and save drafts per language on the current device. This activity is not automatically graded and does not create mastery evidence. |
+| Writing Studio | `/{lang}/writing` | Practice board | Choose a message situation or illustrated A1 picture prompt, compose in German, review a checklist, and save drafts per language on the current device. This activity is not automatically graded and does not create mastery evidence. |
