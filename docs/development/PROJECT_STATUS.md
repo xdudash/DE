@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (first-visit language-to-plan path implemented locally; pending PR)
+Last updated: 2026-10-26 (PR #110 merged; first-visit path verified on desktop and phone)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -77,11 +77,11 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 - The interactive prototype now lists all 35 current lesson-engine formats once each and shows the picture prompt in the writing board.
 - PR #109 adds a browser journey for the picture, German draft persistence after reload, and the no-mastery-event boundary.
 
-## Next implementation block — complete first-run lesson
-- Verify onboarding through the first lesson on desktop and phone, including route choice, lesson resume, and a returning learner's next-step state.
+## Next implementation block — expand the first A0/A1 route
+- Add reviewed lessons that use the expanded exercise formats, prioritizing a complete and coherent first learning line.
 - Keep the human-reviewed catalogue format out of automatic mastery scoring until a review workflow exists.
 
 ## Latest implementation — first visit funnel
-- First-time language choices now open the study-plan wizard before Home. Returning learners with a saved plan, answer history, or an unfinished lesson still go directly to their language Home.
+- PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.
+- Desktop and phone journeys now cover language choice → plan → first lesson; the full GitHub Actions run, including Playwright and axe, passed.
 - Updated the user-flow and screen-map docs to show this entry and return behavior.
-- Next: validate the full onboarding-to-first-lesson path at desktop and phone sizes, then address any issues surfaced by that journey.
