@@ -1,0 +1,64 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_present_conjugation.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Present tense: regular verbs (Präsens)"
+  summary: "Build simple present-tense forms by matching regular verb endings to the subject."
+  obj.main: "Form simple present-tense sentences with regular verbs."
+  obj.endings: "Choose and use the ending that agrees with the subject."
+  b.intro: |
+    German verbs change their ending to match the subject. Start with the infinitive, for example *lernen* (to learn), and remove **-en** to get the stem: **lern-**. Then add a personal ending.
+
+    This lesson practises regular verbs such as *lernen*, *wohnen*, *kommen* and *machen*. The verbs *sein* and *haben*, modal verbs, and verbs with a vowel change have their own forms and are taught separately.
+  b.pattern.caption: "Keep the stem; change the ending to match the subject"
+  col.person: "Subject"
+  col.ending: "Ending"
+  col.form: "lernen"
+  b.examples.title: "Regular verbs in everyday sentences"
+  ex.ich: "I am learning German."
+  ex.du: "You live in Vienna."
+  ex.er: "My brother comes from Graz."
+  ex.wir: "We learn together."
+  ex.ihr: "You all do the exercise."
+  ex.sie: "The children play football."
+  b.spelling: |
+    The ending **-t** is used with *er, sie, es* and *ihr*. The subject tells you which one is meant. In a formal *Sie* sentence, *Sie* is capitalised and the verb ends in **-en**: *Sie lernen Deutsch.*
+
+    Some verb stems need an extra **-e-** before an ending for pronunciation, as in *du arbeitest*. That spelling pattern is outside this first lesson. Learn the regular forms here first, then meet those patterns with examples.
+  b.summary: |
+    - Remove **-en** from a regular infinitive to find its stem: *lernen → lern-*.
+    - Add **-e, -st, -t, -en, -t, -en** for *ich, du, er/sie/es, wir, ihr, sie/Sie*.
+    - Match the verb to the subject: *du lernst*, *mein Bruder lernt*, *wir lernen*.
+    - Irregular verbs such as *sein* and *haben* are learned separately.
+  b.practice.title: "Try the endings"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check the subject and its verb ending."
+  x.du_wohnen.prompt: "Choose the correct form of *wohnen*."
+  x.du_wohnen.a: "*Wohne* goes with *ich*: *Ich wohne in Wien.*"
+  x.du_wohnen.c: "*Wohnt* goes with *er/sie/es* or *ihr*, not *du*."
+  x.du_wohnen.explanation: "With *du*, a regular verb takes **-st**: *du wohnst*."
+  x.er_lernen.prompt: "Choose the correct form of *lernen*."
+  x.er_lernen.a: "The infinitive form does not agree with *er*."
+  x.er_lernen.b: "*Lernst* goes with *du*."
+  x.er_lernen.explanation: "With *er*, a regular verb takes **-t**: *er lernt*."
+  x.match_endings.prompt: "Match each subject to the ending used with *lernen*."
+  x.match_endings.explanation: "The present-tense ending changes with the subject: *ich -e*, *du -st*, *er/sie/es -t*, *wir -en*."
+  x.cloze.prompt: "Complete both sentences with the correct present-tense forms."
+  x.cloze.explanation: "*Ich* takes *lerne*; singular *mein Bruder* takes *wohnt*."
+  x.word_order.prompt: "Build a sentence: “I am learning German today.” You can also start with *Heute*."
+  x.word_order.explanation: "Both word orders work: *Ich lerne heute Deutsch* and *Heute lerne ich Deutsch*. The subject and verb still agree."
+  x.transform.prompt: "Rewrite the sentence for *ihr*: start with *Ihr*."
+  x.transform.explanation: "With *ihr*, the regular ending is **-t**: *Ihr lernt heute Deutsch.*"
+  x.error.prompt: "Correct the verb ending in this sentence."
+  x.error.rule: "*Meine Schwester* is one person, so the verb takes **-t**: *wohnt*."
+  x.error.explanation: "The singular subject *meine Schwester* takes the same ending as *sie*: *wohnt*."
+  x.categorize.prompt: "Sort the subject and verb phrases by singular or plural subject."
+  x.categorize.singular: "Singular subject"
+  x.categorize.plural: "Plural subject"
+  x.categorize.explanation: "*Ich, du,* and *mein Bruder* are singular; *wir, ihr,* and *die Kinder* are plural."
+  x.true_false.prompt: "Is the verb ending correct for *wir*?"
+  x.true_false.wrong: "With *wir*, a regular verb ends in **-en**: *Wir lernen Deutsch.*"
+  x.true_false.explanation: "*Lernt* does not agree with *wir*. The correct sentence is *Wir lernen Deutsch.*"
