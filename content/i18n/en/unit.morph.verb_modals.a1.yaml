@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_modals.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Modal verbs: can, must, may and want"
+  summary: "Use a modal verb to express ability, necessity, permission or intention, with the main verb at the end."
+  obj.meaning: "Recognize common meanings of German modal verbs."
+  obj.form: "Use a modal verb with the infinitive at the end of a simple sentence."
+  b.intro: |
+    Modal verbs add a meaning such as **ability** (*können*), **necessity** (*müssen*), **permission** (*dürfen*) or **intention** (*wollen*). *Möchten* is a polite way to say what you would like.
+
+    The modal verb is conjugated. The other verb stays in the infinitive. In a simple main clause, put that infinitive at the end: *Ich kann heute länger bleiben.* (I can stay longer today.)
+  b.pattern.caption: "The modal changes to match the subject"
+  b.examples.title: "Modal verbs in everyday situations"
+  col.modal: "Infinitive"
+  ich: "ich"
+  du: "du"
+  er_sie_es: "er/sie/es"
+  col.meaning: "Meaning"
+  ex.can: "I can stay longer today."
+  ex.must: "We have to go to the station now."
+  ex.permission: "May I wait here?"
+  ex.want: "She wants to work on Saturday."
+  ex.would_like: "I would like to order a tea."
+  b.order: |
+    In a main clause, the conjugated modal usually takes position 2. The second verb remains an infinitive at the end: *Wir müssen jetzt zum Bahnhof gehen.*
+
+    In a yes/no question, the modal goes first: *Darf ich hier warten?* The infinitive still stays at the end. The subject changes the modal form: *ich kann*, *du kannst*, *er kann*.
+  b.errors.title: "Watch out for these patterns"
+  e.infinitive: "After the modal *kann*, use the infinitive *sprechen* at the end. Only the modal is conjugated: *Ich kann Deutsch sprechen.*"
+  e.conjugation: "With *du*, the form is *kannst*: *Du kannst heute kommen.*"
+  e.separation: "Keep the infinitive at the end of the clause: *Wir müssen jetzt gehen.*"
+  b.summary: |
+    - *können* expresses ability; *müssen* necessity; *dürfen* permission; *wollen* intention.
+    - Conjugate the modal to match the subject: *ich kann*, *du kannst*, *er kann*.
+    - Put the infinitive at the end: *Ich kann heute länger bleiben.*
+    - In a yes/no question, the modal comes first: *Darf ich hier warten?*
+    - *Möchten* is a polite way to state a wish: *Ich möchte einen Tee bestellen.*
+  b.practice.title: "Put modal verbs to work"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check the intended meaning, the modal form and the infinitive at the end."
+  x.meaning.prompt: "Choose the modal that means “am able to” here."
+  x.meaning.a: "*Muss* means “have to”; it expresses necessity."
+  x.meaning.c: "*Darf* means “may”; it asks about permission."
+  x.meaning.explanation: "*Können* expresses ability: *Ich kann heute länger bleiben.*"
+  x.match.prompt: "Match each modal verb to its common meaning."
+  x.match.explanation: "*Können* expresses ability, *müssen* necessity, *dürfen* permission and *wollen* intention."
+  x.cloze.prompt: "Complete the sentence with the correct form of *können* and the infinitive *lernen*."
+  x.cloze.explanation: "With *du*, *können* becomes *kannst*. The infinitive *lernen* goes at the end: *Du kannst heute Deutsch lernen.*"
+  x.order.prompt: "Build a sentence: “We have to work today.” Either normal word order or starting with *Heute* is accepted."
+  x.order.explanation: "Conjugate *müssen* for *wir* and put the infinitive *arbeiten* at the end. A fronted time phrase puts the subject after the modal: *Heute müssen wir arbeiten.*"
+  x.transform.prompt: "Add *können*: Du sprichst sehr gut Deutsch."
+  x.transform.explanation: "Conjugate *können* for *du* as *kannst*. Keep *sprechen* in the infinitive at the end."
+  x.categorize.prompt: "Sort each sentence by the meaning of its modal verb."
+  x.categorize.ability: "Ability"
+  x.categorize.necessity: "Necessity"
+  x.categorize.permission: "Permission"
+  x.categorize.intention: "Intention"
+  x.categorize.explanation: "*Kann* expresses ability, *müssen* necessity, *dürfen* permission and *wollen* intention."
+  x.true_false.prompt: "True or false? In a main clause with a modal verb, the second verb usually goes to the end as an infinitive."
+  x.true_false.wrong: "The modal is conjugated; the other verb stays in the infinitive at the end."
+  x.true_false.explanation: "For example: *Wir müssen jetzt zum Bahnhof gehen.* The infinitive *gehen* comes last."
+  x.correct.prompt: "Rewrite the sentence as a yes/no question for *du*."
+  x.correct.explanation: "For *du*, *müssen* becomes *musst*. In a yes/no question the modal comes first, then the subject; the infinitive stays last: *Musst du heute zum Arzt gehen?*"

@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_modals.a1
+lang: ru
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Модальные глаголы: мочь, быть должным, иметь разрешение, хотеть"
+  summary: "Модальный глагол выражает возможность, необходимость, разрешение или намерение, а смысловой глагол стоит в конце."
+  obj.meaning: "Распознавать основные значения немецких модальных глаголов."
+  obj.form: "Использовать модальный глагол с инфинитивом в конце простого предложения."
+  b.intro: |
+    Модальные глаголы добавляют значение **способности** (*können*), **необходимости** (*müssen*), **разрешения** (*dürfen*) или **намерения** (*wollen*). *Möchten* — вежливый способ сказать, чего вы хотели бы.
+
+    Модальный глагол спрягается, а смысловой остаётся в инфинитиве. В простом главном предложении инфинитив ставится в конец: *Ich kann heute länger bleiben.* (Я могу сегодня остаться подольше.)
+  b.pattern.caption: "Форма модального глагола зависит от подлежащего"
+  b.examples.title: "Модальные глаголы в повседневных ситуациях"
+  col.modal: "Инфинитив"
+  ich: "ich"
+  du: "du"
+  er_sie_es: "er/sie/es"
+  col.meaning: "Значение"
+  ex.can: "Я могу сегодня остаться подольше."
+  ex.must: "Нам нужно сейчас идти на вокзал."
+  ex.permission: "Можно мне здесь подождать?"
+  ex.want: "Она хочет работать в субботу."
+  ex.would_like: "Я хотел(а) бы заказать чай."
+  b.order: |
+    В главном предложении спрягаемый модальный глагол обычно стоит на втором месте. Второй глагол остаётся в инфинитиве и переходит в конец: *Wir müssen jetzt zum Bahnhof gehen.*
+
+    В общем вопросе модальный глагол ставится первым: *Darf ich hier warten?* Инфинитив всё равно остаётся в конце. Форма модального глагола зависит от подлежащего: *ich kann*, *du kannst*, *er kann*.
+  b.errors.title: "Обратите внимание на эти формы"
+  e.infinitive: "После модального *kann* нужен инфинитив *sprechen* в конце. Спрягается только модальный глагол: *Ich kann Deutsch sprechen.*"
+  e.conjugation: "С *du* используется форма *kannst*: *Du kannst heute kommen.*"
+  e.separation: "Инфинитив ставится в конец предложения: *Wir müssen jetzt gehen.*"
+  b.summary: |
+    - *können* выражает способность, *müssen* — необходимость, *dürfen* — разрешение, *wollen* — намерение.
+    - Спрягайте модальный глагол по подлежащему: *ich kann*, *du kannst*, *er kann*.
+    - Смысловой глагол оставляйте в инфинитиве и ставьте в конец: *Ich kann heute länger bleiben.*
+    - В общем вопросе модальный глагол стоит первым: *Darf ich hier warten?*
+    - *Möchten* вежливо выражает желание: *Ich möchte einen Tee bestellen.*
+  b.practice.title: "Практика с модальными глаголами"
+  fb.correct: "Правильно."
+  fb.incorrect: "Пока не совсем. Проверьте нужное значение, форму модального глагола и инфинитив в конце."
+  x.meaning.prompt: "Выберите глагол со значением «мочь» в этом контексте."
+  x.meaning.a: "*Muss* означает «быть должным», необходимость."
+  x.meaning.c: "*Darf* означает «иметь разрешение»."
+  x.meaning.explanation: "*Können* выражает способность: *Ich kann heute länger bleiben.*"
+  x.match.prompt: "Соедините модальные глаголы с их основным значением."
+  x.match.explanation: "*Können* — способность, *müssen* — необходимость, *dürfen* — разрешение, *wollen* — намерение."
+  x.cloze.prompt: "Дополните предложение правильной формой *können* и инфинитивом *lernen*."
+  x.cloze.explanation: "С *du* глагол *können* принимает форму *kannst*. Инфинитив *lernen* ставится в конец: *Du kannst heute Deutsch lernen.*"
+  x.order.prompt: "Составьте предложение: «Нам нужно сегодня работать». Принимается обычный порядок слов и вариант с *Heute* в начале."
+  x.order.explanation: "Для *wir* используйте форму *müssen*, а инфинитив *arbeiten* поставьте в конец. Если вынести время вперёд, подлежащее встанет после модального глагола: *Heute müssen wir arbeiten.*"
+  x.transform.prompt: "Добавьте *können*: Du sprichst sehr gut Deutsch."
+  x.transform.explanation: "Для *du* используйте форму *kannst*. Глагол *sprechen* оставьте в инфинитиве в конце."
+  x.categorize.prompt: "Распределите предложения по значению модального глагола."
+  x.categorize.ability: "Способность"
+  x.categorize.necessity: "Необходимость"
+  x.categorize.permission: "Разрешение"
+  x.categorize.intention: "Намерение"
+  x.categorize.explanation: "*Kann* выражает способность, *müssen* — необходимость, *dürfen* — разрешение, *wollen* — намерение."
+  x.true_false.prompt: "Верно или неверно? В главном предложении с модальным глаголом второй глагол обычно стоит в конце в форме инфинитива."
+  x.true_false.wrong: "Модальный глагол спрягается, а второй глагол остаётся в инфинитиве в конце предложения."
+  x.true_false.explanation: "Например: *Wir müssen jetzt zum Bahnhof gehen.* Инфинитив *gehen* стоит последним."
+  x.correct.prompt: "Преобразуйте предложение в общий вопрос с *du*."
+  x.correct.explanation: "С *du* глагол *müssen* принимает форму *musst*. В общем вопросе модальный глагол стоит первым, затем идёт подлежащее; инфинитив остаётся в конце: *Musst du heute zum Arzt gehen?*"

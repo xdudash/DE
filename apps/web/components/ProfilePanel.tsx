@@ -13,9 +13,10 @@ import { offeredLocales, translator } from "@deutschgo/i18n";
 import { clearDeviceData, exportDeviceData, readSound, restoreDeviceData, validateDeviceDataExport, writeSound, type DeviceDataExport } from "../lib/device-state";
 import { Icon } from "./Icon";
 import { SetupForm } from "./SetupForm";
+import type { LearningPathCounts } from "./LearningPathPicker";
 
 /** Plan, explanation language and sound. */
-export function ProfileSettings({ lang }: { lang: string }) {
+export function ProfileSettings({ lang, coursePaths }: { lang: string; coursePaths: LearningPathCounts[] }) {
   const msg = translator(lang);
   const [sound, setSound] = useState(true);
 
@@ -28,7 +29,7 @@ export function ProfileSettings({ lang }: { lang: string }) {
           <Icon name="calendar" size={20} />
           {msg("dash.plan")}
         </h2>
-        <SetupForm lang={lang} />
+        <SetupForm lang={lang} coursePaths={coursePaths} />
       </section>
 
       <section className="card" aria-labelledby="language-heading">

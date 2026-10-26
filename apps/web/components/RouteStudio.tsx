@@ -1,16 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { translator, type MessageKey } from "@deutschgo/i18n";
 import { useProgress } from "../lib/progress/client";
 import { orderedRouteSteps, useRoutePlan, type RoutePlanOption } from "../lib/route-plan-client";
+import { readSetup, writeSetup, type PathDifficulty, type Setup } from "../lib/device-state";
+import { LearningPathPicker, type LearningPathCounts } from "./LearningPathPicker";
 
-export function RouteStudio({ lang, routes, defaultRouteId }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string }) {
+export function RouteStudio({ lang, routes, defaultRouteId, coursePaths }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[] }) {
   const msg = translator(lang);
   const plan = useRoutePlan(routes, defaultRouteId);
   const { attempts, status } = useProgress();
   const [notice, setNotice] = useState("");
+  const [difficulty, setDifficulty] = useState<PathDifficulty>("medium");
+  useEffect(() => setDifficulty(readSetup()?.difficulty ?? "medium"), []);
   const answered = useMemo(() => {
     const map = new Map<string, Set<string>>();
     for (const attempt of attempts) {
@@ -30,6 +34,14 @@ export function RouteStudio({ lang, routes, defaultRouteId }: { lang: string; ro
   const openLessons = visibleSteps.filter((step) => step.kind === "lesson").length;
   const progress = openLessons > 0 ? Math.round(doneSteps.length / openLessons * 100) : 0;
   const msgWrite = (ok: boolean, key: MessageKey) => setNotice(msg(ok ? key : "routeStudio.storageError"));
+  function changeDifficulty(next: PathDifficulty) {
+    const previous = readSetup() ?? { goal: "general", minutes: 10, difficulty: "medium" as const };
+    const setup: Setup = { ...previous, difficulty: next };
+    if (writeSetup(setup)) {
+      setDifficulty(next);
+      setNotice(msg("learningPath.saved"));
+    } else setNotice(msg("routeStudio.storageError"));
+  }
 
   return <main className="page route-studio">
     <header className="route-studio-heading">
@@ -43,6 +55,11 @@ export function RouteStudio({ lang, routes, defaultRouteId }: { lang: string; ro
         <div className="route-chips"><span>{active.from} → {active.to}</span><span>{msg("routeStudio.stepsCount", { count: visibleSteps.length })}</span><span>{msg("routeStudio.lessonCount", { count: openLessons })}</span></div>
       </div>
       <div className="route-overview-progress"><strong>{status === "loading" ? "—" : `${progress}%`}</strong><span>{msg("routeStudio.completed", { count: doneSteps.length })}</span><span className="route-progress-track"><i style={{ inlineSize: `${progress}%` }} /></span></div>
+    </section>
+
+    <section className="card route-depth-card" aria-label={msg("learningPath.title")}>
+      <LearningPathPicker lang={lang} difficulty={difficulty} paths={coursePaths} onChange={changeDifficulty} />
+      {notice === msg("learningPath.saved") && <p role="status" className="route-notice">{notice}</p>}
     </section>
 
     <section className="route-choice-section">

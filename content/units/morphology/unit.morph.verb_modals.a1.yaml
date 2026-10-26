@@ -1,0 +1,154 @@
+# A1 lesson draft; German, teaching sequence, and translations need human review.
+schema: deutschgo.unit/1
+id: unit.morph.verb_modals.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+prerequisites: [concept.morph.verb_present_conjugation, concept.syntax.v2_declarative]
+goals: [general, everyday, work]
+estimated_minutes: 16
+objectives:
+  - { id: obj_meaning, text: "@obj.meaning", skill: knowledge }
+  - { id: obj_form, text: "@obj.form", skill: writing }
+sources:
+  - { source: src.deutschgo_original }
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.modal", "@ich", "@du", "@er_sie_es", "@col.meaning"]
+    rows:
+      - ["können", "kann", "kannst", "kann", "ability / possibility"]
+      - ["müssen", "muss", "musst", "muss", "necessity"]
+      - ["dürfen", "darf", "darfst", "darf", "permission"]
+      - ["wollen", "will", "willst", "will", "intention"]
+      - ["möchten", "möchte", "möchtest", "möchte", "polite wish"]
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_can, de: "Ich kann heute länger bleiben.", gloss: "@ex.can", highlight: [1, 4] }
+      - { id: ex_must, de: "Wir müssen jetzt zum Bahnhof gehen.", gloss: "@ex.must", highlight: [1, 6] }
+      - { id: ex_permission, de: "Darf ich hier warten?", gloss: "@ex.permission", highlight: [0, 4] }
+      - { id: ex_want, de: "Sie will am Samstag arbeiten.", gloss: "@ex.want", highlight: [1, 5] }
+      - { id: ex_would_like, de: "Ich möchte einen Tee bestellen.", gloss: "@ex.would_like", highlight: [1, 5] }
+  - { type: explanation, id: b_order, body: "@b.order" }
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_infinitive, wrong: "Ich kann spreche Deutsch.", right: "Ich kann Deutsch sprechen.", explanation: "@e.infinitive" }
+      - { id: e_conjugation, wrong: "Du kann heute kommen.", right: "Du kannst heute kommen.", explanation: "@e.conjugation" }
+      - { id: e_separation, wrong: "Wir müssen gehen jetzt.", right: "Wir müssen jetzt gehen.", explanation: "@e.separation" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_meaning
+        type: single_choice
+        objective: obj_meaning
+        concepts: [concept.morph.verb_modals]
+        difficulty: 1
+        prompt: "@x.meaning.prompt"
+        stem_de: "Ich ___ heute länger bleiben. (I am able to stay longer today.)"
+        options:
+          - { id: a, de: "muss", correct: false, feedback: "@x.meaning.a" }
+          - { id: b, de: "kann", correct: true }
+          - { id: c, de: "darf", correct: false, feedback: "@x.meaning.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.meaning.explanation"
+      - id: x_match
+        type: match_pairs
+        objective: obj_meaning
+        concepts: [concept.morph.verb_modals]
+        difficulty: 1
+        prompt: "@x.match.prompt"
+        pairs:
+          - { id: a, left_de: "können", right_de: "ability" }
+          - { id: b, left_de: "müssen", right_de: "necessity" }
+          - { id: c, left_de: "dürfen", right_de: "permission" }
+          - { id: d, left_de: "wollen", right_de: "intention" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match.explanation"
+      - id: x_cloze
+        type: cloze
+        objective: obj_form
+        concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Du {{0}} heute Deutsch {{1}}. (können, lernen)"
+        gaps:
+          - accept: ["kannst"]
+          - accept: ["lernen"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+      - id: x_order
+        type: word_order
+        objective: obj_form
+        concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.order.prompt"
+        tokens: ["heute", "Wir", "müssen", "arbeiten"]
+        final_punctuation: "."
+        accept: ["Wir müssen heute arbeiten."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order.explanation"
+      - id: x_transform
+        type: transform
+        objective: obj_form
+        concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Du sprichst sehr gut Deutsch. (können)"
+        accept: ["Du kannst sehr gut Deutsch sprechen."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+      - id: x_categorize
+        type: categorize
+        objective: obj_meaning
+        concepts: [concept.morph.verb_modals]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: ability, label: "@x.categorize.ability" }
+          - { id: necessity, label: "@x.categorize.necessity" }
+          - { id: permission, label: "@x.categorize.permission" }
+          - { id: intention, label: "@x.categorize.intention" }
+        items:
+          - { id: kann, de: "Ich kann schwimmen.", categoryId: ability }
+          - { id: muss, de: "Wir müssen los.", categoryId: necessity }
+          - { id: darf, de: "Darf ich eintreten?", categoryId: permission }
+          - { id: will, de: "Er will Arzt werden.", categoryId: intention }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+      - id: x_true_false
+        type: true_false
+        objective: obj_meaning
+        concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "Mit einem Modalverb steht das zweite Verb meistens als Infinitiv am Satzende."
+        correct: true
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+      - id: x_correct
+        type: transform
+        objective: obj_form
+        concepts: [concept.morph.verb_modals, concept.syntax.verbal_bracket]
+        difficulty: 2
+        prompt: "@x.correct.prompt"
+        source_de: "Sie muss heute zum Arzt gehen."
+        accept: ["Musst du heute zum Arzt gehen?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.correct.explanation"
+  
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; modal meanings, forms and examples require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check A1/A2 boundary, modal verb scope, word order and exercise progression." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }
