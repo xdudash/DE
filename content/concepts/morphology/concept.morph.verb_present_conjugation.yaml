@@ -1,10 +1,25 @@
 schema: deutschgo.concept/1
 id: concept.morph.verb_present_conjugation
-version: 0.1.0
-status: planned
+version: 1.0.0
+status: needs_review
 kind: morphology
 domain: verbs
 title: "@title"
 summary: "@summary"
 cefr: { introduced: A1, expected_mastery: A1 }
+variety: [standard]
+register: neutral
 relations: []
+pattern:
+  schema_de: "Verb-Stamm + Personalendung"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_ich_lernen, de: "Ich lerne Deutsch.", gloss: "@ex.ich_lernen", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_du_wohnen, de: "Du wohnst in Wien.", gloss: "@ex.du_wohnen", highlight: [1], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "Draft added for the A1 route; requires a qualified German reviewer." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Original DeutschGo examples; owner confirmation pending." }
