@@ -20,6 +20,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "single_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "single_choice", optionId: r.optionId };
+    case "odd_one_out":
+      if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
+      return { type: "odd_one_out", optionId: r.optionId };
     case "connector_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "connector_choice", optionId: r.optionId };
