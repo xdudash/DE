@@ -503,6 +503,11 @@ export const uk: Catalog = {
   "map.grammarCategory": "Граматика",
   "map.wordsCategory": "Слова",
   "map.otherCategory": "Інше",
+  "map.catchup": "Скласти шлях підготовки ({count})",
+  "map.catchupPath": "Шлях підготовки до теми «{topic}»",
+  "map.catchupLead": "Пройдіть ці теми-передумови по черзі перед темою «{topic}». Список оновлюється разом із вашим прогресом.",
+  "map.catchupStart": "Почати з кроку: {topic}",
+  "map.catchupBlocked": "Для першої теми ще немає готового уроку. Інші теми можна відкрити на карті.",
 
   // Contextual dictionary screen
   "dictionary.open": 'Відкрити словник',
