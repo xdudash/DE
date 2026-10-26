@@ -74,7 +74,9 @@
 1. Open **You** and review which learning data is stored in this browser.
 2. Choose **Export device data** to download a versioned JSON snapshot containing DeutschGo local-storage entries, including route, setup, attempts, checkpoints, vocabulary and writing drafts.
 3. The export is created locally in the browser; no upload is made. Account data is exported separately from the signed-in account panel.
-4. To delete device data, open the inline confirmation and confirm. The app removes its local state and reports success only when storage confirms the data was removed. Account data remains available until separately deleted.
+4. To restore a backup, select the JSON file; reject unrelated or oversized files and preview its answer and vocabulary counts.
+5. Confirm the restore after reading that it replaces DeutschGo data in this browser. Apply the backup locally, notify open app screens, and preserve the previous data if storage refuses the write.
+6. To delete device data, open the inline confirmation and confirm. The app removes its local state and reports success only when storage confirms the data was removed. Account data remains available until separately deleted.
 
 ## J — Explainable next step
 1. Rank a due review, repeated error, prerequisite catch-up, then the next available route step.
