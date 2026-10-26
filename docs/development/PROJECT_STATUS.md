@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (profile can export device-local data)
+Last updated: 2026-10-26 (Knowledge Map catch-up paths implemented)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -87,6 +87,10 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 
 ## Latest implementation — device data export
 - The profile's data card now downloads a versioned JSON snapshot of this browser's DeutschGo state before deletion. It includes app-owned local storage entries such as route preferences, lesson answers/checkpoints, vocabulary, and writing drafts; it is created in the browser and is not uploaded.
+
+## Latest implementation — Knowledge Map catch-up paths
+- The map can now expand the unmet prerequisite chain for a target concept, sort it from earliest prerequisite to target, and link directly to the first available lesson. Progress updates shorten the path; planned topics stay visible as blockers and do not lock access to the target.
+- Search, level/type/state filters and this catch-up flow are localized in en/uk/ru/ar.
 
 ## Latest implementation — first visit funnel
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.

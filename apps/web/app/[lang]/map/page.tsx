@@ -21,6 +21,7 @@ export default async function KnowledgeMap({ params }: { params: Promise<{ lang:
     planned: c.status === "planned",
     category: c.kind === "grammar" || c.kind === "morphology" ? "grammar" : c.kind === "lexeme_sense" || c.kind === "collocation" ? "words" : "other",
     href: unitForConcept.has(c.id) ? `/${lang}/learn/${unitForConcept.get(c.id)}` : `/${lang}/map#${c.id}`,
+    startable: unitForConcept.has(c.id),
     prerequisites: (c.relations ?? [])
       .filter((r) => r.type === "depends_on")
       .map((r) => byId.get(r.target))

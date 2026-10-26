@@ -503,6 +503,11 @@ export const ru: Catalog = {
   "map.grammarCategory": "Грамматика",
   "map.wordsCategory": "Слова",
   "map.otherCategory": "Другое",
+  "map.catchup": "Составить путь подготовки ({count})",
+  "map.catchupPath": "Путь подготовки к теме «{topic}»",
+  "map.catchupLead": "Пройдите эти темы-предпосылки по порядку перед темой «{topic}». Список обновляется вместе с вашим прогрессом.",
+  "map.catchupStart": "Начать с шага: {topic}",
+  "map.catchupBlocked": "Для первой темы пока нет готового урока. Остальные темы можно открыть на карте.",
 
   // Contextual dictionary screen
   "dictionary.open": 'Открыть словарь',

@@ -515,6 +515,11 @@ export const ar: Catalog = {
   "map.grammarCategory": "قواعد",
   "map.wordsCategory": "مفردات",
   "map.otherCategory": "أخرى",
+  "map.catchup": "إنشاء مسار للاستدراك ({count})",
+  "map.catchupPath": "مسار الاستدراك لموضوع {topic}",
+  "map.catchupLead": "أكمل هذه الموضوعات التمهيدية بالترتيب قبل {topic}. تتحدث القائمة تلقائيًا مع تقدمك.",
+  "map.catchupStart": "ابدأ بالخطوة الأولى: {topic}",
+  "map.catchupBlocked": "لا يوجد درس متاح للموضوع التمهيدي الأول بعد. يمكنك فتح الموضوعات من الخريطة.",
 
   // Contextual dictionary screen
   "dictionary.open": 'افتح القاموس',

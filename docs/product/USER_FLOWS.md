@@ -27,6 +27,12 @@
 3. Let the learner continue or open a catch-up sequence.
 4. Keep the chosen goal and route available; exploration does not erase them.
 
+### C1 — Catch up before a topic
+1. Open the Knowledge Map and find a target concept by search, level, type, or learning state.
+2. Expand **Build catch-up path** to see unmet transitive prerequisites in dependency order.
+3. Start the first available prerequisite lesson. Completed evidence is re-read by the map, so the remaining path shortens as the learner progresses.
+4. If a required topic has no lesson yet, show it as planned and explain the limit; keep the target topic open for direct exploration.
+
 ## D — Read and collect vocabulary
 1. Open a level-appropriate text with known source and reuse status.
 2. Select a word/expression in context.

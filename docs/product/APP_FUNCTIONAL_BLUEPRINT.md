@@ -42,7 +42,7 @@ flowchart TD
 | Welcome and setup | Language is chosen at the language gate; the three-step wizard selects goal, time, and route, with an optional five-question starting estimate | Device preferences → Home / Route Studio; estimate suggests a matching route | Client pilot implemented; region preference and validated adaptive placement remain planned |
 | Home | Resume card for a paused lesson, next-step reason, route line with lesson/topic stations, daily goal, streak/XP/hearts, practical mission | Device checkpoint + progress + active route → saved lesson sequence, lesson, review, mission, map, Route Studio | Resume checkpoint and route recommendation are device-aware; checkpoint does not sync |
 | Route Studio | Route cards with level span and progress; ordered topic list with move up/down, skip/restore, reset | Route content + progress → Home and lesson; skipped topics remain on Map | Implemented in PR #78; device-local preference |
-| Knowledge Map | Search field, level/strand filters, concept cards with status and prerequisite links | Content graph + progress → lesson, catch-up suggestions | Map exists; richer filters and catch-up path planned |
+| Knowledge Map | Search field, level/strand/state filters, concept cards with evidence state and prerequisite links; optional catch-up path | Content graph + shared progress → ordered prerequisite lessons, target topic | Search and filters are available; catch-up path expands unmet transitive prerequisites and starts the first available lesson |
 | Lesson player | Objective and time estimate, structured teaching blocks, examples, all 35 supported exercise formats, row-level category feedback, completion/next-step panel | Compiled lesson content + shared evaluator → evidence, device-local checkpoint, Home, Map, Practice | The lesson player covers every deterministic format in the current exercise contract; interrupted lessons restore remaining steps and retry order on the same device |
 | Practice board | Weak topics, due count, session estimate, mission list, resume actions | Evidence and due classification → Review Room, lesson, mission | Implemented; expand when skill types arrive |
 | Review Room | Due queue oldest first, 3/5/10 session size, topic opt-out, one exercise at a time, recall feedback | Due evidence + lesson exercise bank → evaluator and evidence | Implemented in merged PR #78; its hosted CI passed |
@@ -93,7 +93,7 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 ### 2. Finish the learning experience
 
 - Make first-run setup produce an editable recommended route and a short diagnostic estimate with a confidence range.
-- Add map search/filtering, visible prerequisites, and one-click catch-up sequences without blocking free exploration.
+- Keep map search/filtering and one-click catch-up sequences current as lesson coverage grows; missing lessons remain visible without blocking free exploration.
 - Complete progress views by concept and skill; show evidence behind states and let learners tune goals and study time.
 - Add audio/listening, guided writing, and speaking only with clearly stated evaluation limits.
 

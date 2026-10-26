@@ -508,6 +508,11 @@ export const en = {
   "map.grammarCategory": "Grammar",
   "map.wordsCategory": "Words",
   "map.otherCategory": "Other",
+  "map.catchup": "Build catch-up path ({count})",
+  "map.catchupPath": "Catch-up path for {topic}",
+  "map.catchupLead": "Complete these prerequisite topics in order before {topic}. Your progress updates this list automatically.",
+  "map.catchupStart": "Start first step: {topic}",
+  "map.catchupBlocked": "The first prerequisite does not have a startable lesson yet. You can still open each topic from the map.",
 
   // Contextual dictionary screen
   "dictionary.open": 'Open dictionary',
