@@ -30,6 +30,7 @@ export default async function Practice({ params }: { params: Promise<{ lang: str
     <main className="page">
       <h1>{msg("practice.title")}</h1>
       <p className="lead">{msg("practice.lead")}</p>
+      <Link href={`/${lang}/exercises`} className="btn btn-secondary">{msg("practice.exerciseCatalog")}</Link>
       <Link href={`/${lang}/writing`} className="card practice-writing-link">
         <span className="pill blue">{msg("practice.writingTitle")}</span>
         <span>{msg("practice.writingDescription")}</span>

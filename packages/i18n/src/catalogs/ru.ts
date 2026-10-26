@@ -566,4 +566,5 @@ export const ru: Catalog = {
   "dictionary.savedAlready": 'Это употребление уже сохранено.',
   "dictionary.openStory": 'Читать историю',
   "dictionary.localNote": 'Переводы доступны для отмеченных слов из текущей библиотеки чтения. Новые слова будут добавляться вместе с историями.',
+  "practice.exerciseCatalog": "Все форматы упражнений",
 };

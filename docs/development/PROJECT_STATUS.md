@@ -97,6 +97,10 @@ Continue the client-side product flow with evidence-backed progress and complete
 - Account and device evidence use the same shared progress view; no score or mastery is inferred from unsaved activity.
 - The source lesson link uses the event's unit id; exercise ids remain attached to individual answer records.
 
+## Latest implementation — exercise format catalog
+- Added `/{lang}/exercises`, linked from Practice. It lists all 35 schema-supported response formats, supports text search, and reports each format's count in authored lessons.
+- The catalog makes the mockup's exercise overview available in the app while keeping the distinction between engine support and authored lesson coverage clear. No lesson content changed.
+
 ## Latest implementation — first visit funnel
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.
 - Desktop and phone journeys now cover language choice → plan → first lesson; the full GitHub Actions run, including Playwright and axe, passed.
