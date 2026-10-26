@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { lineProgress, pickLine, stationStates, type StationInput } from "../lib/path.ts";
+import { lineProgress, pendingRouteRecommendations, pickLine, stationStates, type StationInput } from "../lib/path.ts";
 
 const lesson = (unitId: string, exerciseIds: string[]): StationInput => ({ kind: "lesson", unitId, exerciseIds });
 const planned: StationInput = { kind: "planned", exerciseIds: [] };
@@ -29,6 +29,20 @@ test("a lesson without exercises is never counted as done", () => {
 test("progress counts finished stations against the whole line, planned ones included", () => {
   assert.deepEqual(lineProgress(["done", "current", "planned", "planned"]), { done: 1, total: 4 });
   assert.deepEqual(lineProgress([]), { done: 0, total: 0 });
+});
+
+test("home route recommendations skip completed lessons and keep the next unfinished lesson", () => {
+  const route = [{ target: "concept.first" }, { target: "unit.second" }, { target: "concept.third" }];
+  const lessons = [
+    { id: "concept.first", unitId: "u1", exerciseIds: ["a", "b"] },
+    { id: "unit.second", unitId: "u2", exerciseIds: ["c"] },
+    { id: "concept.third", unitId: "u3", exerciseIds: ["d"] },
+  ];
+  const answered = { u1: new Set(["a", "b"]), u2: new Set(["c"]), u3: new Set<string>() };
+  assert.deepEqual(pendingRouteRecommendations(route, lessons, answered), [{ target: "concept.third" }]);
+  assert.deepEqual(pendingRouteRecommendations(route, lessons, { u1: new Set(["a"]), u2: new Set(["c"]), u3: new Set<string>() }), [
+    { target: "concept.first" }, { target: "concept.third" },
+  ]);
 });
 
 test("the home line is the route where a lesson comes soonest, then the shorter one", () => {
