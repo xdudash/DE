@@ -31,6 +31,32 @@ async function continueUntil(page: Page, target: Locator) {
 }
 
 test.describe("home: the line", () => {
+  test("a first-time language choice opens the plan, then starts the first lesson", async ({ page }) => {
+    await page.goto("/");
+    const english = page.locator(".langcards a").filter({ hasText: "English" });
+    await expect(english).toHaveAttribute("href", "/en/start");
+    await english.click();
+
+    await expect(page).toHaveURL(/\/en\/start$/);
+    await expect(page.getByRole("heading", { name: "Your route starts here" })).toBeVisible();
+    await page.getByRole("button", { name: /Continue/ }).click();
+    await page.getByRole("button", { name: /Continue/ }).click();
+    await page.getByRole("button", { name: "Save and start learning" }).click();
+
+    await expect(page).toHaveURL(/\/en$/);
+    const current = page.locator(".station.is-current");
+    await expect(current).toHaveAttribute("aria-current", "step");
+    await current.getByRole("link", { name: "Start", exact: true }).click();
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.pron\.alphabet_a0$/);
+  });
+
+  test("a saved learner plan keeps language choices pointed at Home", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("deutschgo.setup.v1", JSON.stringify({ goal: "general", minutes: 10 })));
+    await page.goto("/");
+    const english = page.locator(".langcards a").filter({ hasText: "English" });
+    await expect(english).toHaveAttribute("href", "/en");
+  });
+
   test("shows the route as a line with the written lesson and explains local progress", async ({ page }) => {
     await page.goto("/en");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
