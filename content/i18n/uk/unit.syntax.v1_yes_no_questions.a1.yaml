@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.v1_yes_no_questions.a1
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Загальні питання: дієслово на першому місці"
+  summary: "Ставте пряме питання: спочатку відмінюване дієслово, потім підмет."
+  obj.recognize: "Розпізнавати загальне питання й відрізняти його від ствердження та W-питання."
+  obj.ask: "Складати просте загальне питання в теперішньому часі й давати коротку відповідь."
+  b.intro: |
+    Пряме загальне питання уточнює, чи щось правдиве. Почніть його з **відмінюваного дієслова**, а потім поставте підмет: *Wohnst du in Wien?* (Ти живеш у Відні?)
+
+    Порівняйте три схеми: ствердження починається з підмета (*Du wohnst in Wien.*); W-питання починається з питального слова, а дієслово стоїть другим (*Wo wohnst du?*); загальне питання починається з дієслова (*Wohnst du in Wien?*).
+  b.pattern.caption: "Відмінюване дієслово стоїть перед підметом"
+  col.verb: "Місце 1: відмінюване дієслово"
+  col.subject: "Підмет"
+  col.rest: "Інші відомості"
+  b.examples.title: "Щоденні запитання"
+  ex.come: "Ти сьогодні прийдеш?"
+  ex.work: "Вона працює завтра?"
+  ex.appointment: "У Вас призначена зустріч? (ввічливе звертання)"
+  ex.live: "Ти живеш у Відні?"
+  b.answers: |
+    Відповідайте *ja* або *nein*, а потім використовуйте звичайний порядок слів у ствердженні. У німецькій не додають відповідник англійського *do*:
+
+    - *Kommst du heute? – Ja, ich komme heute.*
+    - *Kommst du heute? – Nein, ich komme heute nicht.*
+
+    Форма відмінюваного дієслова залежить від підмета: *Kommst du?*, але *Kommt er?* У питанні з модальним дієсловом чи іншою частиною присудка вперед виноситься лише відмінюване дієслово, а інша частина залишається далі в реченні. Такі форми будуть в окремому уроці.
+  b.errors.title: "Перевірте форму дієслова"
+  e.verb_agreement: "З *du* вживається форма *arbeitest*. Закінчення дієслова має узгоджуватися з підметом: *Arbeitest du heute?*"
+  b.summary: |
+    - У прямому загальному питанні постав відмінюване дієслово першим: *Wohnst du in Wien?*
+    - Підмет іде після дієслова: *Arbeitet sie morgen?*
+    - Відповідай *ja* або *nein*, використовуючи звичайне ствердження: *Ja, ich wohne hier.*
+    - W-питання починається з питального слова, а дієслово стоїть другим: *Wo wohnst du?*
+  b.practice.title: "Практика"
+  fb.correct: "Правильно."
+  fb.incorrect: "Не зовсім. Визнач, перед тобою загальне питання, W-питання чи ствердження."
+  x.choose_question.prompt: "Яке речення є прямим загальним питанням?"
+  x.choose_question.a: "Це ствердження: спочатку стоїть підмет, потім дієслово."
+  x.choose_question.c: "Це W-питання. Воно починається з питального слова, а не з дієслова."
+  x.choose_question.explanation: "Пряме загальне питання починається з відмінюваного дієслова: *Lernst du heute Deutsch?*"
+  x.choose_form.prompt: "Обери форму дієслова, що узгоджується з *du*."
+  x.choose_form.b: "*Wohnt* вживається з *er/sie/es* або *ihr*, але не з *du*."
+  x.choose_form.c: "*Wohnen* вживається з *wir* або ввічливим *Sie*, але не з *du*."
+  x.choose_form.explanation: "З *du* використовуй *wohnst*: *Wohnst du morgen in Wien?*"
+  x.match_forms.prompt: "З'єднай кожен підмет із правильною формою дієслова в теперішньому часі."
+  x.match_forms.explanation: "Закінчення змінюється залежно від підмета: *ich wohne*, *du kommst*, *er arbeitet*, *wir lernen*."
+  x.cloze.prompt: "Доповни питання й коротку відповідь правильними формами дієслова *lernen*."
+  x.cloze.explanation: "Питання починається з *lernst* — форми для *du*. У відповіді з *ich* вживається *lerne*."
+  x.order_question.prompt: "Склади питання: «Ти сьогодні прийдеш?»"
+  x.order_question.explanation: "Постав відмінюване дієслово *kommst* першим, потім підмет *du*, а після нього *heute*."
+  x.transform_question.prompt: "Перетвори ствердження на пряме загальне питання: Du wohnst in Wien."
+  x.transform_question.explanation: "Постав відмінюване дієслово *wohnst* перед підметом *du*: *Wohnst du in Wien?*"
+  x.categorize.prompt: "Розподіли речення за типом порядку слів."
+  x.categorize.statement: "Ствердження"
+  x.categorize.yes_no: "Загальне питання"
+  x.categorize.w_question: "W-питання"
+  x.categorize.explanation: "Ствердження зазвичай починається з підмета; загальне питання — з відмінюваного дієслова; W-питання — з питального слова, а дієслово стоїть другим."
+  x.verb_first.prompt: "Правда чи неправда? У прямому загальному питанні відмінюване дієслово стоїть перед підметом."
+  x.verb_first.wrong: "У цій схемі спочатку стоїть відмінюване дієслово, а за ним — підмет."
+  x.verb_first.explanation: "Наприклад, *Haben Sie einen Termin?* починається з *haben*, за яким іде підмет *Sie*."
+  x.correct_order.prompt: "Виправ форму дієслова в цьому питанні."
+  x.correct_order.explanation: "З *du* вживається *arbeitest*: *Arbeitest du heute im Büro?* Відмінюване дієслово стоїть першим, за ним іде підмет."
