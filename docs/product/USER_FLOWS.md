@@ -152,5 +152,7 @@ Minimal-pairs exercise: listen to the target word, play the candidate spellings 
 
 ## O — Inspect learning progress
 1. Open the progress board from the profile.
-2. Read answer totals, accuracy, and concept states derived from saved evidence; show an empty state before the first answer.
-3. Keep the account-versus-device source visible and return to Home, Map, or Practice.
+2. Read answer totals, accuracy, recent activity, and concept states derived from saved evidence; show an empty state before the first answer.
+3. Filter saved attempts by knowledge, reading, listening, writing, or speaking.
+4. Expand a practiced topic to inspect its correct/total count, current evidence state, and timestamped answer history; follow a source lesson or open the topic on the map.
+5. Keep the account-versus-device source visible and return to Home, Map, or Practice.

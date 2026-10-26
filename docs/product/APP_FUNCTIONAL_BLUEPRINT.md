@@ -51,6 +51,7 @@ flowchart TD
 | Story reader | German text in a calm reading column; selectable words open a contextual meaning panel with the sentence and save action | Story content → local vocabulary board; related concept can open Map | Implemented in PR #78; dictionary breadth planned |
 | Dictionary | Searchable word list with a selected entry, translation, original sentence, source story, and save action | Original reading tokens → local vocabulary scheduler and story reader | Client screen at `/{lang}/dictionary`; coverage follows the glossed word inventory in published reading stories |
 | Vocabulary board | Front/back flashcard, “Again” and “I remembered”, due/scheduled lists, remove action | Device-local word occurrences → scheduler and story context | Implemented in PR #78; no account sync yet |
+| Progress board | Totals and recent activity; skill filters; expandable topic result and answer history | Shared account/device evidence → Home, Map, Practice, and source lesson | Per-skill and per-topic figures come from recorded answers; no invented mastery or streaks |
 | You / profile | Goal, language, account state, progress source, reminder controls, device/account export, clear data and sign-out | Device preferences and account APIs → settings and privacy actions | Device JSON export and clear are client-side; account export/import use the progress API |
 | Sign-in and session | Provider handoff, callback/loading/error, signed-in state, refresh and sign-out | Auth provider → profile, progress APIs | API/UI foundations exist; provider configuration is pending |
 
@@ -80,7 +81,7 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 
 ### 1. Stabilize current client loop
 
-- Fix the failing E2E assertion for the profile clear-data confirmation. The UI copy now includes route and vocabulary data; update the test to assert the localized confirmation shown by the current screen, then run the full CI suite.
+- Keep the profile clear-data journey aligned with its localized confirmation and current device-data scope.
 - Check route, lesson, review, mission, story, vocabulary, profile and map transitions on phone and desktop, including empty and offline states.
 - Add a route-specific browser journey and accessibility checks for keyboard operation, contrast, focus, and Arabic direction.
 
@@ -94,7 +95,7 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 
 - Make first-run setup produce an editable recommended route and a short diagnostic estimate with a confidence range.
 - Keep map search/filtering and one-click catch-up sequences current as lesson coverage grows; missing lessons remain visible without blocking free exploration.
-- Complete progress views by concept and skill; show evidence behind states and let learners tune goals and study time.
+- Let learners tune goals and study time; progress now filters recorded answers by skill and shows evidence for each practiced topic.
 - Add audio/listening, guided writing, and speaking only with clearly stated evaluation limits.
 
 ### 3. Expand the content product
@@ -117,9 +118,9 @@ Screens call typed client interfaces for progress, attempts, routes, and vocabul
 - UI progress always comes from the shared evidence model; local-only data is labelled and clearable.
 - CI passes foundation, content validation, tests/typecheck/build, database checks, Playwright, and accessibility checks before the PR is considered ready.
 
-## Current known blocker
+## Current verification
 
-The latest hosted run passed repository foundation, content/tests/build/typecheck, and database/RLS/attempt recording. Playwright had 67 passing journeys and one failure: the profile clear-data test still expects the old English string “Delete it all? This cannot be undone.” while the current screen uses the new localized confirmation. The correction is explicitly held until product direction resumes; the run is [40168061091](https://github.com/xdudash/DE/actions/runs/40168061091).
+PR #119 passed all four CI groups, including Playwright and accessibility checks. The profile clear-data journey asserts the current localized scope. Keep this screen journey green when changing profile data actions.
 
 
 ### Аудирование с выбором смысла
@@ -149,3 +150,5 @@ The device-local speaking workshop offers three practical A1 prompts, optional b
 
 ## Dedicated progress board
 The `/{lang}/progress` screen reuses the account/device evidence provider to show actual answer totals, accuracy, and concept-state counts. It is reachable from the learner profile and links to Home, Map, and Practice. It does not invent XP, streaks, or certification from attempt data.
+
+The progress breakdown filters saved attempts by knowledge, reading, listening, writing, or speaking. Expanding a topic shows its evidence-derived state, correct/total counts, timestamped answer history, links to source lessons, and a return to the topic on the map. Empty skill filters remain explicit and never show fabricated scores.
