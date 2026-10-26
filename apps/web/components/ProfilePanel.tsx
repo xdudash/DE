@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { offeredLocales, translator } from "@deutschgo/i18n";
-import { clearDeviceData, exportDeviceData, readSound, writeSound } from "../lib/device-state";
+import { clearDeviceData, exportDeviceData, readSound, restoreDeviceData, validateDeviceDataExport, writeSound, type DeviceDataExport } from "../lib/device-state";
 import { Icon } from "./Icon";
 import { SetupForm } from "./SetupForm";
 
@@ -83,6 +83,8 @@ export function ProfileDevice({ lang }: { lang: string }) {
   const [asking, setAsking] = useState(false);
   const [result, setResult] = useState<"cleared" | "failed" | null>(null);
   const [exportResult, setExportResult] = useState<"done" | "failed" | null>(null);
+  const [pendingImport, setPendingImport] = useState<DeviceDataExport | null>(null);
+  const [importResult, setImportResult] = useState<"done" | "failed" | "invalid" | "large" | null>(null);
 
   useEffect(() => {
     setStandalone(window.matchMedia("(display-mode: standalone)").matches);
@@ -109,6 +111,32 @@ export function ProfileDevice({ lang }: { lang: string }) {
     }
   }
 
+  async function chooseBackup(file: File | undefined, input: HTMLInputElement) {
+    setImportResult(null);
+    setPendingImport(null);
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { setImportResult("large"); input.value = ""; return; }
+    try {
+      const parsed: unknown = JSON.parse(await file.text());
+      const snapshot = validateDeviceDataExport(parsed);
+      if (!snapshot) setImportResult("invalid");
+      else setPendingImport(snapshot);
+    } catch {
+      setImportResult("invalid");
+    }
+    input.value = "";
+  }
+
+  function restoreBackup() {
+    if (!pendingImport) return;
+    const ok = restoreDeviceData(pendingImport);
+    setPendingImport(null);
+    setImportResult(ok ? "done" : "failed");
+  }
+
+  const importedAnswers = Array.isArray(pendingImport?.data["deutschgo.events.v1"]) ? (pendingImport.data["deutschgo.events.v1"] as unknown[]).length : 0;
+  const importedWords = Array.isArray(pendingImport?.data["deutschgo.vocabulary.v1"]) ? (pendingImport.data["deutschgo.vocabulary.v1"] as unknown[]).length : 0;
+
   return (
     <>
       <section className="card" aria-labelledby="app-heading">
@@ -126,8 +154,9 @@ export function ProfileDevice({ lang }: { lang: string }) {
         </h2>
         <p className="muted">{msg("profile.accountNote")}</p>
         <p className="muted">{msg("profile.dataNote")}</p>
-        {!asking && <div className="actions">
+        {!asking && !pendingImport && <div className="actions">
           <button type="button" className="btn btn-secondary" onClick={downloadData}>{msg("profile.exportDevice")}</button>
+          <label className="btn btn-secondary profile-import-label">{msg("profile.importDevice")}<input className="profile-import-input" type="file" accept=".json,application/json" aria-label={msg("profile.importDevice")} onChange={(event) => void chooseBackup(event.currentTarget.files?.[0], event.currentTarget)} /></label>
           <button type="button" className="btn btn-danger" onClick={() => { setAsking(true); setResult(null); setExportResult(null); }}>
             {msg("profile.clear")}
           </button>
@@ -135,7 +164,19 @@ export function ProfileDevice({ lang }: { lang: string }) {
         <div aria-live="polite">
           {exportResult === "done" && <p className="notice ok">{msg("profile.exportDeviceDone")}</p>}
           {exportResult === "failed" && <p className="notice bad">{msg("profile.exportDeviceFailed")}</p>}
+          {importResult === "done" && <p className="notice ok">{msg("profile.importDone")}</p>}
+          {importResult === "failed" && <p className="notice bad">{msg("profile.importFailed")}</p>}
+          {importResult === "invalid" && <p className="notice bad">{msg("profile.importInvalid")}</p>}
+          {importResult === "large" && <p className="notice bad">{msg("profile.importTooLarge")}</p>}
         </div>
+        {pendingImport && <div className="confirm profile-import-confirm">
+          <p><strong>{importedAnswers}</strong> {msg("profile.importAnswers")} · <strong>{importedWords}</strong> {msg("profile.importWords")}</p>
+          <p>{msg("profile.importConfirm")}</p>
+          <div className="actions">
+            <button type="button" className="btn btn-primary" onClick={restoreBackup}>{msg("profile.importRestore")}</button>
+            <button type="button" className="btn btn-secondary" onClick={() => setPendingImport(null)}>{msg("profile.importCancel")}</button>
+          </div>
+        </div>}
         {asking && (
           <div className="confirm">
             <p>{msg("profile.clearConfirm")}</p>

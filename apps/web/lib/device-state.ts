@@ -289,19 +289,80 @@ export function deviceKeyValue(): KeyValue {
   }
 }
 
-/** A portable, read-only snapshot of the data this browser stores for DeutschGo. */
-export function exportDeviceData(): { schema: "deutschgo.device-export/1"; exportedAt: string; data: Record<string, unknown> } {
+export interface DeviceDataExport {
+  schema: "deutschgo.device-export/1";
+  exportedAt: string;
+  data: Record<string, unknown>;
+}
+
+const DEVICE_DATA_KEYS = new Set([SETUP_KEY, PLACEMENT_KEY, LESSON_CHECKPOINT_KEY, EVENTS_KEY, LANGUAGE_KEY, SOUND_KEY, OUTBOX_KEY, "deutschgo.vocabulary.v1", "deutschgo.route-plan.v1"]);
+
+function isDeviceDataKey(key: string): boolean {
+  return DEVICE_DATA_KEYS.has(key) || /^deutschgo-writing-(?:v1|active-v1):(en|uk|ru|ar)$/.test(key);
+}
+
+/** A portable snapshot of the data this browser stores for DeutschGo. */
+export function exportDeviceData(): DeviceDataExport {
   const data: Record<string, unknown> = {};
   const storage = window.localStorage;
   for (let i = 0; i < storage.length; i++) {
     const key = storage.key(i);
-    if (!key || (!key.startsWith("deutschgo.") && !key.startsWith("deutschgo-writing-v1:"))) continue;
+    if (!key || !isDeviceDataKey(key)) continue;
     const value = storage.getItem(key);
     if (value === null) continue;
     try { data[key] = JSON.parse(value) as unknown; }
     catch { data[key] = value; }
   }
   return { schema: "deutschgo.device-export/1", exportedAt: new Date().toISOString(), data };
+}
+
+/** Reject malformed or unrelated JSON before it is offered as a device restore. */
+export function validateDeviceDataExport(value: unknown): DeviceDataExport | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const snapshot = value as Record<string, unknown>;
+  if (snapshot.schema !== "deutschgo.device-export/1" || typeof snapshot.exportedAt !== "string" || !Number.isFinite(Date.parse(snapshot.exportedAt))) return null;
+  if (!snapshot.data || typeof snapshot.data !== "object" || Array.isArray(snapshot.data)) return null;
+  const data = snapshot.data as Record<string, unknown>;
+  const entries = Object.entries(data);
+  if (entries.length > 64 || entries.some(([key, item]) => !isDeviceDataKey(key) || JSON.stringify(item) === undefined)) return null;
+  return { schema: "deutschgo.device-export/1", exportedAt: snapshot.exportedAt, data };
+}
+
+/** Restore a validated backup atomically as far as localStorage permits. */
+export function restoreDeviceData(snapshot: DeviceDataExport): boolean {
+  try {
+    const storage = window.localStorage;
+    const before = new Map<string, string>();
+    for (let i = 0; i < storage.length; i++) {
+      const key = storage.key(i);
+      if (key && isDeviceDataKey(key)) {
+        const value = storage.getItem(key);
+        if (value !== null) before.set(key, value);
+      }
+    }
+    const writeSnapshot = (entries: Iterable<[string, string]>) => {
+      for (let i = storage.length - 1; i >= 0; i--) {
+        const key = storage.key(i);
+        if (key && isDeviceDataKey(key)) storage.removeItem(key);
+      }
+      for (const [key, value] of entries) storage.setItem(key, value);
+    };
+    const restored = Object.entries(snapshot.data).map(([key, value]) => [
+      key,
+      key.startsWith("deutschgo-writing-active-v1:") && typeof value === "string" ? value : JSON.stringify(value),
+    ] as [string, string]);
+    try {
+      writeSnapshot(restored);
+      for (const [key, raw] of restored) if (storage.getItem(key) !== raw) throw new Error("restore_verification_failed");
+    } catch (error) {
+      writeSnapshot(before.entries());
+      throw error;
+    }
+    notifyProgress();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -317,7 +378,7 @@ export function clearDeviceData(): boolean {
     const writingKeys: string[] = [];
     for (let i = 0; i < window.localStorage.length; i++) {
       const key = window.localStorage.key(i);
-      if (key?.startsWith("deutschgo-writing-v1:")) writingKeys.push(key);
+      if (key && (key.startsWith("deutschgo-writing-v1:") || key.startsWith("deutschgo-writing-active-v1:"))) writingKeys.push(key);
     }
     for (const key of writingKeys) window.localStorage.removeItem(key);
     notifyProgress();
