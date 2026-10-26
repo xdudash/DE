@@ -20,8 +20,11 @@ export function NextStepCard({ lang, graph, routes, defaultRouteId, targets }: {
     return () => window.removeEventListener(LESSON_CHECKPOINT_EVENT, refresh);
   }, []);
   const { activeRoute, activeRouteId, activeSteps } = useRoutePlan(routes, defaultRouteId);
-  const activeIds = new Set(activeSteps.map((step) => step.id));
-  const route = activeRoute?.recommendation.filter((step) => activeIds.has(step.target)) ?? [];
+  // Keep planned concepts visible on the line, but never recommend one as the
+  // next action: the learner needs a startable lesson or review to make progress.
+  const route = activeRoute?.recommendation.filter((step) =>
+    activeSteps.some((activeStep) => activeStep.kind === "lesson" && activeStep.id === step.target),
+  ) ?? [];
   const pick = useMemo(() => {
     const states = deriveConceptStates(graph, attempts, Date.now());
     return recommend({ graph, states, route, reviewBudget: 3, limit: 1 })[0];
