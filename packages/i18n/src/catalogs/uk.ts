@@ -85,6 +85,7 @@ export const uk: Catalog = {
   "learningPath.levelSteps": "{level}: навчальних кроків — {count}",
   "learningPath.availability": "Зараз у застосунку написано: {count} навчальних модулів. Решту курсу заплановано; матеріали додаватимуться та проходитимуть перевірку.",
   "learningPath.saved": "Обсяг курсу збережено на цьому пристрої.",
+  "learningPath.manage": "Налаштувати весь маршрут",
   "setup.save": "Зберегти мій план",
   "setup.saved": "Ваш план на цьому пристрої: {goal}, {path}, {minutes} на день.",
   "setup.deviceOnly": "Зберігається лише в цьому браузері, доки не з'являться акаунти.",
