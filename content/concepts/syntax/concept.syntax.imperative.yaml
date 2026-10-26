@@ -1,7 +1,7 @@
 schema: deutschgo.concept/1
 id: concept.syntax.imperative
 version: 0.1.0
-status: planned
+status: needs_review
 kind: grammar
 domain: syntax
 title: "@title"
@@ -10,3 +10,19 @@ cefr: { introduced: A1, expected_mastery: A2 }
 relations:
   - { type: depends_on, target: concept.morph.verb_present_conjugation }
   - { type: contrasts_with, target: concept.syntax.v2_declarative }
+pattern:
+  schema_de: "[Verb: imperative form] – [other sentence parts] – [separable prefix]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_du, de: "Mach bitte das Fenster auf!", gloss: "@ex.du", highlight: [0, 4], source: src.deutschgo_original }
+  - { id: ex_ihr, de: "Macht bitte die Bücher auf!", gloss: "@ex.ihr", highlight: [0, 4], source: src.deutschgo_original }
+  - { id: ex_sie, de: "Machen Sie bitte die Tür auf!", gloss: "@ex.sie", highlight: [0, 1, 5], source: src.deutschgo_original }
+confusions:
+  - { id: err_sie_order, wrong: "Sie machen die Tür auf!", right: "Machen Sie die Tür auf!", explanation: "@err.sie_order" }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; requires review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check imperative forms and the limits of this beginner scope." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }
