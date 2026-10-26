@@ -85,3 +85,4 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.
 - Desktop and phone journeys now cover language choice → plan → first lesson; the full GitHub Actions run, including Playwright and axe, passed.
 - Updated the user-flow and screen-map docs to show this entry and return behavior.
+- Home recommendations skip planned route topics without lessons and point to the next available lesson or review; the planned topics stay visible on the line and map.
