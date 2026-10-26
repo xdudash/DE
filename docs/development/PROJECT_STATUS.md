@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (A1 imperative lesson authored; pending review)
+Last updated: 2026-10-26 (contextual Dictionary screen implemented)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -80,6 +80,10 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 ## Next implementation block — expand the first A0/A1 route
 - Add reviewed lessons that use the expanded exercise formats, prioritizing a complete and coherent first learning line.
 - Keep the human-reviewed catalogue format out of automatic mastery scoring until a review workflow exists.
+
+## Latest implementation — contextual Dictionary screen
+- Added `/{lang}/dictionary`, linked from the Library and from a selected word in a story. It searches the authored reading collection by German form, lemma, or localized meaning; shows its original sentence and source; and saves the exact token occurrence into the existing local vocabulary review schedule.
+- Added localized interface strings for en/uk/ru/ar and documented the route and flow. Dictionary breadth grows with reviewed reading entries; it does not invent meanings or claim a complete external dictionary.
 
 ## Latest implementation — first visit funnel
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.

@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 20172)
+Total output lines: 1498
+
 /* ===========================================================================
    DeutschGo — visual system: "Linie"
    ---------------------------------------------------------------------------
@@ -963,21 +966,7 @@ input.bad { border-color: var(--bad-fill); background: var(--bad-soft); }
 @keyframes tile-in { from { opacity: 0; transform: translateY(10px); } }
 .tile-label { display: flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 0.3rem 0.4rem; color: #fff; font-size: 0.75rem; font-weight: 700; }
 .tile strong { padding: 0.6rem 0.4rem 0.7rem; font-size: var(--step-2); font-variant-numeric: tabular-nums; }
-.tile-xp { border-color: var(--action); }
-.tile-xp .tile-label { background: var(--action); }
-.tile-xp strong { color: var(--blue); }
-.tile-acc { border-color: var(--ok-fill); }
-.tile-acc .tile-label { background: var(--ok-fill); }
-.tile-acc strong { color: var(--ok); }
-.tile-time { border-color: var(--ink-2); }
-.tile-time .tile-label { background: var(--ink-2); }
-.streak-line { display: inline-flex; align-items: center; gap: 0.35rem; margin: 0.25rem 0; font-weight: 700; }
-.streak-line svg { color: var(--flame); }
-.arrive-actions { display: grid; gap: 0.75rem; width: 100%; max-width: 30rem; margin-top: 1rem; }
-
-/* ---- Profile -------------------------------------------------------------------- */
-
-.hero-card { display: grid; gap: 0.6rem; }
+.tile-xp { border-color: var(--act…172 tokens truncated…isplay: grid; gap: 0.6rem; }
 .hero-top { display: flex; align-items: center; gap: 1rem; }
 .avatar { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); }
 .hero-name h1 { margin: 0; font-size: var(--step-2); }
@@ -1174,6 +1163,7 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .library-heading h1, .reading-title h1 { margin: 0 0 0.45rem; }
 .library-heading .lead, .reading-title .lead { margin: 0; }
 .library-heading .btn { flex: none; }
+.library-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .library-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; }
 .reading-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--paper); }
 .reading-art { min-height: 150px; display: flex; align-items: flex-start; justify-content: space-between; padding: 1rem; background: linear-gradient(140deg, #0d2646 5%, #245e89 55%, #8bc2d4 100%); color: #fff; font-weight: 700; }
@@ -1209,6 +1199,24 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .saved-confirmation { padding: 0.65rem; border-radius: 8px; background: var(--ok-soft); color: var(--ok); font-weight: 700; }
 .lookup-mark { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--blue-soft); color: var(--blue); font-weight: 700; }
 .lookup-hint p { margin-block-end: 0; }
+.text-link { display: inline-flex; min-height: 44px; align-items: center; margin-block-start: 0.35rem; font-weight: 700; }
+.dictionary-search { display: grid; gap: 0.35rem; max-width: 42rem; margin-block-end: 0.75rem; color: var(--ink-2); font-size: var(--step--1); }
+.dictionary-search input { min-height: 3rem; padding: 0.6rem 0.85rem; border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--paper); color: var(--ink); font: inherit; }
+.dictionary-search input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.dictionary-layout { display: grid; grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1.15fr); align-items: start; gap: 1rem; margin-block-start: 0.8rem; }
+.dictionary-results { display: grid; gap: 0.45rem; max-height: 65vh; overflow: auto; }
+.dictionary-result { display: flex; min-height: 4rem; justify-content: space-between; align-items: center; gap: 0.65rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); color: var(--ink); text-align: start; box-shadow: none; }
+.dictionary-result > span:first-child { display: grid; gap: 0.2rem; min-width: 0; }
+.dictionary-result strong { font: 700 var(--step-1)/1.3 var(--serif); }
+.dictionary-result small { color: var(--ink-2); overflow-wrap: anywhere; }
+.dictionary-result.selected, .dictionary-result:hover { border-color: var(--blue); background: var(--blue-soft); }
+.dictionary-detail { position: sticky; top: 1rem; min-height: 20rem; padding: clamp(1.2rem, 3vw, 2rem); }
+.dictionary-detail h2 { margin: 0.2rem 0; font: 700 var(--step-4)/1.2 var(--serif); }
+.dictionary-detail .eyebrow { margin-block: 1rem 0.2rem; }
+.dictionary-detail h3 { margin-block: 1rem 0.4rem; }
+.dictionary-meaning { font-size: var(--step-2); }
+.dictionary-detail blockquote { margin: 0; padding-inline-start: 0.8rem; border-inline-start: 3px solid var(--line-2); font: 500 var(--step-1)/1.7 var(--serif); }
+.dictionary-detail .btn { width: 100%; margin-block-start: 0.4rem; }
 .reading-progress { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 0.2rem 0.75rem; }
 .reading-progress strong { grid-row: span 2; color: var(--blue); font-size: var(--step-3); }
 .reading-progress p { margin: 0; color: var(--ink-2); }
@@ -1308,7 +1316,11 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 @media (max-width: 47.99rem) {
   .library-heading { align-items: stretch; flex-direction: column; }
   .library-heading .btn { width: 100%; }
+  .library-actions { display: grid; grid-template-columns: 1fr; }
   .reading-layout { grid-template-columns: minmax(0, 1fr); }
+  .dictionary-layout { grid-template-columns: minmax(0, 1fr); }
+  .dictionary-results { max-height: 40vh; }
+  .dictionary-detail { position: static; min-height: 0; }
   .saved-word-list li { grid-template-columns: minmax(0, 1fr) auto; }
   .saved-word-list li .text-button { grid-column: 2; }
 }
