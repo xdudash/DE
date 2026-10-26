@@ -7,3 +7,9 @@ translator: claude (AI draft, 2026-10-12)
 strings:
   title: Imperative (commands and requests)
   summary: Forms for du, ihr and Sie; the verb stands first.
+  pattern.scope: "For common imperatives: *Mach!* (du), *Macht!* (ihr), *Machen Sie!* (formal). Separable prefixes stay at the end."
+  pattern.limits: "Some verbs have special imperative forms. This introduction does not cover every irregular form or all pragmatic differences between commands and requests."
+  ex.du: "Open the window, please!"
+  ex.ihr: "Open the books, please!"
+  ex.sie: "Open the door, please! (formal)"
+  err.sie_order: "In a formal command, put the verb first and follow it with *Sie*: *Machen Sie die Tür auf!*"

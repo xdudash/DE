@@ -1,0 +1,63 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.imperative.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Imperatives: give a simple instruction"
+  summary: "Use the du, ihr, and formal Sie forms to give a short instruction or request."
+  obj.recognize: "Recognize a command and identify whether it addresses du, ihr, or formal Sie."
+  obj.form: "Form a short instruction for one person, a group, and a person addressed formally."
+  b.intro: |
+    Use the imperative to give an instruction or make a request. For many common verbs, the forms are easy to recognize: *mach!* for one person (*du*), *macht!* for several people (*ihr*), and *machen Sie!* for formal *Sie*.
+
+    In the informal singular form, leave out *du*. The formal form keeps *Sie* after the verb. Adding *bitte* makes a request sound more polite.
+  b.pattern.caption: "Three useful forms"
+  col.form: "Imperative"
+  col.subject: "Who you address"
+  col.example: "Example"
+  b.examples.title: "Instructions and requests"
+  ex.du: "Open the window, please! (one person, informal)"
+  ex.ihr: "Open the books, please! (several people, informal)"
+  ex.sie: "Open the door, please! (formal)"
+  ex.wait: "Please wait here! (formal)"
+  b.position: |
+    Separable verbs keep their prefix at the end: *Mach das Fenster auf!* (Open the window!). In a formal instruction, the verb comes first and *Sie* follows: *Öffnen Sie bitte das Fenster!* This lesson practises common patterns; some verbs have special forms that you will learn separately.
+  b.errors.title: "Watch the word order"
+  e.du_subject: "For an informal command to one person, leave out *du*: *Mach das Fenster auf!*"
+  e.sie_order: "In a formal instruction, put the verb first and *Sie* after it: *Machen Sie die Tür auf!*"
+  b.summary: |
+    - One person, informal: verb stem, usually without *du*: *Mach!* / *Warte!*
+    - Several people, informal: use the *ihr* form without *ihr*: *Macht!* / *Wartet!*
+    - Formal: verb first, then *Sie*: *Machen Sie!* / *Warten Sie!*
+    - Put the separable prefix at the end: *Mach die Tür auf!* Add *bitte* for a polite request.
+  b.practice.title: "Practice"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check who is being addressed and where the verb belongs."
+  x.choose_du.prompt: "Choose the instruction for one person you address informally."
+  x.choose_du.a: "This is a statement with the subject *du*, not the usual short command form."
+  x.choose_du.c: "*Macht* addresses several people informally (*ihr*)."
+  x.choose_du.explanation: "For one person, use *Mach!* and leave out *du*."
+  x.match.prompt: "Match each form with its addressee."
+  x.match.explanation: "Use *mach* for *du*, *macht* for *ihr*, and *machen Sie* for a formal request."
+  x.cloze.prompt: "Complete the formal request with *machen*."
+  x.cloze.explanation: "In a formal command, put *machen* first and follow it with *Sie*: *Machen Sie bitte ...!*"
+  x.order.prompt: "Build the request: “Open the window, please!” (one person, informal)"
+  x.order.explanation: "Start with *Mach*, then add *bitte* and the object; the separable prefix *auf* goes at the end."
+  x.transform.prompt: "Turn the statement into a command to several people: Ihr macht bitte die Bücher auf."
+  x.transform.explanation: "Use the *ihr* verb form *macht* without the subject *ihr*: *Macht bitte die Bücher auf!*"
+  x.categorize.prompt: "Sort each instruction by the person or people addressed."
+  x.categorize.du: "One person (du)"
+  x.categorize.ihr: "Several people (ihr)"
+  x.categorize.sie: "Formal (Sie)"
+  x.categorize.explanation: "*Mach* addresses one person, *macht* a group, and *machen Sie* or *warten Sie* is formal."
+  x.true_false.prompt: "True or false? A short informal command to one person usually leaves out *du*."
+  x.true_false.wrong: "The common short form is *Mach!*, without *du*."
+  x.true_false.explanation: "The verb form signals the addressee, so *du* is normally left out: *Mach!*"
+  x.correct.prompt: "Correct the word order in this formal request."
+  x.correct.explanation: "Put the verb first, followed by formal *Sie*: *Öffnen Sie bitte das Fenster!*"
+  x.situation.prompt: "Which is a polite formal instruction to wait here?"
+  x.situation.b: "This is a statement, not an instruction."
+  x.situation.c: "The formal subject *Sie* follows the verb; it does not go at the end here."
+  x.situation.explanation: "A formal instruction starts with the verb: *Warten Sie bitte hier!*"

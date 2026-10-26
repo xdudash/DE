@@ -1,0 +1,158 @@
+# A1 lesson draft; German, teaching sequence, and translations need human review.
+schema: deutschgo.unit/1
+id: unit.syntax.imperative.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.syntax.imperative]
+prerequisites: [concept.morph.verb_present_conjugation]
+goals: [general, everyday, work]
+estimated_minutes: 14
+objectives:
+  - { id: obj_recognize, text: "@obj.recognize", skill: knowledge }
+  - { id: obj_form, text: "@obj.form", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.form", "@col.subject", "@col.example"]
+    rows:
+      - ["mach", "du (one person, informal)", "Mach bitte das Fenster auf!"]
+      - ["macht", "ihr (several people, informal)", "Macht bitte die Bücher auf!"]
+      - ["machen Sie", "Sie (formal)", "Machen Sie bitte die Tür auf!"]
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_du, de: "Mach bitte das Fenster auf!", gloss: "@ex.du", highlight: [0, 4] }
+      - { id: ex_ihr, de: "Macht bitte die Bücher auf!", gloss: "@ex.ihr", highlight: [0, 4] }
+      - { id: ex_sie, de: "Machen Sie bitte die Tür auf!", gloss: "@ex.sie", highlight: [0, 1, 5] }
+      - { id: ex_wait, de: "Warten Sie bitte hier!", gloss: "@ex.wait", highlight: [0, 1] }
+  - { type: explanation, id: b_position, body: "@b.position" }
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_du_subject, wrong: "Du mach das Fenster auf!", right: "Mach das Fenster auf!", explanation: "@e.du_subject" }
+      - { id: e_sie_order, wrong: "Sie machen die Tür auf!", right: "Machen Sie die Tür auf!", explanation: "@e.sie_order" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_choose_du
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.choose_du.prompt"
+        options:
+          - { id: a, de: "Du machst das Fenster auf!", correct: false, feedback: "@x.choose_du.a" }
+          - { id: b, de: "Mach das Fenster auf!", correct: true }
+          - { id: c, de: "Macht das Fenster auf!", correct: false, feedback: "@x.choose_du.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_du.explanation"
+      - id: x_match
+        type: match_pairs
+        objective: obj_recognize
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.match.prompt"
+        pairs:
+          - { id: a, left_de: "du", right_de: "Mach!" }
+          - { id: b, left_de: "ihr", right_de: "Macht!" }
+          - { id: c, left_de: "Sie (formal)", right_de: "Machen Sie!" }
+          - { id: d, left_de: "du", right_de: "Warte!" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match.explanation"
+      - id: x_cloze
+        type: cloze
+        objective: obj_form
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "{{0}} bitte die Tür auf! (Sie)"
+        gaps:
+          - accept: ["Machen Sie"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+      - id: x_order
+        type: word_order
+        objective: obj_form
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.order.prompt"
+        tokens: ["bitte", "Mach", "das Fenster", "auf"]
+        final_punctuation: "!"
+        accept: ["Mach bitte das Fenster auf!"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order.explanation"
+      - id: x_transform
+        type: transform
+        objective: obj_form
+        concepts: [concept.syntax.imperative]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Ihr macht bitte die Bücher auf."
+        accept: ["Macht bitte die Bücher auf!"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+      - id: x_categorize
+        type: categorize
+        objective: obj_recognize
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: du, label: "@x.categorize.du" }
+          - { id: ihr, label: "@x.categorize.ihr" }
+          - { id: sie, label: "@x.categorize.sie" }
+        items:
+          - { id: mach, de: "Mach bitte die Tür auf!", categoryId: du }
+          - { id: macht, de: "Macht bitte die Bücher auf!", categoryId: ihr }
+          - { id: machen_sie, de: "Machen Sie bitte das Fenster auf!", categoryId: sie }
+          - { id: warten_sie, de: "Warten Sie bitte hier!", categoryId: sie }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+      - id: x_true_false
+        type: true_false
+        objective: obj_recognize
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "An informal singular command with du usually leaves out the subject du."
+        correct: true
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+      - id: x_correct
+        type: error_correction
+        objective: obj_form
+        concepts: [concept.syntax.imperative]
+        difficulty: 2
+        prompt: "@x.correct.prompt"
+        source_de: "Sie öffnen bitte das Fenster!"
+        accept: ["Öffnen Sie bitte das Fenster!"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.correct.explanation"
+      - id: x_pick_situation
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.imperative]
+        difficulty: 1
+        prompt: "@x.situation.prompt"
+        options:
+          - { id: a, de: "Warten Sie bitte hier!", correct: true }
+          - { id: b, de: "Sie warten bitte hier.", correct: false, feedback: "@x.situation.b" }
+          - { id: c, de: "Warten hier Sie bitte?", correct: false, feedback: "@x.situation.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.situation.explanation"
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; requires review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check the du/ihr/Sie forms, separable verbs, scope limits and exercise progression." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

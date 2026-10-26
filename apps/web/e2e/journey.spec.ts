@@ -98,6 +98,42 @@ test.describe("home: the line", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
+  test("the next A1 route lesson after yes/no questions is a startable imperative lesson", async ({ page }) => {
+    const completedUnits = [
+      "unit.morph.verb_present_conjugation.a1",
+      "unit.syntax.v2_declarative.a1",
+      "unit.syntax.w_questions.a1",
+      "unit.syntax.v1_yes_no_questions.a1",
+    ];
+    const completedAt = Date.now() - 60 * 60 * 1000;
+    const events = completedUnits.flatMap((unitId, unitIndex) => {
+      const unit = CONTENT_BUNDLE.units.find((candidate: { id: string }) => candidate.id === unitId);
+      const exercises = unit.blocks.flatMap((block: { type: string; items?: { id: string; concepts?: string[] }[] }) => block.type === "exercises" ? block.items ?? [] : []);
+      return exercises.map((exercise: { id: string; concepts?: string[] }, exerciseIndex: number) => ({
+        id: `seed-${unitId}-${exercise.id}`,
+        kind: "attempt",
+        at: completedAt + unitIndex * 100 + exerciseIndex,
+        contentId: exercise.id,
+        conceptIds: exercise.concepts ?? unit.concepts,
+        skill: "knowledge",
+        correct: true,
+        unitId,
+        exerciseId: exercise.id,
+      }));
+    });
+    await page.addInitScript((seededEvents) => {
+      localStorage.setItem("deutschgo.route-plan.v1", JSON.stringify({ activeRouteId: "route.core.a1_sentence_foundations", routes: {} }));
+      localStorage.setItem("deutschgo.events.v1", JSON.stringify(seededEvents));
+    }, events);
+    await page.goto("/en");
+    const nextStep = page.locator("section.next-step").filter({ has: page.getByRole("heading", { name: "Your next step" }) });
+    const lessonLink = nextStep.locator("a.btn");
+    await expect(lessonLink).toHaveAttribute("href", "/en/learn/unit.syntax.imperative.a1");
+    await lessonLink.click();
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.syntax\.imperative\.a1$/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  });
+
   test("a first-time language choice opens the plan, then starts the first lesson", async ({ page }) => {
     await page.goto("/");
     const english = page.locator(".langcards a").filter({ hasText: "English" });
