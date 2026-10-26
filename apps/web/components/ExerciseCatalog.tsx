@@ -30,7 +30,14 @@ const FORMAT_LABELS: Record<string, Partial<Record<Format, string>>> = {
 export function ExerciseCatalog({ lang, counts }: { lang: string; counts: Record<string, number> }) {
   const copy = COPY[lang] ?? COPY.en!;
   const [query, setQuery] = useState("");
-  const visible = useMemo(() => FORMATS.filter((format) => format.replaceAll("_", " ").includes(query.trim().toLowerCase())), [query]);
+  const visible = useMemo(() => {
+    const needle = query.trim().toLocaleLowerCase(lang);
+    return FORMATS.filter((format) => {
+      const id = format.replaceAll("_", " ").toLocaleLowerCase(lang);
+      const label = (FORMAT_LABELS[lang]?.[format] ?? id).toLocaleLowerCase(lang);
+      return id.includes(needle) || label.includes(needle);
+    });
+  }, [lang, query]);
   return <main className="page exercise-catalog">
     <p className="eyebrow">DeutschGo</p>
     <h1>{copy.title}</h1>
