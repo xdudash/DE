@@ -86,6 +86,7 @@ export type Response =
   | { type: "modal_choice"; optionId: string }
   | { type: "odd_one_out"; optionId: string }
   | { type: "flashcard_recall"; rating: "again" | "got_it" }
+  | { type: "translation_input"; text: string }
   | { type: "keyword_build"; text: string }
   | { type: "token_bank_build"; order: number[] }
   | { type: "verb_position"; tokenIndex: number };
@@ -312,6 +313,8 @@ export function evaluate(ex: Exercise, response: Response): EvaluationResult {
       return evalSingleChoice(ex, (response as Extract<Response, { type: "single_choice" }>).optionId);
     case "odd_one_out":
       return evalSingleChoice(ex as unknown as SingleChoiceExercise, (response as Extract<Response, { type: "odd_one_out" }>).optionId);
+    case "translation_input":
+      return evalTransform(ex as unknown as TransformExercise, (response as Extract<Response, { type: "translation_input" }>).text);
     case "flashcard_recall": {
       const rating = (response as Extract<Response, { type: "flashcard_recall" }>).rating;
       if (rating !== "again" && rating !== "got_it") throw new EvaluationError(`flashcard_recall ${ex.id}: rating must be again or got_it`);
