@@ -39,6 +39,7 @@ export const PROGRESS_EVENT = "deutschgo:progress";
 /** Fired after the server confirms an answer, so the shared account view refreshes. */
 export const ACCOUNT_PROGRESS_EVENT = "deutschgo:account-progress";
 const SETUP_KEY = "deutschgo.setup.v1";
+export const SETUP_EVENT = "deutschgo:setup";
 const PLACEMENT_KEY = "deutschgo.placement.v1";
 const LESSON_CHECKPOINT_KEY = "deutschgo.lesson-checkpoint.v1";
 const EVENTS_KEY = "deutschgo.events.v1";
@@ -68,7 +69,9 @@ export function readSetup(): Setup | null {
 }
 
 export function writeSetup(setup: Setup): boolean {
-  return write(SETUP_KEY, setup);
+  const ok = write(SETUP_KEY, setup);
+  if (ok && typeof window !== "undefined") window.dispatchEvent(new Event(SETUP_EVENT));
+  return ok;
 }
 
 export interface PlacementEstimate {
