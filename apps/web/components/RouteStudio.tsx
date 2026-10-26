@@ -7,8 +7,10 @@ import { useProgress } from "../lib/progress/client";
 import { orderedRouteSteps, useRoutePlan, type RoutePlanOption } from "../lib/route-plan-client";
 import { readSetup, writeSetup, type PathDifficulty, type Setup } from "../lib/device-state";
 import { LearningPathPicker, type LearningPathCounts } from "./LearningPathPicker";
+import { CourseRoadmap } from "./CourseRoadmap";
+import type { CourseRoadmapLevel } from "../lib/course-paths";
 
-export function RouteStudio({ lang, routes, defaultRouteId, coursePaths }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[] }) {
+export function RouteStudio({ lang, routes, defaultRouteId, coursePaths, courseRoadmaps }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[]; courseRoadmaps: Record<PathDifficulty, CourseRoadmapLevel[]> }) {
   const msg = translator(lang);
   const plan = useRoutePlan(routes, defaultRouteId);
   const { attempts, status } = useProgress();
@@ -61,6 +63,8 @@ export function RouteStudio({ lang, routes, defaultRouteId, coursePaths }: { lan
       <LearningPathPicker lang={lang} difficulty={difficulty} paths={coursePaths} onChange={changeDifficulty} />
       {notice === msg("learningPath.saved") && <p role="status" className="route-notice">{notice}</p>}
     </section>
+
+    <CourseRoadmap lang={lang} difficulty={difficulty} levels={courseRoadmaps[difficulty]} />
 
     <section className="route-choice-section">
       <div className="route-section-heading"><div><p className="eyebrow">{msg("routeStudio.chooseEyebrow")}</p><h2>{msg("routeStudio.availableRoutes")}</h2></div><span className="muted small">{msg("routeStudio.devicePlan")}</span></div>

@@ -1429,6 +1429,26 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .learning-path-quick-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-block-start: 0.65rem; font-size: 0.78rem; }
 .learning-path-quick-footer a { color: var(--blue); font-weight: 750; text-decoration: none; }
 .learning-path-quick-footer a:hover { text-decoration: underline; }
+.course-roadmap { min-width: 0; }
+.course-roadmap-heading { margin-block-end: 0.9rem; }
+.course-roadmap-heading h2 { margin: 0 0 0.35rem; font-size: var(--step-1); }
+.course-roadmap-heading .eyebrow { margin-block-end: 0.25rem; }
+.course-roadmap-heading p:last-child { margin-block-end: 0; }
+.course-roadmap-levels { display: grid; gap: 0.55rem; }
+.course-roadmap-level { min-width: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); overflow: clip; }
+.course-roadmap-level > summary { display: grid; grid-template-columns: 2.5rem minmax(0,1fr) auto 1rem; align-items: center; gap: 0.65rem; min-height: 3.6rem; padding: 0.55rem 0.75rem; cursor: pointer; list-style: none; }
+.course-roadmap-level > summary::-webkit-details-marker { display: none; }
+.course-roadmap-level > summary::after { content: "⌄"; grid-column: 4; grid-row: 1; color: var(--ink-2); font-weight: 800; }
+.course-roadmap-level[open] > summary::after { content: "⌃"; }
+.course-roadmap-level > summary:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
+.course-roadmap-level-badge { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 0.75rem; background: var(--blue-soft); color: var(--blue); font-weight: 800; }
+.course-roadmap-level-title { font-weight: 750; }
+.course-roadmap-block-count { padding-inline-end: 1.15rem; color: var(--ink-2); font-size: 0.78rem; }
+.course-roadmap-blocks { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(100%,17rem),1fr)); gap: 0.45rem; margin: 0; padding: 0 0.65rem 0.65rem; list-style: none; }
+.course-roadmap-blocks li { display: grid; grid-template-columns: minmax(3.5rem,auto) minmax(0,1fr); gap: 0.15rem 0.6rem; padding: 0.65rem 0.7rem; border-radius: 0.65rem; background: var(--surface); }
+.course-roadmap-blocks li > strong { color: var(--blue); }
+.course-roadmap-blocks li > span { justify-self: end; font-size: 0.78rem; font-weight: 700; }
+.course-roadmap-blocks li > small { grid-column: 1/-1; color: var(--ink-2); font-size: 0.72rem; }
 @media (max-width: 47.99rem) {
   .onboarding-heading { text-align: start; }
   .onboarding-progress { gap: 0.3rem; }
