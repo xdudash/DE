@@ -2,9 +2,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-// The first lesson on the line (the A0 alphabet, ADR-0018 route order). Answers come from the bundle,
+// The first available lesson on the line (A1 regular present tense). Answers come from the bundle,
 // so the tests do not depend on the wording of one lesson.
-const UNIT = "/en/learn/unit.pron.alphabet_a0";
+const UNIT = "/en/learn/unit.morph.verb_present_conjugation.a1";
 const BUNDLE_UNIT = (JSON.parse(readFileSync(join(process.cwd(), "generated", "content.json"), "utf8")).units as Record<string, any>[])
   .find((u) => u.id === UNIT.split("/").pop())!;
 const FIRST_EXERCISE = (BUNDLE_UNIT.blocks.find((b: { type: string }) => b.type === "exercises").items as Record<string, any>[])[0]!;
@@ -47,7 +47,7 @@ test.describe("home: the line", () => {
     const current = page.locator(".station.is-current");
     await expect(current).toHaveAttribute("aria-current", "step");
     await current.getByRole("link", { name: "Start", exact: true }).click();
-    await expect(page).toHaveURL(/\/en\/learn\/unit\.pron\.alphabet_a0$/);
+    await expect(page).toHaveURL(new RegExp(`${UNIT}$`));
   });
 
   test("a saved learner plan keeps language choices pointed at Home", async ({ page }) => {
@@ -93,12 +93,9 @@ test.describe("home: the line", () => {
     await expect(planned.first().getByText("In preparation")).toBeVisible();
   });
 
-  test("the line starts with the first lesson (the A0 alphabet)", async ({ page }) => {
-    // The sentence illustration (figure.slotline) appears only for a lesson whose concept has a
-    // verb-position example. The first station is now the alphabet (ADR-0018 route order), so it is
-    // not shown here; the verb-position illustration returns with the A1 sentence lessons.
+  test("the line starts with the first available lesson (regular present tense)", async ({ page }) => {
     await page.goto("/en");
-    await expect(page.getByText("The alphabet: spelling words aloud").first()).toBeVisible();
+    await expect(page.getByText("Present tense: regular verbs (Präsens)").first()).toBeVisible();
   });
 
   test("pre-launch: no review label is shown to learners (ADR-0022), and no status code leaks", async ({ page }) => {
@@ -268,6 +265,16 @@ test.describe("lesson: a guided run", () => {
       const e = byId[(await exercise.getAttribute("aria-labelledby"))!.replace(/-prompt$/, "")]!;
       if (e.type === "single_choice") {
         await page.getByRole("radio", { name: e.options.find((o: any) => o.correct).de, exact: true }).check();
+      } else if (e.type === "true_false") {
+        await page.locator(`input[name="${e.id}"][value="${e.correct}"]`).check();
+      } else if (e.type === "match_pairs") {
+        for (const pair of e.pairs) {
+          await page.getByLabel(new RegExp(`Your answer: ${pair.left_de}`)).selectOption(pair.id);
+        }
+      } else if (e.type === "categorize") {
+        for (const item of e.items) {
+          await page.getByLabel(new RegExp(`Your answer: ${item.de}`)).selectOption(item.categoryId);
+        }
       } else if (e.type === "word_order") {
         let rest: string = e.accept[0].replace(/[.?!]$/, "");
         const used = new Set<number>();
@@ -297,6 +304,7 @@ test.describe("lesson: a guided run", () => {
     // The next step is offered: the next lesson when the route has one, otherwise the line.
     await expect(arrive.locator(".arrive-actions a.btn-primary")).toBeVisible();
     // Back on the line, the station is ticked (the lesson is finished on this device).
+    await page.addInitScript(() => localStorage.setItem("deutschgo.route-plan.v1", JSON.stringify({ activeRouteId: "route.core.a1_sentence_foundations", routes: {} })));
     await page.goto("/en");
     await expect(page.locator(".station.is-done").first()).toContainText("Done");
   });
