@@ -23,6 +23,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "odd_one_out":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "odd_one_out", optionId: r.optionId };
+    case "flashcard_recall":
+      if (r.rating !== "again" && r.rating !== "got_it") throw new AttemptError("malformed_request", '"rating" must be "again" or "got_it"');
+      return { type: "flashcard_recall", rating: r.rating };
     case "connector_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
       return { type: "connector_choice", optionId: r.optionId };
