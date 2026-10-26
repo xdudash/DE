@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { offeredLocales, translator } from "@deutschgo/i18n";
-import { readLanguage } from "../lib/device-state";
+import { readAttempts, readLanguage, readLessonCheckpoint, readSetup } from "../lib/device-state";
 
 // Stable across renders: the offered set comes from the build, not from state.
 const LOCALES = offeredLocales();
@@ -18,10 +18,14 @@ const CODES = LOCALES.map((l) => l.code);
 
 export function LanguageGate() {
   const [remembered, setRemembered] = useState<string | null>(null);
+  const [returningLearner, setReturningLearner] = useState(false);
 
   // Read after mount: the server cannot know this browser's last language.
   useEffect(() => {
     setRemembered(readLanguage(CODES));
+    // New learners should meet the plan wizard before the learning line. Anyone
+    // with a saved plan, answers, or an unfinished lesson keeps the one-tap path.
+    setReturningLearner(Boolean(readSetup() || readAttempts().length || readLessonCheckpoint()));
   }, []);
 
   const last = remembered ? LOCALES.find((l) => l.code === remembered) : undefined;
@@ -43,7 +47,7 @@ export function LanguageGate() {
       <ul className="langcards" aria-label={translator("en")("app.chooseLanguage")}>
         {LOCALES.map((l) => (
           <li key={l.code}>
-            <Link href={`/${l.code}`} lang={l.code} dir={l.dir}>
+            <Link href={`/${l.code}${returningLearner ? "" : "/start"}`} lang={l.code} dir={l.dir}>
               <strong>{l.nativeName}</strong>
               <span className="muted small">{translator(l.code)("app.tagline")}</span>
             </Link>
