@@ -43,7 +43,7 @@ export function ExerciseCatalog({ lang, counts }: { lang: string; counts: Record
     <h1>{copy.title}</h1>
     <p className="lead">{copy.lead}</p>
     <label className="catalog-search"><span>{copy.search}</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
-    <p className="muted small" aria-live="polite">{visible.length} / {FORMATS.length}</p>
+    <p className="muted small" aria-live="polite"><bdi dir="ltr">{visible.length} / {FORMATS.length}</bdi></p>
     {visible.length ? <ul className="catalog-grid">{visible.map((format) => <li className="card catalog-format" key={format}>
       <span className="catalog-format-icon" aria-hidden="true">✳</span>
       <h2 lang={lang === "ar" ? "ar" : undefined}>{FORMAT_LABELS[lang]?.[format] ?? format.replaceAll("_", " ")}</h2>
