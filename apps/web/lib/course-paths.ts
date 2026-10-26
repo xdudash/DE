@@ -15,6 +15,15 @@ const DEPTHS: Record<PathDifficulty, readonly CurriculumEntry["depth"][]> = {
   hard: ["core", "standard", "deep"],
 };
 const LEVEL_ORDER = ["A0", "A1", "A2", "B1", "B2", "C1", "C2"];
+export const CURRICULUM_TOPIC_BY_CONCEPT: Record<string, string[]> = {
+  alphabet: ["alphabet"], umlauts: ["umlaute"], eszett_and_ss: ["eszett"],
+  long_short_vowels: ["vowels_length"], greetings_dach: ["greetings"], goodbyes: ["goodbyes"],
+  numbers_cardinal: ["numbers_0_20", "numbers_20_100"], verb_present_conjugation: ["present_regular", "present_irregular"],
+  verb_modals: ["modal_koennen_muessen", "modal_wollen_moechten", "modal_duerfen_sollen"],
+  verb_separable_prefix: ["separable_verbs"], imperative: ["imperative_sie"],
+  v1_yes_no_questions: ["yes_no_questions"], w_questions: ["w_questions"], v2_declarative: ["present_regular"],
+  case_accusative: ["nominativ_akkusativ"], pronoun_accusative: ["accusative_pronouns"],
+};
 
 function countsFor(selected: CurriculumEntry[]) {
   return {

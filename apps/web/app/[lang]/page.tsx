@@ -9,8 +9,8 @@ import { graphFromBundle } from "@deutschgo/learning-engine";
 import Link from "next/link";
 import { scenarioMissions } from "../../lib/missions";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
-import { routeOptionsFromBundle } from "../../lib/route-options";
-import { coursePathCounts } from "../../lib/course-paths";
+import { courseModulesByTopic, routeOptionsFromBundle } from "../../lib/route-options";
+import { coursePathCounts, courseSequence } from "../../lib/course-paths";
 import { LearningPathQuickSwitch } from "../../components/LearningPathQuickSwitch";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
@@ -25,6 +25,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   for (const unit of b.units) for (const concept of unit.concepts) if (!unitForConcept.has(concept)) unitForConcept.set(concept, unit.id);
 
   const baseRoutes = routeOptionsFromBundle(b, lang, contentLang);
+  const modulesByTopic = courseModulesByTopic(b, lang, contentLang);
+  const courseSequences = {
+    easy: courseSequence("easy", modulesByTopic),
+    medium: courseSequence("medium", modulesByTopic),
+    hard: courseSequence("hard", modulesByTopic),
+  };
   const routes = baseRoutes.map((route) => {
     const firstLesson = route.steps.find((step) => step.kind === "lesson");
     const unit = firstLesson?.unitId ? units.get(firstLesson.unitId) : undefined;
@@ -64,7 +70,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
         <aside className="home-side">
           <LearningPathQuickSwitch lang={lang} paths={coursePathCounts(b.units.length)} />
-          <NextStepCard lang={lang} graph={graphFromBundle(b)} routes={routes} defaultRouteId={defaultRouteId} targets={targets} />
+          <NextStepCard lang={lang} graph={graphFromBundle(b)} routes={routes} defaultRouteId={defaultRouteId} targets={targets} courseSequences={courseSequences} />
           {featuredMission && <section className="card next-step">
             <h2 className="card-title">{msg("mission.title")}</h2>
             <p className="lead">{featuredMission.title}</p>

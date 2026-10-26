@@ -4,6 +4,23 @@ import type { ContentBundle } from "@deutschgo/content-kit";
 import type { RoutePlanOption } from "./route-plan-client";
 import { dictionaryFor, t } from "./content";
 import { ui } from "./i18n";
+import { CURRICULUM_TOPIC_BY_CONCEPT, type CourseRoadmapModule } from "./course-paths";
+
+export function courseModulesByTopic(bundle: ContentBundle, lang: string, contentLang: string): Record<string, CourseRoadmapModule[]> {
+  const modulesByTopic: Record<string, CourseRoadmapModule[]> = {};
+  for (const unit of bundle.units) {
+    const topics = new Set(unit.concepts.flatMap((conceptId) => CURRICULUM_TOPIC_BY_CONCEPT[conceptId.split(".").at(-1) ?? ""] ?? []));
+    const dictionary = dictionaryFor(unit.id, unit, contentLang);
+    const module = {
+      id: unit.id,
+      title: t(dictionary, unit.title),
+      href: `/${lang}/learn/${unit.id}`,
+      exerciseIds: unit.blocks.flatMap((block) => block.type === "exercises" ? block.items.map((exercise) => exercise.id) : []),
+    };
+    for (const topic of topics) (modulesByTopic[topic] ??= []).push(module);
+  }
+  return modulesByTopic;
+}
 
 export function routeOptionsFromBundle(bundle: ContentBundle, lang: string, contentLang: string): RoutePlanOption[] {
   const msg = ui(lang);
