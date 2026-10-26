@@ -1,0 +1,133 @@
+# A1 lesson draft. German correctness and pedagogy need review (DG-007).
+schema: deutschgo.unit/1
+id: unit.morph.case_accusative.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.morph.case_accusative]
+prerequisites: [concept.morph.case_nominative]
+goals: [general, everyday, work, study]
+estimated_minutes: 14
+objectives:
+  - { id: obj_role, text: "@obj.role", skill: knowledge }
+  - { id: obj_article, text: "@obj.article", skill: writing }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.nominative", "@col.accusative", "@col.example"]
+    rows:
+      - ["der Mann", "den Mann", "Ich sehe den Mann."]
+      - ["ein Mann", "einen Mann", "Ich sehe einen Mann."]
+      - ["die Frau", "die Frau", "Ich sehe die Frau."]
+      - ["das Kind", "das Kind", "Ich sehe das Kind."]
+      - ["die Leute", "die Leute", "Ich sehe die Leute."]
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_book, de: "Ich kaufe den Apfel.", gloss: "@ex.book", highlight: [2, 3] }
+      - { id: ex_coffee, de: "Sie bestellt einen Kaffee.", gloss: "@ex.coffee", highlight: [2, 3] }
+      - { id: ex_film, de: "Wir sehen einen Film.", gloss: "@ex.film", highlight: [2, 3] }
+      - { id: ex_fem, de: "Er besucht die Familie.", gloss: "@ex.fem", highlight: [2, 3] }
+      - { id: ex_neut, de: "Ich nehme das Fahrrad.", gloss: "@ex.neut", highlight: [2, 3] }
+  - { type: explanation, id: b_rule, body: "@b.rule" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_article_masculine
+        type: single_choice
+        objective: obj_article
+        concepts: [concept.morph.case_accusative]
+        difficulty: 1
+        prompt: "@x.article.prompt"
+        stem_de: "Ich kaufe ___ Apfel."
+        options:
+          - { id: a, de: "der", correct: false, feedback: "@x.article.a" }
+          - { id: b, de: "den", correct: true }
+          - { id: c, de: "dem", correct: false, feedback: "@x.article.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.article.explanation"
+      - id: x_einen
+        type: cloze
+        objective: obj_article
+        concepts: [concept.morph.case_accusative]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Wir suchen {{0}} Bahnhof."
+        gaps:
+          - accept: ["einen"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+      - id: x_match
+        type: match_pairs
+        objective: obj_article
+        concepts: [concept.morph.case_accusative]
+        difficulty: 1
+        prompt: "@x.match.prompt"
+        pairs:
+          - { id: m, left_de: "der Hund", right_de: "den Hund" }
+          - { id: f, left_de: "die Tasche", right_de: "die Tasche" }
+          - { id: n, left_de: "das Brot", right_de: "das Brot" }
+          - { id: p, left_de: "die Bücher", right_de: "die Bücher" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match.explanation"
+      - id: x_word_order
+        type: word_order
+        objective: obj_role
+        concepts: [concept.morph.case_accusative]
+        difficulty: 1
+        prompt: "@x.order.prompt"
+        tokens: ["einen", "Ich", "Film", "sehe"]
+        final_punctuation: "."
+        accept: ["Ich sehe einen Film."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order.explanation"
+      - id: x_transform
+        type: transform
+        objective: obj_article
+        concepts: [concept.morph.case_accusative]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Der Mann kauft der Apfel."
+        accept: ["Der Mann kauft den Apfel."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+      - id: x_correct
+        type: error_correction
+        objective: obj_article
+        concepts: [concept.morph.case_accusative]
+        difficulty: 2
+        prompt: "@x.correct.prompt"
+        source_de: "Sie besucht der Arzt."
+        accept: ["Sie besucht den Arzt."]
+        feedback:
+          correct: "@fb.correct"
+          incorrect: "@fb.incorrect"
+          rules:
+            - { match: ["Sie besucht der Arzt."], feedback: "@x.correct.rule", signals: concept.morph.case_accusative }
+        explanation: "@x.correct.explanation"
+      - id: x_true_false
+        type: true_false
+        objective: obj_role
+        concepts: [concept.morph.case_accusative]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "Im Satz 'Ich sehe den Hund' ist 'den Hund' das Objekt."
+        correct: true
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; declension, examples and usage require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check case explanation and practice sequence against the A1 syllabus." }
+  rights: { status: pending, notes: "All examples are original DeutschGo content; owner confirmation pending." }

@@ -13,6 +13,7 @@ const CURRICULUM_TOPIC_BY_CONCEPT: Record<string, string[]> = {
   verb_modals: ["modal_koennen_muessen", "modal_wollen_moechten", "modal_duerfen_sollen"],
   verb_separable_prefix: ["separable_verbs"], imperative: ["imperative_sie"],
   v1_yes_no_questions: ["yes_no_questions"], w_questions: ["w_questions"], v2_declarative: ["present_regular"],
+  case_accusative: ["nominativ_akkusativ"],
 };
 
 export default async function RoutesPage({ params }: { params: Promise<{ lang: string }> }) {
