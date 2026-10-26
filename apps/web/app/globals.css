@@ -1449,6 +1449,9 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .course-roadmap-blocks li > strong { color: var(--blue); }
 .course-roadmap-blocks li > span { justify-self: end; font-size: 0.78rem; font-weight: 700; }
 .course-roadmap-blocks li > small { grid-column: 1/-1; color: var(--ink-2); font-size: 0.72rem; }
+.course-roadmap-modules { grid-column: 1/-1; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-block-start: 0.25rem; }
+.course-roadmap-modules a { display: inline-flex; align-items: center; gap: 0.25rem; max-width: 100%; padding: 0.38rem 0.55rem; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-size: 0.74rem; font-weight: 750; text-decoration: none; }
+.course-roadmap-modules a:hover { text-decoration: underline; }
 @media (max-width: 47.99rem) {
   .onboarding-heading { text-align: start; }
   .onboarding-progress { gap: 0.3rem; }

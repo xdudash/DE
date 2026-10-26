@@ -94,6 +94,7 @@ export const en = {
   "learningPath.mapTitle": "Course roadmap",
   "learningPath.mapDescription": "This {steps}-step curriculum is grouped into levels and blocks. It is the course plan; only authored modules are playable today.",
   "learningPath.blockCount": "{count} blocks",
+  "learningPath.availableModules": "Available lessons in this block",
   "setup.save": "Save my plan",
   "setup.saved": "Your plan on this device: {goal}, {path}, {minutes} a day.",
   "setup.deviceOnly": "Saved only in this browser until accounts arrive.",
