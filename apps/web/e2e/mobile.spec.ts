@@ -78,7 +78,29 @@ test.describe("lesson mode on a phone", () => {
 
 // Phone width with the 16px gutter from the design spec: no sideways scrolling.
 test.describe("phone layout", () => {
-  for (const path of ["/en", LESSON, "/ar/learn/unit.syntax.v2_declarative.a1", "/en/map", "/en/practice"]) {
+  const productScreens = [
+    "/en",
+    "/en/start",
+    "/en/start/diagnostic",
+    "/en/routes",
+    "/en/map",
+    "/en/practice",
+    "/en/exercises",
+    "/en/review",
+    "/en/mission/unit.lex.a0_0113_begruessung_hallo_guten_tag",
+    "/en/library",
+    "/en/library/morgens-am-bahnhof",
+    "/en/dictionary",
+    "/en/vocabulary",
+    "/en/progress",
+    "/en/me",
+    "/en/writing",
+    "/en/speaking",
+    LESSON,
+    "/ar/learn/unit.syntax.v2_declarative.a1",
+  ];
+
+  for (const path of productScreens) {
     test(`no horizontal scroll on ${path}`, async ({ page }) => {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
