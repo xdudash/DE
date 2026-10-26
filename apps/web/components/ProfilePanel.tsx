@@ -170,7 +170,7 @@ export function ProfileDevice({ lang }: { lang: string }) {
           {importResult === "large" && <p className="notice bad">{msg("profile.importTooLarge")}</p>}
         </div>
         {pendingImport && <div className="confirm profile-import-confirm">
-          <p>{msg("profile.importStats", { answers: importedAnswers, words: importedWords })}</p>
+          <p><strong>{importedAnswers}</strong> {msg("profile.importAnswers")} · <strong>{importedWords}</strong> {msg("profile.importWords")}</p>
           <p>{msg("profile.importConfirm")}</p>
           <div className="actions">
             <button type="button" className="btn btn-primary" onClick={restoreBackup}>{msg("profile.importRestore")}</button>
