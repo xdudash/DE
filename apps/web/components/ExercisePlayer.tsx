@@ -28,6 +28,9 @@ export interface PlayerLabels {
   stale: string;
   true: string;
   false: string;
+  revealAnswer: string;
+  recallAgain: string;
+  recallGotIt: string;
   chooseMatch: string;
   chooseCategory: string;
   categoryScore: (correct: number, total: number) => string;
@@ -83,6 +86,8 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
   const [assignments, setAssignments] = useState<Record<string, string>>({});
   const [order, setOrder] = useState<number[]>([]);
   const [verbPosition, setVerbPosition] = useState<number | null>(null);
+  const [flashcardRevealed, setFlashcardRevealed] = useState(false);
+  const [flashcardRating, setFlashcardRating] = useState<"again" | "got_it" | null>(null);
   const [gaps, setGaps] = useState<string[]>(() => (exercise.type === "cloze" ? exercise.gaps.map(() => "") : []));
   const [free, setFree] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -91,6 +96,8 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
 
   useEffect(() => {
     setHasPlayed(false);
+    setFlashcardRevealed(false);
+    setFlashcardRating(null);
     setSpeechAvailable(typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -117,6 +124,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
     ((exercise.type === "single_choice" || exercise.type === "odd_one_out" || exercise.type === "modal_choice" || exercise.type === "read_question" || exercise.type === "preposition_choice" || exercise.type === "case_choice" || exercise.type === "connector_choice" || exercise.type === "reply_choice" || exercise.type === "listening_choice" || exercise.type === "minimal_pairs") && choice !== "" && (exercise.type !== "listening_choice" && exercise.type !== "minimal_pairs" || !speechAvailable || hasPlayed)) ||
     (exercise.type === "multi_choice" && multi.length > 0) ||
     (exercise.type === "true_false" && truth !== null) ||
+    (exercise.type === "flashcard_recall" && flashcardRating !== null) ||
     (exercise.type === "match_pairs" && exercise.pairs.every((p) => !!matches[p.id])) ||
     (exercise.type === "categorize" && exercise.items.every((item) => !!assignments[item.id])) ||
     (exercise.type === "word_order" && order.length === exercise.tokens.length) ||
@@ -147,6 +155,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         switch (exercise.type) {
           case "single_choice": response = { type: "single_choice", optionId: choice }; break;
           case "odd_one_out": response = { type: "odd_one_out", optionId: choice }; break;
+          case "flashcard_recall": if (flashcardRating === null) return null; response = { type: "flashcard_recall", rating: flashcardRating }; break;
           case "connector_choice": response = { type: "connector_choice", optionId: choice }; break;
           case "case_choice": response = { type: "case_choice", optionId: choice }; break;
           case "preposition_choice": response = { type: "preposition_choice", optionId: choice }; break;
@@ -452,6 +461,24 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
             ))}
           </div>
         </>
+      )}
+
+      {exercise.type === "flashcard_recall" && (
+        <section className="flashcard-recall" aria-live="polite">
+          <div className="flashcard-face flashcard-front"><p>{tr(text, exercise.front)}</p></div>
+          {flashcardRevealed ? (
+            <>
+              <div className="flashcard-face flashcard-back">
+                <p lang="de" className="de">{exercise.back_de}</p>
+                {exercise.example_de && <p lang="de" className="de flashcard-example">{exercise.example_de}</p>}
+              </div>
+              <div className="flashcard-ratings" role="group" aria-label={labels.yourAnswer}>
+                <button type="button" className="btn secondary" disabled={locked} aria-pressed={flashcardRating === "again"} onClick={() => setFlashcardRating("again")}>{labels.recallAgain}</button>
+                <button type="button" className="btn primary" disabled={locked} aria-pressed={flashcardRating === "got_it"} onClick={() => setFlashcardRating("got_it")}>{labels.recallGotIt}</button>
+              </div>
+            </>
+          ) : <button type="button" className="btn secondary" onClick={() => setFlashcardRevealed(true)}>{labels.revealAnswer}</button>}
+        </section>
       )}
 
       {exercise.type === "dialogue_gap" && (
