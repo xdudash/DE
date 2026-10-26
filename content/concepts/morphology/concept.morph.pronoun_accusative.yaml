@@ -1,9 +1,8 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Authored A1 material is available in the accusative pronoun unit.
 schema: deutschgo.concept/1
 id: concept.morph.pronoun_accusative
 version: 0.1.0
-status: planned
+status: needs_review
 kind: morphology
 domain: pronouns
 title: "@title"
@@ -12,3 +11,17 @@ cefr: { introduced: A1, expected_mastery: A2 }
 relations:
   - { type: depends_on, target: concept.morph.pronoun_nominative }
   - { type: depends_on, target: concept.morph.case_accusative }
+pattern:
+  schema_de: "[Subjekt] – [finites Verb] – [Akkusativpronomen]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_me, de: "Sie sieht mich.", gloss: "@ex.me", highlight: [2] , source: src.deutschgo_original }
+  - { id: ex_you, de: "Ich höre dich.", gloss: "@ex.you", highlight: [2], source: src.deutschgo_original }
+  - { id: ex_it, de: "Wir kaufen es.", gloss: "@ex.it", highlight: [2], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored concept; pronoun forms and examples require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

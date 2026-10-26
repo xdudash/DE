@@ -2,8 +2,13 @@ schema: deutschgo.l10n/1
 entity: concept.morph.pronoun_accusative
 lang: en
 based_on_version: 0.1.0
-status: draft
-translator: claude (AI draft, 2026-10-12)
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
 strings:
-  title: Personal pronouns in the accusative
-  summary: 'mich, dich, ihn, sie, es, uns, euch, sie/Sie: Ich rufe dich an. Kannst du mich verstehen?'
+  title: "Accusative personal pronouns"
+  summary: "Accusative pronouns replace people or things used as direct objects."
+  pattern.scope: "This pattern covers personal pronouns used as direct objects in simple main clauses."
+  pattern.limits: "Dative pronouns and pronouns after prepositions follow other patterns."
+  ex.me: "She sees me."
+  ex.you: "I hear you."
+  ex.it: "We are buying it."

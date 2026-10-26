@@ -1,0 +1,54 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.pronoun_accusative.a1
+lang: en
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Accusative personal pronouns"
+  summary: "Replace a direct object with a personal pronoun: mich, dich, ihn, sie, es, uns, euch, sie/Sie."
+  obj.forms: "Recognize personal pronouns in the accusative."
+  obj.replace: "Replace a direct object with the matching accusative pronoun."
+  b.intro: |
+    When a person or thing is the **direct object**, use its accusative pronoun. Compare *Der Mann ist nett. Ich mag ihn.* (The man is nice. I like him.) The noun *der Mann* is masculine, so the object pronoun is *ihn*.
+
+    The pronoun usually comes after the conjugated verb in a simple statement: *Sie sieht mich.*
+  b.pattern.caption: "Subject pronouns change when they become direct objects"
+  col.subject: "Subject"
+  col.object: "Direct object"
+  col.example: "Example"
+  b.examples.title: "Replace repeated nouns with pronouns"
+  ex.friend: "I know the man. I know him."
+  ex.friend_f: "We are visiting the neighbor. We are visiting her."
+  ex.thing: "He takes the book. He takes it."
+  ex.plural: "She is calling the children. She is calling them."
+  b.rule: |
+    Learn the forms as pairs: *ich → mich*, *du → dich*, *er → ihn*, *sie → sie*, *es → es*, *wir → uns*, *ihr → euch*, *sie/Sie → sie/Sie*.
+
+    Notice the contrast *er → ihn*: the subject form *er* cannot be used as a direct object. Feminine *sie*, neuter *es*, and plural *sie* look the same as their subject forms, but their role in the sentence changes.
+  b.summary: |
+    - Use an accusative pronoun for a person or thing that is the direct object.
+    - Remember the pairs *ich/mich*, *du/dich*, *er/ihn*, *wir/uns*, *ihr/euch*.
+    - *Sie* and *es* can look unchanged; use the sentence role to identify the case.
+    - In a simple statement, the pronoun usually follows the conjugated verb: *Ich sehe dich.*
+  b.practice.title: "Practice: choose and replace pronouns"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite yet. Check whether the pronoun is the subject or the direct object."
+  x.ihn.prompt: "Choose the pronoun that replaces 'the man' as the object."
+  x.ihn.a: "*Er* is the subject form. This person is the object of *mag*."
+  x.ihn.c: "*Ihm* is dative. Here *mögen* takes a direct object."
+  x.ihn.explanation: "The man is the direct object of *mag*, so use accusative *ihn*."
+  x.cloze.prompt: "Replace Anna with the correct pronoun."
+  x.cloze.explanation: "Anna is feminine and is the direct object, so use *sie*."
+  x.match.prompt: "Match each subject pronoun with its accusative form."
+  x.match.explanation: "The key changed forms here are *ich/mich*, *du/dich*, *er/ihn*, and *wir/uns*."
+  x.order.prompt: "Arrange the words to say that you see the group today. Keep 'Ich' first."
+  x.order.explanation: "The pronoun is the object after the verb: *Ich sehe euch heute.*"
+  x.transform.prompt: "Replace 'den Lehrer' with a pronoun."
+  x.transform.explanation: "*Der Lehrer* is masculine. In the accusative the pronoun is *ihn*."
+  x.error.prompt: "Correct the pronoun form."
+  x.error.rule: "After *sieht*, the speaker is the direct object: use *mich*, not subject form *ich*."
+  x.error.explanation: "The subject is *er*. The person he sees is the object, so use *mich*."
+  x.true_false.prompt: "Decide whether the statement is true or false."
+  x.true_false.wrong: "The subject form is *er*; the accusative form is *ihn*."
+  x.true_false.explanation: "For a masculine direct object, *er* changes to *ihn*."
