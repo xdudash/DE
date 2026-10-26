@@ -88,6 +88,21 @@ test.describe("phone layout", () => {
 
 /** On a phone the sections live in the bottom bar, not in the header. */
 test.describe("phone navigation", () => {
+  test("a new learner can choose a language, save a plan, and enter the first lesson", async ({ page }) => {
+    await page.goto("/");
+    const english = page.locator(".langcards a").filter({ hasText: "English" });
+    await expect(english).toHaveAttribute("href", "/en/start");
+    await english.click();
+    await expect(page).toHaveURL(/\/en\/start$/);
+    await page.getByRole("button", { name: /Continue/ }).click();
+    await page.getByRole("button", { name: /Continue/ }).click();
+    await page.getByRole("button", { name: "Save and start learning" }).click();
+    await expect(page).toHaveURL(/\/en$/);
+    await page.locator(".station.is-current").getByRole("link", { name: "Start", exact: true }).click();
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.pron\.alphabet_a0$/);
+    await expect(page.locator("nav.tabbar")).toBeHidden();
+  });
+
   test("the bottom tab bar navigates between sections", async ({ page }) => {
     await page.goto("/en");
     const tabs = page.getByRole("navigation", { name: "App sections" });
