@@ -58,7 +58,8 @@ export function ProgressBreakdown({ lang, concepts, units }: { lang: string; con
           <p>{msg("progress.topicResult", { correct, total: evidence.length })} · {msg(`state.${state}`)} · {msg(`progress.kind.${concept.kind}`)}</p>
           <p className="muted small">{msg("progress.answersHistory")}</p>
           <ol>{evidence.map((attempt) => {
-            const unit = units.find((candidate) => candidate.id === attempt.contentId);
+            // Local events keep the lesson id in unitId; contentId identifies the exercise.
+            const unit = units.find((candidate) => candidate.id === attempt.unitId);
             return <li key={attempt.id}>
               <span className={attempt.correct ? "evidence-result is-correct" : "evidence-result is-wrong"}>{msg(attempt.correct ? "progress.answerCorrect" : "progress.answerWrong")}</span>
               <time dateTime={new Date(attempt.at).toISOString()}>{new Intl.DateTimeFormat(lang, { dateStyle: "medium", timeStyle: "short" }).format(attempt.at)}</time>
