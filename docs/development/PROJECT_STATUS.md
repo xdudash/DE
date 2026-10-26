@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (PRs #78–#108 merged; exercise gallery and picture-writing journey completed)
+Last updated: 2026-10-26 (first-visit language-to-plan path implemented locally; pending PR)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -80,3 +80,8 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 ## Next implementation block — complete first-run lesson
 - Verify onboarding through the first lesson on desktop and phone, including route choice, lesson resume, and a returning learner's next-step state.
 - Keep the human-reviewed catalogue format out of automatic mastery scoring until a review workflow exists.
+
+## Latest implementation — first visit funnel
+- First-time language choices now open the study-plan wizard before Home. Returning learners with a saved plan, answer history, or an unfinished lesson still go directly to their language Home.
+- Updated the user-flow and screen-map docs to show this entry and return behavior.
+- Next: validate the full onboarding-to-first-lesson path at desktop and phone sizes, then address any issues surfaced by that journey.

@@ -27,7 +27,7 @@ export default defineConfig({
     { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: /mobile\.spec\.ts/ },
   ],
   webServer: {
-    command: `npm run start -- -p ${PORT}`,
+    command: `npm run start -- -H 127.0.0.1 -p ${PORT}`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
