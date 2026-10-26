@@ -1,0 +1,178 @@
+# A1 lesson draft; German, teaching sequence, and translations need human review.
+schema: deutschgo.unit/1
+id: unit.syntax.v1_yes_no_questions.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.syntax.v1_yes_no_questions]
+prerequisites: [concept.morph.verb_present_conjugation]
+goals: [general, everyday, work]
+estimated_minutes: 14
+objectives:
+  - { id: obj_recognize, text: "@obj.recognize", skill: knowledge }
+  - { id: obj_ask, text: "@obj.ask", skill: knowledge }
+sources:
+  - { source: src.deutschgo_original }
+
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.verb", "@col.subject", "@col.rest"]
+    rows:
+      - ["kommst", "du", "heute?"]
+      - ["arbeitet", "sie", "morgen?"]
+      - ["haben", "Sie", "einen Termin?"]
+      - ["wohnst", "du", "in Wien?"]
+
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_come, de: "Kommst du heute?", gloss: "@ex.come", highlight: [0] }
+      - { id: ex_work, de: "Arbeitet sie morgen?", gloss: "@ex.work", highlight: [0] }
+      - { id: ex_appointment, de: "Haben Sie einen Termin?", gloss: "@ex.appointment", highlight: [0] }
+      - { id: ex_live, de: "Wohnst du in Wien?", gloss: "@ex.live", highlight: [0] }
+
+  - { type: explanation, id: b_answers, body: "@b.answers" }
+
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_verb_agreement, wrong: "Arbeitet du heute?", right: "Arbeitest du heute?", explanation: "@e.verb_agreement" }
+
+  - { type: summary, id: b_summary, body: "@b.summary" }
+
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_choose_question
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.choose_question.prompt"
+        options:
+          - { id: a, de: "Du lernst heute Deutsch.", correct: false, feedback: "@x.choose_question.a" }
+          - { id: b, de: "Lernst du heute Deutsch?", correct: true }
+          - { id: c, de: "Was lernst du heute?", correct: false, feedback: "@x.choose_question.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_question.explanation"
+
+      - id: x_choose_form
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.choose_form.prompt"
+        stem_de: "___ du morgen in Wien?"
+        options:
+          - { id: a, de: "Wohnst", correct: true }
+          - { id: b, de: "Wohnt", correct: false, feedback: "@x.choose_form.b" }
+          - { id: c, de: "Wohnen", correct: false, feedback: "@x.choose_form.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose_form.explanation"
+
+      - id: x_match_forms
+        type: match_pairs
+        objective: obj_recognize
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.match_forms.prompt"
+        pairs:
+          - { id: a, left_de: "ich", right_de: "wohne" }
+          - { id: b, left_de: "du", right_de: "kommst" }
+          - { id: c, left_de: "er", right_de: "arbeitet" }
+          - { id: d, left_de: "wir", right_de: "lernen" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match_forms.explanation"
+
+      - id: x_cloze
+        type: cloze
+        objective: obj_ask
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "{{0}} du heute Deutsch? – Ja, ich {{1}} heute Deutsch."
+        gaps:
+          - accept: ["Lernst"]
+          - accept: ["lerne"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+
+      - id: x_order_question
+        type: word_order
+        objective: obj_ask
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.order_question.prompt"
+        tokens: ["du", "Kommst", "heute"]
+        final_punctuation: "?"
+        accept: ["Kommst du heute?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order_question.explanation"
+
+      - id: x_transform_question
+        type: transform
+        objective: obj_ask
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 2
+        prompt: "@x.transform_question.prompt"
+        source_de: "Du wohnst in Wien."
+        accept: ["Wohnst du in Wien?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform_question.explanation"
+
+      - id: x_categorize
+        type: categorize
+        objective: obj_recognize
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: statement, label: "@x.categorize.statement" }
+          - { id: yes_no, label: "@x.categorize.yes_no" }
+          - { id: w_question, label: "@x.categorize.w_question" }
+        items:
+          - { id: du_lernst, de: "Du lernst heute Deutsch.", categoryId: statement }
+          - { id: lernst_du, de: "Lernst du heute Deutsch?", categoryId: yes_no }
+          - { id: wo_lernst, de: "Wo lernst du Deutsch?", categoryId: w_question }
+          - { id: sie_arbeitet, de: "Heute arbeitet sie.", categoryId: statement }
+          - { id: hat_sie, de: "Hat sie einen Termin?", categoryId: yes_no }
+          - { id: wann_kommt, de: "Wann kommt der Zug?", categoryId: w_question }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+
+      - id: x_verb_first
+        type: true_false
+        objective: obj_recognize
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 1
+        prompt: "@x.verb_first.prompt"
+        statement_de: "In einer direkten Ja/Nein-Frage steht das konjugierte Verb vor dem Subjekt."
+        correct: true
+        wrong_feedback: "@x.verb_first.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.verb_first.explanation"
+
+      - id: x_correct_order
+        type: error_correction
+        objective: obj_ask
+        concepts: [concept.syntax.v1_yes_no_questions]
+        difficulty: 2
+        prompt: "@x.correct_order.prompt"
+        source_de: "Arbeitet du heute im Büro?"
+        accept: ["Arbeitest du heute im Büro?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.correct_order.explanation"
+
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; requires review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check the simple present scope, answer examples, and contrast with W-questions." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }
