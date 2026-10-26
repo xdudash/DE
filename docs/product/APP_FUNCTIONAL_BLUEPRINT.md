@@ -43,7 +43,7 @@ flowchart TD
 | Home | Resume card for a paused lesson, next-step reason, route line with lesson/topic stations, daily goal, streak/XP/hearts, practical mission | Device checkpoint + progress + active route → saved lesson sequence, lesson, review, mission, map, Route Studio | Resume checkpoint and route recommendation are device-aware; checkpoint does not sync |
 | Route Studio | Route cards with level span and progress; ordered topic list with move up/down, skip/restore, reset | Route content + progress → Home and lesson; skipped topics remain on Map | Implemented in PR #78; device-local preference |
 | Knowledge Map | Search field, level/strand filters, concept cards with status and prerequisite links | Content graph + progress → lesson, catch-up suggestions | Map exists; richer filters and catch-up path planned |
-| Lesson player | Objective and time estimate, structured teaching blocks, examples, 15 interactive exercise formats, row-level category feedback, completion/next-step panel | Compiled lesson content + shared evaluator → evidence, device-local checkpoint, Home, Map, Practice | Categorization is now an authored, schema-checked format with deterministic partial scoring; interrupted lessons restore remaining steps and retry order on the same device |
+| Lesson player | Objective and time estimate, structured teaching blocks, examples, all 35 supported exercise formats, row-level category feedback, completion/next-step panel | Compiled lesson content + shared evaluator → evidence, device-local checkpoint, Home, Map, Practice | The lesson player covers every deterministic format in the current exercise contract; interrupted lessons restore remaining steps and retry order on the same device |
 | Practice board | Weak topics, due count, session estimate, mission list, resume actions | Evidence and due classification → Review Room, lesson, mission | Implemented; expand when skill types arrive |
 | Review Room | Due queue oldest first, 3/5/10 session size, topic opt-out, one exercise at a time, recall feedback | Due evidence + lesson exercise bank → evaluator and evidence | Implemented in merged PR #78; its hosted CI passed |
 | Practical mission | Scenario briefing, German prompt, reply choices, explanation, finish summary | Authored scenario + lesson evaluator → evidence and lesson | Implemented for authored missions |
@@ -139,7 +139,7 @@ The latest hosted run passed repository foundation, content/tests/build/typechec
 
 ## Writing Studio
 
-The writing board offers realistic A1–A2 message prompts, a focused draft editor, a live word count, and a reusable self-review checklist. Drafts are stored per language on the learner’s device only. The board does not claim automated language grading and does not add writing drafts to learning-progress events. It is linked from Practice and supports four interface languages.
+The writing board offers realistic A1–A2 message prompts and an illustrated A1 picture prompt, a focused draft editor, a live word count, and a reusable self-review checklist. Drafts are stored per language on the learner’s device only. The board does not claim automated language grading and does not add writing drafts to learning-progress events. It is linked from Practice and supports four interface languages.
 
 
 ## Speaking workshop

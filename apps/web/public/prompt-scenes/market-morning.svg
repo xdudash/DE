@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Morning at a market</title>
+  <desc id="desc">A customer buys apples from a market vendor. A bicycle and a bakery stand are nearby.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#eaf4ff"/><stop offset="1" stop-color="#fff8e8"/></linearGradient>
+    <linearGradient id="awning" x2="1" y2="1"><stop stop-color="#3767e8"/><stop offset="1" stop-color="#2345b7"/></linearGradient>
+  </defs>
+  <rect width="720" height="420" rx="30" fill="url(#sky)"/>
+  <circle cx="592" cy="83" r="38" fill="#ffd56a"/>
+  <path d="M0 286c103-34 186-26 281-4 114 27 242-26 439 5v133H0z" fill="#d9edda"/>
+  <rect x="81" y="145" width="558" height="175" rx="18" fill="#fff" stroke="#dce3ef" stroke-width="4"/>
+  <path d="M64 153h592l-31-74H95z" fill="url(#awning)"/>
+  <path d="M98 79h82v74H68zM262 79h83v74h-83zM427 79h83v74h-83zM591 79h65v74h-96z" fill="#eef3ff"/>
+  <path d="M98 79h82v74H68zM262 79h83v74h-83zM427 79h83v74h-83zM591 79h65v74h-96z" fill="none" stroke="#d6deee" stroke-width="2"/>
+  <rect x="106" y="192" width="507" height="108" rx="12" fill="#f5f8fc"/>
+  <rect x="126" y="204" width="211" height="84" rx="10" fill="#f7e3b7"/>
+  <path d="M137 239h190" stroke="#dbb978" stroke-width="4" stroke-linecap="round"/>
+  <rect x="354" y="184" width="235" height="33" rx="8" fill="#fcfcff" stroke="#dce3ef" stroke-width="3"/>
+  <text x="471" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="800" fill="#293b63">FRISCH &amp; GUT</text>
+  <rect x="371" y="222" width="198" height="65" rx="11" fill="#d9a56d"/>
+  <path d="M371 246h198" stroke="#b97c47" stroke-width="4"/>
+  <g stroke="#9c482f" stroke-width="3">
+    <circle cx="400" cy="246" r="13" fill="#e65d48"/><circle cx="435" cy="246" r="13" fill="#f1794e"/>
+    <circle cx="470" cy="246" r="13" fill="#dc4e45"/><circle cx="505" cy="246" r="13" fill="#ef7550"/><circle cx="540" cy="246" r="13" fill="#dc4e45"/>
+  </g>
+  <path d="M400 231l5-7m30 7 5-7m30 7 5-7m30 7 5-7m30 7 5-7" stroke="#468b52" stroke-width="4" stroke-linecap="round"/>
+  <g transform="translate(165 205)">
+    <circle cx="17" cy="89" r="28" fill="none" stroke="#385a8b" stroke-width="5"/><circle cx="93" cy="89" r="28" fill="none" stroke="#385a8b" stroke-width="5"/>
+    <path d="M17 89l25-40 25 40H17l35-27 16 27m-10-44h19" fill="none" stroke="#385a8b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="54" cy="12" r="12" fill="#f0bd8a"/><path d="M48 26l-9 35 30 5 3-27-12-12z" fill="#52a77c"/><path d="M44 38l-22 22m40-19 18 18m-40 6-9 28m34-27 13 27" stroke="#314e79" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(555 224)">
+    <circle cx="25" cy="26" r="13" fill="#d99b70"/><path d="M12 24q2-20 26-14l5 11z" fill="#4b3b34"/>
+    <path d="M12 42q13-10 28 0l11 53H3z" fill="#e4a544"/><path d="M15 94l-5 23m23-23 8 23M11 52l-10 19m36-19 8 17" stroke="#4d5a78" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <rect x="36" y="342" width="648" height="45" rx="22" fill="#fff" fill-opacity=".78"/>
+  <text x="360" y="370" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#59677e">Wer? · Was passiert? · Wo und wann?</text>
+</svg>

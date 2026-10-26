@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-25 (PRs #78–#87 merged; speaking workshop implemented)
+Last updated: 2026-10-26 (PRs #78–#107 merged; exercise catalogue expanded; picture-based writing prompt added)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -14,6 +14,8 @@ Last updated: 2026-10-25 (PRs #78–#87 merged; speaking workshop implemented)
 - PR #80 is merged as `a0e8e40`. It adds the `categorize` exercise end to end, including partial scoring and per-item feedback. CI passed all four job groups.
 - PRs #81–#85 add browser-voiced listening, dictation, error correction, and minimal-pair exercises. The evaluator is at version 1.5.0.
 - PR #86 adds Writing Studio at `/{lang}/writing`: localized A1–A2 prompts, device-local drafts, word count, and self-review without automated scoring.
+- PR #87 adds the Speaking workshop at `/{lang}/speaking`, with optional local recording and no pronunciation score. PRs #88–#107 complete 34 of the 35 catalogue formats; PR #107 adds syllable stress marking.
+- Writing Studio now includes an illustrated A1 picture prompt. Drafts and self-review stay on the device; the prompt is not graded and does not create mastery evidence.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
 - The wizard at `/{lang}/start` selects a goal, daily time, and learning route in three steps. Its optional five-question check stores a rough A0/A1 estimate locally and suggests a route without locking the learner in. Calibration and region selection remain planned.
@@ -50,7 +52,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; speaking workshop; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; exercise types beyond the current set; Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; the engine-managed, human-reviewed picture-prompt exercise (the local-only writing prompt is available in Writing Studio); Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -68,12 +70,12 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Add a speaking workshop with clear microphone consent and honest pronunciation feedback. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Expand the interactive exercise gallery to cover the full implemented catalogue. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Latest implementation — speaking workshop
-- PR #87 adds three practical speaking prompts at `/{lang}/speaking`, browser voice playback, explicit microphone consent, in-page recording playback and deletion, and unsupported-browser handling.
-- Audio is never uploaded or persisted; the UI states that pronunciation is not scored. The Practice board links to the workshop. Interface strings are translated in en/ru/uk/ar.
+## Latest implementation — picture-based writing
+- Writing Studio now offers an illustrated morning-market scene as an A1 writing prompt, with three concrete details to include.
+- The illustration has localized alternative text. The draft, word count, and self-review use the existing device-local writing flow; it is not automatically graded.
 
-## Next implementation block — speaking practice
-- Add an accessible speaking workshop with explicit microphone consent and no unsupported pronunciation-scoring claims.
-- Continue broadening content for the supported exercise types.
+## Next implementation block — complete exercise gallery
+- Update the interactive all-app prototype so its exercise picker and demonstrations match the 34 formats already implemented in the lesson player.
+- Keep the 35th open-ended picture response out of mastery scoring until the review workflow exists; the writing board offers a local, self-reviewed version.

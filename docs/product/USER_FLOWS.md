@@ -110,7 +110,7 @@ Minimal-pairs exercise: listen to the target word, play the candidate spellings 
 
 
 ## N — Guided writing practice
-1. Open Writing Studio from Practice and choose an everyday or work situation.
+1. Open Writing Studio from Practice and choose an everyday/work situation or an illustrated picture prompt.
 2. Read the situation and the three points the message should cover.
 3. Write a German draft; a live word count helps keep the response concise.
 4. Review task coverage, clarity, verb position, spelling, and punctuation.

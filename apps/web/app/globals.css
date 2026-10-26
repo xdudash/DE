@@ -1431,6 +1431,9 @@ select.match-right:focus-visible { outline: 3px solid var(--blue); outline-offse
 .writing-brief h3 { margin: 0.9rem 0 0.35rem; font-size: var(--step-0); }
 .writing-brief p { margin: 0.35rem 0; }
 .writing-brief ul { margin: 0.4rem 0 0; padding-inline-start: 1.3rem; }
+.writing-picture { margin: 0.85rem 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.writing-picture img { display: block; width: 100%; height: auto; aspect-ratio: 12 / 7; object-fit: cover; }
+.writing-picture figcaption { padding: 0.45rem 0.7rem; }
 .writing-editor-heading { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.55rem; font-weight: 750; }
 .writing-editor textarea { display: block; width: 100%; min-height: 13rem; resize: vertical; padding: 0.85rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: inherit; line-height: 1.6; }
 .writing-editor textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
