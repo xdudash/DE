@@ -8,6 +8,7 @@ export interface WritingPrompt {
   level: string;
   situation: string;
   tasks: string[];
+  image?: { src: string; alt: string };
 }
 
 interface WritingLabels {
@@ -117,6 +118,11 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
           <article className="card writing-brief">
             <span className="pill blue">{labels.situation}</span>
             <h2>{prompt.title}</h2>
+            {prompt.image && (
+              <figure className="writing-picture">
+                <img src={prompt.image.src} alt={prompt.image.alt} />
+              </figure>
+            )}
             <p>{prompt.situation}</p>
             <h3>{labels.tasks}</h3>
             <ul>{prompt.tasks.map((task) => <li key={task}>{task}</li>)}</ul>
