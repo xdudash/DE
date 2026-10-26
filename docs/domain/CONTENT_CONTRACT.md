@@ -67,6 +67,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `dialogue_gap` | `lines` with speaker and one accepted-reply gap | exactly one line is missing; accepted replies evaluate correct |
 | `modal_choice` | `before_de`, `after_de`, modal verb options | exactly one authored modal form evaluates as correct, with unique ids and feedback for distractors |
 | `odd_one_out` | optional `stem_de`, three or more German options | exactly one item is marked unrelated; distractors can show targeted feedback |
+| `flashcard_recall` | localized `front`, `back_de`, optional `example_de` | learner reveals the answer and self-rates as `again` or `got_it`; rating becomes the attempt verdict |
 | `negation` | `source_de`, `accept` negated sentences | accepted answers evaluate correct, use `nicht` or a form of `kein`, and differ from the positive source |
 | `connector_choice` | `before_de`, `after_de`, connector options | exactly one authored connector evaluates as correct, with unique ids and feedback for distractors |
 | `case_choice` | `before_de`, `after_de`, case form options | exactly one authored form evaluates as correct, with unique ids and feedback for distractors |
