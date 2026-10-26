@@ -1,0 +1,148 @@
+# A1 lesson draft; German, teaching sequence, and translations need human review.
+schema: deutschgo.unit/1
+id: unit.morph.verb_separable_prefix.a1
+version: 1.0.0
+status: needs_review
+title: "@title"
+summary: "@summary"
+cefr: A1
+concepts: [concept.morph.verb_separable_prefix, concept.syntax.verbal_bracket]
+prerequisites: [concept.morph.verb_present_conjugation, concept.syntax.v2_declarative]
+goals: [general, everyday, work]
+estimated_minutes: 15
+objectives:
+  - { id: obj_recognize, text: "@obj.recognize", skill: knowledge }
+  - { id: obj_form, text: "@obj.form", skill: writing }
+sources:
+  - { source: src.deutschgo_original }
+blocks:
+  - { type: explanation, id: b_intro, body: "@b.intro" }
+  - type: pattern
+    id: b_pattern
+    caption: "@b.pattern.caption"
+    columns: ["@col.subject", "@col.finite", "@col.middle", "@col.prefix"]
+    rows:
+      - ["Ich", "rufe", "dich später", "an."]
+      - ["Du", "stehst", "um sieben Uhr", "auf."]
+      - ["Wir", "kaufen", "am Samstag", "ein."]
+      - ["Kommt", "ihr", "heute Abend", "mit?"]
+  - type: examples
+    id: b_examples
+    title: "@b.examples.title"
+    items:
+      - { id: ex_call, de: "Ich rufe dich später an.", gloss: "@ex.call", highlight: [1, 4] }
+      - { id: ex_get_up, de: "Mara steht um sieben Uhr auf.", gloss: "@ex.get_up", highlight: [1, 5] }
+      - { id: ex_shop, de: "Wir kaufen am Samstag ein.", gloss: "@ex.shop", highlight: [1, 5] }
+      - { id: ex_come, de: "Kommst du heute Abend mit?", gloss: "@ex.come", highlight: [0, 5] }
+      - { id: ex_infinitive, de: "Ich möchte heute Abend ausgehen.", gloss: "@ex.infinitive", highlight: [1, 4] }
+  - { type: explanation, id: b_rule, body: "@b.rule" }
+  - type: common_errors
+    id: b_errors
+    title: "@b.errors.title"
+    items:
+      - { id: e_prefix, wrong: "Ich anrufe dich später.", right: "Ich rufe dich später an.", explanation: "@e.prefix" }
+      - { id: e_subject, wrong: "Heute ich stehe früh auf.", right: "Heute stehe ich früh auf.", explanation: "@e.subject" }
+  - { type: summary, id: b_summary, body: "@b.summary" }
+  - type: exercises
+    id: b_practice
+    title: "@b.practice.title"
+    items:
+      - id: x_choose
+        type: single_choice
+        objective: obj_recognize
+        concepts: [concept.morph.verb_separable_prefix]
+        difficulty: 1
+        prompt: "@x.choose.prompt"
+        options:
+          - { id: a, de: "Ich anrufe dich am Abend.", correct: false, feedback: "@x.choose.a" }
+          - { id: b, de: "Ich rufe dich am Abend an.", correct: true }
+          - { id: c, de: "Ich rufe an dich am Abend.", correct: false, feedback: "@x.choose.c" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.choose.explanation"
+      - id: x_match
+        type: match_pairs
+        objective: obj_recognize
+        concepts: [concept.morph.verb_separable_prefix]
+        difficulty: 1
+        prompt: "@x.match.prompt"
+        pairs:
+          - { id: a, left_de: "anrufen", right_de: "rufe … an" }
+          - { id: b, left_de: "aufstehen", right_de: "steht … auf" }
+          - { id: c, left_de: "einkaufen", right_de: "kaufen … ein" }
+          - { id: d, left_de: "mitkommen", right_de: "kommt … mit" }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.match.explanation"
+      - id: x_cloze
+        type: cloze
+        objective: obj_form
+        concepts: [concept.morph.verb_separable_prefix, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.cloze.prompt"
+        text_de: "Mara {{0}} um sieben Uhr {{1}}. (aufstehen)"
+        gaps:
+          - accept: ["steht"]
+          - accept: ["auf"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.cloze.explanation"
+      - id: x_order
+        type: word_order
+        objective: obj_form
+        concepts: [concept.morph.verb_separable_prefix, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.order.prompt"
+        tokens: ["am Abend", "Ich", "dich", "rufe", "an"]
+        final_punctuation: "."
+        accept: ["Ich rufe dich am Abend an."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.order.explanation"
+      - id: x_transform
+        type: transform
+        objective: obj_form
+        concepts: [concept.morph.verb_separable_prefix]
+        difficulty: 2
+        prompt: "@x.transform.prompt"
+        source_de: "Du stehst am Sonntag früh auf."
+        accept: ["Stehst du am Sonntag früh auf?"]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.transform.explanation"
+      - id: x_categorize
+        type: categorize
+        objective: obj_recognize
+        concepts: [concept.morph.verb_separable_prefix]
+        difficulty: 1
+        prompt: "@x.categorize.prompt"
+        categories:
+          - { id: split, label: "@x.categorize.split" }
+          - { id: together, label: "@x.categorize.together" }
+        items:
+          - { id: ich_rufe, de: "Ich rufe dich später an.", categoryId: split }
+          - { id: du_stehst, de: "Du stehst früh auf.", categoryId: split }
+          - { id: ich_moechte, de: "Ich möchte heute ausgehen.", categoryId: together }
+          - { id: wir_kaufen, de: "Wir kaufen am Markt ein.", categoryId: split }
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.categorize.explanation"
+      - id: x_true_false
+        type: true_false
+        objective: obj_recognize
+        concepts: [concept.morph.verb_separable_prefix, concept.syntax.verbal_bracket]
+        difficulty: 1
+        prompt: "@x.true_false.prompt"
+        statement_de: "Im einfachen Hauptsatz steht die trennbare Vorsilbe normalerweise am Satzende."
+        correct: true
+        wrong_feedback: "@x.true_false.wrong"
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.true_false.explanation"
+      - id: x_correct
+        type: error_correction
+        objective: obj_form
+        concepts: [concept.morph.verb_separable_prefix, concept.syntax.v2_declarative]
+        difficulty: 2
+        prompt: "@x.correct.prompt"
+        source_de: "Heute ich kaufe im Supermarkt ein."
+        accept: ["Heute kaufe ich im Supermarkt ein."]
+        feedback: { correct: "@fb.correct", incorrect: "@fb.incorrect" }
+        explanation: "@x.correct.explanation"
+review:
+  linguistic: { status: pending, notes: "AI-authored A1 draft; separable verbs, examples and word-order judgments require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending, notes: "Check A1 scope and the split-prefix practice progression." }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

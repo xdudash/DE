@@ -1,0 +1,63 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_separable_prefix.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Separable verbs: put the prefix at the end"
+  summary: "Conjugate the verb stem and place its separable prefix at the end of a simple main clause."
+  obj.recognize: "Recognize how a separable verb splits in a main clause."
+  obj.form: "Form simple statements and yes/no questions with a separable verb."
+  b.intro: |
+    Some German verbs have a prefix that separates from the verb in a simple main clause. For example, *anrufen* (to call) becomes *Ich rufe dich an.* The verb stem is conjugated; the prefix moves to the end.
+
+    Think of the two parts as a bracket around the other information: the finite verb is near the beginning, while the prefix closes the clause.
+  b.pattern.caption: "Conjugated verb early; prefix at the end"
+  col.subject: "Subject / question"
+  col.finite: "Conjugated verb"
+  col.middle: "Other information"
+  col.prefix: "Prefix at the end"
+  b.examples.title: "Everyday separable verbs"
+  ex.call: "I will call you later."
+  ex.get_up: "Mara gets up at seven."
+  ex.shop: "We shop on Saturday."
+  ex.come: "Are you coming along tonight?"
+  ex.infinitive: "I would like to go out tonight."
+  b.rule: |
+    In a statement, the conjugated verb remains in position 2 and the prefix goes to the end: *Heute rufe ich dich an.* The time phrase *Heute* takes position 1, so the subject follows the verb.
+
+    In a yes/no question, the conjugated verb goes first and the prefix stays at the end: *Kommst du heute mit?* After a modal verb, the full separable verb usually stays together as an infinitive: *Ich möchte heute Abend ausgehen.*
+  b.errors.title: "Keep both parts in the right place"
+  e.prefix: "In a simple main clause, conjugate the stem (*rufe*) and move the prefix (*an*) to the end: *Ich rufe dich später an.*"
+  e.subject: "When *Heute* is first, the finite verb stays second and the subject follows it: *Heute stehe ich früh auf.*"
+  b.summary: |
+    - Conjugate the verb stem: *anrufen → ich rufe*.
+    - Put the separable prefix at the end of a simple main clause: *Ich rufe dich an.*
+    - If another phrase starts the sentence, the verb still stays second: *Heute rufe ich dich an.*
+    - In a yes/no question, put the finite verb first: *Rufst du mich an?*
+    - After a modal verb, keep the separable verb together in the infinitive: *Ich möchte ausgehen.*
+  b.practice.title: "Split the verbs"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Find the conjugated verb and check where the prefix belongs."
+  x.choose.prompt: "Choose the correctly formed sentence with *anrufen*."
+  x.choose.a: "The finite verb is conjugated and stays near the beginning; the prefix does not stay attached here."
+  x.choose.c: "The prefix belongs at the end of this main clause."
+  x.choose.explanation: "In *Ich rufe dich am Abend an*, *rufe* is conjugated and *an* closes the clause."
+  x.match.prompt: "Match each infinitive to its split present-tense form."
+  x.match.explanation: "The conjugated stem appears early, while *an*, *auf*, *ein* or *mit* moves to the end."
+  x.cloze.prompt: "Complete the sentence with the correct parts of *aufstehen*."
+  x.cloze.explanation: "With *Mara* use *steht*. The separable prefix *auf* goes at the end: *Mara steht um sieben Uhr auf.*"
+  x.order.prompt: "Build the sentence: “I will call you in the evening.”"
+  x.order.explanation: "Keep the subject first, conjugate *anrufen* as *rufe*, and put the prefix *an* at the end."
+  x.transform.prompt: "Turn the statement into a yes/no question."
+  x.transform.explanation: "In a direct yes/no question the finite verb moves to the first position. The prefix still stays at the end: *Stehst du am Sonntag früh auf?*"
+  x.categorize.prompt: "Sort the sentences: is the separable verb split in this clause?"
+  x.categorize.split: "Split in the clause"
+  x.categorize.together: "Together as an infinitive"
+  x.categorize.explanation: "A simple main clause splits the finite verb from its prefix. After a modal, the separable verb stays together as an infinitive: *möchte ausgehen*."
+  x.true_false.prompt: "True or false? In a simple main clause, the separable prefix usually stands at the end."
+  x.true_false.wrong: "The finite stem is conjugated earlier in the clause; the separable prefix closes it."
+  x.true_false.explanation: "For example: *Wir kaufen am Samstag ein.* The prefix *ein* is at the end."
+  x.correct.prompt: "Correct the word order in this sentence."
+  x.correct.explanation: "*Heute* is in position 1, so the conjugated verb *kaufe* comes in position 2, followed by the subject *ich*. The prefix *ein* stays at the end."
