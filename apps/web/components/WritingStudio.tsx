@@ -50,12 +50,15 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
           reviewed: parsed.reviewed && typeof parsed.reviewed === "object" ? parsed.reviewed : {},
         });
       }
+      const selectedId = window.localStorage.getItem(`deutschgo-writing-active-v1:${lang}`);
+      const selectedIndex = prompts.findIndex((item) => item.id === selectedId);
+      if (selectedIndex >= 0) setActive(selectedIndex);
     } catch {
       setSaveError(true);
     } finally {
       setHydrated(true);
     }
-  }, [lang]);
+  }, [lang, prompts]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -66,6 +69,15 @@ export function WritingStudio({ lang, labels, prompts, criteria }: Props) {
       setSaveError(true);
     }
   }, [hydrated, lang, work]);
+
+  useEffect(() => {
+    if (!hydrated || !prompt) return;
+    try {
+      window.localStorage.setItem(`deutschgo-writing-active-v1:${lang}`, prompt.id);
+    } catch {
+      setSaveError(true);
+    }
+  }, [hydrated, lang, prompt?.id]);
 
   if (!prompt) return null;
   const promptId = prompt.id;

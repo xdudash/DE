@@ -270,6 +270,32 @@ test.describe("lesson: a guided run", () => {
   });
 });
 
+test.describe("writing studio: picture prompt", () => {
+  test("shows the illustrated task and keeps the German draft on this device", async ({ page }) => {
+    await page.goto("/en/writing");
+    const prompt = page.getByRole("button", { name: /At the morning market/ });
+    await expect(prompt).toBeVisible();
+    await prompt.click();
+
+    const illustration = page.getByRole("img", { name: "A customer buys fresh apples from a vendor at a neighborhood market." });
+    await expect(illustration).toBeVisible();
+    await expect(illustration).toHaveAttribute("src", "/prompt-scenes/market-morning.svg");
+
+    const draft = page.getByRole("textbox", { name: "Your German draft" });
+    const sentence = "Auf dem Markt kauft eine Frau Äpfel.";
+    await draft.fill(sentence);
+    await expect.poll(() => page.evaluate(() => {
+      const stored = JSON.parse(localStorage.getItem("deutschgo-writing-v1:en") ?? "{}");
+      return stored.drafts?.["picture-market"];
+    })).toBe(sentence);
+
+    await page.reload();
+    await expect(page.getByRole("button", { name: /At the morning market/ })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("textbox", { name: "Your German draft" })).toHaveValue(sentence);
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem("deutschgo.events.v1") ?? "[]"))).toEqual([]);
+  });
+});
+
 test.describe("DACH missions", () => {
   test("opens an authored conversation and checks the learner's reply", async ({ page }) => {
     await page.goto("/en/practice");

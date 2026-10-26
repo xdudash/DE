@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (PRs #78–#107 merged; exercise catalogue expanded; picture-based writing prompt added)
+Last updated: 2026-10-26 (PRs #78–#108 merged; exercise gallery and picture-writing journey completed)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -14,7 +14,7 @@ Last updated: 2026-10-26 (PRs #78–#107 merged; exercise catalogue expanded; pi
 - PR #80 is merged as `a0e8e40`. It adds the `categorize` exercise end to end, including partial scoring and per-item feedback. CI passed all four job groups.
 - PRs #81–#85 add browser-voiced listening, dictation, error correction, and minimal-pair exercises. The evaluator is at version 1.5.0.
 - PR #86 adds Writing Studio at `/{lang}/writing`: localized A1–A2 prompts, device-local drafts, word count, and self-review without automated scoring.
-- PR #87 adds the Speaking workshop at `/{lang}/speaking`, with optional local recording and no pronunciation score. PRs #88–#107 complete 34 of the 35 catalogue formats; PR #107 adds syllable stress marking.
+- PR #87 adds the Speaking workshop at `/{lang}/speaking`, with optional local recording and no pronunciation score. PRs #88–#107 complete 34 of the 35 catalogue formats; PR #107 adds syllable stress marking. PR #108 adds an illustrated picture-writing prompt and updates the interactive gallery to cover all 35 currently supported lesson formats.
 - Writing Studio now includes an illustrated A1 picture prompt. Drafts and self-review stay on the device; the prompt is not graded and does not create mastery evidence.
 - Library screens: `/{lang}/library`, `/{lang}/library/{storyId}`, and `/{lang}/vocabulary`. UI strings exist in en/uk/ru/ar. Vocabulary stays on this device pending DG-050's lexicon/saved-sense contract and account API.
 - Route Studio at `/{lang}/routes` stores route choice and order locally; it drives the Home line and next-step recommendation. Lesson evidence remains shared, and skipped topics stay available in the map.
@@ -70,12 +70,13 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Expand the interactive exercise gallery to cover the full implemented catalogue. Then continue with DG-028's complete export/audit path, profile sync, reviewed A1 content, the P4 lexicon contract, and remaining privacy/operations gates.
+Broaden the first A0/A1 route with reviewed lessons that use the expanded exercise formats. Then continue with DG-028's complete export/audit path, profile sync, the P4 lexicon contract, and remaining privacy/operations gates.
 
-## Latest implementation — picture-based writing
-- Writing Studio now offers an illustrated morning-market scene as an A1 writing prompt, with three concrete details to include.
-- The illustration has localized alternative text. The draft, word count, and self-review use the existing device-local writing flow; it is not automatically graded.
+## Latest implementation — picture-writing journey
+- PR #108 adds an original A1 market illustration and localized picture prompt to Writing Studio. Drafts remain local and ungraded.
+- The interactive prototype now lists all 35 current lesson-engine formats once each and shows the picture prompt in the writing board.
+- PR #109 adds a browser journey for the picture, German draft persistence after reload, and the no-mastery-event boundary.
 
-## Next implementation block — complete exercise gallery
-- Update the interactive all-app prototype so its exercise picker and demonstrations match the 34 formats already implemented in the lesson player.
-- Keep the 35th open-ended picture response out of mastery scoring until the review workflow exists; the writing board offers a local, self-reviewed version.
+## Next implementation block — complete first-run lesson
+- Verify onboarding through the first lesson on desktop and phone, including route choice, lesson resume, and a returning learner's next-step state.
+- Keep the human-reviewed catalogue format out of automatic mastery scoring until a review workflow exists.
