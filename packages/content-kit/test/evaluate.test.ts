@@ -49,7 +49,7 @@ describe("connector_choice", () => {
 });
 
 describe("translation_input", () => {
-  const exercise = { id: "x_translation", type: "translation_input" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, front: "@translation", accept: ["Ich kaufe eine Fahrkarte.", "Ich kaufe ein Ticket."] };
+  const exercise = { id: "x_translation", type: "translation_input" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, front: "@translation" as const, accept: ["Ich kaufe eine Fahrkarte.", "Ich kaufe ein Ticket."] };
   it("accepts authored variants with normal answer comparison", () => {
     assert.equal(evaluate(exercise, { type: "translation_input", text: "Ich kaufe eine Fahrkarte." }).correct, true);
     assert.equal(evaluate(exercise, { type: "translation_input", text: "Ich kaufe ein Ticket." }).correct, true);
