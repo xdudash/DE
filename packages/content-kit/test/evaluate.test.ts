@@ -48,6 +48,14 @@ describe("connector_choice", () => {
   });
 });
 
+describe("flashcard_recall", () => {
+  const exercise = { id: "x_recall", type: "flashcard_recall" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, front: "@meaning" as const, back_de: "die Fahrkarte", example_de: "Ich kaufe eine Fahrkarte." };
+  it("records self-rated recall as success or review-needed", () => {
+    assert.equal(evaluate(exercise, { type: "flashcard_recall", rating: "got_it" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "flashcard_recall", rating: "again" }).correct, false);
+  });
+});
+
 describe("odd_one_out", () => {
   const exercise = { id: "x_odd", type: "odd_one_out" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, stem_de: "Welches Wort passt nicht dazu?", options: [{ id: "a", de: "der Apfel", correct: false }, { id: "b", de: "die Birne", correct: false }, { id: "c", de: "der Stuhl", correct: true }] };
   it("selects the one unrelated item", () => {
