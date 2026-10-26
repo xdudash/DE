@@ -65,12 +65,15 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
     case "true_false":
       if (typeof r.value !== "boolean") throw new AttemptError("malformed_request", '"value" must be a boolean');
       return { type: "true_false", value: r.value };
-    case "match_pairs": {
+    case "match_pairs":
+    case "join_halves": {
       if (typeof r.matches !== "object" || r.matches === null || Array.isArray(r.matches)
         || Object.values(r.matches as Record<string, unknown>).some((x) => typeof x !== "string")) {
         throw new AttemptError("malformed_request", '"matches" must be an object of string to string');
       }
-      return { type: "match_pairs", matches: r.matches as Record<string, string> };
+      return r.type === "match_pairs"
+        ? { type: "match_pairs", matches: r.matches as Record<string, string> }
+        : { type: "join_halves", matches: r.matches as Record<string, string> };
     }
     case "reply_choice":
       if (typeof r.optionId !== "string") throw new AttemptError("malformed_request", '"optionId" must be a string');
