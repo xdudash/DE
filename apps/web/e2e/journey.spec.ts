@@ -57,6 +57,13 @@ test.describe("home: the line", () => {
     await expect(english).toHaveAttribute("href", "/en");
   });
 
+  test("the next-step card recommends a startable lesson on a sparse route", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("deutschgo.route-plan.v1", JSON.stringify({ activeRouteId: "route.core.a1_sentence_foundations", routes: {} })));
+    await page.goto("/en");
+    const nextStep = page.locator("section.next-step").filter({ has: page.getByRole("heading", { name: "Your next step" }) });
+    await expect(nextStep.locator("a.btn")).toHaveAttribute("href", "/en/learn/unit.syntax.v2_declarative.a1");
+  });
+
   test("shows the route as a line with the written lesson and explains local progress", async ({ page }) => {
     await page.goto("/en");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
