@@ -78,6 +78,13 @@
 5. A remembered word advances through 1, 3, 7, 16, and 35 day intervals. **Again** returns it in ten minutes. The board also lists scheduled and due words and allows removal.
 6. Vocabulary, context, and dates are local to this browser. They are excluded from account progress and cross-device claims until a lexicon/saved-vocabulary server contract is implemented.
 
+### K1 — Search the contextual dictionary
+1. Open Dictionary from the Library or from a selected word in a story.
+2. Search by the displayed German form, lemma, or localized meaning; a `?q=` link preloads the selected story word.
+3. Select a result to see its meaning, the sentence it came from, and a link back to that story.
+4. Save the exact occurrence to My vocabulary. The existing occurrence id makes repeat saves idempotent, and the word uses the same due schedule as words saved in the reader.
+5. If no entry matches, adjust the query or return to the Library. Only glossed words from the available original stories appear in the pilot dictionary.
+
 ## L — Choose and shape a learning route (device pilot)
 1. Open **Edit route** from the Home learning line to see the available course lines, their level range, available lessons, and completion progress.
 2. Choose the active route. Its line immediately drives the Home stations and the explainable next-step recommendation.

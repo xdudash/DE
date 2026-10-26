@@ -26,7 +26,7 @@ export function LibraryBoard({ lang, stories }: { lang: string; stories: Reading
   const due = saved.filter((word) => word.dueAt <= Date.now()).length;
   return <main className="page library-page">
     <header className="library-heading"><div><p className="eyebrow">{msg("library.eyebrow")}</p><h1>{msg("library.title")}</h1><p className="lead">{msg("library.lead")}</p></div>
-      <Link className="btn btn-secondary" href={`/${lang}/vocabulary`}>{msg("library.words", { count: saved.length })}{due > 0 ? ` · ${msg("library.due", { count: due })}` : ""}</Link>
+      <div className="library-actions"><Link className="btn btn-secondary" href={`/${lang}/dictionary`}>{msg("dictionary.open")}</Link><Link className="btn btn-secondary" href={`/${lang}/vocabulary`}>{msg("library.words", { count: saved.length })}{due > 0 ? ` · ${msg("library.due", { count: due })}` : ""}</Link></div>
     </header>
     <section className="library-grid" aria-label={msg("library.readings")}>
       {stories.map((story, index) => <article className={`reading-card reading-card-${index % 3}`} key={story.id}>
@@ -63,7 +63,7 @@ export function ReadingArticle({ lang, story }: { lang: string; story: ReadingSt
       <p className="reading-source">{msg("library.sourceLabel")}: {story.source}</p>
     </article>
     <aside className="reading-aside">
-      {selected ? <section className="card lookup-card" aria-live="polite">
+        {selected ? <section className="card lookup-card" aria-live="polite">
         <p className="eyebrow">{msg("library.wordInContext")}</p><h2 lang="de" className="de">{selected.token.de}</h2>
         <p className="lookup-lemma" lang="de">{selected.token.lemma}</p><p>{selected.token.gloss?.[lang] ?? selected.token.gloss?.en ?? msg("library.noMeaning")}</p>
         <blockquote lang="de" className="de">{selected.context}</blockquote>
@@ -71,6 +71,7 @@ export function ReadingArticle({ lang, story }: { lang: string; story: ReadingSt
           const ok = saveWord({ id: selected.id, storyId: story.id, word: selected.token.de, lemma: selected.token.lemma ?? selected.token.de, meaning: selected.token.gloss?.[lang] ?? selected.token.gloss?.en ?? "", context: selected.context });
           setSaved(listSavedWords()); setNotice(msg(ok ? "library.saved" : "library.saveFailed"));
         }}>{msg("library.saveWord")}</button>}
+        <Link className="text-link" href={`/${lang}/dictionary?q=${encodeURIComponent(selected.token.lemma ?? selected.token.de)}`}>{msg("dictionary.open")}</Link>
         {notice && <p role="status" className="small muted">{notice}</p>}
       </section> : <section className="card lookup-hint"><span className="lookup-mark" aria-hidden="true">Aa</span><h2>{msg("library.lookupTitle")}</h2><p className="muted">{msg("library.lookupHint")}</p></section>}
       <section className="card reading-progress"><strong>{saved.length}</strong><p>{msg("library.savedCount", { count: saved.length })}</p><Link href={`/${lang}/vocabulary`}>{msg("library.openWords")}</Link></section>

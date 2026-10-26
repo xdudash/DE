@@ -505,6 +505,28 @@ export const en = {
   "map.grammarCategory": "Grammar",
   "map.wordsCategory": "Words",
   "map.otherCategory": "Other",
+
+  // Contextual dictionary screen
+  "dictionary.open": 'Open dictionary',
+  "dictionary.eyebrow": 'German words in context',
+  "dictionary.title": 'Dictionary',
+  "dictionary.lead": 'Search words from the DeutschGo reading library. Every entry keeps the original sentence and story it came from.',
+  "dictionary.back": 'Back to library',
+  "dictionary.search": 'Search a German word or meaning',
+  "dictionary.sourceNote": 'Showing {count} matching entries from original stories. Saved words stay on this device.',
+  "dictionary.results": 'Dictionary matches',
+  "dictionary.empty": 'No matching words yet',
+  "dictionary.emptyBody": 'Try another spelling or search for part of a meaning.',
+  "dictionary.refine": 'Showing the first 60 matches. Add more letters to narrow your search.',
+  "dictionary.entry": 'Word entry',
+  "dictionary.seenAs": 'In the text',
+  "dictionary.example": 'Sentence',
+  "dictionary.fromStory": 'From: {title}',
+  "dictionary.save": 'Save to my vocabulary',
+  "dictionary.saved": 'Saved to your device vocabulary.',
+  "dictionary.savedAlready": 'This occurrence is already saved.',
+  "dictionary.openStory": 'Read the story',
+  "dictionary.localNote": 'Meanings are available for marked words in the current reading collection. More dictionary entries will be added with future reading content.',
 } as const;
 
 export type MessageKey = keyof typeof en;
