@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-10-26 (PR #110 merged; first-visit path verified on desktop and phone)
+Last updated: 2026-10-26 (PRs #110–#112 merged; A1 route draft lesson added)
 
 ## Current phase
 **P2 — learner loop** (in progress). P1 content skeleton is done; its exit (gold unit human-reviewed) is still open. `main` includes PR #77 (`25548d5`) and PR #78 (`8e1b0e5`) and PR #79 (`288a994`). See [roadmap](./ROADMAP.md) and the [task register](./BACKLOG.md).
@@ -24,7 +24,7 @@ Last updated: 2026-10-26 (PR #110 merged; first-visit path verified on desktop a
 
 ## Implemented (on `main`)
 - Content contract v1: JSON Schemas, strict YAML loader, semantic validator, bundle compiler, answer evaluator (single choice, word order, cloze, transform), graph utilities (`packages/content-kit`).
-- Content: A1 graph mapped (DG-012): 67 concepts, 66 of them `planned`; **one** authored concept (V2) and the gold unit with 10 exercises (`needs_review`); 2 A1 routes. `npm run content:report`.
+- Content: A1 graph mapped (DG-012): 67 concepts, 65 `planned` and 2 authored as `needs_review`; two A1 lesson units are available across 2 A1 routes. The V2 gold unit and new regular-present lesson still need human review. `npm run content:report`.
 - Learning engine v1 (`packages/learning-engine`, DG-010): states, review scheduler, explainable recommendations.
 - Attempt recording (`packages/attempts`, `POST /api/attempts`, DG-009): server re-evaluation, append-only events, derived caches.
 - Learner-data schema (`supabase/migrations` 0001, 0002): RLS on every table, GDPR export function, cascade deletion. Hosted project `deutschgo` (EU) exists; 0001 is recorded as applied, 0002 (push subscriptions) is not recorded.
@@ -47,7 +47,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Goals, time budget and region use different vocabularies in the app, the database and the content (DG-029).
 
 ## Authored but NOT human-verified
-- German correctness and pedagogy of the gold unit (`review.*: pending`).
+- German correctness and pedagogy of the gold unit and the new regular-present lesson (`review.*: pending`).
 - uk/ru translations (0 of 210 localization files reviewed) and the uk/ru/ar interface strings: machine drafts.
 - Rights confirmation for original content (owner).
 
@@ -86,3 +86,4 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 - Desktop and phone journeys now cover language choice → plan → first lesson; the full GitHub Actions run, including Playwright and axe, passed.
 - Updated the user-flow and screen-map docs to show this entry and return behavior.
 - Home recommendations skip planned route topics without lessons and point to the next available lesson or review; the planned topics stay visible on the line and map.
+- The A1 sentence route now begins with a regular-present lesson, followed by the V2 lesson. The new 9-exercise draft uses 8 supported formats; it remains `needs_review` and is never described as human-verified.
