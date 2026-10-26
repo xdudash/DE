@@ -4,8 +4,9 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 
 // The first available lesson on the line (A1 regular present tense). Answers come from the bundle,
 // so the tests do not depend on the wording of one lesson.
+const CONTENT_BUNDLE = JSON.parse(readFileSync(join(process.cwd(), "generated", "content.json"), "utf8"));
 const UNIT = "/en/learn/unit.morph.verb_present_conjugation.a1";
-const BUNDLE_UNIT = (JSON.parse(readFileSync(join(process.cwd(), "generated", "content.json"), "utf8")).units as Record<string, any>[])
+const BUNDLE_UNIT = (CONTENT_BUNDLE.units as Record<string, any>[])
   .find((u) => u.id === UNIT.split("/").pop())!;
 const FIRST_EXERCISE = (BUNDLE_UNIT.blocks.find((b: { type: string }) => b.type === "exercises").items as Record<string, any>[])[0]!;
 const RIGHT = FIRST_EXERCISE.options.find((o: { correct: boolean }) => o.correct).de as string;
@@ -31,6 +32,37 @@ async function continueUntil(page: Page, target: Locator) {
 }
 
 test.describe("home: the line", () => {
+  test("the next A1 route lesson is a startable W-question lesson", async ({ page }) => {
+    const completedUnits = ["unit.morph.verb_present_conjugation.a1", "unit.syntax.v2_declarative.a1"];
+    const completedAt = Date.now() - 60 * 60 * 1000;
+    const events = completedUnits.flatMap((unitId, unitIndex) => {
+      const unit = CONTENT_BUNDLE.units.find((candidate: { id: string }) => candidate.id === unitId);
+      const exercises = unit.blocks.flatMap((block: { type: string; items?: { id: string; concepts?: string[] }[] }) => block.type === "exercises" ? block.items ?? [] : []);
+      return exercises.map((exercise: { id: string; concepts?: string[] }, exerciseIndex: number) => ({
+        id: `seed-${unitId}-${exercise.id}`,
+        kind: "attempt",
+        at: completedAt + unitIndex * 100 + exerciseIndex,
+        contentId: exercise.id,
+        conceptIds: exercise.concepts ?? unit.concepts,
+        skill: "knowledge",
+        correct: true,
+        unitId,
+        exerciseId: exercise.id,
+      }));
+    });
+    await page.addInitScript((seededEvents) => {
+      localStorage.setItem("deutschgo.route-plan.v1", JSON.stringify({ activeRouteId: "route.core.a1_sentence_foundations", routes: {} }));
+      localStorage.setItem("deutschgo.events.v1", JSON.stringify(seededEvents));
+    }, events);
+    await page.goto("/en");
+    const nextStep = page.locator("section.next-step").filter({ has: page.getByRole("heading", { name: "Your next step" }) });
+    const lessonLink = nextStep.locator("a.btn");
+    await expect(lessonLink).toHaveAttribute("href", "/en/learn/unit.syntax.w_questions.a1");
+    await lessonLink.click();
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.syntax\.w_questions\.a1$/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  });
+
   test("a first-time language choice opens the plan, then starts the first lesson", async ({ page }) => {
     await page.goto("/");
     const english = page.locator(".langcards a").filter({ hasText: "English" });
