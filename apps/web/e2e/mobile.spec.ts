@@ -109,6 +109,27 @@ test.describe("phone layout", () => {
   }
 });
 
+test.describe("exercise format gallery", () => {
+  test("opens a format-specific, tappable preview", async ({ page }) => {
+    await page.goto("/en/exercises");
+    await page.getByRole("button", { name: "Preview interaction" }).first().click();
+    const preview = page.locator(".format-preview");
+    await expect(preview).toBeVisible();
+    await expect(preview.getByText("Choose or enter your answer")).toBeVisible();
+    const choice = preview.getByRole("button", { name: "Guten Tag!" });
+    await choice.click();
+    await expect(choice).toHaveAttribute("aria-pressed", "true");
+    await expect(preview.getByText("Selected: Guten Tag!")).toBeVisible();
+  });
+
+  test("localizes preview labels in Arabic and keeps the preview available", async ({ page }) => {
+    await page.goto("/ar/exercises");
+    await page.getByRole("button", { name: "معاينة التفاعل" }).first().click();
+    await expect(page.locator(".format-preview")).toBeVisible();
+    await expect(page.locator(".format-preview-head")).toContainText("عرض تفاعلي");
+  });
+});
+
 /** On a phone the sections live in the bottom bar, not in the header. */
 test.describe("phone navigation", () => {
   test("a new learner can choose a language, save a plan, and enter the first lesson", async ({ page }) => {
