@@ -1,0 +1,55 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.case_accusative.a1
+lang: en
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Accusative: the direct object"
+  summary: "Use the accusative for the direct object. Masculine articles change; feminine, neuter, and plural definite articles stay the same."
+  obj.role: "Recognize the direct object in a simple sentence."
+  obj.article: "Choose the correct definite or indefinite article for a direct object."
+  b.intro: |
+    The **accusative** often marks the person or thing directly affected by an action. In *Ich sehe den Hund* (I see the dog), *ich* is doing the action and *den Hund* is what I see.
+
+    First find the subject, then ask **whom?** or **what?** after the verb. The answer is often the accusative object.
+  b.pattern.caption: "Only masculine articles change in the accusative"
+  col.nominative: "Subject form"
+  col.accusative: "Object form"
+  col.example: "Example"
+  b.examples.title: "Objects in everyday sentences"
+  ex.book: "I am buying the apple."
+  ex.coffee: "She is ordering a coffee."
+  ex.film: "We are watching a film."
+  ex.fem: "He is visiting the family."
+  ex.neut: "I am taking the bicycle."
+  b.rule: |
+    With a **masculine** noun, the definite article changes from *der* to *den* and the indefinite article changes from *ein* to *einen*. The same pattern applies to *kein* → *keinen* and possessives such as *mein* → *meinen*.
+
+    Feminine *die*, neuter *das*, and plural *die* do not change in this basic accusative pattern. The noun itself usually stays the same: *der Hund* → *den Hund*.
+  b.summary: |
+    - The subject does the action and is usually nominative.
+    - The direct object answers **whom?** or **what?** after the verb.
+    - Masculine: *der → den*, *ein → einen*, *kein → keinen*.
+    - Feminine *die*, neuter *das*, and plural *die* stay the same here.
+  b.practice.title: "Practice: find and form the object"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite yet. Find the object and check the noun's gender."
+  x.article.prompt: "Choose the article for the direct object."
+  x.article.a: "*Der* is the masculine subject form. Here the apple is the object."
+  x.article.c: "*Dem* is used for some dative objects; this sentence needs the accusative."
+  x.article.explanation: "*Apfel* is masculine, and it is the thing being bought, so use accusative *den*."
+  x.cloze.prompt: "Complete the sentence with the accusative article."
+  x.cloze.explanation: "*Bahnhof* is masculine. As the object of *suchen*, it takes *einen*."
+  x.match.prompt: "Match each subject form with its accusative object form."
+  x.match.explanation: "Only the masculine article changes in this set: *der → den*."
+  x.order.prompt: "Put the words in order to say that you are watching a film."
+  x.order.explanation: "The subject comes first, then the conjugated verb, then the object: *Ich sehe einen Film.*"
+  x.transform.prompt: "Correct the article so the sentence says the man buys the apple."
+  x.transform.explanation: "The apple is the direct object. *Apfel* is masculine, so *der* becomes *den*."
+  x.correct.prompt: "Correct the article in the sentence."
+  x.correct.rule: "The doctor is the object of *besucht*. Use masculine accusative *den Arzt*."
+  x.correct.explanation: "*Sie* is the subject. The person she visits is the direct object: *den Arzt*."
+  x.true_false.prompt: "Decide whether the statement is true or false."
+  x.true_false.wrong: "In this sentence, *ich* is the subject and *den Hund* is the direct object."
+  x.true_false.explanation: "The verb *sehen* takes the thing seen as its direct object; *den Hund* is accusative."

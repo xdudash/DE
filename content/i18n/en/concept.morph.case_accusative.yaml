@@ -2,8 +2,13 @@ schema: deutschgo.l10n/1
 entity: concept.morph.case_accusative
 lang: en
 based_on_version: 0.1.0
-status: draft
-translator: claude (AI draft, 2026-10-12)
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
 strings:
-  title: 'Accusative: the direct object'
-  summary: 'The direct object of most verbs. Only the masculine article changes visibly: der → den. Ich brauche den Termin.'
+  title: "Accusative case"
+  summary: "The accusative commonly marks the direct object of a verb."
+  pattern.scope: "This basic pattern covers direct objects after common transitive verbs in simple main clauses."
+  pattern.limits: "Some verbs take dative objects, and prepositions can assign a case. Learn those patterns separately."
+  ex.masculine: "I see the dog."
+  ex.feminine: "I see the cat."
+  ex.neuter: "I see the child."

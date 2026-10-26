@@ -1,9 +1,8 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
+# Authored A1 material is available in the accusative article unit.
 schema: deutschgo.concept/1
 id: concept.morph.case_accusative
 version: 0.1.0
-status: planned
+status: needs_review
 kind: morphology
 domain: cases
 title: "@title"
@@ -11,3 +10,17 @@ summary: "@summary"
 cefr: { introduced: A1, expected_mastery: A2 }
 relations:
   - { type: depends_on, target: concept.morph.case_nominative }
+pattern:
+  schema_de: "[Subjekt im Nominativ] – [finites Verb] – [direktes Objekt im Akkusativ]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_masculine, de: "Ich sehe den Hund.", gloss: "@ex.masculine", highlight: [2, 3], source: src.deutschgo_original }
+  - { id: ex_feminine, de: "Ich sehe die Katze.", gloss: "@ex.feminine", highlight: [2, 3], source: src.deutschgo_original }
+  - { id: ex_neuter, de: "Ich sehe das Kind.", gloss: "@ex.neuter", highlight: [2, 3], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored concept; case use and examples require review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

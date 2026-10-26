@@ -3,7 +3,12 @@ entity: concept.morph.case_accusative
 lang: ru
 based_on_version: 0.1.0
 status: machine_draft
-translator: claude (AI draft, 2026-10-12)
+translator: Codex (AI draft, 2026-10-26)
 strings:
-  title: 'Akkusativ: прямое дополнение'
-  summary: 'Прямое дополнение большинства глаголов. Заметно меняется только артикль мужского рода: der → den. Ich brauche den Termin.'
+  title: "Винительный падеж (Akkusativ)"
+  summary: "Akkusativ обычно обозначает прямое дополнение при глаголе."
+  pattern.scope: "Эта базовая модель охватывает прямые дополнения после распространённых переходных глаголов в простом главном предложении."
+  pattern.limits: "Некоторые глаголы требуют Dativ, а предлоги могут задавать падеж. Эти модели изучаются отдельно."
+  ex.masculine: "Я вижу собаку."
+  ex.feminine: "Я вижу кошку."
+  ex.neuter: "Я вижу ребёнка."
