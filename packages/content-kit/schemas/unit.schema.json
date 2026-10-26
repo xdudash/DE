@@ -509,7 +509,8 @@
             "read_question",
             "dialogue_gap",
             "modal_choice",
-            "odd_one_out"
+            "odd_one_out",
+            "flashcard_recall"
           ]
         }
       },
@@ -1623,6 +1624,29 @@
           },
           "required": [
             "options"
+          ],
+          "type": "object"
+        },
+        {
+          "$ref": "#/$defs/exerciseBase",
+          "unevaluatedProperties": false,
+          "properties": {
+            "type": {
+              "const": "flashcard_recall"
+            },
+            "front": {
+              "$ref": "common.schema.json#/$defs/l10nRef"
+            },
+            "back_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            },
+            "example_de": {
+              "$ref": "common.schema.json#/$defs/de"
+            }
+          },
+          "required": [
+            "front",
+            "back_de"
           ],
           "type": "object"
         }
