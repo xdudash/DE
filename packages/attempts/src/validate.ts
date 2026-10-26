@@ -66,6 +66,9 @@ function responseOf(raw: unknown): AttemptRequest["response"] {
       if (typeof r.value !== "boolean") throw new AttemptError("malformed_request", '"value" must be a boolean');
       return { type: "true_false", value: r.value };
     case "match_pairs":
+    case "stress_mark":
+      if (!Number.isInteger(r.syllableIndex) || (r.syllableIndex as number) < 0) throw new AttemptError("malformed_request", '"syllableIndex" must be a non-negative integer');
+      return { type: "stress_mark", syllableIndex: r.syllableIndex as number };
     case "join_halves": {
       if (typeof r.matches !== "object" || r.matches === null || Array.isArray(r.matches)
         || Object.values(r.matches as Record<string, unknown>).some((x) => typeof x !== "string")) {
