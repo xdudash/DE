@@ -52,7 +52,7 @@ Foundation check (passes without `node_modules`; with dependencies installed it 
 - Rights confirmation for original content (owner).
 
 ## Not implemented (product scope, later phases)
-Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; prerequisite catch-up; the engine-managed, human-reviewed picture-prompt exercise (the local-only writing prompt is available in Writing Studio); Arabic font; billing (free during build-out by decision).
+Email sign-in; complete lexicon and synced saved senses; additional reviewed reading content; recorded audio assets; calibrated placement beyond the five-question pilot; account-synced route preferences; the engine-managed, human-reviewed picture-prompt exercise (the local-only writing prompt is available in Writing Studio); Arabic font; billing (free during build-out by decision).
 
 ## Accepted decisions
 ADR-0001…0006, ADR-0009…0015 accepted. Proposed: ADR-0007 media, ADR-0008 billing.
@@ -70,7 +70,7 @@ DG-011 (lockfile) is no longer owner-blocked and is **in review** (branch `chore
 The permanent link is the production deployment of `main` on Vercel (ADR-0005). The address is not recorded here; read it in the Vercel dashboard (project `de` → Domains) and record it once the owner confirms it. A custom domain is an owner decision (blocker 4).
 
 ## Next recommended task
-Broaden the first A0/A1 route with reviewed lessons that use the expanded exercise formats. Then continue with DG-028's complete export/audit path, profile sync, the P4 lexicon contract, and remaining privacy/operations gates.
+Continue the client-side product flow with evidence-backed progress and complete screen journeys. Lesson content is intentionally out of scope for this pass. Then continue with DG-028's complete export/audit path, profile sync, the P4 lexicon contract, and remaining privacy/operations gates.
 
 ## Latest implementation — picture-writing journey
 - PR #108 adds an original A1 market illustration and localized picture prompt to Writing Studio. Drafts remain local and ungraded.
@@ -89,8 +89,12 @@ Broaden the first A0/A1 route with reviewed lessons that use the expanded exerci
 - The profile's data card now downloads a versioned JSON snapshot of this browser's DeutschGo state before deletion. It includes app-owned local storage entries such as route preferences, lesson answers/checkpoints, vocabulary, and writing drafts; it is created in the browser and is not uploaded.
 
 ## Latest implementation — Knowledge Map catch-up paths
-- The map can now expand the unmet prerequisite chain for a target concept, sort it from earliest prerequisite to target, and link directly to the first available lesson. Progress updates shorten the path; planned topics stay visible as blockers and do not lock access to the target.
+- PR #119 merged. The map can expand the unmet prerequisite chain for a target concept, sort it from earliest prerequisite to target, and link directly to the first available lesson. Progress updates shorten the path; planned topics stay visible as blockers and do not lock access to the target.
 - Search, level/type/state filters and this catch-up flow are localized in en/uk/ru/ar.
+
+## Latest implementation — progress by skill and topic
+- The progress board filters actual saved attempts by skill and shows per-topic accuracy, evidence state, answer history, and links back to the map and source lesson.
+- Account and device evidence use the same shared progress view; no score or mastery is inferred from unsaved activity.
 
 ## Latest implementation — first visit funnel
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.
