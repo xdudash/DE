@@ -2,10 +2,15 @@
 
 ## A — First visit
 1. Choose an explanation language.
-2. Choose a learning goal and daily study-time target in the study-plan wizard.
-3. Choose an available route, review the plan, and save it on this device.
-4. Continue to Home; the active route shapes its learning line and next-step recommendation.
-5. Offer an optional five-question placement check. Label it a rough estimate, not an official CEFR result; the learner can ignore it and select any route.
+2. Open the study-plan wizard directly from the language choice.
+3. Choose a learning goal and daily study-time target; offer an optional five-question placement check, clearly labelled as a rough estimate rather than an official CEFR result.
+4. Choose an available route, review the plan, and save it on this device.
+5. Continue to Home; the active route shapes its learning line and next-step recommendation, with the first available lesson ready to start.
+
+## A1 — Return from the language gate
+1. Offer the last used explanation language as a direct route back to Home.
+2. Language cards also lead to Home when this browser already has a saved plan, learning answers, or an unfinished lesson.
+3. Preserve the route, next-step recommendation, and lesson-resume action from that local state.
 
 ## B — Learn a topic
 1. Open a topic from search, map, route, or recommendation.
