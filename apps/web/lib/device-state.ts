@@ -289,6 +289,21 @@ export function deviceKeyValue(): KeyValue {
   }
 }
 
+/** A portable, read-only snapshot of the data this browser stores for DeutschGo. */
+export function exportDeviceData(): { schema: "deutschgo.device-export/1"; exportedAt: string; data: Record<string, unknown> } {
+  const data: Record<string, unknown> = {};
+  const storage = window.localStorage;
+  for (let i = 0; i < storage.length; i++) {
+    const key = storage.key(i);
+    if (!key || (!key.startsWith("deutschgo.") && !key.startsWith("deutschgo-writing-v1:"))) continue;
+    const value = storage.getItem(key);
+    if (value === null) continue;
+    try { data[key] = JSON.parse(value) as unknown; }
+    catch { data[key] = value; }
+  }
+  return { schema: "deutschgo.device-export/1", exportedAt: new Date().toISOString(), data };
+}
+
 /**
  * Removes everything DeutschGo keeps in this browser: the plan, remembered language,
  * answers, queued sends, saved vocabulary and route preferences. An account's copy is not touched:
