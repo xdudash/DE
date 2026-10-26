@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { GOALS, MINUTE_CHOICES, readPlacement, readSetup, writeSetup, type Goal, type PlacementEstimate, type Setup } from "../lib/device-state";
+import { GOALS, MINUTE_CHOICES, readPlacement, readSetup, writeSetup, type Goal, type PathDifficulty, type PlacementEstimate, type Setup } from "../lib/device-state";
 import { useRoutePlan, type RoutePlanOption } from "../lib/route-plan-client";
+import { LearningPathPicker, type LearningPathCounts } from "./LearningPathPicker";
 
 const GOAL_KEYS = {
   general: "setup.goal.general",
@@ -22,13 +23,14 @@ const GOAL_HINT_KEYS: Record<Goal, MessageKey> = {
   exam: "onboarding.goal.exam",
 };
 
-export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string }) {
+export function OnboardingWizard({ lang, routes, defaultRouteId, coursePaths }: { lang: string; routes: RoutePlanOption[]; defaultRouteId: string; coursePaths: LearningPathCounts[] }) {
   const msg = translator(lang);
   const router = useRouter();
   const routePlan = useRoutePlan(routes, defaultRouteId);
   const [step, setStep] = useState(0);
   const [goal, setGoal] = useState<Goal>("general");
   const [minutes, setMinutes] = useState<number>(10);
+  const [difficulty, setDifficulty] = useState<PathDifficulty>("medium");
   const [routeId, setRouteId] = useState(defaultRouteId);
   const [placement, setPlacement] = useState<PlacementEstimate | null>(null);
   const [ready, setReady] = useState(false);
@@ -39,6 +41,7 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
     if (existing) {
       setGoal(existing.goal);
       setMinutes(existing.minutes);
+      setDifficulty(existing.difficulty);
     }
     const estimate = readPlacement();
     setPlacement(estimate);
@@ -56,7 +59,7 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
   const recommendedRouteId = placement ? (routes.find((route) => route.from === (placement.band === "A1" ? "A1" : "A0") && route.goals.includes(goal)) ?? routes.find((route) => route.from === (placement.band === "A1" ? "A1" : "A0")))?.id : undefined;
 
   function save() {
-    const setup: Setup = { goal, minutes };
+    const setup: Setup = { goal, minutes, difficulty };
     const setupSaved = writeSetup(setup);
     const routeSaved = routePlan.selectRoute(routeId);
     if (setupSaved && routeSaved) {
@@ -75,7 +78,7 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
         <p className="lead">{msg("onboarding.lead")}</p>
       </header>
       <ol className="onboarding-progress" aria-label={msg("onboarding.title")}>
-        {(["onboarding.step1", "onboarding.step2", "onboarding.step3"] as const).map((key, index) => (
+        {(["onboarding.step1", "onboarding.step2", "onboarding.step3", "onboarding.step4"] as const).map((key, index) => (
           <li key={key} className={index === step ? "is-current" : index < step ? "is-done" : ""} aria-current={index === step ? "step" : undefined}>
             <span>{index < step ? "✓" : index + 1}</span><b>{msg(key)}</b>
           </li>
@@ -108,6 +111,11 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
           </>}
 
           {step === 1 && <>
+            <LearningPathPicker lang={lang} difficulty={difficulty} paths={coursePaths} onChange={setDifficulty} />
+            <p className="onboarding-local-note">{msg("routeStudio.localNote")}</p>
+          </>}
+
+          {step === 2 && <>
             <h2>{msg("routeStudio.availableRoutes")}</h2>
             <p className="muted">{msg("onboarding.routeHint")}</p>
             <div className="onboarding-routes" role="radiogroup" aria-label={msg("routeStudio.availableRoutes")}>
@@ -119,13 +127,14 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
             <p className="onboarding-local-note">{msg("routeStudio.localNote")}</p>
           </>}
 
-          {step === 2 && <>
+          {step === 3 && <>
             <div className="onboarding-ready-icon" aria-hidden="true">✦</div>
             <h2>{msg("onboarding.reviewTitle")}</h2>
             <p className="muted">{msg("onboarding.reviewLead")}</p>
             <dl className="onboarding-summary">
               <div><dt>{msg("setup.goalLabel")}</dt><dd>{msg(GOAL_KEYS[goal])}</dd></div>
               <div><dt>{msg("setup.minutesLabel")}</dt><dd>{msg("setup.minutes", { minutes })}</dd></div>
+              <div><dt>{msg("learningPath.title")}</dt><dd>{msg(`learningPath.${difficulty}` as MessageKey)} · {new Intl.NumberFormat(lang).format(coursePaths.find((path) => path.difficulty === difficulty)?.steps ?? 0)}</dd></div>
               {placement && <div><dt>{msg("onboarding.startingPoint")}</dt><dd>{placement.band}</dd></div>}
               <div><dt>{msg("routeStudio.activeRoute")}</dt><dd>{chosenRoute?.title ?? "—"}</dd></div>
             </dl>
@@ -135,9 +144,9 @@ export function OnboardingWizard({ lang, routes, defaultRouteId }: { lang: strin
 
           <div className="onboarding-actions">
             {step > 0 ? <button type="button" className="btn btn-secondary" onClick={() => { setStatus("idle"); setStep(step - 1); }}>← {msg("onboarding.back")}</button> : <span />}
-            {step < 2 ? <button type="button" className="btn btn-primary" onClick={() => { setStatus("idle"); setStep(step + 1); }}>{msg("onboarding.next")} →</button> : <div className="onboarding-final-actions"><button type="button" className="btn btn-secondary" onClick={() => router.push(`/${lang}/routes`)}>{msg("onboarding.editRoute")}</button><button type="button" className="btn btn-primary" onClick={save}>{msg("onboarding.save")}</button></div>}
+            {step < 3 ? <button type="button" className="btn btn-primary" onClick={() => { setStatus("idle"); setStep(step + 1); }}>{msg("onboarding.next")} →</button> : <div className="onboarding-final-actions"><button type="button" className="btn btn-secondary" onClick={() => router.push(`/${lang}/routes`)}>{msg("onboarding.editRoute")}</button><button type="button" className="btn btn-primary" onClick={save}>{msg("onboarding.save")}</button></div>}
           </div>
-          {step === 2 && <Link className="onboarding-skip" href={`/${lang}`}>{msg("onboarding.skip")}</Link>}
+          {step === 3 && <Link className="onboarding-skip" href={`/${lang}`}>{msg("onboarding.skip")}</Link>}
         </section>
       )}
     </main>

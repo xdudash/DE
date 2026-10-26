@@ -18,7 +18,7 @@ import type { SessionAnswer } from "./lesson-session.ts";
 import { OUTBOX_KEY, type KeyValue } from "./attempts/outbox.ts";
 
 import { normalizeSetup, type Setup } from "./plan.ts";
-export { GOALS, MINUTE_CHOICES, normalizeSetup, type Goal, type Setup } from "./plan.ts";
+export { GOALS, MINUTE_CHOICES, PATH_DIFFICULTIES, normalizeSetup, type Goal, type PathDifficulty, type Setup } from "./plan.ts";
 
 /** A graded exercise answer, as the learning engine reads it, plus where it came from. */
 export interface DeviceAttempt extends LearningEvent {

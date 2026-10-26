@@ -9,6 +9,7 @@ import { Reminders, type ReminderLabels } from "../../../components/Reminders";
 import { ProgressPanel } from "../../../components/ProgressPanel";
 import { bundle } from "../../../lib/content";
 import { ui } from "../../../lib/i18n";
+import { coursePathCounts } from "../../../lib/course-paths";
 
 /** Every catalog string the account area shows. Kept here so the client gets plain text. */
 const ACCOUNT_KEYS: MessageKey[] = [
@@ -71,7 +72,7 @@ export default async function You({ params }: { params: Promise<{ lang: string }
         <ProgressPanel lang={lang} graph={graphFromBundle(b)} totalTopics={b.concepts.length} />
         <Link className="btn btn-secondary" href={"/" + lang + "/progress"}>{msg("progress.title")}</Link>
       </section>
-      <ProfileSettings lang={lang} />
+      <ProfileSettings lang={lang} coursePaths={coursePathCounts(b.units.length)} />
       <section className="card" aria-labelledby="reminder-heading">
         <h2 id="reminder-heading" className="card-title">
           <Icon name="bell" size={20} />

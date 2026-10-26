@@ -1,9 +1,7 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
 schema: deutschgo.concept/1
 id: concept.morph.verb_modals
 version: 0.1.0
-status: planned
+status: needs_review
 kind: morphology
 domain: verbs
 title: "@title"
@@ -12,3 +10,17 @@ cefr: { introduced: A1, expected_mastery: A2 }
 relations:
   - { type: depends_on, target: concept.morph.verb_present_conjugation }
   - { type: related_to, target: concept.syntax.verbal_bracket }
+pattern:
+  schema_de: "[Subjekt] – [konjugiertes Modalverb] – [weitere Angaben] – [Infinitiv am Satzende]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_ability, de: "Ich kann heute länger bleiben.", gloss: "@ex.ability", highlight: [1], source: src.deutschgo_original }
+  - { id: ex_necessity, de: "Wir müssen jetzt gehen.", gloss: "@ex.necessity", highlight: [1, 4], source: src.deutschgo_original }
+  - { id: ex_permission, de: "Darf ich hier warten?", gloss: "@ex.permission", highlight: [0, 4], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored concept; modal forms and meanings need review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }

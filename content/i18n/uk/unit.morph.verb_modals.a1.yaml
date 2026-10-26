@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.morph.verb_modals.a1
+lang: uk
+based_on_version: 1.0.0
+status: machine_draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Модальні дієслова: могти, мусити, мати дозвіл, хотіти"
+  summary: "Модальне дієслово виражає можливість, необхідність, дозвіл або намір, а смислове дієслово стоїть у кінці."
+  obj.meaning: "Розпізнавати основні значення німецьких модальних дієслів."
+  obj.form: "Уживати модальне дієслово з інфінітивом у кінці простого речення."
+  b.intro: |
+    Модальні дієслова додають значення **здатності** (*können*), **необхідності** (*müssen*), **дозволу** (*dürfen*) або **наміру** (*wollen*). *Möchten* — ввічливий спосіб сказати, чого ви хотіли б.
+
+    Модальне дієслово відмінюється, а смислове залишається в інфінітиві. У простому головному реченні інфінітив ставимо в кінець: *Ich kann heute länger bleiben.* (Я можу сьогодні залишитися довше.)
+  b.pattern.caption: "Форма модального дієслова залежить від підмета"
+  b.examples.title: "Модальні дієслова в повсякденних ситуаціях"
+  col.modal: "Інфінітив"
+  ich: "ich"
+  du: "du"
+  er_sie_es: "er/sie/es"
+  col.meaning: "Значення"
+  ex.can: "Я можу сьогодні залишитися довше."
+  ex.must: "Нам потрібно зараз іти на вокзал."
+  ex.permission: "Можна мені тут почекати?"
+  ex.want: "Вона хоче працювати в суботу."
+  ex.would_like: "Я хотів/хотіла б замовити чай."
+  b.order: |
+    У головному реченні відмінюване модальне дієслово зазвичай стоїть на другому місці. Друге дієслово залишається в інфінітиві й переходить у кінець: *Wir müssen jetzt zum Bahnhof gehen.*
+
+    У загальному питанні модальне дієслово ставимо першим: *Darf ich hier warten?* Інфінітив усе одно залишається в кінці. Форма модального дієслова залежить від підмета: *ich kann*, *du kannst*, *er kann*.
+  b.errors.title: "Зверніть увагу на ці форми"
+  e.infinitive: "Після модального *kann* потрібен інфінітив *sprechen* у кінці. Відмінюється лише модальне дієслово: *Ich kann Deutsch sprechen.*"
+  e.conjugation: "З *du* вживаємо форму *kannst*: *Du kannst heute kommen.*"
+  e.separation: "Інфінітив ставимо в кінець речення: *Wir müssen jetzt gehen.*"
+  b.summary: |
+    - *können* виражає здатність, *müssen* — необхідність, *dürfen* — дозвіл, *wollen* — намір.
+    - Відмінюйте модальне дієслово відповідно до підмета: *ich kann*, *du kannst*, *er kann*.
+    - Смислове дієслово залишайте в інфінітиві й ставте в кінець: *Ich kann heute länger bleiben.*
+    - У загальному питанні модальне дієслово стоїть першим: *Darf ich hier warten?*
+    - *Möchten* ввічливо виражає бажання: *Ich möchte einen Tee bestellen.*
+  b.practice.title: "Практика з модальними дієсловами"
+  fb.correct: "Правильно."
+  fb.incorrect: "Ще ні. Перевірте потрібне значення, форму модального дієслова та інфінітив у кінці."
+  x.meaning.prompt: "Виберіть дієслово зі значенням «могти» в цьому контексті."
+  x.meaning.a: "*Muss* означає «мусити», необхідність."
+  x.meaning.c: "*Darf* означає «мати дозвіл»."
+  x.meaning.explanation: "*Können* виражає здатність: *Ich kann heute länger bleiben.*"
+  x.match.prompt: "Поєднайте модальні дієслова з їхнім основним значенням."
+  x.match.explanation: "*Können* — здатність, *müssen* — необхідність, *dürfen* — дозвіл, *wollen* — намір."
+  x.cloze.prompt: "Доповніть речення правильною формою *können* та інфінітивом *lernen*."
+  x.cloze.explanation: "З *du* дієслово *können* має форму *kannst*. Інфінітив *lernen* ставимо в кінець: *Du kannst heute Deutsch lernen.*"
+  x.order.prompt: "Складіть речення: «Нам потрібно сьогодні працювати». Приймаються звичайний порядок слів і варіант із *Heute* на початку."
+  x.order.explanation: "Для *wir* використайте форму *müssen*, а інфінітив *arbeiten* поставте в кінець. Якщо винести час уперед, підмет стоятиме після модального дієслова: *Heute müssen wir arbeiten.*"
+  x.transform.prompt: "Додайте *können*: Du sprichst sehr gut Deutsch."
+  x.transform.explanation: "Для *du* використайте форму *kannst*. Дієслово *sprechen* залиште в інфінітиві в кінці."
+  x.categorize.prompt: "Розподіліть речення за значенням модального дієслова."
+  x.categorize.ability: "Здатність"
+  x.categorize.necessity: "Необхідність"
+  x.categorize.permission: "Дозвіл"
+  x.categorize.intention: "Намір"
+  x.categorize.explanation: "*Kann* виражає здатність, *müssen* — необхідність, *dürfen* — дозвіл, *wollen* — намір."
+  x.true_false.prompt: "Правда чи ні? У головному реченні з модальним дієсловом друге дієслово зазвичай стоїть у кінці в інфінітиві."
+  x.true_false.wrong: "Модальне дієслово відмінюється, а друге залишається в інфінітиві в кінці речення."
+  x.true_false.explanation: "Наприклад: *Wir müssen jetzt zum Bahnhof gehen.* Інфінітив *gehen* стоїть останнім."
+  x.correct.prompt: "Перетворіть речення на загальне питання з *du*."
+  x.correct.explanation: "З *du* дієслово *müssen* має форму *musst*. У загальному питанні модальне дієслово стоїть першим, потім іде підмет; інфінітив залишається в кінці: *Musst du heute zum Arzt gehen?*"

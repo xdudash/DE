@@ -8,7 +8,8 @@
  */
 import { useEffect, useState, type FormEvent } from "react";
 import { translator, type MessageKey } from "@deutschgo/i18n";
-import { GOALS, MINUTE_CHOICES, PROGRESS_EVENT, readSetup, writeSetup, type Goal, type Setup } from "../lib/device-state";
+import { GOALS, MINUTE_CHOICES, PROGRESS_EVENT, readSetup, writeSetup, type Goal, type PathDifficulty, type Setup } from "../lib/device-state";
+import { LearningPathPicker, type LearningPathCounts } from "./LearningPathPicker";
 
 const GOAL_KEY: Record<Goal, MessageKey> = {
   general: "setup.goal.general",
@@ -18,11 +19,12 @@ const GOAL_KEY: Record<Goal, MessageKey> = {
   exam: "setup.goal.exam",
 };
 
-export function SetupForm({ lang }: { lang: string }) {
+export function SetupForm({ lang, coursePaths }: { lang: string; coursePaths: LearningPathCounts[] }) {
   const msg = translator(lang);
   const [saved, setSaved] = useState<Setup | null>(null);
   const [goal, setGoal] = useState<Goal>("general");
   const [minutes, setMinutes] = useState<number>(10);
+  const [difficulty, setDifficulty] = useState<PathDifficulty>("medium");
   const [status, setStatus] = useState<"idle" | "saved" | "failed">("idle");
 
   // Read after mount so server and client render the same first frame; read again when
@@ -34,6 +36,7 @@ export function SetupForm({ lang }: { lang: string }) {
       if (previous) {
         setGoal(previous.goal);
         setMinutes(previous.minutes);
+        setDifficulty(previous.difficulty);
       }
     };
     read();
@@ -43,7 +46,7 @@ export function SetupForm({ lang }: { lang: string }) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const next: Setup = { goal, minutes };
+    const next: Setup = { goal, minutes, difficulty };
     if (writeSetup(next)) {
       setSaved(next);
       setStatus("saved");
@@ -77,6 +80,7 @@ export function SetupForm({ lang }: { lang: string }) {
             ))}
           </div>
         </fieldset>
+        <LearningPathPicker lang={lang} difficulty={difficulty} paths={coursePaths} onChange={setDifficulty} />
         <button type="submit" className="primary">{msg("setup.save")}</button>
       </form>
 
@@ -86,6 +90,7 @@ export function SetupForm({ lang }: { lang: string }) {
           <p className="small">
             {msg("setup.saved", {
               goal: msg(GOAL_KEY[saved.goal]),
+              path: msg(`learningPath.${saved.difficulty}` as MessageKey),
               // Pass the localized duration ("15 min", "15 хв"), not a bare number.
               minutes: msg("setup.minutes", { minutes: saved.minutes }),
             })}{" "}

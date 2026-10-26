@@ -7,16 +7,17 @@ describe("plan goals (DG-029, ADR-0020)", () => {
     assert.deepEqual([...GOALS], ["general", "everyday", "work", "study", "exam"]);
   });
 
-  it("accepts a complete plan unchanged", () => {
-    assert.deepEqual(normalizeSetup({ goal: "exam", minutes: 15 }), { goal: "exam", minutes: 15 });
+  it("keeps older plans and defaults their course depth to medium", () => {
+    assert.deepEqual(normalizeSetup({ goal: "exam", minutes: 15 }), { goal: "exam", minutes: 15, difficulty: "medium" });
+    assert.deepEqual(normalizeSetup({ goal: "work", minutes: 10, difficulty: "hard" }), { goal: "work", minutes: 10, difficulty: "hard" });
   });
 
   it("reads the first version's 'life' goal as everyday", () => {
-    assert.deepEqual(normalizeSetup({ goal: "life", minutes: 5 }), { goal: "everyday", minutes: 5 });
+    assert.deepEqual(normalizeSetup({ goal: "life", minutes: 5 }), { goal: "everyday", minutes: 5, difficulty: "medium" });
   });
 
   it("ignores a region saved by an earlier version", () => {
-    assert.deepEqual(normalizeSetup({ goal: "work", region: "de-AT", minutes: 10 }), { goal: "work", minutes: 10 });
+    assert.deepEqual(normalizeSetup({ goal: "work", region: "de-AT", minutes: 10 }), { goal: "work", minutes: 10, difficulty: "medium" });
   });
 
   it("refuses anything that is not a complete, valid plan", () => {

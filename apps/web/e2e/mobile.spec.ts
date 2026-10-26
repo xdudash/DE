@@ -110,16 +110,46 @@ test.describe("phone layout", () => {
 });
 
 test.describe("exercise format gallery", () => {
-  test("opens a format-specific, tappable preview", async ({ page }) => {
+  test("answers and checks a format-specific preview on a phone", async ({ page }) => {
     await page.goto("/en/exercises");
     await page.getByRole("button", { name: "Preview interaction" }).first().click();
     const preview = page.locator(".format-preview");
     await expect(preview).toBeVisible();
     await expect(preview.getByText("Choose or enter your answer")).toBeVisible();
-    const choice = preview.getByRole("button", { name: "Guten Tag!" });
+    const choice = preview.getByRole("button", { name: "lerne" });
     await choice.click();
     await expect(choice).toHaveAttribute("aria-pressed", "true");
-    await expect(preview.getByText("Selected: Guten Tag!")).toBeVisible();
+    await preview.getByRole("button", { name: "Check answer" }).click();
+    await expect(preview.getByRole("status")).toContainText("Correct");
+  });
+
+  test("matches pairs, categorizes words, and builds a sentence by tapping", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto("/en/exercises");
+
+    const pairs = page.locator(".catalog-format").filter({ hasText: "Match pairs" });
+    await pairs.getByRole("button", { name: "Preview interaction" }).click();
+    await pairs.getByRole("button", { name: "Guten Morgen" }).click();
+    await pairs.getByRole("button", { name: "Good morning" }).click();
+    await pairs.getByRole("button", { name: "Gute Nacht" }).click();
+    await pairs.getByRole("button", { name: "Good night" }).click();
+    await pairs.getByRole("button", { name: "Check answer" }).click();
+    await expect(pairs.getByRole("status")).toContainText("Correct");
+
+    const categories = page.locator(".catalog-format").filter({ hasText: "Categorize" });
+    await categories.getByRole("button", { name: "Preview interaction" }).click();
+    await categories.locator("select").nth(0).selectOption("Obst");
+    await categories.locator("select").nth(1).selectOption("Möbel");
+    await categories.locator("select").nth(2).selectOption("Getränk");
+    await categories.getByRole("button", { name: "Check answer" }).click();
+    await expect(categories.getByRole("status")).toContainText("Correct");
+
+    const order = page.locator(".catalog-format").filter({ hasText: "Word order" });
+    await order.getByRole("button", { name: "Preview interaction" }).click();
+    for (const token of ["Ich", "lerne", "Deutsch."]) await order.getByRole("button", { name: token }).click();
+    await order.getByRole("button", { name: "Check answer" }).click();
+    await expect(order.getByRole("status")).toContainText("Correct");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
   });
 
   test("localizes preview labels in Arabic and keeps the preview available", async ({ page }) => {
@@ -138,6 +168,9 @@ test.describe("phone navigation", () => {
     await expect(english).toHaveAttribute("href", "/en/start");
     await english.click();
     await expect(page).toHaveURL(/\/en\/start$/);
+    await page.getByRole("button", { name: /Continue/ }).click();
+    await expect(page.getByRole("heading", { name: "Choose how deep to go" })).toBeVisible();
+    await expect(page.getByRole("radio", { name: /Easy path/ })).toBeVisible();
     await page.getByRole("button", { name: /Continue/ }).click();
     await page.getByRole("button", { name: /Continue/ }).click();
     await page.getByRole("button", { name: "Save and start learning" }).click();
