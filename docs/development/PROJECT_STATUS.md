@@ -86,7 +86,7 @@ Continue the client-side product flow with evidence-backed progress and complete
 - Added localized interface strings for en/uk/ru/ar and documented the route and flow. Dictionary breadth grows with reviewed reading entries; it does not invent meanings or claim a complete external dictionary.
 
 ## Latest implementation — device data export
-- The profile's data card now downloads a versioned JSON snapshot of this browser's DeutschGo state before deletion. It includes app-owned local storage entries such as route preferences, lesson answers/checkpoints, vocabulary, and writing drafts; it is created in the browser and is not uploaded.
+- The profile's data card downloads a versioned JSON snapshot and restores it locally after validation, preview, and explicit confirmation. It includes route preferences, lesson answers/checkpoints, vocabulary, and writing drafts; no upload occurs. Clear-data now also removes the saved Writing Studio prompt selection.
 
 ## Latest implementation — Knowledge Map catch-up paths
 - PR #119 merged. The map can expand the unmet prerequisite chain for a target concept, sort it from earliest prerequisite to target, and link directly to the first available lesson. Progress updates shorten the path; planned topics stay visible as blockers and do not lock access to the target.
@@ -95,6 +95,7 @@ Continue the client-side product flow with evidence-backed progress and complete
 ## Latest implementation — progress by skill and topic
 - The progress board filters actual saved attempts by skill and shows per-topic accuracy, evidence state, answer history, and links back to the map and source lesson.
 - Account and device evidence use the same shared progress view; no score or mastery is inferred from unsaved activity.
+- The source lesson link uses the event's unit id; exercise ids remain attached to individual answer records.
 
 ## Latest implementation — first visit funnel
 - PR #110 merged as `b89b593`. First-time language choices open the study-plan wizard before Home; returning learners with a saved plan, answer history, or an unfinished lesson go directly to their language Home.
