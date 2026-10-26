@@ -1,6 +1,7 @@
 "use client";
 
 import { translator } from "@deutschgo/i18n";
+import Link from "next/link";
 import type { PathDifficulty } from "../lib/device-state";
 import type { CourseRoadmapLevel } from "../lib/course-paths";
 
@@ -27,6 +28,9 @@ export function CourseRoadmap({ lang, difficulty, levels }: { lang: string; diff
             <strong>{block.id}</strong>
             <span>{msg("learningPath.steps", { count: number(block.steps) })}</span>
             <small>{msg("learningPath.breakdown", { lessons: number(block.lessons), scenarios: number(block.scenarios), checkpoints: number(block.checkpoints) })}</small>
+            {block.modules.length > 0 && <div className="course-roadmap-modules" aria-label={msg("learningPath.availableModules")}>
+              {block.modules.map((module) => <Link key={module.id} href={module.href}>▶ {module.title}</Link>)}
+            </div>}
           </li>)}
         </ol>
       </details>)}

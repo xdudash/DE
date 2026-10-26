@@ -89,6 +89,7 @@ export const uk: Catalog = {
   "learningPath.mapTitle": "Мапа курсу",
   "learningPath.mapDescription": "План на {steps} навчальних кроків згруповано за рівнями та блоками. Це програма курсу; зараз доступні лише написані модулі.",
   "learningPath.blockCount": "Блоків: {count}",
+  "learningPath.availableModules": "Доступні уроки в цьому блоці",
   "setup.save": "Зберегти мій план",
   "setup.saved": "Ваш план на цьому пристрої: {goal}, {path}, {minutes} на день.",
   "setup.deviceOnly": "Зберігається лише в цьому браузері, доки не з'являться акаунти.",

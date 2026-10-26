@@ -89,6 +89,7 @@ export const ru: Catalog = {
   "learningPath.mapTitle": "Карта курса",
   "learningPath.mapDescription": "План на {steps} учебных шагов сгруппирован по уровням и блокам. Это программа курса; сейчас доступны только написанные модули.",
   "learningPath.blockCount": "Блоков: {count}",
+  "learningPath.availableModules": "Доступные уроки в этом блоке",
   "setup.save": "Сохранить мой план",
   "setup.saved": "Ваш план на этом устройстве: {goal}, {path}, {minutes} в день.",
   "setup.deviceOnly": "Сохраняется только в этом браузере, пока не появятся аккаунты.",

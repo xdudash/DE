@@ -2,9 +2,10 @@ import "server-only";
 import curriculum from "../../../curriculum/course.json";
 import type { PathDifficulty } from "./plan";
 
-type CurriculumEntry = { id: string; level: string; block: string; depth: "core" | "standard" | "deep"; kind: "lesson" | "scenario" | "checkpoint" };
+type CurriculumEntry = { id: string; level: string; block: string; topic: string; depth: "core" | "standard" | "deep"; kind: "lesson" | "scenario" | "checkpoint" };
 type PathCounts = { difficulty: PathDifficulty; steps: number; lessons: number; scenarios: number; checkpoints: number; authoredLessons: number; levels: Array<{ level: string; steps: number }> };
-export type CourseRoadmapBlock = { id: string; steps: number; lessons: number; scenarios: number; checkpoints: number };
+export type CourseRoadmapModule = { id: string; title: string; href: string };
+export type CourseRoadmapBlock = { id: string; steps: number; lessons: number; scenarios: number; checkpoints: number; topics: string[]; modules: CourseRoadmapModule[] };
 export type CourseRoadmapLevel = { level: string; steps: number; blocks: CourseRoadmapBlock[] };
 
 const entries = curriculum.lessons as CurriculumEntry[];
@@ -42,7 +43,7 @@ export function coursePathCounts(authoredLessons: number): PathCounts[] {
 }
 
 /** Group only the selected depth's blueprint into levels and blocks for the route board. */
-export function courseRoadmap(difficulty: PathDifficulty): CourseRoadmapLevel[] {
+export function courseRoadmap(difficulty: PathDifficulty, modulesByTopic: Record<string, CourseRoadmapModule[]> = {}): CourseRoadmapLevel[] {
   const selected = entries.filter((entry) => DEPTHS[difficulty].includes(entry.depth));
   const levelIds = [...new Set(selected.map((entry) => entry.level))].sort((a, b) => LEVEL_ORDER.indexOf(a) - LEVEL_ORDER.indexOf(b));
   return levelIds.map((level) => {
@@ -51,7 +52,12 @@ export function courseRoadmap(difficulty: PathDifficulty): CourseRoadmapLevel[] 
     return {
       level,
       ...countsFor(levelEntries),
-      blocks: blockIds.map((id) => ({ id, ...countsFor(levelEntries.filter((entry) => entry.block === id)) })),
+      blocks: blockIds.map((id) => {
+        const blockEntries = levelEntries.filter((entry) => entry.block === id);
+        const topics = [...new Set(blockEntries.filter((entry) => entry.kind === "lesson").map((entry) => entry.topic))];
+        const modules = [...new Map(topics.flatMap((topic) => modulesByTopic[topic] ?? []).map((module) => [module.id, module])).values()];
+        return { id, ...countsFor(blockEntries), topics, modules };
+      }),
     };
   });
 }

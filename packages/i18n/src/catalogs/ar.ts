@@ -101,6 +101,7 @@ export const ar: Catalog = {
   "learningPath.mapTitle": "خريطة الدورة",
   "learningPath.mapDescription": "خطة من {steps} خطوة تعليمية مجمعة حسب المستويات والوحدات. هذه خريطة الدورة؛ المتاح للتعلم حالياً هو الوحدات المكتوبة فقط.",
   "learningPath.blockCount": "{count} وحدة",
+  "learningPath.availableModules": "الدروس المتاحة في هذه الوحدة",
   "setup.save": "احفظ خطتي",
   "setup.saved": "خطتك على هذا الجهاز: {goal}، {path}، {minutes} يوميًا.",
   "setup.deviceOnly": "تُحفظ في هذا المتصفح فقط إلى أن تتوفر الحسابات.",
