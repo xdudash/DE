@@ -65,6 +65,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `separable_verb` | `source_de`, `finite_form_de`, `prefix_de`, `accept` sentences | accepted answers evaluate correct and contain the finite form and separated prefix |
 | `read_question` | `text_de`, `question_de`, answer options | exactly one answer evaluates as correct; each distractor can show targeted feedback |
 | `dialogue_gap` | `lines` with speaker and one accepted-reply gap | exactly one line is missing; accepted replies evaluate correct |
+| `modal_choice` | `before_de`, `after_de`, modal verb options | exactly one authored modal form evaluates as correct, with unique ids and feedback for distractors |
 | `negation` | `source_de`, `accept` negated sentences | accepted answers evaluate correct, use `nicht` or a form of `kein`, and differ from the positive source |
 | `connector_choice` | `before_de`, `after_de`, connector options | exactly one authored connector evaluates as correct, with unique ids and feedback for distractors |
 | `case_choice` | `before_de`, `after_de`, case form options | exactly one authored form evaluates as correct, with unique ids and feedback for distractors |

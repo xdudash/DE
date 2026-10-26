@@ -386,6 +386,20 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
             for (const r of ex.feedback.rules ?? []) for (const m of r.match) if (ex.accept.some((a) => answersEqual(a, m))) c.error("exercise.rule_shadows_answer", u.id, `${where}: error rule matches accepted "${m}"`);
             break;
           }
+          case "modal_choice": {
+            const correct = ex.options.filter((option) => option.correct);
+            if (ex.options.length < 2) c.error("exercise.choice_count", u.id, `${where}: at least two modal forms are required`);
+            if (correct.length !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one modal form must be correct`);
+            const ids = new Set<string>();
+            for (const option of ex.options) {
+              if (ids.has(option.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${option.id}`);
+              ids.add(option.id);
+              if (!option.de.trim()) c.error("exercise.option_empty", u.id, `${where}: modal option ${option.id} is empty`);
+              if (!option.correct && !option.feedback) c.warn("exercise.distractor_feedback", u.id, `${where}: modal distractor ${option.id} has no targeted feedback`);
+            }
+            if (correct[0] && !evaluate(ex, { type: "modal_choice", optionId: correct[0].id }).correct) c.error("exercise.self_check", u.id, `${where}: correct modal form does not evaluate as correct`);
+            break;
+          }
           case "dialogue_gap": {
             const gaps = ex.lines.filter((line) => "accept" in line);
             if (ex.lines.length < 2 || ex.lines.length > 8) c.error("exercise.dialogue_line_count", u.id, `${where}: dialogues need 2 to 8 lines`);
