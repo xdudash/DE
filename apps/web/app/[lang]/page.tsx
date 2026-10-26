@@ -10,6 +10,8 @@ import Link from "next/link";
 import { scenarioMissions } from "../../lib/missions";
 import { contentLanguageFor, localeInfo, ui } from "../../lib/i18n";
 import { routeOptionsFromBundle } from "../../lib/route-options";
+import { coursePathCounts } from "../../lib/course-paths";
+import { LearningPathQuickSwitch } from "../../components/LearningPathQuickSwitch";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -61,6 +63,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           {routes.length > 0 && <LinePath lang={lang} routes={routes} defaultRouteId={defaultRouteId} />}
         </div>
         <aside className="home-side">
+          <LearningPathQuickSwitch lang={lang} paths={coursePathCounts(b.units.length)} />
           <NextStepCard lang={lang} graph={graphFromBundle(b)} routes={routes} defaultRouteId={defaultRouteId} targets={targets} />
           {featuredMission && <section className="card next-step">
             <h2 className="card-title">{msg("mission.title")}</h2>

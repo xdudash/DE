@@ -97,6 +97,7 @@ export const ar: Catalog = {
   "learningPath.levelSteps": "{level}: {count} خطوة تعليمية",
   "learningPath.availability": "المكتوب في التطبيق الآن: {count} وحدة تعليمية. بقية الدورة مخططة وستصبح متاحة مع إضافة المحتوى ومراجعته.",
   "learningPath.saved": "تم حفظ عمق الدورة على هذا الجهاز.",
+  "learningPath.manage": "تعديل المسار الكامل",
   "setup.save": "احفظ خطتي",
   "setup.saved": "خطتك على هذا الجهاز: {goal}، {path}، {minutes} يوميًا.",
   "setup.deviceOnly": "تُحفظ في هذا المتصفح فقط إلى أن تتوفر الحسابات.",

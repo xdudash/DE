@@ -90,6 +90,7 @@ export const en = {
   "learningPath.levelSteps": "{level}: {count} study steps",
   "learningPath.availability": "Authored in the app now: {count} lesson units. The rest of this course is planned and will become playable as material is added and reviewed.",
   "learningPath.saved": "Course depth saved on this device.",
+  "learningPath.manage": "Edit full route",
   "setup.save": "Save my plan",
   "setup.saved": "Your plan on this device: {goal}, {path}, {minutes} a day.",
   "setup.deviceOnly": "Saved only in this browser until accounts arrive.",

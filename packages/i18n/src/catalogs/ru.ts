@@ -85,6 +85,7 @@ export const ru: Catalog = {
   "learningPath.levelSteps": "{level}: учебных шагов — {count}",
   "learningPath.availability": "Сейчас в приложении написано: {count} учебных модулей. Остальная часть курса запланирована и станет доступна по мере написания и проверки материалов.",
   "learningPath.saved": "Объём курса сохранён на этом устройстве.",
+  "learningPath.manage": "Настроить весь маршрут",
   "setup.save": "Сохранить мой план",
   "setup.saved": "Ваш план на этом устройстве: {goal}, {path}, {minutes} в день.",
   "setup.deviceOnly": "Сохраняется только в этом браузере, пока не появятся аккаунты.",
