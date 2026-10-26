@@ -7,3 +7,8 @@ translator: claude (AI draft, 2026-10-12)
 strings:
   title: Separable-prefix verbs
   summary: 'Verbs like anrufen, aufstehen, einkaufen split in a main clause: the prefix goes to the end — Ich rufe dich an.'
+  pattern.scope: "This pattern covers common separable verbs in present-tense statements and direct yes/no questions."
+  pattern.limits: "When the separable verb is an infinitive after a modal, it stays together; subordinate clauses and past tense require further study."
+  ex.call: "I will call you later."
+  ex.get_up: "Mara gets up at seven."
+  ex.shop: "We shop on Saturday."

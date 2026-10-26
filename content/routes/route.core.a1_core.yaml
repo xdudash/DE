@@ -56,7 +56,7 @@ steps:
   # 5 — Two-part verbs: modals, separable prefixes, requests
   - { unit: unit.morph.verb_modals.a1 }
   - { concept: concept.syntax.verbal_bracket }
-  - { concept: concept.morph.verb_separable_prefix }
+  - { unit: unit.morph.verb_separable_prefix.a1 }
   - { concept: concept.pron.word_stress }
   - { concept: concept.morph.verb_imperative_forms }
   - { concept: concept.syntax.imperative }

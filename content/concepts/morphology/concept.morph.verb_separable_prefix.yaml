@@ -1,9 +1,7 @@
-# Graph placeholder (status: planned): id, level and dependencies only.
-# Authored content is added when a unit teaches this concept (see DG-007 gate).
 schema: deutschgo.concept/1
 id: concept.morph.verb_separable_prefix
 version: 0.1.0
-status: planned
+status: needs_review
 kind: morphology
 domain: verbs
 title: "@title"
@@ -12,3 +10,17 @@ cefr: { introduced: A1, expected_mastery: A2 }
 relations:
   - { type: depends_on, target: concept.morph.verb_present_conjugation }
   - { type: related_to, target: concept.syntax.verbal_bracket }
+pattern:
+  schema_de: "[finite verb stem in position 2] – [middle field] – [separable prefix at clause end]"
+  scope: "@pattern.scope"
+  limits: "@pattern.limits"
+examples:
+  - { id: ex_call, de: "Ich rufe dich später an.", gloss: "@ex.call", highlight: [1, 4], source: src.deutschgo_original }
+  - { id: ex_get_up, de: "Mara steht um sieben Uhr auf.", gloss: "@ex.get_up", highlight: [1, 5], source: src.deutschgo_original }
+  - { id: ex_shop, de: "Wir kaufen am Samstag ein.", gloss: "@ex.shop", highlight: [1, 5], source: src.deutschgo_original }
+sources:
+  - { source: src.deutschgo_original }
+review:
+  linguistic: { status: pending, notes: "AI-authored concept; verb list, patterns and examples need review by a qualified German teacher or native speaker." }
+  pedagogical: { status: pending }
+  rights: { status: pending, notes: "Examples are original DeutschGo content; owner confirmation pending." }
