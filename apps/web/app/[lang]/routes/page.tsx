@@ -3,7 +3,7 @@ import { bundle } from "../../../lib/content";
 import { contentLanguageFor } from "../../../lib/i18n";
 import { pickLine } from "../../../lib/path";
 import { routeOptionsFromBundle } from "../../../lib/route-options";
-import { coursePathCounts, courseRoadmap } from "../../../lib/course-paths";
+import { coursePathCounts, courseRoadmap, courseSequence } from "../../../lib/course-paths";
 import { dictionaryFor, t } from "../../../lib/content";
 
 const CURRICULUM_TOPIC_BY_CONCEPT: Record<string, string[]> = {
@@ -21,15 +21,16 @@ export default async function RoutesPage({ params }: { params: Promise<{ lang: s
   const { lang } = await params;
   const content = bundle();
   const routes = routeOptionsFromBundle(content, lang, contentLanguageFor(lang));
-  const modulesByTopic: Record<string, Array<{ id: string; title: string; href: string }>> = {};
+  const modulesByTopic: Record<string, Array<{ id: string; title: string; href: string; exerciseIds: string[] }>> = {};
   for (const unit of content.units) {
     const topics = new Set(unit.concepts.flatMap((conceptId) => CURRICULUM_TOPIC_BY_CONCEPT[conceptId.split(".").at(-1) ?? ""] ?? []));
     const dictionary = dictionaryFor(unit.id, unit, contentLanguageFor(lang));
-    const module = { id: unit.id, title: t(dictionary, unit.title), href: `/${lang}/learn/${unit.id}` };
+    const exerciseIds = unit.blocks.flatMap((block) => block.type === "exercises" ? block.items.map((exercise) => exercise.id) : []);
+    const module = { id: unit.id, title: t(dictionary, unit.title), href: `/${lang}/learn/${unit.id}`, exerciseIds };
     for (const topic of topics) (modulesByTopic[topic] ??= []).push(module);
   }
   const units = new Set(content.units.map((unit) => unit.id));
   const unitForConcept = new Set(content.units.flatMap((unit) => unit.concepts));
   const defaultRoute = pickLine(content.routes, (step) => !!((step.unit && units.has(step.unit)) || (step.concept && unitForConcept.has(step.concept))))?.id ?? routes[0]?.id ?? "";
-  return <RouteStudio lang={lang} routes={routes} defaultRouteId={defaultRoute} coursePaths={coursePathCounts(content.units.length)} courseRoadmaps={{ easy: courseRoadmap("easy", modulesByTopic), medium: courseRoadmap("medium", modulesByTopic), hard: courseRoadmap("hard", modulesByTopic) }} />;
+  return <RouteStudio lang={lang} routes={routes} defaultRouteId={defaultRoute} coursePaths={coursePathCounts(content.units.length)} courseRoadmaps={{ easy: courseRoadmap("easy", modulesByTopic), medium: courseRoadmap("medium", modulesByTopic), hard: courseRoadmap("hard", modulesByTopic) }} courseSequences={{ easy: courseSequence("easy", modulesByTopic), medium: courseSequence("medium", modulesByTopic), hard: courseSequence("hard", modulesByTopic) }} />;
 }
