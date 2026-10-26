@@ -585,7 +585,7 @@ export function ExercisePlayer({ exercise, text, labels, unit, checked, onReadyC
         <>
           {exercise.type === "transform" || exercise.type === "error_correction" || exercise.type === "negation" || exercise.type === "separable_verb" ? (
             <p lang="de" className="de stem">{exercise.source_de}</p>
-          ) : exercise.type !== "keyword_build" && exercise.stem_de ? (
+          ) : exercise.type !== "keyword_build" && exercise.type !== "translation_input" && isTextInput(exercise) && exercise.stem_de ? (
             <p lang="de" className="de stem">{exercise.stem_de}</p>
           ) : null}
           {exercise.type === "separable_verb" && <p className="muted small de separable-parts" lang="de">{exercise.finite_form_de} + {exercise.prefix_de}</p>}
