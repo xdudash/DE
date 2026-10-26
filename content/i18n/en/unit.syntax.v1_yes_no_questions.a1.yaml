@@ -1,0 +1,67 @@
+schema: deutschgo.l10n/1
+entity: unit.syntax.v1_yes_no_questions.a1
+lang: en
+based_on_version: 1.0.0
+status: draft
+translator: Codex (AI draft, 2026-10-26)
+strings:
+  title: "Yes/no questions: put the verb first"
+  summary: "Ask a direct question with the finite verb first, then the subject."
+  obj.recognize: "Recognize a yes/no question and distinguish it from a statement and a W-question."
+  obj.ask: "Form a simple present-tense yes/no question and give a short answer."
+  b.intro: |
+    A direct yes/no question asks whether something is true. Start it with the **finite (conjugated) verb**, then put the subject after it: *Wohnst du in Wien?* (Do you live in Vienna?)
+
+    Compare the three patterns: a statement starts with the subject (*Du wohnst in Wien.*); a W-question starts with a question word and keeps the verb second (*Wo wohnst du?*); a yes/no question starts with the verb (*Wohnst du in Wien?*).
+  b.pattern.caption: "The finite verb comes before the subject"
+  col.verb: "Position 1: finite verb"
+  col.subject: "Subject"
+  col.rest: "Other details"
+  b.examples.title: "Questions you can use"
+  ex.come: "Are you coming today?"
+  ex.work: "Is she working tomorrow?"
+  ex.appointment: "Do you have an appointment? (formal)"
+  ex.live: "Do you live in Vienna?"
+  b.answers: |
+    Answer with *ja* or *nein*, then use a normal statement order. German does not add an English-style *do*:
+
+    - *Kommst du heute? – Ja, ich komme heute.*
+    - *Kommst du heute? – Nein, ich komme heute nicht.*
+
+    The finite verb agrees with the subject: *Kommst du?* but *Kommt er?* In questions with a modal or another verb part, only the finite verb moves to the front; the other part stays later in the sentence. You will practise those forms in a separate lesson.
+  b.errors.title: "Check the verb form"
+  e.verb_agreement: "With *du*, the verb is *arbeitest*. The ending must agree with the subject: *Arbeitest du heute?*"
+  b.summary: |
+    - In a direct yes/no question, put the finite verb first: *Wohnst du in Wien?*
+    - Put the subject after the verb: *Arbeitet sie morgen?*
+    - Use *ja* or *nein* and a normal statement in the answer: *Ja, ich wohne hier.*
+    - A W-question starts with its question word and has the verb second: *Wo wohnst du?*
+  b.practice.title: "Practice"
+  fb.correct: "Correct."
+  fb.incorrect: "Not quite. Check whether this is a yes/no question, a W-question, or a statement."
+  x.choose_question.prompt: "Which sentence is a direct yes/no question?"
+  x.choose_question.a: "This is a statement: the subject comes first and the verb second."
+  x.choose_question.c: "This is a W-question. It starts with a question word, not the verb."
+  x.choose_question.explanation: "A direct yes/no question starts with its finite verb: *Lernst du heute Deutsch?*"
+  x.choose_form.prompt: "Choose the verb form that agrees with *du*."
+  x.choose_form.b: "*Wohnt* goes with *er/sie/es* or *ihr*, not *du*."
+  x.choose_form.c: "*Wohnen* goes with *wir* or formal *Sie*, not *du*."
+  x.choose_form.explanation: "With *du*, use *wohnst*: *Wohnst du morgen in Wien?*"
+  x.match_forms.prompt: "Match each subject to the correct present-tense verb form."
+  x.match_forms.explanation: "The endings change with the subject: *ich wohne*, *du kommst*, *er arbeitet*, *wir lernen*."
+  x.cloze.prompt: "Complete the question and short answer with the correct forms of *lernen*."
+  x.cloze.explanation: "The question starts with *lernst*, the form for *du*. In the answer, *ich* takes *lerne*."
+  x.order_question.prompt: "Build the question: “Are you coming today?”"
+  x.order_question.explanation: "Put the finite verb *kommst* first, then the subject *du*, followed by *heute*."
+  x.transform_question.prompt: "Turn the statement into a direct yes/no question: Du wohnst in Wien."
+  x.transform_question.explanation: "Move the finite verb *wohnst* before the subject *du*: *Wohnst du in Wien?*"
+  x.categorize.prompt: "Sort each sentence by its word-order pattern."
+  x.categorize.statement: "Statement"
+  x.categorize.yes_no: "Yes/no question"
+  x.categorize.w_question: "W-question"
+  x.categorize.explanation: "Statements usually start with the subject; yes/no questions start with the finite verb; W-questions start with a question word and put the verb second."
+  x.verb_first.prompt: "True or false? In a direct yes/no question, the finite verb comes before the subject."
+  x.verb_first.wrong: "In this pattern, the finite verb comes first and the subject follows it."
+  x.verb_first.explanation: "For example, *Haben Sie einen Termin?* starts with *haben*, then the subject *Sie*."
+  x.correct_order.prompt: "Correct the verb form in this question."
+  x.correct_order.explanation: "With *du*, use *arbeitest*: *Arbeitest du heute im Büro?* The finite verb is first, followed by the subject."
