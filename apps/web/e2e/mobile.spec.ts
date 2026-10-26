@@ -100,7 +100,7 @@ test.describe("phone navigation", () => {
     await page.getByRole("button", { name: "Save and start learning" }).click();
     await expect(page).toHaveURL(/\/en$/);
     await page.locator(".station.is-current").getByRole("link", { name: "Start", exact: true }).click();
-    await expect(page).toHaveURL(/\/en\/learn\/unit\.pron\.alphabet_a0$/);
+    await expect(page).toHaveURL(/\/en\/learn\/unit\.morph\.verb_present_conjugation\.a1$/);
     await expect(page.locator("nav.tabbar")).toBeHidden();
   });
 
