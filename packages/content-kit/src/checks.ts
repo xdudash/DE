@@ -183,6 +183,20 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
       const where = `exercise ${ex.id}`;
       try {
         switch (ex.type) {
+          case "odd_one_out": {
+            const correct = ex.options.filter((option) => option.correct);
+            if (ex.options.length < 3) c.error("exercise.odd_one_out_count", u.id, `${where}: provide at least three items for comparison`);
+            if (correct.length !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one item must be the odd one out`);
+            const ids = new Set<string>();
+            for (const option of ex.options) {
+              if (ids.has(option.id)) c.error("exercise.option_id", u.id, `${where}: duplicate option id ${option.id}`);
+              ids.add(option.id);
+              if (!option.de.trim()) c.error("exercise.option_empty", u.id, `${where}: item ${option.id} is empty`);
+              if (!option.correct && !option.feedback) c.warn("exercise.distractor_feedback", u.id, `${where}: item ${option.id} has no targeted feedback`);
+            }
+            if (correct[0] && !evaluate(ex, { type: "odd_one_out", optionId: correct[0].id }).correct) c.error("exercise.self_check", u.id, `${where}: odd item does not evaluate as correct`);
+            break;
+          }
           case "single_choice": {
             const n = ex.options.filter((o) => o.correct).length;
             if (n !== 1) c.error("exercise.choice_correct_count", u.id, `${where}: exactly one correct option required, found ${n}`);

@@ -48,6 +48,14 @@ describe("connector_choice", () => {
   });
 });
 
+describe("odd_one_out", () => {
+  const exercise = { id: "x_odd", type: "odd_one_out" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, stem_de: "Welches Wort passt nicht dazu?", options: [{ id: "a", de: "der Apfel", correct: false }, { id: "b", de: "die Birne", correct: false }, { id: "c", de: "der Stuhl", correct: true }] };
+  it("selects the one unrelated item", () => {
+    assert.equal(evaluate(exercise, { type: "odd_one_out", optionId: "c" }).correct, true);
+    assert.equal(evaluate(exercise, { type: "odd_one_out", optionId: "a" }).correct, false);
+  });
+});
+
 describe("modal_choice", () => {
   const exercise = { id: "x_modal", type: "modal_choice" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, before_de: "Ich", after_de: "heute länger arbeiten, weil das Projekt fertig werden muss.", options: [{ id: "a", de: "muss", correct: true }, { id: "b", de: "darf", correct: false }, { id: "c", de: "mag", correct: false }] };
   it("evaluates the modal form in context", () => {
