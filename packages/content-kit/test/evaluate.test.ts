@@ -57,6 +57,14 @@ describe("translation_input", () => {
   });
 });
 
+describe("join_halves", () => {
+  const exercise = { id: "x_halves", type: "join_halves" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, pairs: [{ id: "a", left_de: "Wenn es regnet,", right_de: "bleibe ich zu Hause." }, { id: "b", left_de: "Obwohl er müde ist,", right_de: "lernt er weiter." }] };
+  it("accepts the authored joins and rejects swapped endings", () => {
+    assert.equal(evaluate(exercise, { type: "join_halves", matches: { a: "a", b: "b" } }).correct, true);
+    assert.equal(evaluate(exercise, { type: "join_halves", matches: { a: "b", b: "a" } }).correct, false);
+  });
+});
+
 describe("flashcard_recall", () => {
   const exercise = { id: "x_recall", type: "flashcard_recall" as const, objective: "o1", concepts: ["concept.x.y"], prompt: "@p" as const, difficulty: 1 as const, explanation: "@e" as const, feedback: { correct: "@ok" as const, incorrect: "@no" as const }, front: "@meaning" as const, back_de: "die Fahrkarte", example_de: "Ich kaufe eine Fahrkarte." };
   it("records self-rated recall as success or review-needed", () => {
