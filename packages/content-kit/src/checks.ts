@@ -183,6 +183,11 @@ function checkExercises(c: Collector, repo: ContentRepo): void {
       const where = `exercise ${ex.id}`;
       try {
         switch (ex.type) {
+          case "translation_input": {
+            if (ex.accept.length === 0) c.error("exercise.accept_required", u.id, `${where}: at least one German translation is required`);
+            for (const answer of ex.accept) if (!evaluate(ex, { type: "translation_input", text: answer }).correct) c.error("exercise.self_check", u.id, `${where}: accepted translation "${answer}" does not evaluate as correct`);
+            break;
+          }
           case "flashcard_recall": {
             if (!ex.front || !ex.back_de.trim()) c.error("exercise.flashcard_content", u.id, `${where}: recall cards need a front and a German answer`);
             if (ex.example_de !== undefined && !ex.example_de.trim()) c.error("exercise.flashcard_example", u.id, `${where}: example sentence must not be empty`);
