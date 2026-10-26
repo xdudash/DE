@@ -61,6 +61,7 @@ Common: `id`, `type`, `objective` (must exist), `concepts[]`, `prompt`, `difficu
 | `categorize` | `categories[]` with localized labels; each German `items[]` entry maps to a category | unique ids; every category used; every item points to a known category; authored answer evaluates correct |
 | `word_order` | `tokens` (≤9 chunks, display order), `accept` sentences, `final_punctuation` | every accepted sentence is buildable from the tokens and evaluates correct; rules don't shadow answers; tokens not pre-solved |
 | `join_halves` | `pairs` with sentence beginnings and endings | joins are unique and the authored pairings evaluate as correct |
+| `stress_mark` | `syllables` and `stress_index` | the marked stress index identifies one of the supplied syllables |
 | `cloze` | `text_de` with `{{0}}…`, per-gap `accept` + rules | placeholders contiguous; gap rules don't shadow answers |
 | `transform` | `source_de`, `accept` sentences | accepted answers evaluate correct; source not already an answer |
 | `separable_verb` | `source_de`, `finite_form_de`, `prefix_de`, `accept` sentences | accepted answers evaluate correct and contain the finite form and separated prefix |
